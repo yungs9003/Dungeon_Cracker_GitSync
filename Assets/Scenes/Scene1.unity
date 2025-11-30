@@ -128,6 +128,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2974551974566156804, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2974551974566156804, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2974551974566156804, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2974551974566156804, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -169,7 +181,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3059896303695722254, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
       propertyPath: m_Name
-      value: Block
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3059896303695722254, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -177,8 +193,22 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2974551974566156804, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 682510198}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3059896303695722254, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1344484715}
+    - targetCorrespondingSourceObject: {fileID: 3059896303695722254, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1344484714}
+    - targetCorrespondingSourceObject: {fileID: 3059896303695722254, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1344484719}
   m_SourcePrefab: {fileID: 100100000, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
+--- !u!1 &401687382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3059896303695722254, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
+  m_PrefabInstance: {fileID: 314094057}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &682510197
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,13 +235,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 682510197}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 4.97, z: 0}
+  m_LocalRotation: {x: 0.76604444, y: 0, z: 0, w: 0.64278764}
+  m_LocalPosition: {x: 0, y: 3.25, z: 0.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1344484710}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 100, y: 0, z: 0}
 --- !u!81 &682510199
 AudioListener:
   m_ObjectHideFlags: 0
@@ -254,7 +284,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
@@ -296,7 +326,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123309884}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1123309886
 Camera:
   m_ObjectHideFlags: 0
@@ -392,10 +422,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3bb1145226de9418e063679482141c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JsonBlockBuilder3D
-  jsonFileName: map_0202
+  jsonFileName: map_1130
   blockPrefab: {fileID: 2030956388103666965, guid: 6ef5b87d66c47ae4e88f11223b71be3c, type: 3}
   cellSize: 1
   unitHeight: 1
+  player: {fileID: 1344484710}
+  playerYOffset: 0.5
 --- !u!4 &1217976753
 Transform:
   m_ObjectHideFlags: 0
@@ -416,6 +448,76 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2974551974566156804, guid: f9acd0b63a7f54a49aa8fd88a83c901a, type: 3}
   m_PrefabInstance: {fileID: 314094057}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1344484714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401687382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ca50a2c03313f409a53ba3f3bab664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  moveSpeed: 5
+--- !u!54 &1344484715
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401687382}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!114 &1344484719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401687382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: 2e54872ac1ed06a45bea74d7c7b2a0c1, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1525536234
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,18 +8,25 @@ public class CellData
     public string coord; // "0000"
     public string code;  // "100-000", "000-001", "001-001"
 }
+[System.Serializable]
+public class PlayerData
+{
+    public string start;
+}
 
 [System.Serializable]
 public class MapData
 {
     public string size;   // "0202" → 2x2
     public CellData[] grid;
+    public PlayerData player;
 }
+
 
 public class JsonBlockBuilder3D : MonoBehaviour
 {
     [Header("JSON 파일 이름 (Assets/Resources 기준, 확장자 제외)")]
-    public string jsonFileName = "map_0202";
+    public string jsonFileName = "map_002";
 
     [Header("블록 프리팹 (큐브)")]
     public GameObject blockPrefab;
@@ -27,6 +34,10 @@ public class JsonBlockBuilder3D : MonoBehaviour
     [Header("그리드 설정")]
     public float cellSize = 1f;    // x,z 방향 간격
     public float unitHeight = 1f;  // 높이 1일 때 y 스케일 값
+
+    [Header("플레이어 설정")]
+    public Transform player;       // 씬에 있는 Player 오브젝트를 드래그해서 넣기
+    public float playerYOffset = 0.5f; // 블록 위에서 살짝 띄우는 값
 
     // 각 좌표별 블록 높이 저장 (게임 로직용)
     private Dictionary<Vector2Int, int> heightMap = new Dictionary<Vector2Int, int>();
@@ -64,6 +75,8 @@ public class JsonBlockBuilder3D : MonoBehaviour
             Debug.LogError("JSON 파싱 실패 또는 grid 데이터 없음");
             return;
         }
+
+        Debug.Log($"가져온 파일: {jsonFileName} ");
 
         int width  = Convert.ToInt32(mapData.size.Substring(0, 2), 16);
         int height = Convert.ToInt32(mapData.size.Substring(2, 2), 16);
@@ -110,24 +123,74 @@ public class JsonBlockBuilder3D : MonoBehaviour
         }
 
         Debug.Log("3D 블록 생성 완료");
+        PositionPlayer(mapData);
     }
+    void PositionPlayer(MapData mapData) {
+        if (player == null)
+        {
+            Debug.LogWarning("Player Transform이 설정되지 않았습니다.");
+            return;
+        }
+
+        if (mapData.player == null || string.IsNullOrEmpty(mapData.player.start))
+        {
+            Debug.LogWarning("mapData.player.start 가 비어있습니다.");
+            return;
+        }
+
+        string start = mapData.player.start;
+
+        if (start.Length < 4)
+        {
+            Debug.LogWarning($"start 값이 올바르지 않습니다: {start}");
+            return;
+        }
+
+        // "00 00" (hex) → x, y
+        int x = Convert.ToInt32(start.Substring(0, 2), 16);
+        int y = Convert.ToInt32(start.Substring(2, 2), 16);
+
+        // 높이 정보 가져오기 (없으면 0)
+        int h = GetHeightAt(x, y);
+
+        // 월드 좌표 계산 (블록 생성할 때와 동일한 규칙)
+        float worldX = x * cellSize;
+        float worldZ = y * cellSize;
+
+        // 블록의 윗면 높이 = h * unitHeight
+        // 플레이어는 그 위에 살짝 띄워서 배치
+        float worldY = h * unitHeight + playerYOffset;
+
+        Vector3 playerPos = new Vector3(worldX, worldY, worldZ);
+        player.position = playerPos;
+
+        Debug.Log($"플레이어를 ({x},{y}) (height={h}) → {playerPos} 위치에 배치했습니다.");
+    }
+
+
+
 
     // code 문자열을 실제 "높이 값"으로 바꿔주는 함수
     int GetHeightFromCode(string code)
     {
         switch (code)
         {
+            case "000-000":
+                return 1;   // 바닥
             case "100-000":
-                return 0;   // 빈 칸
-            case "000-001":
-                return 1;   // 높이 1
+                return 0;   // 낭떠러지
+            case "002-002":
+                return 1;   // 함정해제모듈
             case "001-001":
-                return 2;   // 높이 2
+                return 2;   // 벽
+            case "101-001":
+                return 2;   // 화살
             default:
                 Debug.LogWarning($"알 수 없는 code: {code}");
                 return 0;
         }
     }
+
 
     // 다른 스크립트에서 높이 정보가 필요할 때 사용
     public int GetHeightAt(int x, int y)
