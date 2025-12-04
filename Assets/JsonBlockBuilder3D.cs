@@ -114,6 +114,9 @@ public class JsonBlockBuilder3D : MonoBehaviour
 
             Vector3 worldPos = new Vector3(worldX, worldY, worldZ);
 
+            string prefabPath = "Prefabs/" + cell.code;
+            blockPrefab = Resources.Load<GameObject>(prefabPath);
+
             GameObject block = Instantiate(blockPrefab, worldPos, Quaternion.identity, transform);
 
             // 높이에 맞게 스케일 조정 (y 방향만)
