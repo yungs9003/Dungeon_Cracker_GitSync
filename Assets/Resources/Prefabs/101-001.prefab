@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5504500885481262305}
   - component: {fileID: 4352235451257119079}
   - component: {fileID: 2335421694957690176}
+  - component: {fileID: -6429855842624710283}
   m_Layer: 0
   m_Name: 101-001
   m_TagString: Untagged
@@ -111,3 +112,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-6429855842624710283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059896303695722254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0bb6a7cfc05f4458300213ff4e14dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bow
+  projectilePrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  speed: 12
+  damage: 10
+  fireCooldown: 1
