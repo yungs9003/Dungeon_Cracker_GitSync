@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public class Projectile3D : MonoBehaviour
+public class Arrow : MonoBehaviour
 {
     [SerializeField] private float lifeTime = 3f;
 
