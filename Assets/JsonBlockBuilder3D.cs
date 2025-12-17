@@ -25,6 +25,7 @@ public class MapData
 {
     public string size;   // "0202" → 2x2
     public CellData[] grid;
+    public DirectionData[] direction;
     public PlayerData player;
 }
 
@@ -32,7 +33,7 @@ public class MapData
 public class JsonBlockBuilder3D : MonoBehaviour
 {
     [Header("JSON 파일 이름 (Assets/Resources 기준, 확장자 제외)")]
-    public string jsonFileName = "map_002";
+    public string jsonFileName = "map_1130";
 
     [Header("블록 프리팹 (큐브)")]
     public GameObject blockPrefab;
@@ -68,7 +69,6 @@ public class JsonBlockBuilder3D : MonoBehaviour
             "11" => new Vector3(0, 0, -1),
             _ => new Vector3(0, 0, 1)
         };
-
         return Quaternion.LookRotation(forward, Vector3.up);
     }
 
@@ -100,9 +100,20 @@ public class JsonBlockBuilder3D : MonoBehaviour
 
         Debug.Log($"가져온 파일: {jsonFileName} ");
 
-        int width  = Convert.ToInt32(mapData.size.Substring(0, 2), 16);
+        int width = Convert.ToInt32(mapData.size.Substring(0, 2), 16);
         int height = Convert.ToInt32(mapData.size.Substring(2, 2), 16);
         Debug.Log($"3D Map size: {width} x {height}");
+        Dictionary<string, string> dirMap = new Dictionary<string, string>();
+        if (mapData.direction != null)
+        {
+            Debug.Log("something");
+            foreach (var d in mapData.direction)
+            {
+                if (d == null) continue;
+                if (string.IsNullOrEmpty(d.coord) || string.IsNullOrEmpty(d.dir)) continue;
+                dirMap[d.coord.Trim().ToUpperInvariant()] = d.dir.Trim();
+            }
+        }
 
         // 2) 각 셀에 대해 큐브 생성
         foreach (var cell in mapData.grid)
@@ -138,8 +149,23 @@ public class JsonBlockBuilder3D : MonoBehaviour
 
             string prefabPath = "Prefabs/" + cell.code;
             blockPrefab = Resources.Load<GameObject>(prefabPath);
+            if (blockPrefab == null)
+            {
+                Debug.LogError($"프리팹 로드 실패: {prefabPath} (cell.coord={cell.coord}, code={cell.code})");
+                continue;
+            }
 
-            GameObject block = Instantiate(blockPrefab, worldPos, Quaternion.identity, transform);
+            // ✅ direction 정보가 있는 좌표면 해당 방향으로 회전 적용
+            Quaternion rot = Quaternion.identity;
+            string coordKey = cell.coord.Trim().ToUpperInvariant();
+            
+            if (dirMap.TryGetValue(coordKey, out string dir))
+            {
+                dir = dirMap[coordKey];
+                rot = GetRotationFromDir(dir);
+            }
+
+            GameObject block = Instantiate(blockPrefab, worldPos, rot, transform);
 
             // 높이에 맞게 스케일 조정 (y 방향만)
             block.transform.localScale = new Vector3(cellSize, h * unitHeight, cellSize);
@@ -204,7 +230,7 @@ public class JsonBlockBuilder3D : MonoBehaviour
         {
             case "000-000":
                 return 1;   // 바닥
-            case "100-000":
+            case "100-000": 
                 return 0;   // 낭떠러지
             case "002-002":
                 return 1;   // 함정해제모듈
