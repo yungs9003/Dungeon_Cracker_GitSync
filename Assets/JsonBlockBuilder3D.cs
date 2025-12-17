@@ -13,6 +13,12 @@ public class PlayerData
 {
     public string start;
 }
+[System.Serializable]
+public class DirectionData
+{
+    public string coord; // "0305"
+    public string dir;   // "00"(위), "01"(오), "10"(왼), "11"(아래)
+}
 
 [System.Serializable]
 public class MapData
@@ -48,6 +54,22 @@ public class JsonBlockBuilder3D : MonoBehaviour
     void Start()
     {
         BuildBlocks();
+    }
+    // ✅ dir(00/01/10/11) → 회전(Quaternion)
+    Quaternion GetRotationFromDir(string dir)
+    {
+        // dir: 00(위), 01(오), 10(왼), 11(아래)
+        // 벡터 규칙: 위 (0,0,1), 오 (1,0,0), 왼 (-1,0,0), 아래 (0,0,-1)
+        Vector3 forward = dir switch
+        {
+            "00" => new Vector3(0, 0, 1),
+            "01" => new Vector3(1, 0, 0),
+            "10" => new Vector3(-1, 0, 0),
+            "11" => new Vector3(0, 0, -1),
+            _ => new Vector3(0, 0, 1)
+        };
+
+        return Quaternion.LookRotation(forward, Vector3.up);
     }
 
     void BuildBlocks()
@@ -128,7 +150,9 @@ public class JsonBlockBuilder3D : MonoBehaviour
         Debug.Log("3D 블록 생성 완료");
         PositionPlayer(mapData);
     }
-    void PositionPlayer(MapData mapData) {
+
+    void PositionPlayer(MapData mapData)
+    {
         if (player == null)
         {
             Debug.LogWarning("Player Transform이 설정되지 않았습니다.");
