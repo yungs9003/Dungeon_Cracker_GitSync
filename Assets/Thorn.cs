@@ -8,47 +8,44 @@ public class Thorn : MonoBehaviour
     [SerializeField] private int damage = 2;
     [SerializeField] private float hitCooldown = 2f;
 
-    // 같은 대상이 여러 번 닿아도 2초 동안은 무시
+    // 같은 대상이 여러 번 닿아도 hitCooldown 동안은 무시
     private readonly Dictionary<Health, float> nextDamageTime = new();
 
     private void Reset()
     {
-        // 기본은 트리거 권장 (밟았을 때 감지 쉽고 안정적)
+        // 충돌 이벤트를 쓰려면 Trigger가 아니어야 함
         var col = GetComponent<Collider>();
-        col.isTrigger = true;
+        col.isTrigger = false;
     }
 
     private void Awake()
     {
-        // 트리거 이벤트가 안정적으로 오려면 (둘 중 하나라도 Rigidbody 필요)
-        // 플레이어가 Rigidbody가 없다면, 가시 타일에 Rigidbody(kinematic)를 붙이면 됨.
-        // (이 스크립트는 Rigidbody를 강제하진 않음)
         var col = GetComponent<Collider>();
-        if (!col.isTrigger)
-            col.isTrigger = true;
+        if (col.isTrigger)
+            col.isTrigger = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        TryDamage(other);
+        TryDamage(collision.collider);
     }
 
-    // Enter가 누락되거나 계속 밟고 있는 상태에서도 "쿨다운 끝나면 다시 1회" 주고 싶다면 유지
-    private void OnTriggerStay(Collider other)
+    // 계속 닿아있는 동안 쿨다운 끝나면 다시 데미지 주고 싶으면 유지
+    private void OnCollisionStay(Collision collision)
     {
-        TryDamage(other);
+        TryDamage(collision.collider);
     }
 
     private void TryDamage(Collider other)
     {
-        // 플레이어 히트박스에 Health가 직접 없을 수 있으니 부모까지 탐색
+        // 충돌한 오브젝트(또는 부모)에 Health가 있는지 탐색
         Health health = other.GetComponentInParent<Health>();
         if (health == null) return;
 
         float now = Time.time;
 
         if (nextDamageTime.TryGetValue(health, out float allowedTime) && now < allowedTime)
-            return; // 아직 쿨다운 중
+            return;
 
         health.TakeDamage(damage);
         nextDamageTime[health] = now + hitCooldown;
