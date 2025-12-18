@@ -28,7 +28,7 @@ public class Arrow : MonoBehaviour
         if (visual == null) visual = transform;
     }
 
-    public void Launch(Vector3 dir, float speed, int damage, Collider owner = null)
+    public void Launch(Vector3 dir, float speed, int damage, Quaternion rot, Collider owner = null)
     {
         this.damage = damage;
         ownerCol = owner;
@@ -42,6 +42,9 @@ public class Arrow : MonoBehaviour
 
         dir.y = 0f;
         dir.Normalize();
+
+        rb.rotation = rot;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         rb.linearVelocity = dir * speed;   // Unity 6: linearVelocity 사용 가능
         AlignVisualToDirection(dir);
@@ -63,7 +66,7 @@ public class Arrow : MonoBehaviour
     // Trigger 방식(추천): Arrow Collider IsTrigger = ON
     private void OnTriggerEnter(Collider other)
     {
-        if (ownerCol != null && other == ownerCol) return;
+        if (other.GetComponentInParent<Arrow>() != null) return;
 
         // ✅ 플레이어 히트박스에 Health가 직접 없을 수도 있으니 부모까지 탐색
         Health health = other.GetComponentInParent<Health>();

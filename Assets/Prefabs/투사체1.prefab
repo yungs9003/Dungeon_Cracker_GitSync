@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7409171863068123205}
   - component: {fileID: 6398752709816162928}
   - component: {fileID: 8204536500667557004}
-  - component: {fileID: 7677213441814863176}
+  - component: {fileID: -262669538544640626}
   m_Layer: 0
   m_Name: "\uD22C\uC0AC\uCCB41"
   m_TagString: Untagged
@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -118,7 +118,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!136 &8204536500667557004
 CapsuleCollider:
@@ -139,11 +139,11 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3.61
+  m_Radius: 2
   m_Height: 1.14
-  m_Direction: 1
+  m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7677213441814863176
+--- !u!114 &-262669538544640626
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,6 +152,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 546337095765194015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f68a2c6a9dc1a1348acd505dcf60d17c, type: 3}
+  m_Script: {fileID: 11500000, guid: 208be0848bf274041a6bcda35da1f294, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HelloLogger
+  m_EditorClassIdentifier: Assembly-CSharp::Arrow
+  lifeTime: 3
+  visual: {fileID: 0}
+  modelForwardAxis: {x: 0, y: 1, z: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5504500885481262305}
   - component: {fileID: 4352235451257119079}
   - component: {fileID: 2335421694957690176}
-  - component: {fileID: -6429855842624710283}
+  - component: {fileID: 740154745610827241}
   m_Layer: 0
   m_Name: 101-001
   m_TagString: Untagged
@@ -113,7 +113,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-6429855842624710283
+--- !u!114 &740154745610827241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,14 +122,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3059896303695722254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e0bb6a7cfc05f4458300213ff4e14dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 18e3b9aba0478c349aef0d5985c76833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bow
-  projectilePrefab: {fileID: 167248550969580265, guid: cd030a210ffc66f41b6cf7f760f293b1, type: 3}
-  firePoint: {fileID: 5426602706951862105}
-  speed: 1
-  damage: 10
-  fireCooldown: 5
+  projectilePrefab: {fileID: -262669538544640626, guid: 5594ca2b5b6fc094f891af4a2efc27dc, type: 3}
+  muzzleLocalOffset: {x: 0, y: 0.6, z: 0.6}
+  speed: 3
+  damage: 1
+  fireCooldown: 2
+  autoFire: 1
 --- !u!1 &4047188669640195463
 GameObject:
   m_ObjectHideFlags: 0
