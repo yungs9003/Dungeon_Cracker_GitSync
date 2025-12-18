@@ -238,6 +238,8 @@ public class JsonBlockBuilder3D : MonoBehaviour
                 return 2;   // 벽
             case "101-001":
                 return 2;   // 화살
+            case "102-002": // 
+                return 1;
             default:
                 Debug.LogWarning($"알 수 없는 code: {code}");
                 return 0;
