@@ -153,9 +153,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a177d66f7009264eb466231c6482b9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RollingBallTrap
-  lifeTime: 4
+  lifeTime: 3
   damage: 2
-  hitCooldownPerTarget: 0.8
+  hitCooldownPerTarget: 1
   accel: 25
   stopSpeedThreshold: 0.25
   stuckTimeToStop: 0.6
