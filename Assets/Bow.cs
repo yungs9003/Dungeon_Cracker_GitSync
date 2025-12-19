@@ -48,10 +48,11 @@ public class Bow : MonoBehaviour
         // ✅ 추가: y만 블록 "중간 높이"로 강제
         // ownerCol이 블록의 Collider라고 가정
         if (ownerCol != null)
-        {
-            float midY = ownerCol.bounds.center.y*(1.5f);   // 블록의 세로 중앙
-            spawnPos.y = midY;
-        }
+            spawnPos.y = ownerCol.bounds.center.y;
+
+        // ✅ (2) 벽을 뚫고 보이는 것 방지: 발사 방향으로 약간 앞으로 밀기
+        const float forwardPadding = 0.15f; // 필요하면 0.05~0.3에서 조절
+        spawnPos += dir * forwardPadding;
 
         // ✅ 투사체 "이미지 회전"을 발사 방향으로 맞춤
         Quaternion spawnRot = Quaternion.LookRotation(dir, Vector3.up) * Quaternion.Euler(-90f, 90f, 0f);
@@ -59,8 +60,6 @@ public class Bow : MonoBehaviour
     
         Arrow arrow = Instantiate(projectilePrefab, spawnPos, spawnRot);
         arrow.Launch(dir, speed, damage, spawnRot , ownerCol);
-
-        Debug.Log($"dir={dir}, rotEuler={spawnRot.eulerAngles}");
 
     }
 }

@@ -42,4 +42,11 @@ public class Health : MonoBehaviour
         // 여기서 Destroy(gameObject); 하거나, 애니메이션/드랍 처리 등
         // Destroy(gameObject);
     }
+
+    public void ReviveFull()
+    {
+        currentHP = maxHP;
+        onHealthChanged?.Invoke(currentHP, maxHP);
+    }
+
 }

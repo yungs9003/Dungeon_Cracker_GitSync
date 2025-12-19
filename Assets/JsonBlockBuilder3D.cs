@@ -2,65 +2,93 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+#region JSON Data Models
+[Serializable]
 public class CellData
 {
-    public string coord; // "0000"
-    public string code;  // "100-000", "000-001", "001-001"
+    public string coord; // "0705" (hex, XXZZ)
+    public string code;  // "001-001", "000-000", ...
 }
-[System.Serializable]
+
+[Serializable]
 public class PlayerData
 {
-    public string start;
+    public string start; // "0004"
 }
-[System.Serializable]
+
+[Serializable]
 public class DirectionData
 {
     public string coord; // "0305"
     public string dir;   // "00"(위), "01"(오), "10"(왼), "11"(아래)
 }
 
-[System.Serializable]
-public class MapData
+[Serializable]
+public class RelationData
 {
-    public string size;   // "0202" → 2x2
-    public CellData[] grid;
-    public DirectionData[] direction;
-    public PlayerData player;
+    public string coord_m; // master coord
+    public string coord_t; // target coord
 }
 
+[Serializable]
+public class MapData
+{
+    public string size;            // 예: "0a07" (hex width, depth)
+    public CellData[] grid;
+    public DirectionData[] direction;
+    public RelationData[] relation;
+    public PlayerData player;
+}
+#endregion
+
+/// <summary>
+/// 002-002 같은 블록이 relation 타겟(coord_t 리스트)을 받아야 하면,
+/// 해당 프리팹에 이 인터페이스를 구현한 컴포넌트를 붙이면 됨.
+/// </summary>
+public interface IRelationTargetsReceiver
+{
+    void SetRelationTargets(List<string> targets);
+}
 
 public class JsonBlockBuilder3D : MonoBehaviour
 {
     [Header("JSON 파일 이름 (Assets/Resources 기준, 확장자 제외)")]
     public string jsonFileName = "map_1130";
 
-    [Header("블록 프리팹 (큐브)")]
-    public GameObject blockPrefab;
+    [Header("프리팹 Resources 경로 (Resources/Prefabs/{code}.prefab)")]
+    public string prefabFolder = "Prefabs/";
 
     [Header("그리드 설정")]
-    public float cellSize = 1f;    // x,z 방향 간격
-    public float unitHeight = 1f;  // 높이 1일 때 y 스케일 값
+    public float cellSize = 1f;   // x,z 간격
+    public float baseY = 0f;      // 블록을 둘 기본 바닥 y
 
-    [Header("플레이어 설정")]
-    public Transform player;       // 씬에 있는 Player 오브젝트를 드래그해서 넣기
-    public float playerYOffset = 0.5f; // 블록 위에서 살짝 띄우는 값
+    [Header("피벗이 중앙인 프리팹을 바닥에 자동으로 '내려놓기'")]
+    public bool autoGroundToBaseY = false;
 
-    // 각 좌표별 블록 높이 저장 (게임 로직용)
-    private Dictionary<Vector2Int, int> heightMap = new Dictionary<Vector2Int, int>();
+    [Header("생성 제외 코드(프리팹이 없거나 빈칸 취급할 코드)")]
+    public List<string> skipCodes = new List<string> { "100-000" };
 
-    // 좌표 중복 방지
-    private HashSet<Vector2Int> usedPositions = new HashSet<Vector2Int>();
+    [Header("플레이어 / 리스폰")]
+    public Transform player;
+    public float playerSpawnY = 1.5f; // 요청: start는 y=1.5 고정
+    public Respawn respawn;
 
-    void Start()
+    // 내부 캐시
+    private readonly Dictionary<Vector2Int, string> codeMap = new Dictionary<Vector2Int, string>();
+    private readonly Dictionary<Vector2Int, string> dirMap = new Dictionary<Vector2Int, string>();
+    private readonly Dictionary<Vector2Int, List<string>> relationMap = new Dictionary<Vector2Int, List<string>>();
+    private readonly Dictionary<string, GameObject> prefabCache = new Dictionary<string, GameObject>();
+
+    public MapData LoadedMapData { get; private set; }
+
+    private void Start()
     {
-        BuildBlocks();
+        BuildFromJson();
     }
-    // ✅ dir(00/01/10/11) → 회전(Quaternion)
+
+    // ✅ 회전 방식은 너가 준 그대로 유지 :contentReference[oaicite:3]{index=3}
     Quaternion GetRotationFromDir(string dir)
     {
-        // dir: 00(위), 01(오), 10(왼), 11(아래)
-        // 벡터 규칙: 위 (0,0,1), 오 (1,0,0), 왼 (-1,0,0), 아래 (0,0,-1)
         Vector3 forward = dir switch
         {
             "00" => new Vector3(0, 0, 1),
@@ -72,16 +100,13 @@ public class JsonBlockBuilder3D : MonoBehaviour
         return Quaternion.LookRotation(forward, Vector3.up);
     }
 
-    void BuildBlocks()
+    public void BuildFromJson()
     {
-        // 이전에 만들어진 자식 오브젝트 정리 (재생성 대비)
-        for (int i = transform.childCount - 1; i >= 0; i--)
-        {
-            DestroyImmediate(transform.GetChild(i).gameObject);
-        }
-
-        heightMap.Clear();
-        usedPositions.Clear();
+        ClearChildren();
+        codeMap.Clear();
+        dirMap.Clear();
+        relationMap.Clear();
+        prefabCache.Clear();
 
         // 1) JSON 로드
         TextAsset json = Resources.Load<TextAsset>(jsonFileName);
@@ -91,168 +116,217 @@ public class JsonBlockBuilder3D : MonoBehaviour
             return;
         }
 
-        MapData mapData = JsonUtility.FromJson<MapData>(json.text);
-        if (mapData == null || mapData.grid == null)
+        LoadedMapData = JsonUtility.FromJson<MapData>(json.text);
+        if (LoadedMapData == null || LoadedMapData.grid == null)
         {
             Debug.LogError("JSON 파싱 실패 또는 grid 데이터 없음");
             return;
         }
 
-        Debug.Log($"가져온 파일: {jsonFileName} ");
+        // size: 앞 2자리=width, 뒤 2자리=depth (hex)
+        int width = Convert.ToInt32(LoadedMapData.size.Substring(0, 2), 16);
+        int depth = Convert.ToInt32(LoadedMapData.size.Substring(2, 2), 16);
 
-        int width = Convert.ToInt32(mapData.size.Substring(0, 2), 16);
-        int height = Convert.ToInt32(mapData.size.Substring(2, 2), 16);
-        Debug.Log($"3D Map size: {width} x {height}");
-        Dictionary<string, string> dirMap = new Dictionary<string, string>();
-        if (mapData.direction != null)
+        // 2) 데이터 캐싱
+        CacheGrid(LoadedMapData.grid);
+        CacheDirections(LoadedMapData.direction);
+        CacheRelations(LoadedMapData.relation);
+
+        // 3) xz 반복문으로 생성
+        for (int x = 0; x < width; x++)
         {
-            Debug.Log("something");
-            foreach (var d in mapData.direction)
+            for (int z = 0; z < depth; z++)
             {
-                if (d == null) continue;
-                if (string.IsNullOrEmpty(d.coord) || string.IsNullOrEmpty(d.dir)) continue;
-                dirMap[d.coord.Trim().ToUpperInvariant()] = d.dir.Trim();
+                var c = new Vector2Int(x, z);
+
+                if (!codeMap.TryGetValue(c, out string code) || string.IsNullOrEmpty(code))
+                    continue;
+
+                code = code.Trim().ToUpperInvariant();
+                if (skipCodes.Contains(code))
+                    continue;
+
+                // code와 동일 이름 prefab 로드
+                GameObject prefab = LoadPrefab(code);
+                if (prefab == null)
+                {
+                    Debug.LogWarning($"프리팹 없음 → 생성 스킵: {prefabFolder}{code}");
+                    continue;
+                }
+
+                // direction이 있으면 회전 적용
+                Quaternion rot = Quaternion.identity;
+                if (dirMap.TryGetValue(c, out string dir) && !string.IsNullOrEmpty(dir))
+                    rot = GetRotationFromDir(dir.Trim());
+
+                Vector3 pos = new Vector3(x * cellSize, baseY, z * cellSize);
+                GameObject block = Instantiate(prefab, pos, rot, transform);
+                block.name = $"{code}_{x:X2}{z:X2}";
+
+                // 피벗이 중앙인 프리팹을 바닥(baseY)에 딱 붙이고 싶을 때 옵션
+                if (autoGroundToBaseY)
+                    GroundObjectToY(block, baseY);
+
+                // 4) code == "002-002" 이면 relation 전달
+                if (code == "002-002" && relationMap.TryGetValue(c, out var targets) && targets != null)
+                {
+                    var receiver = block.GetComponent<IRelationTargetsReceiver>();
+                    if (receiver != null)
+                        receiver.SetRelationTargets(new List<string>(targets));
+                    else
+                        block.SendMessage("SetRelationTargets", new List<string>(targets), SendMessageOptions.DontRequireReceiver);
+                }
             }
         }
 
-        // 2) 각 셀에 대해 큐브 생성
-        foreach (var cell in mapData.grid)
-        {
-            int x = Convert.ToInt32(cell.coord.Substring(0, 2), 16);
-            int y = Convert.ToInt32(cell.coord.Substring(2, 2), 16);
+        // 5) player.start 위치로 플레이어 배치 + Respawn에 전달 (y=1.5 고정) :contentReference[oaicite:4]{index=4}
+        PositionPlayerAndSetRespawn(LoadedMapData);
 
-            Vector2Int coord2D = new Vector2Int(x, y);
-            if (usedPositions.Contains(coord2D))
-            {
-                Debug.LogWarning($"중복 좌표 무시: ({x}, {y}), code={cell.code}");
-                continue;
-            }
-            usedPositions.Add(coord2D);
-
-            // code → 높이값으로 변환
-            int h = GetHeightFromCode(cell.code);
-
-            // 높이 0 이하면 아무것도 안 만든다 (빈 칸)
-            if (h <= 0) continue;
-
-            heightMap[coord2D] = h;
-
-            // 3D 월드 좌표 계산
-            // x → worldX, y → worldZ 로 사용 (탑뷰 기준)
-            float worldX = x * cellSize;
-            float worldZ = y * cellSize;
-
-            // 큐브 pivot이 가운데라서, 높이의 절반만큼 y를 올려준다
-            float worldY = (h * unitHeight) / 2f;
-
-            Vector3 worldPos = new Vector3(worldX, worldY, worldZ);
-
-            string prefabPath = "Prefabs/" + cell.code;
-            blockPrefab = Resources.Load<GameObject>(prefabPath);
-            if (blockPrefab == null)
-            {
-                Debug.LogError($"프리팹 로드 실패: {prefabPath} (cell.coord={cell.coord}, code={cell.code})");
-                continue;
-            }
-
-            // ✅ direction 정보가 있는 좌표면 해당 방향으로 회전 적용
-            Quaternion rot = Quaternion.identity;
-            string coordKey = cell.coord.Trim().ToUpperInvariant();
-            
-            if (dirMap.TryGetValue(coordKey, out string dir))
-            {
-                dir = dirMap[coordKey];
-                rot = GetRotationFromDir(dir);
-            }
-
-            GameObject block = Instantiate(blockPrefab, worldPos, rot, transform);
-
-            // 높이에 맞게 스케일 조정 (y 방향만)
-            block.transform.localScale = new Vector3(cellSize, h * unitHeight, cellSize);
-
-            block.name = $"Block_{x}_{y}_h{h}";
-        }
-
-        Debug.Log("3D 블록 생성 완료");
-        PositionPlayer(mapData);
+        Debug.Log($"Build 완료: {jsonFileName}");
     }
 
-    void PositionPlayer(MapData mapData)
+    private void CacheGrid(CellData[] grid)
     {
-        if (player == null)
+        foreach (var cell in grid)
         {
-            Debug.LogWarning("Player Transform이 설정되지 않았습니다.");
-            return;
-        }
-
-        if (mapData.player == null || string.IsNullOrEmpty(mapData.player.start))
-        {
-            Debug.LogWarning("mapData.player.start 가 비어있습니다.");
-            return;
-        }
-
-        string start = mapData.player.start;
-
-        if (start.Length < 4)
-        {
-            Debug.LogWarning($"start 값이 올바르지 않습니다: {start}");
-            return;
-        }
-
-        // "00 00" (hex) → x, y
-        int x = Convert.ToInt32(start.Substring(0, 2), 16);
-        int y = Convert.ToInt32(start.Substring(2, 2), 16);
-
-        // 높이 정보 가져오기 (없으면 0)
-        int h = GetHeightAt(x, y);
-
-        // 월드 좌표 계산 (블록 생성할 때와 동일한 규칙)
-        float worldX = x * cellSize;
-        float worldZ = y * cellSize;
-
-        // 블록의 윗면 높이 = h * unitHeight
-        // 플레이어는 그 위에 살짝 띄워서 배치
-        float worldY = h * unitHeight + playerYOffset;
-
-        Vector3 playerPos = new Vector3(worldX, worldY, worldZ);
-        player.position = playerPos;
-
-        Debug.Log($"플레이어를 ({x},{y}) (height={h}) → {playerPos} 위치에 배치했습니다.");
-    }
-
-
-
-
-    // code 문자열을 실제 "높이 값"으로 바꿔주는 함수
-    int GetHeightFromCode(string code)
-    {
-        switch (code)
-        {
-            case "000-000":
-                return 1;   // 바닥
-            case "100-000": 
-                return 0;   // 낭떠러지
-            case "002-002":
-                return 1;   // 함정해제모듈
-            case "001-001":
-                return 2;   // 벽
-            case "101-001":
-                return 2;   // 화살
-            case "102-002": // 
-                return 1;
-            default:
-                Debug.LogWarning($"알 수 없는 code: {code}");
-                return 0;
+            if (cell == null) continue;
+            if (!TryParseCoord(cell.coord, out int x, out int z)) continue;
+            codeMap[new Vector2Int(x, z)] = cell.code;
         }
     }
 
-
-    // 다른 스크립트에서 높이 정보가 필요할 때 사용
-    public int GetHeightAt(int x, int y)
+    private void CacheDirections(DirectionData[] directions)
     {
-        Vector2Int c = new Vector2Int(x, y);
-        if (heightMap.TryGetValue(c, out int h))
-            return h;
-        return 0;
+        if (directions == null) return;
+
+        foreach (var d in directions)
+        {
+            if (d == null) continue;
+            if (!TryParseCoord(d.coord, out int x, out int z)) continue;
+            if (string.IsNullOrEmpty(d.dir)) continue;
+
+            dirMap[new Vector2Int(x, z)] = d.dir;
+        }
+    }
+
+    private void CacheRelations(RelationData[] relations)
+    {
+        if (relations == null) return;
+
+        foreach (var r in relations)
+        {
+            if (r == null) continue;
+
+            if (!TryParseCoord(r.coord_m, out int mx, out int mz)) continue;
+            string t = NormalizeCoord(r.coord_t);
+            if (string.IsNullOrEmpty(t)) continue;
+
+            var m = new Vector2Int(mx, mz);
+            if (!relationMap.TryGetValue(m, out var list))
+            {
+                list = new List<string>();
+                relationMap[m] = list;
+            }
+            list.Add(t);
+        }
+    }
+
+    private GameObject LoadPrefab(string code)
+    {
+        code = code?.Trim().ToUpperInvariant();
+        if (string.IsNullOrEmpty(code)) return null;
+
+        if (prefabCache.TryGetValue(code, out var cached) && cached != null)
+            return cached;
+
+        string path = prefabFolder + code;
+        GameObject prefab = Resources.Load<GameObject>(path);
+        prefabCache[code] = prefab;
+        return prefab;
+    }
+
+    private void PositionPlayerAndSetRespawn(MapData mapData)
+    {
+        if (mapData?.player == null || string.IsNullOrEmpty(mapData.player.start))
+            return;
+
+        if (!TryParseCoord(mapData.player.start, out int x, out int z))
+            return;
+
+        Vector3 spawnPos = new Vector3(x * cellSize, playerSpawnY, z * cellSize);
+
+        if (player != null)
+            player.position = spawnPos;
+
+        if (respawn == null && player != null)
+            respawn = player.GetComponent<Respawn>();
+
+        if (respawn != null)
+            respawn.SetRespawnPoint(spawnPos);
+        else
+            Debug.LogWarning("Respawn 컴포넌트를 찾지 못했습니다. (Inspector에 연결하거나 Player에 Respawn.cs를 붙여줘)");
+    }
+
+    private void GroundObjectToY(GameObject go, float targetY)
+    {
+        // Renderer/Collider bounds 중 더 “믿을만한 것”이 있는 쪽으로 바닥 정렬
+        Bounds? b = null;
+
+        var cols = go.GetComponentsInChildren<Collider>();
+        if (cols != null && cols.Length > 0)
+        {
+            b = cols[0].bounds;
+            for (int i = 1; i < cols.Length; i++) b = Encapsulate(b.Value, cols[i].bounds);
+        }
+        else
+        {
+            var rends = go.GetComponentsInChildren<Renderer>();
+            if (rends != null && rends.Length > 0)
+            {
+                b = rends[0].bounds;
+                for (int i = 1; i < rends.Length; i++) b = Encapsulate(b.Value, rends[i].bounds);
+            }
+        }
+
+        if (b.HasValue)
+        {
+            float delta = targetY - b.Value.min.y;
+            go.transform.position += new Vector3(0f, delta, 0f);
+        }
+    }
+
+    private Bounds Encapsulate(Bounds a, Bounds b)
+    {
+        a.Encapsulate(b);
+        return a;
+    }
+
+    private void ClearChildren()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+            DestroyImmediate(transform.GetChild(i).gameObject);
+    }
+
+    private static bool TryParseCoord(string coord, out int x, out int z)
+    {
+        x = z = 0;
+        coord = NormalizeCoord(coord);
+        if (string.IsNullOrEmpty(coord) || coord.Length < 4) return false;
+
+        try
+        {
+            x = Convert.ToInt32(coord.Substring(0, 2), 16);
+            z = Convert.ToInt32(coord.Substring(2, 2), 16);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static string NormalizeCoord(string coord)
+    {
+        return coord?.Trim().ToUpperInvariant();
     }
 }
