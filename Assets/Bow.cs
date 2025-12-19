@@ -9,9 +9,9 @@ public class Bow : MonoBehaviour
     [SerializeField] private Vector3 muzzleLocalOffset = new Vector3(0f, 0.6f, 0.6f);
 
     [Header("Stats")]
-    [SerializeField] private float speed = 8f;
+    [SerializeField] private float speed = 4f;
     [SerializeField] private int damage = 2;
-    [SerializeField] private float fireCooldown = 1.0f;
+    [SerializeField] private float fireCooldown = 3.0f;
     [SerializeField] private bool autoFire = true;
 
     private float lastFireTime;

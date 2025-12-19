@@ -66,7 +66,7 @@ public class JsonBlockBuilder3D : MonoBehaviour
     public bool autoGroundToBaseY = false;
 
     [Header("생성 제외 코드(프리팹이 없거나 빈칸 취급할 코드)")]
-    public List<string> skipCodes = new List<string> { "100-000" };
+    public List<string> skipCodes = new List<string>();
 
     [Header("플레이어 / 리스폰")]
     public Transform player;

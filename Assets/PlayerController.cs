@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
 
     private SpeedController speed;   // ✅ 추가
 
+    private KnockbackReceiver knockback;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -52,12 +54,17 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 dir = new Vector3(moveInput.x, 0f, moveInput.y);
+        // FixedUpdate 안에서 dir 계산 후:
+        var tracker = GetComponent<PlayerMoveDirectionTracker>();
+        if (tracker != null) tracker.SetMoveDir(dir);
 
         if (dir.sqrMagnitude > 1f)
             dir.Normalize();
 
         float moveSpeed = speed.CurrentSpeed; // ✅ 여기서 현재 속도 사용
         Vector3 velocity = dir * moveSpeed;
+
+        Vector3 kb = knockback != null ? knockback.ConsumeDisplacement(Time.fixedDeltaTime) : Vector3.zero;
 
         rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
     }
