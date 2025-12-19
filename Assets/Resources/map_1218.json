@@ -40,7 +40,7 @@
     { "coord": "0201", "dir": "00" }
   ],
   "relation": [
-    { "coord_m": "0304", "coord_t": "0201"}
+    { "coord_m": "0304", "coord_t": "0202"}
   ],
   "player": {
     "start" : "0003"

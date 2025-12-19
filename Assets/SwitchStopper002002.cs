@@ -2,35 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
+[DisallowMultipleComponent]
 public class SwitchStopper002002 : MonoBehaviour, IRelationTargetsReceiver
 {
     [Header("Switch Behavior")]
     [SerializeField] private bool disableOnEnter = true;
     [SerializeField] private bool reEnableOnExit = false;
 
+    [Header("Trigger Collider (must be IsTrigger=true)")]
+    [SerializeField] private Collider triggerCollider;   // ✅ 스위치 감지용 콜라이더를 명시
+
     [Header("Player detect")]
-    [SerializeField] private LayerMask playerMask; // Player 레이어 지정 추천
+    [SerializeField] private LayerMask playerMask;
 
     private List<string> targetCoords = new();
     private readonly List<GameObject> targetObjects = new();
 
     private void Reset()
     {
-        // 스위치는 Trigger가 편함
-        GetComponent<Collider>().isTrigger = true;
+        // 같은 오브젝트에 콜라이더가 여러 개일 수 있으니 "명시"가 필요
+        triggerCollider = GetComponent<Collider>();
+        if (triggerCollider != null) triggerCollider.isTrigger = true;
+    }
+
+    private void Awake()
+    {
+        // 런타임에도 안전장치
+        if (triggerCollider == null) triggerCollider = GetComponent<Collider>();
+        if (triggerCollider != null && !triggerCollider.isTrigger)
+            triggerCollider.isTrigger = true;
     }
 
     public void SetRelationTargets(List<string> coords)
     {
         targetCoords = coords ?? new List<string>();
-        Debug.Log($"[Switch] SetRelationTargets called. coords={targetCoords.Count}");
     }
 
     private void Start()
     {
-        Debug.Log($"[Switch] Start. targetCoords={targetCoords?.Count ?? 0}");
-        // 맵 생성 직후 타이밍 이슈 방지: 한 프레임 뒤에 resolve
         StartCoroutine(ResolveTargetsNextFrame());
     }
 
@@ -43,19 +52,13 @@ public class SwitchStopper002002 : MonoBehaviour, IRelationTargetsReceiver
         if (reg == null) yield break;
 
         foreach (var c in targetCoords)
-        {
             if (reg.TryGet(c, out var go) && go != null)
                 targetObjects.Add(go);
-        }
-        Debug.Log($"[Switch] Resolved targetObjects = {targetObjects.Count}");
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"[Switch] TriggerEnter with {other.name}, layer={LayerMask.LayerToName(other.gameObject.layer)}");
         if (!IsPlayer(other)) return;
-        Debug.Log($"[Switch] Player confirmed. targetsCoords={targetCoords?.Count ?? 0}, targetObjects={targetObjects.Count}");
         if (disableOnEnter) SetTargetsEnabled(false);
     }
 
@@ -76,27 +79,13 @@ public class SwitchStopper002002 : MonoBehaviour, IRelationTargetsReceiver
         foreach (var go in targetObjects)
         {
             if (go == null) continue;
-            int cnt=0;
-            // 1) 인터페이스가 있으면 그걸 우선 사용
-            var toggles = go.GetComponentsInChildren<ITrapToggle>(true);
-            if (toggles != null && toggles.Length > 0)
-            {
-                foreach (var t in toggles) t.SetTrapEnabled(enabled);
-                cnt++;
-            }
-            Debug.Log($"[Switch] {go.name} has ITrapToggle count = {cnt}");
 
-            // 2) 없으면 Behaviour를 꺼버리는 fallback (함정 스크립트들이 MonoBehaviour일 때)
-            //    너무 광범위하게 끄기 싫으면 특정 타입만 골라 끄도록 바꿔도 됨.
-            var behaviours = go.GetComponentsInChildren<MonoBehaviour>(true);
-            foreach (var b in behaviours)
-            {
-                // 자기 자신(스위치)은 끄지 않기
-                if (b == null || b.gameObject == this.gameObject) continue;
-                // 필요하면 여기서 화이트리스트/블랙리스트로 조절 가능
-                b.enabled = enabled;
-            }
+            // ✅ 스위치로 제어할 대상은 "ITrapToggle"로만 제한 (안전)
+            var toggles = go.GetComponentsInChildren<ITrapToggle>(true);
+            foreach (var t in toggles)
+                t.SetTrapEnabled(enabled);
+
+            // ❌ fallback으로 모든 MonoBehaviour 끄는 건 바닥/구조까지 망가질 수 있어 권장 X
         }
     }
-    
 }
