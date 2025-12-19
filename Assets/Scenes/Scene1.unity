@@ -996,10 +996,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28ca50a2c03313f409a53ba3f3bab664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  _unused: 0
-  enableTestDamage: 0
-  damageInterval: 3
-  damageAmount: 1
 --- !u!114 &1096301136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1019,6 +1015,8 @@ MonoBehaviour:
   onDied:
     m_PersistentCalls:
       m_Calls: []
+  useInvincibility: 1
+  invincibilityAfterHit: 0.5
 --- !u!114 &1096301137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1201,7 +1199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3bb1145226de9418e063679482141c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JsonBlockBuilder3D
-  jsonFileName: map_1130
+  jsonFileName: map_1219
   prefabFolder: Prefabs/
   cellSize: 1
   baseY: 0
