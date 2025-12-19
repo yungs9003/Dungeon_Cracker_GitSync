@@ -2,11 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class Thorn : MonoBehaviour
+public class Thorn : MonoBehaviour, ITrapToggle
 {
     [Header("Damage")]
     [SerializeField] private int damage = 2;
     [SerializeField] private float hitCooldown = 2f;
+
+    [Header("Trap Toggle")]
+    [SerializeField] private bool trapEnabled = true;
 
     // 같은 대상이 여러 번 닿아도 hitCooldown 동안은 무시
     private readonly Dictionary<Health, float> nextDamageTime = new();
@@ -25,6 +28,13 @@ public class Thorn : MonoBehaviour
             col.isTrigger = false;
     }
 
+    public void SetTrapEnabled(bool enabled)
+    {
+        trapEnabled = enabled;
+
+        // OFF로 바뀌면 쿨다운 기록도 초기화(원하면)
+        if (!trapEnabled) nextDamageTime.Clear();
+    }
     private void OnCollisionEnter(Collision collision)
     {
         TryDamage(collision.collider);
@@ -38,6 +48,7 @@ public class Thorn : MonoBehaviour
 
     private void TryDamage(Collider other)
     {
+        if (!trapEnabled) return;
         // 충돌한 오브젝트(또는 부모)에 Health가 있는지 탐색
         Health health = other.GetComponentInParent<Health>();
         if (health == null) return;

@@ -1201,7 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3bb1145226de9418e063679482141c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JsonBlockBuilder3D
-  jsonFileName: map_1130
+  jsonFileName: map_1219
   prefabFolder: Prefabs/
   cellSize: 1
   baseY: 0
@@ -1725,6 +1725,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1629232668}
   m_CullTransparentMesh: 1
+--- !u!1 &2037408876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2037408878}
+  - component: {fileID: 2037408877}
+  m_Layer: 0
+  m_Name: MapRegistry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2037408877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037408876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10fe63f5ab9dfe248974292c1cd70c7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlockRegistry
+--- !u!4 &2037408878
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037408876}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.55629, y: 2.67011, z: 3.64191}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2093513454
 GameObject:
   m_ObjectHideFlags: 0
@@ -1810,3 +1854,4 @@ SceneRoots:
   - {fileID: 1096301133}
   - {fileID: 1520967658}
   - {fileID: 123661791}
+  - {fileID: 2037408878}

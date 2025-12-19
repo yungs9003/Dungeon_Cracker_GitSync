@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bow : MonoBehaviour
+public class Bow : MonoBehaviour, ITrapToggle
 {
     [Header("Projectile Prefab (Arrow 프리팹)")]
     [SerializeField] private Arrow projectilePrefab;
@@ -13,6 +13,7 @@ public class Bow : MonoBehaviour
     [SerializeField] private int damage = 2;
     [SerializeField] private float fireCooldown = 3.0f;
     [SerializeField] private bool autoFire = true;
+    public void SetTrapEnabled(bool enabled) => autoFire = enabled;
 
     private float lastFireTime;
     private Collider ownerCol;

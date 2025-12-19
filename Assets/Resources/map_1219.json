@@ -123,8 +123,9 @@
     { "coord": "0605", "dir": "11" }
   ],
   "relation": [
-    { "coord_m": "0207", "coord_t": "0201"},
-    { "coord_m": "0207", "coord_t": "030a"}
+    { "coord_m": "0207", "coord_t": "0605"},
+    { "coord_m": "0207", "coord_t": "030a"},
+    { "coord_m": "0207", "coord_t": "0604"}
   ],
   "player": {
     "start" : "0002"

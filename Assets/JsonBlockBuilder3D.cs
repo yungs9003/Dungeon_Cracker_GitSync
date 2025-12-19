@@ -47,7 +47,7 @@ public class MapData
 /// </summary>
 public interface IRelationTargetsReceiver
 {
-    void SetRelationTargets(List<string> targets);
+    void SetRelationTargets(List<string> coords);
 }
 
 public class JsonBlockBuilder3D : MonoBehaviour
@@ -162,6 +162,16 @@ public class JsonBlockBuilder3D : MonoBehaviour
                 Vector3 pos = new Vector3(x * cellSize, baseY, z * cellSize);
                 GameObject block = Instantiate(prefab, pos, rot, transform);
                 block.name = $"{code}_{x:X2}{z:X2}";
+                // c가 Vector2Int라면:
+                string coordStr = $"{c.x:X2}{c.y:X2}".ToLowerInvariant();  // ✅ "030a"
+                // ✅ BlockCoord 자동 부착 + 좌표 저장
+                var bc = block.GetComponent<BlockCoord>();
+                if (bc == null) bc = block.AddComponent<BlockCoord>();
+                bc.SetCoord(coordStr);
+
+                // ✅ Registry 등록
+                if (BlockRegistry.Instance != null)
+                BlockRegistry.Instance.Register(coordStr, block);
 
                 // 피벗이 중앙인 프리팹을 바닥(baseY)에 딱 붙이고 싶을 때 옵션
                 if (autoGroundToBaseY)
@@ -170,6 +180,8 @@ public class JsonBlockBuilder3D : MonoBehaviour
                 // 4) code == "002-002" 이면 relation 전달
                 if (code == "002-002" && relationMap.TryGetValue(c, out var targets) && targets != null)
                 {
+                    Debug.Log($"[Builder] Found 002-002 at {coordStr}");
+                    Debug.Log($"[Builder] relationMap has key? {relationMap.ContainsKey(c)}");
                     var receiver = block.GetComponent<IRelationTargetsReceiver>();
                     if (receiver != null)
                         receiver.SetRelationTargets(new List<string>(targets));
@@ -327,6 +339,6 @@ public class JsonBlockBuilder3D : MonoBehaviour
 
     private static string NormalizeCoord(string coord)
     {
-        return coord?.Trim().ToUpperInvariant();
+        return coord?.Trim().ToLowerInvariant();
     }
 }

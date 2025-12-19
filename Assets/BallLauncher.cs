@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BallLauncher : MonoBehaviour
+public class BallLauncher : MonoBehaviour, ITrapToggle
 {
     [Header("Ball Prefab")]
     [SerializeField] private RollingBallTrap ballPrefab;
@@ -16,7 +16,10 @@ public class BallLauncher : MonoBehaviour
     [SerializeField] private int damage = 2;
     [SerializeField] private float spawnCooldown = 2.0f;
     [SerializeField] private bool autoSpawn = true;
-
+    public void SetTrapEnabled(bool enabled){
+        autoSpawn = enabled;
+        Debug.Log($"[BallLauncher:{name}] SetTrapEnabled({enabled})");
+    }
     [Header("Anti-clipping")]
     [SerializeField] private float forwardPadding = 0.2f;
     [SerializeField] private float checkRadius = 0.25f;
@@ -43,6 +46,7 @@ public class BallLauncher : MonoBehaviour
 
     public void Spawn()
     {
+        Debug.Log($"[BallLauncher:{name}] Spawn called. autoSpawn={autoSpawn}");
         if (ballPrefab == null) return;
 
         Vector3 dir = transform.forward;

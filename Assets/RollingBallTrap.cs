@@ -5,7 +5,7 @@ using UnityEngine;
 public class RollingBallTrap : MonoBehaviour
 {
     [Header("Lifetime (0이면 안 사라짐)")]
-    [SerializeField] private float lifeTime = 0f;
+    [SerializeField] private float lifeTime = 4f;
 
     [Header("Damage")]
     [SerializeField] private int damage = 2;
