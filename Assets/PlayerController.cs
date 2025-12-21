@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private Health health;
     private SpeedController speed;
     private KnockbackReceiver knockback;
+    private PlayerMoveDirectionTracker dirTracker;
 
     private void Awake()
     {
@@ -21,6 +22,8 @@ public class PlayerController : MonoBehaviour
         knockback = GetComponent<KnockbackReceiver>();
 
         rb.freezeRotation = true;
+
+        dirTracker = GetComponent<PlayerMoveDirectionTracker>();
     }
 
     public void OnMove(InputValue value) => moveInput = value.Get<Vector2>();
@@ -31,6 +34,9 @@ public class PlayerController : MonoBehaviour
 
         Vector3 dir = new Vector3(moveInput.x, 0f, moveInput.y);
         if (dir.sqrMagnitude > 1f) dir.Normalize();
+
+        if (dirTracker != null)
+        dirTracker.SetMoveDir(dir);
 
         Vector3 velocity = dir * speed.CurrentSpeed;
         Vector3 kbDisp = knockback != null ? knockback.ConsumeDisplacement(dt) : Vector3.zero;
