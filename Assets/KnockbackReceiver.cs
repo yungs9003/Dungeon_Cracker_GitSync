@@ -4,6 +4,7 @@ public class KnockbackReceiver : MonoBehaviour
 {
     private Vector3 kbVel;     // 넉백 속도
     private float kbTimeLeft;  // 남은 시간
+    public bool IsKnockbacking => kbTimeLeft > 0f;
 
     /// <summary>
     /// dir: 밀리는 방향(수평 권장, normalized 권장)
