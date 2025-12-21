@@ -1754,7 +1754,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.85, y: 2, z: 1}
+  m_LocalScale: {x: 0.08, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1096301133}
@@ -1814,7 +1814,7 @@ SpriteRenderer:
   m_Size: {x: 10.8, y: 20.48}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &1997035923
@@ -1829,6 +1829,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51cd6cf04f79177448d23e138b94e3fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  playerRb: {fileID: 0}
+  knockback: {fileID: 0}
+  dirTracker: {fileID: 0}
+  runThreshold: 0.1
+  flipByX: 1
 --- !u!114 &1997035924
 MonoBehaviour:
   m_ObjectHideFlags: 0
