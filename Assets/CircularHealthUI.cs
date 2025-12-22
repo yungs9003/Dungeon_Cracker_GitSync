@@ -10,6 +10,7 @@ public class CircularHealthUI : MonoBehaviour
     public Image ringGreen;
     public Image ringYellow;
     public Image ringRed;
+    public Image dividerMask; // DividerMask의 Image (Filled + Mask)
 
     [Header("Stage")]
     [Min(1)] public int segmentsPerStage = 5; // 5칸
@@ -21,6 +22,8 @@ public class CircularHealthUI : MonoBehaviour
         if (ringGreen == null)  ringGreen  = FindChildImageByName("HPbar Green");
         if (ringYellow == null) ringYellow = FindChildImageByName("HPbar Yellow");
         if (ringRed == null)    ringRed    = FindChildImageByName("HPbar Red");
+        if (dividerMask == null) dividerMask = FindChildImageByName("DividerMask");
+
 
         if (health == null)
             health = FindObjectOfType<Health>();
@@ -52,6 +55,7 @@ public class CircularHealthUI : MonoBehaviour
             SetRing(ringGreen, false, 0f);
             SetRing(ringYellow, false, 0f);
             SetRing(ringRed, false, 0f);
+            SetRing(dividerMask, false, 0f);
             return;
         }
 
@@ -69,18 +73,21 @@ public class CircularHealthUI : MonoBehaviour
         // 현재 단계 링만 fill을 줄인다.
         if (stage >= 2) // 초록 단계
         {
+            SetRing(dividerMask, true, 1f);
             SetRing(ringRed, true, 1f);
             SetRing(ringYellow, true, 1f);
             SetRing(ringGreen, true, fill);
         }
         else if (stage == 1) // 노랑 단계
         {
+            SetRing(dividerMask, true, 1f);
             SetRing(ringRed, true, 1f);
             SetRing(ringYellow, true, fill);
             SetRing(ringGreen, false, 0f);
         }
         else // 빨강 단계
         {
+            SetRing(dividerMask, true, fill);
             SetRing(ringRed, true, fill);
             SetRing(ringYellow, false, 0f);
             SetRing(ringGreen, false, 0f);
