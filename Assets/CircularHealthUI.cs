@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CircularHealthUI : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class CircularHealthUI : MonoBehaviour
     public Image ringRed;
     public Image dividerMask; // DividerMask의 Image (Filled + Mask)
 
+    public TMP_Text stageText;
     [Header("Stage")]
     [Min(1)] public int segmentsPerStage = 5; // 5칸
     [Min(1)] public int stageCount = 3;       // 3단계(초/노/빨)
@@ -27,6 +29,11 @@ public class CircularHealthUI : MonoBehaviour
 
         if (health == null)
             health = FindObjectOfType<Health>();
+        if (stageText == null)
+        {
+            var t = GetComponentInChildren<TMP_Text>(true);
+            stageText = t;
+        }
     }
 
     private void OnEnable()
@@ -56,6 +63,7 @@ public class CircularHealthUI : MonoBehaviour
             SetRing(ringYellow, false, 0f);
             SetRing(ringRed, false, 0f);
             SetRing(dividerMask, false, 0f);
+            if (stageText != null) stageText.text = "";
             return;
         }
 
@@ -68,6 +76,8 @@ public class CircularHealthUI : MonoBehaviour
 
         // 딱 1/5 단위로 줄어드는 fill (1.0, 0.8, 0.6, 0.4, 0.2)
         float fill = stageHP / (float)seg;
+
+        if (stageText != null) stageText.text = stageHP.ToString(); // 5~1
 
         // 아래 레이어는 “다음 색이 보이도록” 항상 꽉 채워두고,
         // 현재 단계 링만 fill을 줄인다.
