@@ -373,9 +373,9 @@ MonoBehaviour:
   ballPrefab: {fileID: 1220912713090507383, guid: 5cd3f7a956928ba4baabc0d2d5715064, type: 3}
   spawnLocalOffset: {x: 0, y: 0.6, z: 0.6}
   cellSize: 1
-  speed: 3
+  speed: 5
   damage: 2
-  spawnCooldown: 2
+  spawnCooldown: 3
   autoSpawn: 1
   forwardPadding: 0.2
   checkRadius: 0.25

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4377078887996438788}
   - component: {fileID: 5141213427630080533}
   - component: {fileID: 5528817675387331944}
-  - component: {fileID: 908060981969740682}
   m_Layer: 0
   m_Name: "\uD22C\uC0AC\uCCB42"
   m_TagString: Untagged
@@ -143,18 +142,3 @@ CapsuleCollider:
   m_Height: 1.14
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &908060981969740682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4386394838289685888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 208be0848bf274041a6bcda35da1f294, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Arrow
-  lifeTime: 3
-  visual: {fileID: 0}
-  modelForwardAxis: {x: 0, y: 0, z: 1}
