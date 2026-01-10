@@ -6,9 +6,9 @@ public class PopupPanelController : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private GameObject panelRoot;
-    [SerializeField] private Image previewImage;   // 팝업에 보여줄 이미지
+    [SerializeField] private Image previewImage;
 
-    private int targetBuildIndex = -1;
+    private string targetSceneName = "";
 
     private void Awake()
     {
@@ -16,27 +16,19 @@ public class PopupPanelController : MonoBehaviour
         panelRoot.SetActive(false);
     }
 
-    // ✅ 버튼이 호출: Resources 이미지 경로 + 씬 번호
-    public void OpenWithSpriteAndBuildIndex(string resourceSpritePath, int buildIndex)
+    public void OpenWithSpriteAndSceneName(string resourceSpritePath, string sceneName)
     {
-        targetBuildIndex = buildIndex;
+        targetSceneName = sceneName;
 
-        // Resources에서 스프라이트 로드
         Sprite sp = Resources.Load<Sprite>(resourceSpritePath);
         if (sp == null)
-        {
             Debug.LogError($"[Popup] Sprite not found in Resources: '{resourceSpritePath}'");
-            // 이미지가 없더라도 팝업은 띄울지 말지는 선택
-            // return; 
-        }
 
         if (previewImage != null)
         {
             previewImage.sprite = sp;
             previewImage.enabled = (sp != null);
-
-            // 선택: 이미지 비율 유지
-            previewImage.preserveAspect = true;
+            previewImage.preserveAspect = true; // 필요 시
         }
 
         panelRoot.SetActive(true);
@@ -51,12 +43,12 @@ public class PopupPanelController : MonoBehaviour
     {
         panelRoot.SetActive(false);
 
-        if (targetBuildIndex < 0)
+        if (string.IsNullOrEmpty(targetSceneName))
         {
-            Debug.LogError("[Popup] targetBuildIndex is not set.");
+            Debug.LogError("[Popup] targetSceneName is empty.");
             return;
         }
 
-        SceneManager.LoadScene(targetBuildIndex);
+        SceneManager.LoadScene(targetSceneName);
     }
 }

@@ -5,10 +5,10 @@ public class ButtonPopupLink : MonoBehaviour
     [SerializeField] private PopupPanelController popup;
 
     [Header("Resources Sprite Path (without extension)")]
-    [SerializeField] private string resourceSpritePath; 
+    [SerializeField] private string resourceSpritePath; // 예: "UI/ClearImage"
 
-    [Header("Target Scene Build Index")]
-    [SerializeField] private int targetBuildIndex = 0;
+    [Header("Target Scene Name")]
+    [SerializeField] private string targetSceneName; // 예: "MainMenu"
 
     public void OpenPopup()
     {
@@ -18,6 +18,6 @@ public class ButtonPopupLink : MonoBehaviour
             return;
         }
 
-        popup.OpenWithSpriteAndBuildIndex(resourceSpritePath, targetBuildIndex);
+        popup.OpenWithSpriteAndSceneName(resourceSpritePath, targetSceneName);
     }
 }
