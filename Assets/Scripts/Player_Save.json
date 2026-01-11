@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "dungeons": [
+    {
+      "dungeonId": "DUNGEON_001",
+      "criteria": [true, false, true, false],
+      "bestTimeMs": 183420,
+      "clearCount": 2,
+      "lastPlayedUtc": "2026-01-11T09:00:00Z"
+    }
+  ]
+}

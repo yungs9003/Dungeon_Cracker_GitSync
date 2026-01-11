@@ -1,0 +1,22 @@
+{
+  "dungeons": [
+    {
+      "id": "DUNGEON_001",
+      "name": "버려진 채굴장",
+      "sceneName": "Dungeon_001",
+      "previewSpritePath": "UI/DungeonPreview/Dungeon_001",
+      "description": "폐광 깊숙이 남아있는 기계 함정들을 돌파하라.",
+      "tags": ["퍼즐", "함정", "파밍"],
+      "farmableItems": [
+        { "id": "IT_ORE_01", "iconSpritePath": "UI/Items/ore_01" },
+        { "id": "IT_GEAR_01", "iconSpritePath": "UI/Items/gear_01" }
+      ],
+      "clearCriteria": [
+        "사망 없이 클리어",
+        "시간 제한 내 클리어",
+        "숨겨진 방 발견",
+        "함정 피격 3회 이하"
+      ]
+    }
+  ]
+}
