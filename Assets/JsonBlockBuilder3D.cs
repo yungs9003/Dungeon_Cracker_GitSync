@@ -73,6 +73,10 @@ public class JsonBlockBuilder3D : MonoBehaviour
     public float playerSpawnY = 1.5f; // 요청: start는 y=1.5 고정
     public Respawn respawn;
 
+    // JsonBlockBuilder3D.cs 안에 추가
+    [Header("Auto Build On Start")]
+    public bool autoBuildOnStart = true;
+
     // 내부 캐시
     private readonly Dictionary<Vector2Int, string> codeMap = new Dictionary<Vector2Int, string>();
     private readonly Dictionary<Vector2Int, string> dirMap = new Dictionary<Vector2Int, string>();
@@ -83,6 +87,14 @@ public class JsonBlockBuilder3D : MonoBehaviour
 
     private void Start()
     {
+        if (autoBuildOnStart)
+            BuildFromJson();
+    }
+
+    // 외부에서 json 경로를 바꿔서 빌드할 수 있게 helper 추가
+    public void BuildFromJsonPath(string resourcesPathWithoutExt)
+    {
+        jsonFileName = resourcesPathWithoutExt;
         BuildFromJson();
     }
 
@@ -314,10 +326,16 @@ public class JsonBlockBuilder3D : MonoBehaviour
     }
 
     private void ClearChildren()
+{
+    for (int i = transform.childCount - 1; i >= 0; i--)
     {
-        for (int i = transform.childCount - 1; i >= 0; i--)
-            DestroyImmediate(transform.GetChild(i).gameObject);
+        var child = transform.GetChild(i).gameObject;
+
+        // ✅ 플레이 중이면 Destroy
+        if (Application.isPlaying) Destroy(child);
+        else DestroyImmediate(child);
     }
+}
 
     private static bool TryParseCoord(string coord, out int x, out int z)
     {
