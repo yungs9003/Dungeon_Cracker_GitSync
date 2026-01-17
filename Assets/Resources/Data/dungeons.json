@@ -8,8 +8,8 @@
       "description": "폐광 깊숙이 남아있는 기계 함정들을 돌파하라.",
       "tags": ["퍼즐", "함정", "파밍"],
       "farmableItems": [
-        { "id": "IT_ORE_01", "iconSpritePath": "UI/Items/ore_01" },
-        { "id": "IT_GEAR_01", "iconSpritePath": "UI/Items/gear_01" }
+        { "id": "001", "iconSpritePath": "UI/Items/coolant" },
+        { "id": "002", "iconSpritePath": "UI/Items/cube" }
       ],
       "clearCriteria": [
         "사망 없이 클리어",

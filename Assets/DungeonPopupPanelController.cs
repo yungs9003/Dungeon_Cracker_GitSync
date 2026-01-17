@@ -15,7 +15,6 @@ public class DungeonPopupPanelController : MonoBehaviour
     [Header("Texts")]
     [SerializeField] private TMP_Text dungeonNameText;
     [SerializeField] private TMP_Text descriptionText;
-    [SerializeField] private TMP_Text tagsText;
 
     [Header("Farmable Item Slots (fixed)")]
     [SerializeField] private Image[] farmItemSlots;
@@ -73,13 +72,6 @@ public class DungeonPopupPanelController : MonoBehaviour
         // --- Texts ---
         if (dungeonNameText != null) dungeonNameText.text = info.name ?? "";
         if (descriptionText != null) descriptionText.text = info.description ?? "";
-        if (tagsText != null)
-        {
-            var tagStr = (info.tags == null || info.tags.Count == 0)
-                ? ""
-                : string.Join("  ", info.tags.Select(t => $"#{t}"));
-            tagsText.text = tagStr;
-        }
 
         // --- Farm Items ---
         if (farmItemSlots != null)
