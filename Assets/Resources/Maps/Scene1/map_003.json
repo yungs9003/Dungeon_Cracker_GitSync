@@ -125,7 +125,10 @@
   "relation": [
     { "coord_m": "0207", "coord_t": "0605"},
     { "coord_m": "0207", "coord_t": "030a"},
-    { "coord_m": "0207", "coord_t": "0604"}
+    { "coord_m": "0207", "coord_t": "0604"},
+    { "coord_m": "0207", "coord_t": "0405"},
+    { "coord_m": "0207", "coord_t": "0505"},
+    { "coord_m": "0207", "coord_t": "0203"}
   ],
   "player": {
     "start" : "0002"
