@@ -2,22 +2,17 @@ using UnityEngine;
 
 public class ButtonPopupLink : MonoBehaviour
 {
-    [SerializeField] private PopupPanelController popup;
-
-    [Header("Resources Sprite Path (without extension)")]
-    [SerializeField] private string resourceSpritePath; // 예: "UI/ClearImage"
-
-    [Header("Target Scene Name")]
-    [SerializeField] private string targetSceneName; // 예: "MainMenu"
+    [SerializeField] private DungeonPopupPanelController popup; // <- 여기!
+    [SerializeField] private string dungeonId;                 // 예: DUNGEON_001
 
     public void OpenPopup()
     {
         if (popup == null)
         {
-            Debug.LogError("[ButtonPopupLink] PopupPanelController is not assigned.");
+            Debug.LogError("[ButtonPopupLink] DungeonPopupPanelController is not assigned.");
             return;
         }
 
-        popup.OpenWithSpriteAndSceneName(resourceSpritePath, targetSceneName);
+        popup.OpenDungeon(dungeonId);
     }
 }

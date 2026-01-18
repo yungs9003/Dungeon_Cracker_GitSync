@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,8 +15,9 @@ public class DungeonPopupPanelController : MonoBehaviour
     [SerializeField] private TMP_Text dungeonNameText;
     [SerializeField] private TMP_Text descriptionText;
 
-    [Header("Farmable Item Slots (fixed)")]
-    [SerializeField] private Image[] farmItemSlots;
+    [Header("Farmable Items (dynamic prefab)")]
+    [SerializeField] private Transform farmItemContainer;   // FarmItemsContainer 연결
+    [SerializeField] private GameObject farmItemPrefab;     // FarmItemIcon 프리팹 연결
 
     [Header("Clear Circles (3)")]
     [SerializeField] private Image[] clearCircles; // size 3
@@ -73,40 +73,47 @@ public class DungeonPopupPanelController : MonoBehaviour
         if (dungeonNameText != null) dungeonNameText.text = info.name ?? "";
         if (descriptionText != null) descriptionText.text = info.description ?? "";
 
-        // --- Farm Items ---
-        if (farmItemSlots != null)
-        {
-            for (int i = 0; i < farmItemSlots.Length; i++)
-            {
-                var slot = farmItemSlots[i];
-                if (slot == null) continue;
-
-                if (info.farmableItems != null && i < info.farmableItems.Count)
-                {
-                    var item = info.farmableItems[i];
-                    var icon = Resources.Load<Sprite>(item.iconSpritePath);
-                    if (icon == null)
-                        Debug.LogError($"[DungeonPopup] Farm item icon not found: '{item.iconSpritePath}'");
-
-                    slot.sprite = icon;
-                    slot.enabled = (icon != null);
-                    slot.preserveAspect = true;
-                    slot.gameObject.SetActive(true);
-                }
-                else
-                {
-                    slot.sprite = null;
-                    slot.enabled = false;
-                    slot.gameObject.SetActive(false);
-                }
-            }
-        }
+        // --- Farm Items (dynamic) ---
+        BuildFarmItems(info.farmableItems);
 
         // --- Clear Circles from Save ---
         var progress = SaveManager.Instance.GetOrCreateDungeonProgress(dungeonId);
         ApplyClearCircles(progress);
 
         panelRoot.SetActive(true);
+    }
+
+    private void BuildFarmItems(System.Collections.Generic.List<FarmItemInfo> items)
+    {
+        if (farmItemContainer == null || farmItemPrefab == null) return;
+
+        // 1) 이전에 생성된 아이콘 삭제
+        for (int i = farmItemContainer.childCount - 1; i >= 0; i--)
+        {
+            Destroy(farmItemContainer.GetChild(i).gameObject);
+        }
+
+        if (items == null) return;
+
+        // 2) 아이템 개수만큼 프리팹 생성
+        foreach (var item in items)
+        {
+            var go = Instantiate(farmItemPrefab, farmItemContainer);
+
+            var img = go.GetComponent<Image>();
+            if (img == null) img = go.GetComponentInChildren<Image>();
+
+            if (img != null)
+            {
+                var sp = Resources.Load<Sprite>(item.iconSpritePath);
+                if (sp == null)
+                    Debug.LogError($"[DungeonPopup] Farm item icon not found: '{item.iconSpritePath}'");
+
+                img.sprite = sp;
+                img.enabled = (sp != null);
+                img.preserveAspect = true;
+            }
+        }
     }
 
     private void ApplyClearCircles(DungeonProgress progress)
@@ -122,13 +129,11 @@ public class DungeonPopupPanelController : MonoBehaviour
 
         if (achieved >= 4)
         {
-            // 4개 달성 => 3개 모두 하얀색 채움
             for (int i = 0; i < 3; i++)
                 SetCircle(clearCircles[i], circleWhiteFilled);
         }
         else
         {
-            // 0~3개 => achieved 개수만큼 파란색 채움, 나머지 빈 동그라미
             for (int i = 0; i < 3; i++)
             {
                 if (i < achieved) SetCircle(clearCircles[i], circleBlueFilled);

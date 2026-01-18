@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/WorldMap.unity
     guid: 20d478f604f01894cb39aea6160f436d
   - enabled: 1
-    path: Assets/Scenes/Scene1.unity
+    path: Assets/Scenes/DUNGEON_001.unity
     guid: 2a044a310c62191439b7b5a9a02c8ba2
   - enabled: 1
     path: Assets/Scenes/Scene2.unity
