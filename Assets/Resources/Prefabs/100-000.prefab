@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 3955173351836562924}
   - component: {fileID: 5457274129363269519}
   - component: {fileID: -8923090651501258051}
+  - component: {fileID: 7964089219816606010}
   m_Layer: 0
   m_Name: 100-000
   m_TagString: Pit
@@ -177,5 +178,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3cdd92ce7fd30c044b0cdb922c75a624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  damage: 1
+  backDistance: 1
+  upOffset: 0.3
+--- !u!114 &7964089219816606010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3672546185880861242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98955dd027a1689498628ba12ed34a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
