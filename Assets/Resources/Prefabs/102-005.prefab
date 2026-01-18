@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4122911701624071292}
   - component: {fileID: 1600545753038240593}
   - component: {fileID: 7321423994190630366}
+  - component: {fileID: 2854998755363548527}
   m_Layer: 0
   m_Name: 102-005
   m_TagString: Untagged
@@ -393,6 +394,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   code: 000-000
+--- !u!114 &2854998755363548527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461535643077472420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98955dd027a1689498628ba12ed34a70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReplaceSelfWithPrefabOnDisable
+  prefabFolder: Prefabs/
+  replaceToCode: 000-000
+  destroySelfAfterReplace: 1
+  onlyOnce: 1
 --- !u!1 &2552498138818096263
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,3 +478,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Slime
   slowAmount: 2
   duration: 2
+  trapEnabled: 1

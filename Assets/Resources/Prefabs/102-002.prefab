@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4037440251160829725}
   - component: {fileID: 6349659862603833948}
   - component: {fileID: -4824596812353978342}
+  - component: {fileID: -6012075545121534074}
   m_Layer: 0
   m_Name: 102-002
   m_TagString: Untagged
@@ -429,3 +430,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Thorn
   damage: 2
   hitCooldown: 2
+  trapEnabled: 1
+--- !u!114 &-6012075545121534074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6913935495585216774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98955dd027a1689498628ba12ed34a70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReplaceSelfWithPrefabOnDisable
+  prefabFolder: Prefabs/
+  replaceToCode: 000-000
+  destroySelfAfterReplace: 1
+  onlyOnce: 1

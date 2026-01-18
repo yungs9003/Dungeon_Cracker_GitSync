@@ -89,7 +89,8 @@
   "relation": [
     { "coord_m": "0705", "coord_t": "0305"},
     { "coord_m": "0705", "coord_t": "0501"},
-    { "coord_m": "0705", "coord_t": "0803"}
+    { "coord_m": "0705", "coord_t": "0803"},
+    { "coord_m": "0705", "coord_t": "0403"}
   ],
   "player": {
     "start" : "0004"
