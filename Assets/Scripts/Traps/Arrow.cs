@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public class Arrow : MonoBehaviour
+public class Arrow : MonoBehaviour, IPlayerDestroyableProjectile // ✅ IPlayerDestroyableProjectile 구현 추가
 {
     [Header("Lifetime")]
     [SerializeField] private float lifeTime = 3f;
@@ -91,7 +91,8 @@ public class Arrow : MonoBehaviour
         {
             return;
         }
-
+        // ✅ 추가: 트리거는 데미지 대상으로 취급하지 않음 (ForwardZone 방지)
+        if (other.isTrigger) return;
         Health health = other.GetComponentInParent<Health>();
         if (health != null)
         {
@@ -104,6 +105,12 @@ public class Arrow : MonoBehaviour
 
         // 벽/바닥 등
         hasHit = true;
+        Despawn();
+    }
+
+    // ✅ 플레이어 액션으로 제거될 때 호출
+    public void DestroyByPlayer()
+    {
         Despawn();
     }
 

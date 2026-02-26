@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(SpeedController))]
 [RequireComponent(typeof(KnockbackReceiver))]
+[RequireComponent(typeof(PlayerMoveDirectionTracker))] // ✅ 추가: 방향 트래커 보장
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
@@ -27,7 +28,6 @@ public class PlayerController : MonoBehaviour
         dirTracker = GetComponent<PlayerMoveDirectionTracker>();
     }
 
-    // ✅ 입력 콜백에서 잠금 처리(중요)
     public void OnMove(InputValue value)
     {
         if (!canControl)
@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour
         moveInput = value.Get<Vector2>();
     }
 
-    // ✅ 외부(포탈 등)에서 호출할 잠금/해제 함수
     public void SetControl(bool enabled, bool stopImmediately = true)
     {
         canControl = enabled;
@@ -49,10 +48,8 @@ public class PlayerController : MonoBehaviour
 
             if (stopImmediately)
             {
-                // Unity 6 권장: linearVelocity
                 rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
-
             }
         }
     }
@@ -61,14 +58,13 @@ public class PlayerController : MonoBehaviour
     {
         float dt = Time.fixedDeltaTime;
 
-        // ✅ 잠겼을 때도 넉백만 적용할지 선택 가능
-        // "완전히 멈춤" 원하면 아래처럼 그냥 return 하는 게 가장 확실
         if (!canControl) return;
 
         Vector3 dir = new Vector3(moveInput.x, 0f, moveInput.y);
         if (dir.sqrMagnitude > 1f) dir.Normalize();
 
-        if (dirTracker != null) dirTracker.SetMoveDir(dir);
+        // ✅ 마지막 이동 방향 유지 (이미 잘 되어 있음)
+        dirTracker.SetMoveDir(dir);
 
         Vector3 velocity = dir * speed.CurrentSpeed;
         Vector3 kbDisp = knockback != null ? knockback.ConsumeDisplacement(dt) : Vector3.zero;

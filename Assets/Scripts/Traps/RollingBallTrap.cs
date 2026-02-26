@@ -201,6 +201,7 @@ public class RollingBallTrap : MonoBehaviour
 
     private void TryDamageAndKnockback(Collider other)
 {
+    if (other.isTrigger) return;
     // 플레이어만 처리하고 싶으면 이 줄을 켜줘
     if (!IsPlayerLayer(other.gameObject.layer)) return;
 
