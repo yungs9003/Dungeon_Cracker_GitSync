@@ -142,8 +142,8 @@ namespace Dungeon.Game.System { ... }
 
 ## ✅ 체크리스트
 
-- [ ] 모든 폴더 생성 (`Assets/Scripts/Player`, `Assets/Scripts/UI` 등)
-- [ ] 파일 이동 (유니티에서 이동하면 `.meta` 자동 유지됨)
+- [O] 모든 폴더 생성 (`Assets/Scripts/Player`, `Assets/Scripts/UI` 등)
+- [O] 파일 이동 (유니티에서 이동하면 `.meta` 자동 유지됨)
 - [ ] 네임스페이스 추가
 - [ ] `using` 선언 업데이트 (필요 시)
 - [ ] 씬 및 프리팹 Inspector 재연결 확인

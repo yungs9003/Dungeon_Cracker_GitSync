@@ -1,3 +1,10 @@
 ﻿<Solution>
+  <Project Path="Dungeon.Core.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Dungeon.Player.csproj" />
+  <Project Path="Dungeon.Manager.csproj" />
+  <Project Path="Dungeon.Traps.csproj" />
+  <Project Path="Dungeon.UI.csproj" />
+  <Project Path="Dungeon.Map.csproj" />
+  <Project Path="Dungeon.System.csproj" />
 </Solution>
