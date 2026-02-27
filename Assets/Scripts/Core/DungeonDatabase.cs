@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Dungeon.Core;
+
 public class DungeonDatabase : MonoBehaviour
 {
     public static DungeonDatabase Instance { get; private set; }

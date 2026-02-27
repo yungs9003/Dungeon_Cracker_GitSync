@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Player;
+
 public class PlayerSafePointTracker : MonoBehaviour
 {
     [Header("Refs")]

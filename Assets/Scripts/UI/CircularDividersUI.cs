@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+namespace Dungeon.UI;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif

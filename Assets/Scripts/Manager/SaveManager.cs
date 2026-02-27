@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using UnityEngine;
 
+namespace Dungeon.Manager;
+
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }

@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+namespace Dungeon.Player;
+
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(SpeedController))]

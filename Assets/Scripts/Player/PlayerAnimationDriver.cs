@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Player;
+
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class PlayerAnimationDriver : MonoBehaviour

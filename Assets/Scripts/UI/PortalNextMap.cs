@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
+namespace Dungeon.UI;
+
 public class PortalNextMap : MonoBehaviour
 {
     [Header("Detect")]

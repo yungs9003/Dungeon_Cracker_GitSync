@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+namespace Dungeon.UI;
+
 public class CircularHealthUI : MonoBehaviour
 {
     [Header("Refs")]

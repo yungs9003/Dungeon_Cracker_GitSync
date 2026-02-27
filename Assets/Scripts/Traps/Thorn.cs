@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Dungeon.Traps;
+
 [RequireComponent(typeof(Collider))]
 public class Thorn : MonoBehaviour, ITrapToggle
 {

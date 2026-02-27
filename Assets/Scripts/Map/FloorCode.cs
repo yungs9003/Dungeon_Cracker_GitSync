@@ -1,6 +1,6 @@
 using UnityEngine;
 
-using UnityEngine;
+namespace Dungeon.Map;
 
 public class FloorCode : MonoBehaviour
 {

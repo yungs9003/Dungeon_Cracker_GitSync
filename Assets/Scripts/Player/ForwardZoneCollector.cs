@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Dungeon.Player;
+
 public class ForwardZoneCollector : MonoBehaviour
 {
     // ✅ 여러 투사체 타입을 한 리스트로 관리 (Arrow, Bullet, Fireball 등)

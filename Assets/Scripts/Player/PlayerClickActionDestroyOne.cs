@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+namespace Dungeon.Player;
+
 public class PlayerClickActionDestroyOne : MonoBehaviour
 {
     [Header("References")]

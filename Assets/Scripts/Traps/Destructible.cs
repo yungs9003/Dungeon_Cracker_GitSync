@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Traps;
+
 public class Destructible : MonoBehaviour
 {
     [Header("What to destroy")]

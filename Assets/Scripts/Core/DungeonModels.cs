@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Dungeon.Core;
+
 [Serializable]
 public class DungeonCatalog
 {

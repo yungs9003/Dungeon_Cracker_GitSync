@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+namespace Dungeon.System;
+
 public class SceneButtonLoader : MonoBehaviour
 {
     // 씬 이름으로 이동

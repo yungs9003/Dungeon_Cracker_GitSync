@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+namespace Dungeon.UI;
+
 public class PopupPanelController : MonoBehaviour
 {
     [Header("UI")]

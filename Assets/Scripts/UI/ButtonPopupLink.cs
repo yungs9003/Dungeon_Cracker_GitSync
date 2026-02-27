@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.UI;
+
 public class ButtonPopupLink : MonoBehaviour
 {
     [SerializeField] private DungeonPopupPanelController popup; // <- 여기!

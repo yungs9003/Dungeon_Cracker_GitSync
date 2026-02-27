@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Dungeon.Traps;
+
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class RollingBallTrap : MonoBehaviour
 {

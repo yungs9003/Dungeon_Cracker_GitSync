@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
+namespace Dungeon.UI;
+
 public class DungeonPopupPanelController : MonoBehaviour
 {
     [Header("Root")]

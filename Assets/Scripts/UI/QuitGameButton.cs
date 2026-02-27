@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.UI;
+
 public class QuitGameButton : MonoBehaviour
 {
     public void Quit()

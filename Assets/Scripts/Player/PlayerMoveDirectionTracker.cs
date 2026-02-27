@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Player;
+
 public class PlayerMoveDirectionTracker : MonoBehaviour
 {
     // 최근 유효 이동 방향(수평). 초기값은 forward로 둠

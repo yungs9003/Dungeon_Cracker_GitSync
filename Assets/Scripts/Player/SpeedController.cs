@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Player;
+
 public class SpeedController : MonoBehaviour
 {
     [SerializeField] private float baseSpeed = 5f; // PlayerController의 기본속도랑 맞추기

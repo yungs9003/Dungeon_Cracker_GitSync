@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.System;
+
 /// <summary>
 /// 002-002 스위치가 SetTrapEnabled(false)를 호출하면
 /// 자기 자신(예: 100-000 낭떠러지)을 000-000 블록으로 "교체"한다.

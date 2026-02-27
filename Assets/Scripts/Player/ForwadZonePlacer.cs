@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Player;
+
 [RequireComponent(typeof(BoxCollider))]
 public class ForwardZonePlacer : MonoBehaviour
 {

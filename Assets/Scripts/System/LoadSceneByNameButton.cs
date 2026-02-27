@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.System;
+
 public class LoadSceneByNameButton : MonoBehaviour
 {
     [SerializeField] private SceneButtonLoader loader;

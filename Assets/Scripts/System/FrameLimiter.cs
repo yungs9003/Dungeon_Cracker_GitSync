@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.System;
+
 public class FrameLimiter : MonoBehaviour
 {
     void Awake()

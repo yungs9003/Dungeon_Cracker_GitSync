@@ -4,6 +4,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+namespace Dungeon.Manager;
+
 public class MapSequenceManager : MonoBehaviour
 {
     public static MapSequenceManager Instance { get; private set; }

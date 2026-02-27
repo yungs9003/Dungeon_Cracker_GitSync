@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+namespace Dungeon.Traps;
+
 public class WallSpikeTrap : MonoBehaviour, ITrapToggle
 {
     [Header("Motion (LOCAL)")]

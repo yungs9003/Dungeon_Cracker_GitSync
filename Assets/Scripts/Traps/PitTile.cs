@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Traps;
+
 public class PitTile : MonoBehaviour
 {
     [SerializeField] private int damage = 1;

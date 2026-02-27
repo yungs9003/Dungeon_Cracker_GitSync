@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+namespace Dungeon.Player;
+
 public class Health : MonoBehaviour
 {
     [Header("Stats")]

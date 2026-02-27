@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Player;
+
 public class KnockbackReceiver : MonoBehaviour
 {
     private Vector3 kbVel;     // 넉백 속도

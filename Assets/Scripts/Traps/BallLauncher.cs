@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Traps;
+
 public class BallLauncher : MonoBehaviour, ITrapToggle
 {
     [Header("Ball Prefab")]

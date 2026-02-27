@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
+namespace Dungeon.Player;
+
 [RequireComponent(typeof(Health), typeof(Rigidbody))]
 public class Respawn : MonoBehaviour
 {

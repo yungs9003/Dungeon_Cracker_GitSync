@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Map;
+
 public class BlockCoord : MonoBehaviour
 {
     [SerializeField] private string coord;

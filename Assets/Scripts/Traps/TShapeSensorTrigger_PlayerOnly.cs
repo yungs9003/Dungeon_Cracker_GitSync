@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Traps;
+
 [RequireComponent(typeof(Rigidbody))]
 public class TShapeSensorTrigger_PlayerOnly : MonoBehaviour
 {

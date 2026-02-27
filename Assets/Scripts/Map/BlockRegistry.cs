@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Dungeon.Map;
+
 public class BlockRegistry : MonoBehaviour
 {
     public static BlockRegistry Instance { get; private set; }

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Dungeon.Map;
+
 #region JSON Data Models
 [Serializable]
 public class CellData

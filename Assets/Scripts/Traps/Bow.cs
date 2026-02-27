@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Traps;
+
 public class Bow : MonoBehaviour, ITrapToggle
 {
     [Header("Projectile Prefab (Arrow 프리팹)")]

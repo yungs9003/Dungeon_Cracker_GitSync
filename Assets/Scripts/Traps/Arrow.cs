@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace Dungeon.Traps;
+
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class Arrow : MonoBehaviour, IPlayerDestroyableProjectile // ✅ IPlayerDestroyableProjectile 구현 추가
 {
