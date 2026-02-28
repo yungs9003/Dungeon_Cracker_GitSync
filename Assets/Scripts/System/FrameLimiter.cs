@@ -1,7 +1,7 @@
 using UnityEngine;
 
-namespace Dungeon.System;
-
+namespace Dungeon.System
+{
 public class FrameLimiter : MonoBehaviour
 {
     void Awake()
@@ -10,4 +10,5 @@ public class FrameLimiter : MonoBehaviour
         QualitySettings.vSyncCount = 1;
         Application.targetFrameRate = 60;
     }
+}
 }

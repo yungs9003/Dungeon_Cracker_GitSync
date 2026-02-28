@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Dungeon.Core;
-
+namespace Dungeon.Core
+{
 [Serializable]
 public class DungeonCatalog
 {
@@ -47,4 +47,5 @@ public class DungeonProgress
     public long bestTimeMs;
     public int clearCount;
     public string lastPlayedUtc;
+}
 }

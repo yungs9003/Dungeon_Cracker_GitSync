@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Dungeon.Core;
-
+namespace Dungeon.Core
+{
 public class DungeonDatabase : MonoBehaviour
 {
     public static DungeonDatabase Instance { get; private set; }
@@ -44,4 +44,5 @@ public class DungeonDatabase : MonoBehaviour
 
     public bool TryGetDungeon(string dungeonId, out DungeonInfo info)
         => map.TryGetValue(dungeonId, out info);
+}
 }

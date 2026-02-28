@@ -1,8 +1,9 @@
 using UnityEngine;
 
-namespace Dungeon.Core;
-
+namespace Dungeon.Core
+{
 public interface ITrapToggle
 {
     void SetTrapEnabled(bool enabled);
+}
 }

@@ -1,7 +1,10 @@
 {
     "name": "Dungeon.System",
     "rootNamespace": "Dungeon.System",
-    "references": [],
+    "references": [
+        "GUID:0388092e6defa814e83caa9fb0ab8ce0",
+        "GUID:37712eb6af69c4149b63e2085b337ed7"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
