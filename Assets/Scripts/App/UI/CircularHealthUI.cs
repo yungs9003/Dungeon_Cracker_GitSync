@@ -31,7 +31,7 @@ public class CircularHealthUI : MonoBehaviour
 
 
         if (health == null)
-            health = FindObjectOfType<Health>();
+            health = FindAnyObjectByType<Health>();
         if (stageText == null)
         {
             var t = GetComponentInChildren<TMP_Text>(true);

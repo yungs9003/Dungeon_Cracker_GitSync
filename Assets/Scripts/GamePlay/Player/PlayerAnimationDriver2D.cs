@@ -2,37 +2,73 @@ using UnityEngine;
 
 namespace Dungeon.Player
 {
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(SpriteRenderer))]
     public class PlayerAnimationDriver2D : MonoBehaviour
     {
-        [SerializeField] private Rigidbody2D targetRb;
-        [SerializeField] private Animator animator;
-        [SerializeField] private SpriteRenderer spriteRenderer;
+        [Header("Refs (auto if null)")]
+        [SerializeField] private Rigidbody2D playerRb;
+        [SerializeField] private KnockbackReceiver2D knockback;
+        [SerializeField] private PlayerMoveDirectionTracker2D dirTracker;
 
-        [SerializeField] private string speedParam = "Speed";
+        [Header("Tuning")]
+        [SerializeField] private float moveThreshold = 0.05f;
+        [SerializeField] private bool flipByX = true;
+        [SerializeField] private bool useTransformDeltaForSpeed = true;
+
+        private Animator anim;
+        private SpriteRenderer sr;
+
+        private Vector3 lastWorldPos;
+
+        private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
+        private static readonly int KnockbackHash = Animator.StringToHash("Knockback");
 
         private void Awake()
         {
-            if (targetRb == null)
-                targetRb = GetComponentInParent<Rigidbody2D>();
+            anim = GetComponent<Animator>();
+            sr = GetComponent<SpriteRenderer>();
 
-            if (animator == null)
-                animator = GetComponent<Animator>();
+            if (playerRb == null) playerRb = GetComponentInParent<Rigidbody2D>();
+            if (knockback == null) knockback = GetComponentInParent<KnockbackReceiver2D>();
+            if (dirTracker == null) dirTracker = GetComponentInParent<PlayerMoveDirectionTracker2D>();
 
-            if (spriteRenderer == null)
-                spriteRenderer = GetComponent<SpriteRenderer>();
+            lastWorldPos = transform.position;
+        }
+
+        private void Start()
+        {
+            // 시작 시 무조건 Idle 쪽으로 가게 초기화
+            anim.SetBool(IsMovingHash, false);
+            anim.SetBool(KnockbackHash, false);
         }
 
         private void Update()
         {
-            if (targetRb == null || animator == null) return;
+            float speed = 0f;
 
-            Vector2 v = targetRb.linearVelocity;
-            animator.SetFloat(speedParam, v.magnitude);
-
-            if (spriteRenderer != null)
+            if (useTransformDeltaForSpeed)
             {
-                if (v.x > 0.01f) spriteRenderer.flipX = false;
-                else if (v.x < -0.01f) spriteRenderer.flipX = true;
+                Vector3 delta = transform.position - lastWorldPos;
+                speed = delta.magnitude / Mathf.Max(Time.deltaTime, 0.0001f);
+                lastWorldPos = transform.position;
+            }
+            else if (playerRb != null)
+            {
+                speed = playerRb.linearVelocity.magnitude;
+            }
+
+            bool isMoving = speed > moveThreshold;
+            bool isKb = knockback != null && knockback.IsKnockbacking;
+
+            anim.SetBool(IsMovingHash, isMoving);
+            anim.SetBool(KnockbackHash, isKb);
+
+            if (flipByX && dirTracker != null)
+            {
+                float x = dirTracker.LastMoveDir.x;
+                if (Mathf.Abs(x) > 0.001f)
+                    sr.flipX = x < 0f;
             }
         }
     }

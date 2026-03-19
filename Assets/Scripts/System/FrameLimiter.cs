@@ -8,7 +8,7 @@ public class FrameLimiter : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject); // 씬 전환해도 유지
         QualitySettings.vSyncCount = 1;
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 120;
     }
 }
 }

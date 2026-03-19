@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3442393239198337628}
   - component: {fileID: 2666986669700055699}
   - component: {fileID: 7880023783530941820}
+  - component: {fileID: -5164164361243859125}
   m_Layer: 0
   m_Name: 001-001
   m_TagString: Untagged
@@ -80,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c92ab452c571a2f4e8431e66e23f1cc7, type: 3}
+  m_Sprite: {fileID: -3047889392355451319, guid: acc3e26f2f57dc14d99e15d366a51b3f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -137,3 +138,29 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-5164164361243859125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7497179109973377783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d4fbca911c06245995b6a4fa973647, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.GamePlay::AssetVariantSprite2D
+  spriteRenderer: {fileID: 2666986669700055699}
+  variants:
+  - {fileID: -3047889392355451319, guid: acc3e26f2f57dc14d99e15d366a51b3f, type: 3}
+  - {fileID: -6665242386147438775, guid: f9b7961e78db2e248b5247aa5ad2e1af, type: 3}
+  - {fileID: -8667452979921559061, guid: b2db07b4ce74f3549a1b35babff9bb53, type: 3}
+  - {fileID: 634197481102456534, guid: d19c7d20337e720408bb5c8203ebacc4, type: 3}
+  - {fileID: -3176536449208518258, guid: 4d34b74bdb7011e47a2b66e62fd7ff01, type: 3}
+  - {fileID: -1803160342904494810, guid: 6c6423ff6195e31499a6392e3eafee81, type: 3}
+  - {fileID: 7971614035056903394, guid: 1c21b36b272dbbf44ac67d420c29f035, type: 3}
+  - {fileID: 930372832427038123, guid: 0593b1cd2f8dd6e488e299fd637e1868, type: 3}
+  - {fileID: -7253166597062744840, guid: 683b625bc1965eb42abbf8c0b1098810, type: 3}
+  - {fileID: -7918698140010856851, guid: 2d82b86c0aeabf444bdd130d07f3840e, type: 3}
+  - {fileID: 1278430170897915419, guid: f4a20178beeea1344b663f70cc2a7825, type: 3}
+  - {fileID: 4324717930429422322, guid: 42d6d28a9bf7fcb4686c95d0b33fecd7, type: 3}
