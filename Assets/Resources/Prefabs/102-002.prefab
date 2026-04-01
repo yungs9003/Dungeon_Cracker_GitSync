@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 9087015784459649221}
   - component: {fileID: 194573114586514065}
   - component: {fileID: -58699332673504796}
-  - component: {fileID: 8959624897381919300}
-  - component: {fileID: -2379613496819198676}
+  - component: {fileID: 4978567614609075749}
+  - component: {fileID: -5680394783138841032}
   m_Layer: 0
   m_Name: 102-002
   m_TagString: Untagged
@@ -108,8 +108,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 194573114586514065}
   variants:
   - {fileID: 1588305945480240070, guid: 3ddc4a8c86c459944b4446e43eb7d6de, type: 3}
---- !u!58 &8959624897381919300
-CircleCollider2D:
+--- !u!61 &4978567614609075749
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -143,8 +143,18 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.15
---- !u!114 &-2379613496819198676
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.003, y: 0.003}
+  m_EdgeRadius: 0
+--- !u!114 &-5680394783138841032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,8 +163,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8120532279946757268}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef006faa32c07f94dbcfae11537a781c, type: 3}
+  m_Script: {fileID: 11500000, guid: 437a4f62179f1404eb0faf4854fdee37, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Traps.PitTile2D
-  damage: 1
-  backDistance: 1
+  m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Traps.Thorn2D
+  damage: 2
+  hitCooldown: 0.5
+  knockbackDistance: 0.1
+  knockbackDuration: 0.08
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  trapEnabled: 1

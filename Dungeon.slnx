@@ -1,7 +1,7 @@
 ﻿<Solution>
   <Project Path="Dungeon.Core.csproj" />
+  <Project Path="Dungeon.GamePlay.csproj" />
   <Project Path="Dungeon.App.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="Dungeon.GamePlay.csproj" />
   <Project Path="Dungeon.System.csproj" />
 </Solution>

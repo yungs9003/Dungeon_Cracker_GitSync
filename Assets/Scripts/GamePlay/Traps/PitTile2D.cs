@@ -7,7 +7,6 @@ namespace Dungeon.Traps
     public class PitTile2D : MonoBehaviour
     {
         [SerializeField] private int damage = 1;
-        [SerializeField] private float backDistance = 1.0f;
 
         private void Reset()
         {
@@ -20,10 +19,7 @@ namespace Dungeon.Traps
             var respawn = other.GetComponentInParent<Respawn2D>();
             if (respawn == null) return;
 
-            var tracker = other.GetComponentInParent<PlayerMoveDirectionTracker2D>();
-            Vector2 dir = tracker != null ? tracker.LastMoveDir : Vector2.down;
-
-            respawn.TrapReturnByDirection(damage, dir, backDistance);
+            respawn.ReturnToLastSafePointFromTrap(damage);
         }
     }
 }
