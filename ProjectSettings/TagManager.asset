@@ -15,9 +15,9 @@ TagManager:
   - Health
   - 
   - 
-  - 
+  - PlayerBG
   - Player
-  - 
+  - PlayerFront
   - 
   - 
   - 
@@ -42,8 +42,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: PlayerBG
+    uniqueID: 1492126745
+    locked: 0
   - name: Players
     uniqueID: 183189819
+    locked: 0
+  - name: PlayerFront
+    uniqueID: 3654170813
     locked: 0
   m_RenderingLayers:
   - Default
