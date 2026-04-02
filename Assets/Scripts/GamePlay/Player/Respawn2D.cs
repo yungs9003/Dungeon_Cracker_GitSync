@@ -90,6 +90,7 @@ namespace Dungeon.Player
                 StopCoroutine(respawnCo);
 
             respawnCo = StartCoroutine(CoTeleport(worldPos));
+            health.ReviveFull();
         }
 
         private IEnumerator CoTeleport(Vector2 worldPos)
