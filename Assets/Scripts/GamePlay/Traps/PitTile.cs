@@ -5,7 +5,7 @@ namespace Dungeon.Traps
 {
 public class PitTile : MonoBehaviour
 {
-    [SerializeField] private int damage = 1;
+    [SerializeField] private int damage = 10;
     [SerializeField] private float backDistance = 1.0f; // 1칸 정도
     [SerializeField] private float upOffset = 0.3f;
 

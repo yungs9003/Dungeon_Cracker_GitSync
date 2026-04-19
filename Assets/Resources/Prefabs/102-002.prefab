@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437a4f62179f1404eb0faf4854fdee37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Traps.Thorn2D
-  damage: 2
+  damage: 10
   hitCooldown: 0.7
   knockbackDistance: 0.4
   knockbackDuration: 0.16
