@@ -15,6 +15,7 @@ namespace Dungeon.Player
         [Header("Option")]
         [SerializeField] private bool respawnOnDie = true;
         [SerializeField] private bool resetVelocity = true;
+        [SerializeField] private bool initializeFromStartPosition = true;
 
         [Header("Pit/Trap Anti-spam")]
         [SerializeField] private float trapCooldown = 0.2f;
@@ -29,6 +30,16 @@ namespace Dungeon.Player
         {
             health = GetComponent<Health>();
             rb = GetComponent<Rigidbody2D>();
+
+            if (initializeFromStartPosition)
+            {
+                Vector2 p = transform.position;
+                if (startRespawnPoint == Vector2.zero)
+                    startRespawnPoint = p;
+
+                if (lastSafePoint == Vector2.zero)
+                    lastSafePoint = p;
+            }
         }
 
         private void OnEnable()
@@ -46,9 +57,6 @@ namespace Dungeon.Player
         public void SetRespawnPoint(Vector2 p)
         {
             startRespawnPoint = p;
-
-            if (lastSafePoint == Vector2.zero)
-                lastSafePoint = p;
         }
 
         public void SetLastSafePoint(Vector2 p)
@@ -56,14 +64,17 @@ namespace Dungeon.Player
             lastSafePoint = p;
         }
 
+        public Vector2 GetLastSafePoint() => lastSafePoint;
+        public Vector2 GetStartRespawnPoint() => startRespawnPoint;
+
         public void RespawnToStart()
         {
-            TeleportToRaw(startRespawnPoint);
+            TeleportToRaw(startRespawnPoint, reviveFull: true);
         }
 
         public void RespawnToLastSafePoint()
         {
-            TeleportToRaw(lastSafePoint);
+            TeleportToRaw(lastSafePoint, reviveFull: false);
         }
 
         public bool ReturnToLastSafePointFromTrap(int damage = 0)
@@ -76,24 +87,23 @@ namespace Dungeon.Player
             if (damage > 0 && health != null)
                 health.TakeDamage(damage);
 
-            // 데미지로 죽었으면 onDied -> 시작점 복귀를 우선시
+            // 데미지로 죽었으면 onDied가 startRespawnPoint로 보냄
             if (health != null && health.currentHP <= 0)
                 return false;
 
-            TeleportToRaw(lastSafePoint);
+            TeleportToRaw(lastSafePoint, reviveFull: false);
             return true;
         }
 
-        public void TeleportToRaw(Vector2 worldPos)
+        public void TeleportToRaw(Vector2 worldPos, bool reviveFull = false)
         {
             if (respawnCo != null)
                 StopCoroutine(respawnCo);
 
-            respawnCo = StartCoroutine(CoTeleport(worldPos));
-            health.ReviveFull();
+            respawnCo = StartCoroutine(CoTeleport(worldPos, reviveFull));
         }
 
-        private IEnumerator CoTeleport(Vector2 worldPos)
+        private IEnumerator CoTeleport(Vector2 worldPos, bool reviveFull)
         {
             if (resetVelocity && rb != null)
             {
@@ -115,6 +125,9 @@ namespace Dungeon.Player
                 rb.linearVelocity = Vector2.zero;
                 rb.angularVelocity = 0f;
             }
+
+            if (reviveFull && health != null)
+                health.ReviveFull();
 
             respawnCo = null;
         }

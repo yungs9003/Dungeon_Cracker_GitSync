@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 9087015784459649221}
   - component: {fileID: 194573114586514065}
   - component: {fileID: -58699332673504796}
-  m_Layer: 0
+  - component: {fileID: -2430392212490267949}
+  - component: {fileID: 8499595719194683525}
+  m_Layer: 8
   m_Name: 100-000
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,3 +112,96 @@ MonoBehaviour:
   - {fileID: 1061185120160504946, guid: f7f266eb73d816d4ca60fb3409ef28de, type: 3}
   - {fileID: 6585801811889749926, guid: 26b977ab71bd4b54a91dfda6c1f27315, type: 3}
   - {fileID: 1641314119534879299, guid: ea99aa7b3b562614899e9b8a240087ac, type: 3}
+--- !u!114 &-2430392212490267949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8120532279946757268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed11da5997fc3694388d9f065b77c62e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Traps.CliffTrap2D
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  playerRb: {fileID: 0}
+  tileCenterOffset: {x: 0, y: 0}
+  triggerBoxSize: {x: 0.6, y: 0.6}
+  pullDuration: 0.12
+  pullEase:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  damage: 20
+  controlScriptsToDisable: []
+  visualChildName: Visual
+  retriggerCooldown: 0.2
+--- !u!61 &8499595719194683525
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8120532279946757268}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

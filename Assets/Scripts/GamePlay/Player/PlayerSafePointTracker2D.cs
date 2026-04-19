@@ -12,7 +12,7 @@ namespace Dungeon.Player
         [SerializeField] private Vector2 safePointOffset = Vector2.zero;
 
         [Header("Unsafe Check")]
-        [SerializeField] private LayerMask unsafeMask;   // Pit 레이어만 넣는 걸 추천
+        [SerializeField] private LayerMask unsafeMask;
         [SerializeField] private float sampleRadius = 0.1f;
 
         [Header("Optimize")]
@@ -39,7 +39,7 @@ namespace Dungeon.Player
 
             Vector2 safePoint = CellToWorld(cell) + safePointOffset;
 
-            // 현재 타일이 위험 타일이면 저장하지 않음
+            // 현재 셀이 위험 타일이면 lastSafePoint 갱신 금지
             if (unsafeMask.value != 0 &&
                 Physics2D.OverlapCircle(safePoint, sampleRadius, unsafeMask) != null)
             {

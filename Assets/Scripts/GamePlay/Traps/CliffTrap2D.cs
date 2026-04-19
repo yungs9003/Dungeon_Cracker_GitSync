@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using Dungeon.Core;
 using Dungeon.Player;
 
 namespace Dungeon.Traps
@@ -9,9 +8,9 @@ namespace Dungeon.Traps
     {
         [Header("Target")]
         [SerializeField] private LayerMask playerLayer;
+        [SerializeField] private Rigidbody2D playerRb;
 
         [Header("Tile / Detection")]
-        [SerializeField] private float tileSize = 1f;
         [SerializeField] private Vector2 tileCenterOffset = Vector2.zero;
         [SerializeField] private Vector2 triggerBoxSize = new Vector2(0.7f, 0.7f);
 
@@ -31,28 +30,53 @@ namespace Dungeon.Traps
         [SerializeField] private string visualChildName = "Visual";
 
         [Header("Anti Spam")]
-        [SerializeField] private float retriggerCooldown = 0.2f;
+        [SerializeField] private float retriggerCooldown = 0.25f;
 
         private bool isBusy;
         private float nextAllowedTime;
+
+        private void Awake()
+        {
+            if (playerRb == null)
+            {
+                GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+                if (playerObj != null)
+                    playerRb = playerObj.GetComponent<Rigidbody2D>();
+            }
+        }
 
         private void FixedUpdate()
         {
             if (isBusy) return;
             if (Time.time < nextAllowedTime) return;
+            if (playerRb == null) return;
 
-            Vector2 center = GetTileCenter();
-            Collider2D hit = Physics2D.OverlapBox(center, triggerBoxSize, 0f, playerLayer);
-            if (hit == null) return;
+            // 플레이어 레이어 체크
+            if ((playerLayer.value & (1 << playerRb.gameObject.layer)) == 0)
+                return;
 
-            Respawn2D respawn = hit.GetComponentInParent<Respawn2D>();
-            Rigidbody2D rb = hit.GetComponentInParent<Rigidbody2D>();
-            if (respawn == null || rb == null) return;
+            Vector2 cliffCenter = GetTileCenter();
+            Vector2 playerCenter = playerRb.worldCenterOfMass;
 
-            StartCoroutine(CoPitFall(respawn, rb));
+            Vector2 delta = playerCenter - cliffCenter;
+
+            // ✅ 플레이어 "중심점"이 0.7 x 0.7 범위 안에 들어왔을 때만 발동
+            bool inside =
+                Mathf.Abs(delta.x) <= triggerBoxSize.x * 0.5f &&
+                Mathf.Abs(delta.y) <= triggerBoxSize.y * 0.5f;
+
+            if (!inside) return;
+
+            Respawn2D respawn = playerRb.GetComponent<Respawn2D>();
+            if (respawn == null)
+                respawn = playerRb.GetComponentInParent<Respawn2D>();
+
+            if (respawn == null) return;
+
+            StartCoroutine(CoCliffFall(respawn, playerRb));
         }
 
-        private IEnumerator CoPitFall(Respawn2D respawn, Rigidbody2D rb)
+        private IEnumerator CoCliffFall(Respawn2D respawn, Rigidbody2D rb)
         {
             isBusy = true;
             nextAllowedTime = Time.time + retriggerCooldown;
@@ -98,10 +122,10 @@ namespace Dungeon.Traps
             if (visual != null)
                 visual.localScale = Vector3.zero;
 
-            // 데미지 + 마지막 안전 지점 복귀
-            bool respawned = respawn.ReturnToLastSafePointFromTrap(damage);
+            // ✅ 데미지 후 마지막 안전 지점으로 복귀
+            // 데미지로 죽으면 Respawn2D 쪽 onDied가 startRespawnPoint로 보냄
+            respawn.ReturnToLastSafePointFromTrap(damage);
 
-            // 혹시 데미지로 죽어서 start point로 복귀해도 외형은 복구
             yield return null;
 
             if (visual != null)
@@ -111,7 +135,6 @@ namespace Dungeon.Traps
             rb.angularVelocity = 0f;
 
             SetControlsEnabled(true);
-
             isBusy = false;
         }
 
@@ -149,9 +172,6 @@ namespace Dungeon.Traps
         private void OnDrawGizmosSelected()
         {
             Vector2 center = GetTileCenter();
-
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireCube(center, new Vector3(tileSize, tileSize, 0f));
 
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(center, triggerBoxSize);
