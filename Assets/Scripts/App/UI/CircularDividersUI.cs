@@ -1,79 +1,216 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Dungeon.Player;
 
 namespace Dungeon.UI
 {
 #if UNITY_EDITOR
-using UnityEditor;
+    using UnityEditor;
 #endif
 
-[ExecuteAlways]
-public class CircularDividersUI : MonoBehaviour
-{
-    [Header("Link (optional)")]
-    [SerializeField] private CircularHealthUI healthUI; // segmentsPerStage 가져오려면 연결
-
-    [Header("Look")]
-    [SerializeField] private Sprite lineSprite;
-    [SerializeField] private Color lineColor = Color.white;
-    [SerializeField] private float lineWidth = 2f;
-    [SerializeField] private float lineLength = 300f;
-    [SerializeField] private float startAngleDeg = 0f;
-
-    // OnValidate에서 직접 Rebuild하지 않도록 예약 플래그
-    private bool pendingRebuild;
-
-    private void OnEnable()
+    [ExecuteAlways]
+    public class CircularDividersUI : MonoBehaviour
     {
-        RequestRebuild();
-    }
+        [Header("Link")]
+        [SerializeField] private BarHealthUI healthUI;
+        [SerializeField] private Health health;
 
-    private void OnValidate()
-    {
-        // ✅ 여기서 DestroyImmediate 하면 에러남 → 예약만 한다
-        RequestRebuild();
-    }
+        [Header("Divider Rule")]
+        [Min(1)]
+        [SerializeField] private int hpPerDivider = 10;
 
-    private void RequestRebuild()
-    {
-#if UNITY_EDITOR
-        // 에디터(플레이 X 또는 실행 중에도 인스펙터 변경 등으로 OnValidate가 호출될 수 있음)
-        if (!pendingRebuild)
+        [Tooltip("health가 없을 때만 사용하는 fallback 최대체력")]
+        [Min(1)]
+        [SerializeField] private int manualMaxHP = 100;
+
+        [Header("Top Divider")]
+        [SerializeField] private bool alwaysShowTopDivider = true;
+        [SerializeField] private float topDividerAngleDeg = 0f; 
+        // 스프라이트 기준 상단 방향이 다르면 0 대신 90, -90 등 조정
+
+        [Header("Look")]
+        [SerializeField] private Sprite lineSprite;
+        [SerializeField] private Color lineColor = Color.black;
+        [SerializeField] private float lineWidth = 4f;
+        [SerializeField] private float lineLength = 28f;
+        [SerializeField] private float startAngleDeg = 0f;
+
+        private bool pendingRebuild;
+
+        private Image topDividerImage;
+        private readonly List<Image> dynamicDividerImages = new();
+
+        private int lastBuiltMaxHP = -1;
+        private int lastBuiltHpPerDivider = -1;
+
+        public int HpPerDivider => hpPerDivider;
+
+        private void Awake()
         {
-            pendingRebuild = true;
-            EditorApplication.delayCall += DelayedRebuild;
+            AutoBind();
         }
+
+        private void OnEnable()
+        {
+            AutoBind();
+            RequestRebuild();
+        }
+
+        private void OnValidate()
+        {
+            AutoBind();
+            RequestRebuild();
+        }
+
+        private void AutoBind()
+        {
+            if (healthUI == null)
+                healthUI = GetComponentInParent<BarHealthUI>();
+
+            if (health == null)
+            {
+                if (healthUI != null && healthUI.health != null)
+                    health = healthUI.health;
+                else
+                    health = FindAnyObjectByType<Health>();
+            }
+        }
+
+        private void RequestRebuild()
+        {
+#if UNITY_EDITOR
+            if (!pendingRebuild)
+            {
+                pendingRebuild = true;
+                EditorApplication.delayCall += DelayedRebuild;
+            }
 #else
-        // 빌드에서는 그냥 즉시
-        Rebuild();
+            Rebuild();
 #endif
-    }
+        }
 
 #if UNITY_EDITOR
-    private void DelayedRebuild()
-    {
-        EditorApplication.delayCall -= DelayedRebuild;
-        pendingRebuild = false;
+        private void DelayedRebuild()
+        {
+            EditorApplication.delayCall -= DelayedRebuild;
+            pendingRebuild = false;
 
-        // 오브젝트가 삭제된 상태면 중단
-        if (this == null) return;
-
-        Rebuild();
-    }
+            if (this == null) return;
+            Rebuild();
+        }
 #endif
 
-    [ContextMenu("Rebuild")]
-    public void Rebuild()
-    {
-        int div = healthUI != null ? Mathf.Max(1, healthUI.segmentsPerStage) : 5;
-
-        // 기존 라인 삭제
-        ClearChildrenSafe();
-
-        // 새로 생성
-        for (int i = 0; i < div; i++)
+        [ContextMenu("Rebuild")]
+        public void Rebuild()
         {
-            var go = new GameObject($"Divider_{i:00}", typeof(RectTransform), typeof(Image));
+            AutoBind();
+
+            int maxHP = GetResolvedMaxHP();
+            int dynamicDividerCount = CalculateDynamicDividerCount(maxHP, hpPerDivider);
+
+            ClearChildrenSafe();
+            dynamicDividerImages.Clear();
+            topDividerImage = null;
+
+            if (alwaysShowTopDivider)
+                topDividerImage = CreateDivider("Divider_TOP", topDividerAngleDeg);
+
+            if (dynamicDividerCount > 0)
+            {
+                float stepAngle = 360f / (dynamicDividerCount + 1);
+
+                for (int i = 0; i < dynamicDividerCount; i++)
+                {
+                    float angle = startAngleDeg + stepAngle * (i + 1);
+                    var img = CreateDivider($"Divider_{i:00}", angle);
+                    dynamicDividerImages.Add(img);
+                }
+            }
+
+            lastBuiltMaxHP = maxHP;
+            lastBuiltHpPerDivider = hpPerDivider;
+
+            int currentHP = GetResolvedCurrentHP();
+            Sync(currentHP, maxHP);
+        }
+
+        public void Sync(int currentHP, int maxHP)
+        {
+            maxHP = Mathf.Max(1, maxHP);
+            currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+
+            if (NeedsRebuild(maxHP))
+            {
+                Rebuild();
+                return;
+            }
+
+            int visibleDynamicCount = CalculateVisibleDynamicDividerCount(currentHP, maxHP, hpPerDivider);
+
+            for (int i = 0; i < dynamicDividerImages.Count; i++)
+            {
+                if (dynamicDividerImages[i] != null)
+                    dynamicDividerImages[i].enabled = i < visibleDynamicCount;
+            }
+
+            if (topDividerImage != null)
+                topDividerImage.enabled = alwaysShowTopDivider;
+        }
+
+        private bool NeedsRebuild(int maxHP)
+        {
+            return lastBuiltMaxHP != maxHP || lastBuiltHpPerDivider != hpPerDivider;
+        }
+
+        private int GetResolvedMaxHP()
+        {
+            if (health != null)
+                return Mathf.Max(1, health.maxHP);
+
+            if (healthUI != null && healthUI.health != null)
+                return Mathf.Max(1, healthUI.health.maxHP);
+
+            return Mathf.Max(1, manualMaxHP);
+        }
+
+        private int GetResolvedCurrentHP()
+        {
+            if (health != null)
+                return Mathf.Max(0, health.currentHP);
+
+            if (healthUI != null && healthUI.health != null)
+                return Mathf.Max(0, healthUI.health.currentHP);
+
+            return GetResolvedMaxHP();
+        }
+
+        private int CalculateDynamicDividerCount(int maxHP, int hpStep)
+        {
+            int stageCount = Mathf.CeilToInt((float)maxHP / hpStep);
+
+            // 구간이 1개면 divider 0개
+            // 구간이 5개면 divider 4개
+            return Mathf.Max(0, stageCount - 1);
+        }
+
+        private int CalculateVisibleDynamicDividerCount(int currentHP, int maxHP, int hpStep)
+        {
+            int totalDynamic = CalculateDynamicDividerCount(maxHP, hpStep);
+            if (totalDynamic <= 0) return 0;
+            if (currentHP <= 0) return 0;
+
+            int currentStage = Mathf.CeilToInt((float)currentHP / hpStep);
+
+            // stage 1 -> divider 0개
+            // stage 2 -> divider 1개
+            // ...
+            return Mathf.Clamp(currentStage - 1, 0, totalDynamic);
+        }
+
+        private Image CreateDivider(string objName, float zAngle)
+        {
+            var go = new GameObject(objName, typeof(RectTransform), typeof(Image));
             go.transform.SetParent(transform, false);
 
             var rt = (RectTransform)go.transform;
@@ -81,31 +218,31 @@ public class CircularDividersUI : MonoBehaviour
             rt.pivot = new Vector2(0.5f, 0f);
             rt.anchoredPosition = Vector2.zero;
             rt.sizeDelta = new Vector2(lineWidth, lineLength);
-            rt.localRotation = Quaternion.Euler(0, 0, startAngleDeg + (360f / div) * i);
+            rt.localRotation = Quaternion.Euler(0f, 0f, zAngle);
 
             var img = go.GetComponent<Image>();
             img.sprite = lineSprite;
             img.color = lineColor;
             img.raycastTarget = false;
-        }
-    }
 
-    private void ClearChildrenSafe()
-    {
-        for (int i = transform.childCount - 1; i >= 0; i--)
+            return img;
+        }
+
+        private void ClearChildrenSafe()
         {
-            var child = transform.GetChild(i).gameObject;
+            for (int i = transform.childCount - 1; i >= 0; i--)
+            {
+                var child = transform.GetChild(i).gameObject;
 
 #if UNITY_EDITOR
-            // ✅ 플레이 중이면 DestroyImmediate 절대 금지
-            if (Application.isPlaying)
-                Destroy(child);
-            else
-                DestroyImmediate(child); // ✅ 에디터에서 즉시 삭제 OK (단, OnValidate 밖에서 실행됨)
+                if (Application.isPlaying)
+                    Destroy(child);
+                else
+                    DestroyImmediate(child);
 #else
-            Destroy(child);
+                Destroy(child);
 #endif
+            }
         }
     }
-}
 }

@@ -5,97 +5,122 @@ using Dungeon.Player;
 
 namespace Dungeon.UI
 {
-public class BarHealthUI : MonoBehaviour
-{
-    [Header("Refs")]
-    public Health health;
-    public Image healthBar;     // 막대 이미지 (Filled 타입)
-    public TMP_Text healthText; // 체력 텍스트 (현재/최대)
-
-    [Header("Thresholds")]
-    [Range(0f, 1f)] public float yellowThreshold = 0.5f; // 경고 시작 비율
-    [Range(0f, 1f)] public float redThreshold = 0.15f;   // 위험 시작 비율
-
-    private void Awake()
+    public class BarHealthUI : MonoBehaviour
     {
-        // Inspector에서 드래그해도 되고, 이름으로 자동 연결도 가능
-        if (healthBar == null)
-            healthBar = FindChildImageByName("HealthBar");
+        [Header("Refs")]
+        public Health health;
+        public Image healthCircle;
+        public TMP_Text healthText;
+        public CircularDividersUI dividersUI;
 
-        if (health == null)
-            health = FindAnyObjectByType<Health>();
+        [Header("Thresholds")]
+        [Range(0f, 1f)] public float yellowThreshold = 0.5f;
+        [Range(0f, 1f)] public float redThreshold = 0.15f;
 
-        if (healthText == null)
+        [Header("Colors")]
+        public Color greenColor  = new Color(0.25f, 1.00f, 0.25f, 1f);
+        public Color yellowColor = new Color(1.00f, 0.88f, 0.25f, 1f);
+        public Color redColor    = new Color(1.00f, 0.45f, 0.45f, 1f);
+
+        [Header("Circle")]
+        [Range(0, 3)] public int fillOrigin = 2;
+        public bool clockwise = false;
+
+        [Header("Text")]
+        public bool autoResizeText = true;
+        public float textFontMin = 18f;
+        public float textFontMax = 42f;
+
+        private void Awake()
         {
-            var t = GetComponentInChildren<TMP_Text>(true);
-            healthText = t;
+            if (health == null)
+                health = FindAnyObjectByType<Health>();
+
+            if (healthText == null)
+                healthText = GetComponentInChildren<TMP_Text>(true);
+
+            if (dividersUI == null)
+                dividersUI = GetComponentInChildren<CircularDividersUI>(true);
+
+            SetupCircleImage();
+            SetupHealthText();
+        }
+
+        private void OnEnable()
+        {
+            if (health == null) return;
+
+            health.onHealthChanged.AddListener(OnHealthChanged);
+            OnHealthChanged(health.currentHP, health.maxHP);
+        }
+
+        private void OnDisable()
+        {
+            if (health == null) return;
+            health.onHealthChanged.RemoveListener(OnHealthChanged);
+        }
+
+        private void OnHealthChanged(int current, int max)
+        {
+            if (max <= 0) return;
+            if (healthCircle == null) return;
+
+            float ratio = Mathf.Clamp01((float)current / max);
+
+            healthCircle.fillAmount = ratio;
+            healthCircle.color = GetBarColor(ratio);
+
+            if (healthText != null)
+                healthText.text = $"{current} / {max}";
+
+            UpdateDividerVisibility(current, max);
+        }
+
+        private void SetupCircleImage()
+        {
+            if (healthCircle == null) return;
+
+            healthCircle.type = Image.Type.Filled;
+            healthCircle.fillMethod = Image.FillMethod.Radial360;
+            healthCircle.fillOrigin = fillOrigin;
+            healthCircle.fillClockwise = clockwise;
+            healthCircle.preserveAspect = true;
+        }
+
+        private void SetupHealthText()
+        {
+            if (healthText == null) return;
+
+            healthText.enableAutoSizing = autoResizeText;
+            healthText.fontSizeMin = textFontMin;
+            healthText.fontSizeMax = textFontMax;
+            healthText.alignment = TextAlignmentOptions.Center;
+            healthText.overflowMode = TextOverflowModes.Overflow;
+        }
+
+        private Color GetBarColor(float ratio)
+        {
+            float safeThreshold = Mathf.Clamp01(yellowThreshold);
+            float dangerThreshold = Mathf.Clamp01(redThreshold);
+
+            if (safeThreshold < dangerThreshold)
+                safeThreshold = dangerThreshold;
+
+            if (ratio > safeThreshold)
+                return greenColor;
+            else if (ratio > dangerThreshold)
+                return yellowColor;
+            else
+                return redColor;
+        }
+
+        private void UpdateDividerVisibility(int current, int max)
+        {
+            if (dividersUI == null) return;
+
+            // HP 변화와 MaxHP 변화를 모두 반영해서
+            // divider 재생성 / 표시 개수 갱신을 한 번에 처리
+            dividersUI.Sync(current, max);
         }
     }
-
-    private void OnEnable()
-    {
-        if (health == null) return;
-        health.onHealthChanged.AddListener(OnHealthChanged);
-        OnHealthChanged(health.currentHP, health.maxHP);
-    }
-
-    private void OnDisable()
-    {
-        if (health == null) return;
-        health.onHealthChanged.RemoveListener(OnHealthChanged);
-    }
-
-    private void OnHealthChanged(int current, int max)
-    {
-        if (max <= 0) return;
-        if (healthBar == null) return;
-
-        // 체력 비율 계산 (0.0 ~ 1.0)
-        float healthRatio = (float)current / max;
-
-        // 막대 길이 설정
-        SetBar(healthBar, true, healthRatio);
-
-        // 막대 색상 설정
-        healthBar.color = GetBarColor(healthRatio);
-
-        // 체력 텍스트 표시 (현재/최대)
-        if (healthText != null)
-            healthText.text = $"{current} / {max}";
-    }
-
-    /// <summary>
-    /// 체력 비율에 따라 막대 색상을 결정합니다.
-    /// - ratio > yellowThreshold: 초록색
-    /// - ratio > redThreshold: 노란색
-    /// - ratio ≤ redThreshold: 빨간색
-    /// Inspector에서 yellowThreshold, redThreshold를 조정할 수 있습니다.
-    /// </summary>
-    private Color GetBarColor(float ratio)
-    {
-        float safeThreshold = Mathf.Clamp01(yellowThreshold);
-        float dangerThreshold = Mathf.Clamp01(redThreshold);
-
-        if (ratio > safeThreshold)
-            return Color.green;
-        else if (ratio > dangerThreshold)
-            return Color.yellow;
-        else
-            return Color.red;
-    }
-
-    private void SetBar(Image img, bool enabled, float fill)
-    {
-        img.enabled = enabled;
-        img.fillAmount = Mathf.Clamp01(fill);
-    }
-
-    private Image FindChildImageByName(string childName)
-    {
-        var images = GetComponentsInChildren<Image>(true);
-        foreach (var img in images)
-            if (img.name == childName) return img;
-        return null;
-    }
-}
 }
