@@ -19,8 +19,6 @@ public class Arrow : MonoBehaviour, IPlayerDestroyableProjectile // ✅ IPlayerD
     [Header("Hit timing")]
     [SerializeField] private float hitEnableDelay = 0.05f; // 너무 길면 '붙어있을 때 무시'가 커짐
 
-    [Header("Debug")]
-    [SerializeField] private bool debugLog = true;
 
     private Rigidbody rb;
     private int damage;
