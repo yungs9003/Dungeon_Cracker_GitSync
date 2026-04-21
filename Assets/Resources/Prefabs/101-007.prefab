@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3240869912232053050}
   - component: {fileID: 1761418184115679126}
   - component: {fileID: 7938418751368816429}
+  - component: {fileID: 9031566405088199413}
   m_Layer: 11
   m_Name: 101-007
   m_TagString: Untagged
@@ -179,3 +180,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &9031566405088199413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3416582450190713817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14fab389b2f40894496def821c6d4b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Traps.Destructible
+  destroyRoot: {fileID: 0}
+  explicitTrapToggles: []
+  replacementPrefab: {fileID: 8120532279946757268, guid: 3972e0934ff60ee4297faac6bbbdea41, type: 3}
+  replacementSpawnPoint: {fileID: 0}
+  copyDestroyedObjectRotation: 1
+  disableTrapsBeforeDestroy: 1
+  destroyNextFrame: 1

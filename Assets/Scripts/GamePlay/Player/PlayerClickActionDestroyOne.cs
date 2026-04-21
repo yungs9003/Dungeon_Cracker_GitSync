@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Dungeon.Core;
@@ -9,11 +10,15 @@ namespace Dungeon.Player
     {
         [Header("References")]
         [SerializeField] private ForwardZoneCollector zone;
-        [SerializeField] private Transform 기준점; // 거리 계산 기준(보통 플레이어)
+        [SerializeField] private Transform 기준점;
 
         [Header("Optional click rate limit")]
         [SerializeField] private float clickCooldown = 0.08f;
         private float nextTime;
+
+        [Header("Trap Destroy Delay")]
+        [SerializeField] private float trapDestroyDelay = 0.2f;
+        private bool isTrapDestroyPending;
 
         private Destructible currentHighlighted;
         private TrapZoneHighlight currentHighlightComp;
@@ -34,6 +39,8 @@ namespace Dungeon.Player
         private void OnDisable()
         {
             ClearCurrentHighlight();
+            isTrapDestroyPending = false;
+            StopAllCoroutines();
         }
 
         private void OnDestroy()
@@ -63,9 +70,11 @@ namespace Dungeon.Player
             zone.projectiles.RemoveAll(p => p == null);
             zone.destructibles.RemoveAll(d => d == null);
 
+            // 1순위: 투사체 즉시 제거
             if (TryDestroyNearestProjectile()) return;
 
-            TryDestroyHighlightedDestructible();
+            // 2순위: 함정은 0.2초 딜레이 후 제거
+            TryDestroyHighlightedDestructibleDelayed();
         }
 
         private void RefreshTrapHighlight()
@@ -115,7 +124,7 @@ namespace Dungeon.Player
             {
                 if (d == null) continue;
 
-                float dist = (d.transform.position - 기준점.position).sqrMagnitude;
+                float dist = ((Vector2)d.transform.position - (Vector2)기준점.position).sqrMagnitude;
                 if (dist < bestDist)
                 {
                     bestDist = dist;
@@ -128,7 +137,8 @@ namespace Dungeon.Player
 
         private bool TryDestroyNearestProjectile()
         {
-            if (zone.projectiles == null || zone.projectiles.Count == 0) return false;
+            if (zone.projectiles == null || zone.projectiles.Count == 0)
+                return false;
 
             MonoBehaviour best = null;
             float bestDist = float.PositiveInfinity;
@@ -137,7 +147,7 @@ namespace Dungeon.Player
             {
                 if (mb == null) continue;
 
-                float d = (mb.transform.position - 기준점.position).sqrMagnitude;
+                float d = ((Vector2)mb.transform.position - (Vector2)기준점.position).sqrMagnitude;
                 if (d < bestDist)
                 {
                     bestDist = d;
@@ -158,17 +168,30 @@ namespace Dungeon.Player
             return false;
         }
 
-        private bool TryDestroyHighlightedDestructible()
+        private bool TryDestroyHighlightedDestructibleDelayed()
         {
             if (currentHighlighted == null) return false;
+            if (isTrapDestroyPending) return false;
 
             Destructible target = currentHighlighted;
 
             zone.destructibles.Remove(target);
             ClearCurrentHighlight();
 
-            target.ExecuteDestruction();
+            StartCoroutine(DestroyTrapAfterDelay(target, trapDestroyDelay));
             return true;
+        }
+
+        private IEnumerator DestroyTrapAfterDelay(Destructible target, float delay)
+        {
+            isTrapDestroyPending = true;
+
+            yield return new WaitForSeconds(delay);
+
+            if (target != null)
+                target.ExecuteDestruction();
+
+            isTrapDestroyPending = false;
         }
     }
 }
