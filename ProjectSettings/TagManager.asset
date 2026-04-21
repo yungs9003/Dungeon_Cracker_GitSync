@@ -51,5 +51,14 @@ TagManager:
   - name: PlayerFront
     uniqueID: 3654170813
     locked: 0
+  - name: ProjectileBG
+    uniqueID: 1238231507
+    locked: 0
+  - name: Projectile
+    uniqueID: 2096827759
+    locked: 0
+  - name: ProjectileFront
+    uniqueID: 3305503453
+    locked: 0
   m_RenderingLayers:
   - Default
