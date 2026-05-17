@@ -10,6 +10,7 @@ namespace Dungeon.Traps
     {
         [Header("Damage")]
         [SerializeField] private int damage = 2;
+        [SerializeField] private int bleedingDamage = 5;
         [SerializeField] private float hitCooldown = 0.5f;
 
         [Header("Knockback")]
@@ -68,7 +69,10 @@ namespace Dungeon.Traps
             if (nextDamageTime.TryGetValue(health, out float allowedTime) && now < allowedTime)
                 return;
 
+            // 즉시 데미지 적용
             health.TakeDamage(damage);
+            // 출혈 상태 유발: tick당 bleedingDamage 사용
+            health.TakeBleedingDamage(bleedingDamage, 7f, 1f);
             nextDamageTime[health] = now + hitCooldown;
 
             var kb = other.GetComponentInParent<KnockbackReceiver2D>();

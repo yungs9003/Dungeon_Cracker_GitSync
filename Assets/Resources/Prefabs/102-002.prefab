@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Traps.Thorn2D
   damage: 10
+  bleedingDamage: 2
   hitCooldown: 0.7
   knockbackDistance: 0.4
   knockbackDuration: 0.16
