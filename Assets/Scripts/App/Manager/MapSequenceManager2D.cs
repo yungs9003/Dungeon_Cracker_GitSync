@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Collections;
 using UnityEngine;
@@ -6,6 +5,7 @@ using UnityEngine.SceneManagement;
 using Dungeon.Player;
 using Dungeon.Map;
 using Dungeon.UI;
+using Dungeon.Core;
 
 namespace Dungeon.Manager
 {
@@ -26,20 +26,26 @@ namespace Dungeon.Manager
         [Header("End")]
         [SerializeField] private string endSceneName = "ClearScene";
 
+        [Header("Checkpoint")]
+        [SerializeField] private string checkpointSceneName = "CheckpointScene";
+
         private TextAsset[] mapFiles;
         private int currentIndex = 0;
 
         private PlayerController2D pendingPlayer;
         private bool isTransitioning;
 
+        public int CurrentIndex => currentIndex;
+        public int MapCount => mapFiles != null ? mapFiles.Length : 0;
+
         private void Awake()
         {
-            // 싱글톤 중복 방지
             if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
                 return;
             }
+
             Instance = this;
 
             if (builder == null)
@@ -51,7 +57,12 @@ namespace Dungeon.Manager
 
         private void Start()
         {
+            SaveFileManager.EnsureSaveFileExists();
+
             LoadMapList();
+
+            TryApplyCheckpointResume();
+
             LoadCurrent();
 
             if (fader == null)
@@ -75,17 +86,67 @@ namespace Dungeon.Manager
             }
 
             mapFiles = mapFiles.OrderBy(t => t.name).ToArray();
+
             Debug.Log($"[MapSequence2D] Found maps: {string.Join(", ", mapFiles.Select(m => m.name))}");
+        }
+
+        private void TryApplyCheckpointResume()
+        {
+            if (!SaveFileManager.HasCheckpointResumeRequest())
+                return;
+
+            string savedSceneName = SaveFileManager.GetCheckpointSceneName();
+            string currentSceneName = SceneManager.GetActiveScene().name;
+
+            if (savedSceneName != currentSceneName)
+            {
+                Debug.LogWarning(
+                    $"[MapSequence2D] Checkpoint scene mismatch. Saved={savedSceneName}, Current={currentSceneName}"
+                );
+                return;
+            }
+
+            int savedMapIndex = SaveFileManager.GetCheckpointMapIndex();
+            int nextIndex = savedMapIndex + 1;
+
+            if (mapFiles == null || mapFiles.Length == 0)
+                return;
+
+            if (nextIndex >= mapFiles.Length)
+            {
+                SaveFileManager.ClearCheckpointResumeRequest();
+
+                Debug.Log("[MapSequence2D] Checkpoint resume target is after last map. Loading clear scene.");
+                SceneManager.LoadScene(endSceneName);
+                return;
+            }
+
+            currentIndex = nextIndex;
+            SaveFileManager.ClearCheckpointResumeRequest();
+
+            Debug.Log($"[MapSequence2D] Resume from checkpoint. Start index={currentIndex}");
         }
 
         private void LoadCurrent()
         {
-            if (builder == null || mapFiles == null || mapFiles.Length == 0) return;
+            if (builder == null || mapFiles == null || mapFiles.Length == 0)
+                return;
+
+            if (currentIndex < 0)
+                currentIndex = 0;
+
+            if (currentIndex >= mapFiles.Length)
+            {
+                Debug.LogWarning("[MapSequence2D] currentIndex is out of range. Loading end scene.");
+                SceneManager.LoadScene(endSceneName);
+                return;
+            }
 
             string sceneName = SceneManager.GetActiveScene().name;
             string path = $"{rootFolder}/{sceneName}/{mapFiles[currentIndex].name}";
 
             builder.BuildFromJsonPath(path);
+
             Debug.Log($"[MapSequence2D] Loaded map {currentIndex + 1}/{mapFiles.Length} : {path}");
         }
 
@@ -94,7 +155,6 @@ namespace Dungeon.Manager
             return mapFiles != null && currentIndex + 1 < mapFiles.Length;
         }
 
-        // 포털 등에서 호출
         public void LoadNextMapOrFinish(PlayerController2D pc)
         {
             if (isTransitioning) return;
@@ -110,7 +170,6 @@ namespace Dungeon.Manager
 
         private IEnumerator CoLoadNextMapOrFinish()
         {
-            // 트리거/물리 콜백 탈출
             yield return null;
 
             if (mapFiles == null || mapFiles.Length == 0)
@@ -130,18 +189,16 @@ namespace Dungeon.Manager
 
             if (HasNextMap())
             {
+                SaveFileManager.AddGold(500);
                 currentIndex++;
 
-                // 필요하면 먼저 FadeOut
                 if (fader != null)
                     yield return fader.FadeOut(fadeInSeconds);
 
                 LoadCurrent();
 
-                // 맵 생성 직후 한 프레임 대기
                 yield return null;
 
-                // 새 맵 로드 후 FadeIn
                 if (fader != null)
                     yield return fader.FadeIn(fadeInSeconds);
 
@@ -153,6 +210,7 @@ namespace Dungeon.Manager
             }
             else
             {
+                SaveFileManager.AddGold(500);
                 Debug.Log("[MapSequence2D] Last map cleared!");
 
                 if (fader != null)
@@ -162,7 +220,36 @@ namespace Dungeon.Manager
             }
         }
 
-        // 외부에서 현재 맵을 처음부터 다시 불러오고 싶을 때
+        public void EnterCheckpoint(PlayerController2D pc)
+        {
+            if (isTransitioning) return;
+
+            isTransitioning = true;
+            pendingPlayer = pc;
+
+            if (pendingPlayer != null)
+                pendingPlayer.SetControl(false, stopImmediately: true);
+
+            StartCoroutine(CoEnterCheckpoint());
+        }
+
+        private IEnumerator CoEnterCheckpoint()
+        {
+            yield return null;
+
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            SaveFileManager.AddGold(500);
+            SaveFileManager.SaveCheckpoint(currentSceneName, currentIndex);
+
+            if (fader == null)
+                fader = FindFirstObjectByType<ScreenFader>(FindObjectsInactive.Include);
+
+            if (fader != null)
+                yield return fader.FadeOut(fadeInSeconds);
+
+            SceneManager.LoadScene(checkpointSceneName);
+        }
+
         public void ReloadCurrentMap(PlayerController2D pc = null)
         {
             if (isTransitioning) return;

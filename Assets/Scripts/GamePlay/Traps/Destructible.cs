@@ -53,6 +53,7 @@ namespace Dungeon.Traps
             Quaternion spawnRot = copyDestroyedObjectRotation ? baseTf.rotation : Quaternion.identity;
 
             Instantiate(replacementPrefab, spawnPos, spawnRot);
+            SaveFileManager.AddDummy1(1);
         }
 
         private void DisableTraps()

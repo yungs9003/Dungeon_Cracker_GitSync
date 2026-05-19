@@ -221,6 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5028000345942427785}
   - component: {fileID: 8543998555061483467}
+  - component: {fileID: -4550483715322301712}
   m_Layer: 11
   m_Name: 102-009
   m_TagString: Untagged
@@ -276,6 +277,25 @@ MonoBehaviour:
   cooldown: 1.5
   idleMaskAlpha: 1
   drawGizmos: 1
+--- !u!114 &-4550483715322301712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8523855165110912143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14fab389b2f40894496def821c6d4b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Traps.Destructible
+  destroyRoot: {fileID: 0}
+  explicitTrapToggles: []
+  replacementPrefab: {fileID: 8120532279946757268, guid: 3972e0934ff60ee4297faac6bbbdea41, type: 3}
+  replacementSpawnPoint: {fileID: 0}
+  copyDestroyedObjectRotation: 1
+  disableTrapsBeforeDestroy: 1
+  destroyNextFrame: 1
 --- !u!1 &8909402644661442286
 GameObject:
   m_ObjectHideFlags: 0

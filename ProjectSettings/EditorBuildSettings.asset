@@ -13,7 +13,7 @@ EditorBuildSettings:
     guid: 20d478f604f01894cb39aea6160f436d
   - enabled: 1
     path: Assets/Scenes/DUNGEON_001.unity
-    guid: 2a044a310c62191439b7b5a9a02c8ba2
+    guid: b73ece2f14ff6a14584fea4048144d92
   - enabled: 1
     path: Assets/Scenes/DUNGEON_001.unity
     guid: b73ece2f14ff6a14584fea4048144d92
@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Shop.unity
     guid: 19e000eb2b6f2904db8247183c71c933
+  - enabled: 1
+    path: Assets/Scenes/CheckpointScene.unity
+    guid: 6f43bdd71b236784fae3fcd620dc61cb
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2e54872ac1ed06a45bea74d7c7b2a0c1, type: 3}
   m_UseUCBPForAssetBundles: 0
