@@ -1,12 +1,12 @@
 {
-  "gold": 0,
+  "gold": 1500,
   "item": [
-    { "dummy1": 0},
+    { "dummy1": 5},
     { "dummy2": 0 }
   ],
   "checkpoint": {
-    "sceneName": "",
-    "mapIndex": -1,
+    "sceneName": "DUNGEON_001",
+    "mapIndex": 0,
     "resumeRequested": false
   },
   "dungeon_status": [

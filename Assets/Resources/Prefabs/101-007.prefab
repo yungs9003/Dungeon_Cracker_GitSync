@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Dungeon.GamePlay::AssetVariantSprite2D
   spriteRenderer: {fileID: 8019727426068410593}
   variants:
-  - {fileID: 6689756556060055724, guid: 74b309b1466a26d49b97ff01ed83b65c, type: 3}
+  - {fileID: 845501852167526080, guid: bc168b93566230e49accd67c21cc8951, type: 3}
 --- !u!114 &1761418184115679126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,9 +122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Traps.BallLauncher2D
   ballPrefab: {fileID: 1226098189425314892, guid: bfd6884f1b1676f4dbb5894d0fcced08, type: 3}
-  spawnLocalOffset: {x: 0.6, y: 0}
+  spawnLocalOffset: {x: -1.7, y: 0}
   cellSize: 1
-  speed: 6
+  speed: 3
   damage: 2
   spawnCooldown: 2
   autoSpawn: 1
