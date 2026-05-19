@@ -37,10 +37,18 @@ namespace Dungeon.Traps
 
         private readonly Dictionary<Health, float> lastHitTime = new();
 
+        // IgnorePlayerPhysicsCollision을 켜면 OnCollisionEnter2D가 호출되지 않을 수 있으므로,
+        // FixedUpdate에서 직접 플레이어와의 겹침을 검사하기 위한 콜라이더 목록/버퍼.
+        private Collider2D[] myDamageCols;
+        private readonly Collider2D[] overlapResults = new Collider2D[16];
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             myCol = GetComponent<Collider2D>();
+
+            // 본체 Collider와 자식 DamageTrigger Collider를 모두 포함한다.
+            myDamageCols = GetComponentsInChildren<Collider2D>(true);
 
             rb.gravityScale = 0f;
             rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
@@ -63,6 +71,9 @@ namespace Dungeon.Traps
             rb.bodyType = RigidbodyType2D.Dynamic;
             rb.linearVelocity = moveDir * moveSpeed;
 
+            // 발사 이후 자식 DamageTrigger가 생성/활성화된 경우까지 대비해서 한 번 더 갱신.
+            myDamageCols = GetComponentsInChildren<Collider2D>(true);
+
             if (ignorePlayerPhysicsCollision)
                 IgnorePlayerCollisions();
 
@@ -79,6 +90,9 @@ namespace Dungeon.Traps
 
             // 일정 속도로 직진
             rb.linearVelocity = moveDir * moveSpeed;
+
+            // IgnorePlayerPhysicsCollision이 켜져도 데미지는 들어가도록 직접 겹침 검사.
+            CheckPlayerOverlapDamage();
         }
 
         private void IgnorePlayerCollisions()
@@ -101,6 +115,46 @@ namespace Dungeon.Traps
                 }
             }
         }
+
+        private void CheckPlayerOverlapDamage()
+        {
+            if (playerMask.value == 0) return;
+
+            if (myDamageCols == null || myDamageCols.Length == 0)
+                myDamageCols = GetComponentsInChildren<Collider2D>(true);
+
+            ContactFilter2D filter = new ContactFilter2D();
+            filter.SetLayerMask(playerMask);
+            filter.useLayerMask = true;
+            filter.useTriggers = true;
+
+            for (int i = 0; i < myDamageCols.Length; i++)
+            {
+                Collider2D col = myDamageCols[i];
+                if (col == null) continue;
+                if (!col.enabled) continue;
+
+                int count = col.Overlap(filter, overlapResults);
+
+                for (int j = 0; j < count; j++)
+                {
+                    Collider2D other = overlapResults[j];
+                    if (other == null) continue;
+
+                    if (IsOwnerCollider(other))
+                        continue;
+
+                    if (IsPlayerLayer(other.gameObject.layer))
+                    {
+                        TryDamageAndKnockback(other);
+                    }
+
+                    // 다음 검사에 이전 결과가 남지 않도록 비워둔다.
+                    overlapResults[j] = null;
+                }
+            }
+        }
+
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
@@ -137,6 +191,12 @@ namespace Dungeon.Traps
             if (IsOwnerCollider(other))
                 return;
 
+            // 플레이어를 Trigger로 처리하고 싶을 때를 대비
+            if (IsPlayerLayer(other.gameObject.layer))
+            {
+                TryDamageAndKnockback(other);
+                return;
+            }
             // Pit 같은 Trigger 지형이면 소멸
             if ((pitMask.value & (1 << other.gameObject.layer)) != 0)
             {
@@ -144,12 +204,7 @@ namespace Dungeon.Traps
                 return;
             }
 
-            // 플레이어를 Trigger로 처리하고 싶을 때를 대비
-            if (IsPlayerLayer(other.gameObject.layer))
-            {
-                TryDamageAndKnockback(other);
-                return;
-            }
+            
         }
 
         private bool IsPlayerLayer(int layer)

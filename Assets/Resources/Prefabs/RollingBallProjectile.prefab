@@ -210,7 +210,7 @@ MonoBehaviour:
     m_Bits: 1024
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 2049
+    m_Bits: 2048
   pitMask:
     serializedVersion: 2
     m_Bits: 256

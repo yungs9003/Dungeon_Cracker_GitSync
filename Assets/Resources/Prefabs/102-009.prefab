@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6340574378746200013}
   - component: {fileID: 3136115349140075502}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: LaserBeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4151841867386825593}
   - component: {fileID: 8883066815131965840}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CrystalBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ MonoBehaviour:
   maxLaserDistance: 8
   laserHitLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 3072
   damage: 10
   laserDuration: 0.2
   chargeTime: 1
@@ -353,7 +353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2270788360932782914}
   - component: {fileID: 8282745213993783221}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CrystalMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}

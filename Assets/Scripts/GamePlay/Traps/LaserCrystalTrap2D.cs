@@ -130,26 +130,48 @@ namespace Dungeon.Traps
         }
 
         private void FireLaser(Vector2 dir)
+{
+    Vector2 origin = firePoint.position;
+
+    RaycastHit2D[] hits = Physics2D.RaycastAll(
+        origin,
+        dir,
+        maxLaserDistance,
+        laserHitLayer
+    );
+
+    float actualDistance = maxLaserDistance;
+    RaycastHit2D validHit = default;
+    bool hasValidHit = false;
+
+    foreach (RaycastHit2D hit in hits)
+    {
+        if (hit.collider == null)
+            continue;
+
+        // 자기 자신 또는 자기 자식 Collider는 무시
+        if (hit.collider.transform == transform || hit.collider.transform.IsChildOf(transform))
+            continue;
+
+        // 여기까지 왔으면 실제로 레이저가 맞아야 하는 대상
+        validHit = hit;
+        hasValidHit = true;
+        break;
+    }
+
+    if (hasValidHit)
+    {
+        actualDistance = validHit.distance;
+
+        Health health = validHit.collider.GetComponentInParent<Health>();
+        if (health != null)
         {
-            Vector2 origin = firePoint.position;
-
-            RaycastHit2D hit = Physics2D.Raycast(origin, dir, maxLaserDistance, laserHitLayer);
-
-            float actualDistance = maxLaserDistance;
-
-            if (hit.collider != null)
-            {
-                actualDistance = hit.distance;
-
-                Health health = hit.collider.GetComponentInParent<Health>();
-                if (health != null)
-                {
-                    health.TakeDamage(damage);
-                }
-            }
-
-            ShowLaserVisual(origin, dir, actualDistance);
+            health.TakeDamage(damage);
         }
+    }
+
+    ShowLaserVisual(origin, dir, actualDistance);
+}
 
         private void ShowLaserVisual(Vector2 origin, Vector2 dir, float distance)
         {
