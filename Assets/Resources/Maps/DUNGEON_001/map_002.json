@@ -62,7 +62,7 @@
     { "coord": "0702", "code": "000-000","assetNo":0,"direction":"00" },
     { "coord": "0703", "code": "000-000","assetNo":0,"direction":"00" },
     { "coord": "0704", "code": "000-000","assetNo":0,"direction":"00" },
-    { "coord": "0705", "code": "002-002","assetNo":0,"direction":"00" },
+    { "coord": "0705", "code": "102-010","assetNo":0,"direction":"00" },
     { "coord": "0706", "code": "001-001","assetNo":2,"direction":"11" },
 
     { "coord": "0800", "code": "001-001","assetNo":1,"direction":"11" },
