@@ -1,42 +1,72 @@
 using UnityEngine;
-using Dungeon.Player;
+using UnityEngine.SceneManagement;
 using Dungeon.Manager;
 
-namespace Dungeon.Checkpoint
+namespace Dungeon.UI
 {
     [RequireComponent(typeof(Collider2D))]
     public class CheckpointEntrance2D : MonoBehaviour
     {
-        private bool used;
+        [Header("Checkpoint")]
+        [SerializeField] private string checkpointSceneName = "CheckpointScene";
+
+        [Header("Player Check")]
+        [SerializeField] private string playerTag = "Player";
+        [Tooltip("플레이어 중심이 체크포인트 입구 중심으로부터 이 거리 이내에 들어오면 발동합니다.")]
+        [SerializeField] private float reachRadius = 0.25f;
+
+        private bool triggered;
 
         private void Reset()
         {
             Collider2D col = GetComponent<Collider2D>();
-            col.isTrigger = true;
+            if (col != null) col.isTrigger = true;
         }
 
         private void Awake()
         {
             Collider2D col = GetComponent<Collider2D>();
-            col.isTrigger = true;
+            if (col != null) col.isTrigger = true;
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerStay2D(Collider2D other)
         {
-            if (used) return;
+            if (triggered) return;
+            if (!other.CompareTag(playerTag)) return;
 
-            PlayerController2D player = other.GetComponentInParent<PlayerController2D>();
-            if (player == null) return;
+            if (!IsPlayerCenterInside(other.transform)) return;
 
-            used = true;
+            triggered = true;
+            EnterCheckpointScene();
+        }
 
-            if (MapSequenceManager2D.Instance == null)
-            {
-                Debug.LogWarning("[CheckpointEntrance2D] MapSequenceManager2D.Instance가 없습니다.");
-                return;
-            }
+        private bool IsPlayerCenterInside(Transform playerTransform)
+        {
+            Vector2 playerCenter = playerTransform.position;
+            Vector2 entranceCenter = transform.position;
+            return Vector2.Distance(playerCenter, entranceCenter) <= reachRadius;
+        }
 
-            MapSequenceManager2D.Instance.EnterCheckpoint(player);
+        private void EnterCheckpointScene()
+        {
+            string returnSceneName = SceneManager.GetActiveScene().name;
+
+            MapSequenceManager2D manager = MapSequenceManager2D.Instance;
+            if (manager == null)
+                manager = FindFirstObjectByType<MapSequenceManager2D>();
+
+            int nextMapIndex = 0;
+            if (manager != null)
+                nextMapIndex = manager.GetNextMapIndexForCheckpoint();
+            else
+                Debug.LogWarning("[CheckpointEntrance2D] MapSequenceManager2D를 찾지 못했습니다. nextMapIndex를 0으로 저장합니다.");
+
+            if (SaveManager.Instance != null)
+                SaveManager.Instance.SetCheckpoint(returnSceneName, nextMapIndex, checkpointSceneName);
+            else
+                Debug.LogWarning("[CheckpointEntrance2D] SaveManager.Instance가 없습니다. 체크포인트 저장 없이 씬만 이동합니다.");
+
+            SceneManager.LoadScene(checkpointSceneName, LoadSceneMode.Single);
         }
     }
 }

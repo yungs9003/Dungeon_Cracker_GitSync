@@ -1,11 +1,11 @@
+using System;
 using System.Linq;
 using System.Collections;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Dungeon.Player;
 using Dungeon.Map;
 using Dungeon.UI;
-using Dungeon.Core;
 
 namespace Dungeon.Manager
 {
@@ -26,17 +26,16 @@ namespace Dungeon.Manager
         [Header("End")]
         [SerializeField] private string endSceneName = "ClearScene";
 
-        [Header("Checkpoint")]
-        [SerializeField] private string checkpointSceneName = "CheckpointScene";
-
         private TextAsset[] mapFiles;
         private int currentIndex = 0;
 
-        private PlayerController2D pendingPlayer;
+        // PlayerController, PlayerController2D 둘 다 받을 수 있게 Component로 보관한다.
+        private Component pendingPlayer;
         private bool isTransitioning;
 
         public int CurrentIndex => currentIndex;
-        public int MapCount => mapFiles != null ? mapFiles.Length : 0;
+        public int MapCount => mapFiles == null ? 0 : mapFiles.Length;
+        public string EndSceneName => endSceneName;
 
         private void Awake()
         {
@@ -45,7 +44,6 @@ namespace Dungeon.Manager
                 Destroy(gameObject);
                 return;
             }
-
             Instance = this;
 
             if (builder == null)
@@ -57,11 +55,21 @@ namespace Dungeon.Manager
 
         private void Start()
         {
-            SaveFileManager.EnsureSaveFileExists();
-
             LoadMapList();
 
-            TryApplyCheckpointResume();
+            // 체크포인트 씬에서 돌아온 경우 저장된 다음 맵 index부터 시작한다.
+            if (SaveManager.Instance != null &&
+                SaveManager.Instance.TryConsumePendingMapIndex(SceneManager.GetActiveScene().name, out int pendingIndex))
+            {
+                currentIndex = pendingIndex;
+            }
+
+            if (mapFiles != null && mapFiles.Length > 0 && currentIndex >= mapFiles.Length)
+            {
+                Debug.Log("[MapSequence] Pending map index is past the last map. Go to ClearScene.");
+                SceneManager.LoadScene(endSceneName);
+                return;
+            }
 
             LoadCurrent();
 
@@ -81,50 +89,12 @@ namespace Dungeon.Manager
 
             if (mapFiles == null || mapFiles.Length == 0)
             {
-                Debug.LogError($"[MapSequence2D] No json TextAssets in Resources/{folderPath}");
+                Debug.LogError($"[MapSequence] No json TextAssets in Resources/{folderPath}");
                 return;
             }
 
             mapFiles = mapFiles.OrderBy(t => t.name).ToArray();
-
-            Debug.Log($"[MapSequence2D] Found maps: {string.Join(", ", mapFiles.Select(m => m.name))}");
-        }
-
-        private void TryApplyCheckpointResume()
-        {
-            if (!SaveFileManager.HasCheckpointResumeRequest())
-                return;
-
-            string savedSceneName = SaveFileManager.GetCheckpointSceneName();
-            string currentSceneName = SceneManager.GetActiveScene().name;
-
-            if (savedSceneName != currentSceneName)
-            {
-                Debug.LogWarning(
-                    $"[MapSequence2D] Checkpoint scene mismatch. Saved={savedSceneName}, Current={currentSceneName}"
-                );
-                return;
-            }
-
-            int savedMapIndex = SaveFileManager.GetCheckpointMapIndex();
-            int nextIndex = savedMapIndex + 1;
-
-            if (mapFiles == null || mapFiles.Length == 0)
-                return;
-
-            if (nextIndex >= mapFiles.Length)
-            {
-                SaveFileManager.ClearCheckpointResumeRequest();
-
-                Debug.Log("[MapSequence2D] Checkpoint resume target is after last map. Loading clear scene.");
-                SceneManager.LoadScene(endSceneName);
-                return;
-            }
-
-            currentIndex = nextIndex;
-            SaveFileManager.ClearCheckpointResumeRequest();
-
-            Debug.Log($"[MapSequence2D] Resume from checkpoint. Start index={currentIndex}");
+            Debug.Log($"[MapSequence] Found maps: {string.Join(", ", mapFiles.Select(m => m.name))}");
         }
 
         private void LoadCurrent()
@@ -132,22 +102,13 @@ namespace Dungeon.Manager
             if (builder == null || mapFiles == null || mapFiles.Length == 0)
                 return;
 
-            if (currentIndex < 0)
-                currentIndex = 0;
-
-            if (currentIndex >= mapFiles.Length)
-            {
-                Debug.LogWarning("[MapSequence2D] currentIndex is out of range. Loading end scene.");
-                SceneManager.LoadScene(endSceneName);
-                return;
-            }
+            currentIndex = Mathf.Clamp(currentIndex, 0, mapFiles.Length - 1);
 
             string sceneName = SceneManager.GetActiveScene().name;
             string path = $"{rootFolder}/{sceneName}/{mapFiles[currentIndex].name}";
 
             builder.BuildFromJsonPath(path);
-
-            Debug.Log($"[MapSequence2D] Loaded map {currentIndex + 1}/{mapFiles.Length} : {path}");
+            Debug.Log($"[MapSequence] Loaded map {currentIndex + 1}/{mapFiles.Length} : {path}");
         }
 
         public bool HasNextMap()
@@ -155,16 +116,21 @@ namespace Dungeon.Manager
             return mapFiles != null && currentIndex + 1 < mapFiles.Length;
         }
 
-        public void LoadNextMapOrFinish(PlayerController2D pc)
+        // 체크포인트 도달 시 저장해야 하는 "다음 맵 index".
+        // 마지막 맵에서 체크포인트를 찍은 경우 mapFiles.Length가 반환될 수 있고,
+        // 이 값으로 돌아오면 Start()에서 ClearScene으로 보낸다.
+        public int GetNextMapIndexForCheckpoint()
+        {
+            return currentIndex + 1;
+        }
+
+        // 기존 3D 포탈/2D 포탈 모두 이 함수로 호출 가능하다.
+        public void LoadNextMapOrFinish(Component playerController)
         {
             if (isTransitioning) return;
-
             isTransitioning = true;
-            pendingPlayer = pc;
 
-            if (pendingPlayer != null)
-                pendingPlayer.SetControl(false, stopImmediately: true);
-
+            pendingPlayer = playerController;
             StartCoroutine(CoLoadNextMapOrFinish());
         }
 
@@ -174,10 +140,9 @@ namespace Dungeon.Manager
 
             if (mapFiles == null || mapFiles.Length == 0)
             {
-                Debug.LogError("[MapSequence2D] mapFiles is empty. Check Resources path.");
+                Debug.LogError("[MapSequence] mapFiles is empty. Check Resources path.");
 
-                if (pendingPlayer != null)
-                    pendingPlayer.SetControl(true, stopImmediately: true);
+                SetPlayerControl(pendingPlayer, true, true);
 
                 pendingPlayer = null;
                 isTransitioning = false;
@@ -189,12 +154,7 @@ namespace Dungeon.Manager
 
             if (HasNextMap())
             {
-                SaveFileManager.AddGold(500);
                 currentIndex++;
-
-                if (fader != null)
-                    yield return fader.FadeOut(fadeInSeconds);
-
                 LoadCurrent();
 
                 yield return null;
@@ -202,16 +162,14 @@ namespace Dungeon.Manager
                 if (fader != null)
                     yield return fader.FadeIn(fadeInSeconds);
 
-                if (pendingPlayer != null)
-                    pendingPlayer.SetControl(true, stopImmediately: true);
+                SetPlayerControl(pendingPlayer, true, true);
 
                 pendingPlayer = null;
                 isTransitioning = false;
             }
             else
             {
-                SaveFileManager.AddGold(500);
-                Debug.Log("[MapSequence2D] Last map cleared!");
+                Debug.Log("[MapSequence] Last map cleared!");
 
                 if (fader != null)
                     yield return fader.FadeOut(1.0f);
@@ -220,69 +178,25 @@ namespace Dungeon.Manager
             }
         }
 
-        public void EnterCheckpoint(PlayerController2D pc)
+        private void SetPlayerControl(Component playerController, bool enabled, bool stopImmediately)
         {
-            if (isTransitioning) return;
+            if (playerController == null) return;
 
-            isTransitioning = true;
-            pendingPlayer = pc;
+            MethodInfo method = playerController.GetType().GetMethod(
+                "SetControl",
+                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance,
+                null,
+                new[] { typeof(bool), typeof(bool) },
+                null
+            );
 
-            if (pendingPlayer != null)
-                pendingPlayer.SetControl(false, stopImmediately: true);
+            if (method != null)
+            {
+                method.Invoke(playerController, new object[] { enabled, stopImmediately });
+                return;
+            }
 
-            StartCoroutine(CoEnterCheckpoint());
-        }
-
-        private IEnumerator CoEnterCheckpoint()
-        {
-            yield return null;
-
-            string currentSceneName = SceneManager.GetActiveScene().name;
-            SaveFileManager.AddGold(500);
-            SaveFileManager.SaveCheckpoint(currentSceneName, currentIndex);
-
-            if (fader == null)
-                fader = FindFirstObjectByType<ScreenFader>(FindObjectsInactive.Include);
-
-            if (fader != null)
-                yield return fader.FadeOut(fadeInSeconds);
-
-            SceneManager.LoadScene(checkpointSceneName);
-        }
-
-        public void ReloadCurrentMap(PlayerController2D pc = null)
-        {
-            if (isTransitioning) return;
-
-            isTransitioning = true;
-            pendingPlayer = pc;
-
-            if (pendingPlayer != null)
-                pendingPlayer.SetControl(false, stopImmediately: true);
-
-            StartCoroutine(CoReloadCurrentMap());
-        }
-
-        private IEnumerator CoReloadCurrentMap()
-        {
-            if (fader == null)
-                fader = FindFirstObjectByType<ScreenFader>(FindObjectsInactive.Include);
-
-            if (fader != null)
-                yield return fader.FadeOut(fadeInSeconds);
-
-            LoadCurrent();
-
-            yield return null;
-
-            if (fader != null)
-                yield return fader.FadeIn(fadeInSeconds);
-
-            if (pendingPlayer != null)
-                pendingPlayer.SetControl(true, stopImmediately: true);
-
-            pendingPlayer = null;
-            isTransitioning = false;
+            Debug.LogWarning($"[MapSequence] {playerController.GetType().Name}에 SetControl(bool, bool) 메서드가 없습니다.");
         }
     }
 }

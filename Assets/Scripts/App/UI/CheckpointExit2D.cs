@@ -1,47 +1,64 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Dungeon.Player;
-using Dungeon.Core;
+using Dungeon.Manager;
+using Dungeon.UI;
 
-namespace Dungeon.Checkpoint
+namespace Dungeon.Checkpoints
 {
-    [RequireComponent(typeof(Collider2D))]
-    public class CheckpointExit2D : MonoBehaviour
+public class CheckpointExit2D : MonoBehaviour
+{
+    [Header("Detect")]
+    [SerializeField] private string playerTag = "Player";
+    [SerializeField] private Transform portalCenter;
+    [SerializeField] private float reachRadius = 0.25f;
+
+    [Header("Fade")]
+    [SerializeField] private ScreenFader fader;
+    [SerializeField] private float fadeOutSeconds = 1.0f;
+
+    private bool triggered;
+
+    private void Awake()
     {
-        private bool used;
+        if (portalCenter == null) portalCenter = transform;
 
-        private void Reset()
+        if (fader == null)
+            fader = FindFirstObjectByType<ScreenFader>(FindObjectsInactive.Include);
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (triggered) return;
+
+        var pc = other.GetComponentInParent<PlayerController2D>();
+        if (pc == null) return;
+        if (!pc.CompareTag(playerTag)) return;
+
+        Vector2 playerCenter = other.bounds.center;
+        float dist = Vector2.Distance(playerCenter, portalCenter.position);
+        if (dist > reachRadius) return;
+
+        triggered = true;
+        StartCoroutine(CoExitCheckpoint(pc));
+    }
+
+    private IEnumerator CoExitCheckpoint(PlayerController2D pc)
+    {
+        pc.SetControl(false, stopImmediately: true);
+
+        if (fader != null) yield return fader.FadeOut(fadeOutSeconds);
+        else yield return new WaitForSeconds(fadeOutSeconds);
+
+        if (SaveManager.Instance == null || !SaveManager.Instance.ExitCheckpointToSavedNextMap())
         {
-            Collider2D col = GetComponent<Collider2D>();
-            col.isTrigger = true;
-        }
+            Debug.LogWarning("[CheckpointExit2D] Failed to exit checkpoint. SaveManager or checkpoint data missing.");
 
-        private void Awake()
-        {
-            Collider2D col = GetComponent<Collider2D>();
-            col.isTrigger = true;
-        }
+            if (pc != null)
+                pc.SetControl(true, stopImmediately: true);
 
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (used) return;
-
-            PlayerController2D player = other.GetComponentInParent<PlayerController2D>();
-            if (player == null) return;
-
-            used = true;
-
-            SaveFileManager.RequestCheckpointResume();
-
-            string sceneName = SaveFileManager.GetCheckpointSceneName();
-
-            if (string.IsNullOrEmpty(sceneName))
-            {
-                Debug.LogWarning("[CheckpointExit2D] 저장된 던전 Scene 이름이 없습니다.");
-                return;
-            }
-
-            SceneManager.LoadScene(sceneName);
+            triggered = false;
         }
     }
+}
 }
