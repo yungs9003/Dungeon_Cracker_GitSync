@@ -1,8 +1,11 @@
 {
   "user_name":"Toluse",
-  "gold": 35600,
+  "gold": 2500,
+  "broken_traps": 0,
+  "clear_reward_claimed": false,
+  "last_getting_gold": 0,
   "main_stats":{
-    "max_HP":650,
+    "max_HP":150,
     "physical_resist":10,
     "magical_resist":20
   },
@@ -14,10 +17,11 @@
     "freeze_resist": 0
   },
   "item": [
-    { "item-006": 2 }
+    { "000": 2 }
   ],
   "equip": [
-    { "equip-008": 3 }
+    { "000": 3 },
+    { "001": 5 }
   ],
   "checkpoint": {
     "sceneName": "",

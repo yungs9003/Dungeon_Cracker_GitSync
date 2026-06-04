@@ -1,7 +1,7 @@
 {
   "gold": 0,
   "item": [
-    { "dummy1": 0},
+    { "dummy1": 10},
     { "dummy2": 0 }
   ],
   "checkpoint": {

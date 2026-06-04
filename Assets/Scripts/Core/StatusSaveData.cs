@@ -13,6 +13,15 @@ namespace Dungeon.Core
         [JsonProperty("gold")]
         public int gold = 0;
 
+        [JsonProperty("broken_traps")]
+        public int broken_traps = 0;
+
+        [JsonProperty("clear_reward_claimed")]
+        public bool clear_reward_claimed = false;
+
+        [JsonProperty("last_getting_gold")]
+        public int last_getting_gold = 0;
+
         [JsonProperty("main_stats")]
         public MainStats main_stats = new();
 
@@ -72,13 +81,11 @@ namespace Dungeon.Core
         [JsonProperty("electric_resist")]
         public int electric_resist = 0;
 
-        // 기존 savefile은 amber_resist로 되어 있음
         [JsonProperty("amber_resist")]
         public int amber_resist = 0;
 
         [JsonProperty("freeze_resist")]
         public int freeze_resist = 0;
-
     }
 
     [Serializable]

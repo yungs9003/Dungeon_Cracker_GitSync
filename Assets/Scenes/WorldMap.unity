@@ -6623,7 +6623,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760e6ba2ca5ef2b48a04897afe0435db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.StatusSaveFile
-  fileName: savefile.json
+  sourceFileName: savefile.json
+  useDevelopmentRuntimeCopy: 1
+  runtimeCopyFileName: savefile_dev_runtime.json
+  deleteRuntimeCopyOnQuit: 1
+  logSavePath: 1
 --- !u!224 &1182390668
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10459,7 +10463,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1285610271}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5957446
+  m_Size: 0.59574467
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

@@ -22,19 +22,33 @@ namespace Dungeon.Traps
         [SerializeField] private bool disableTrapsBeforeDestroy = true;
         [SerializeField] private bool destroyNextFrame = true;
 
+        [Header("Save Count")]
+        [SerializeField] private bool countAsBrokenTrap = true;
+
+        private bool alreadyDestroyed;
+
         private void Awake()
         {
-            if (destroyRoot == null) destroyRoot = transform;
+            if (destroyRoot == null)
+                destroyRoot = transform;
         }
 
         public void ExecuteDestruction()
         {
+            if (alreadyDestroyed)
+                return;
+
+            alreadyDestroyed = true;
+
             if (disableTrapsBeforeDestroy)
                 DisableTraps();
 
+            AddBrokenTrapCount();
+
             SpawnReplacement();
 
-            if (destroyRoot == null) return;
+            if (destroyRoot == null)
+                return;
 
             if (destroyNextFrame)
                 StartCoroutine(DestroyCo());
@@ -42,31 +56,51 @@ namespace Dungeon.Traps
                 Destroy(destroyRoot.gameObject);
         }
 
+        private void AddBrokenTrapCount()
+        {
+            if (!countAsBrokenTrap)
+                return;
+
+            if (StatusSaveFile.Instance == null)
+            {
+                Debug.LogWarning("[Destructible] StatusSaveFile.Instance is missing. broken_traps was not increased.");
+                return;
+            }
+
+            StatusSaveFile.Instance.AddBrokenTrap(1);
+        }
+
         private void SpawnReplacement()
         {
-            if (replacementPrefab == null) return;
+            if (replacementPrefab == null)
+                return;
 
             Transform baseTf = replacementSpawnPoint != null ? replacementSpawnPoint : destroyRoot;
-            if (baseTf == null) baseTf = transform;
+            if (baseTf == null)
+                baseTf = transform;
 
             Vector3 spawnPos = baseTf.position;
             Quaternion spawnRot = copyDestroyedObjectRotation ? baseTf.rotation : Quaternion.identity;
 
             Instantiate(replacementPrefab, spawnPos, spawnRot);
-            SaveFileManager.AddDummy1(1);
         }
 
         private void DisableTraps()
         {
-            if (destroyRoot == null) return;
+            if (destroyRoot == null)
+                return;
 
             if (explicitTrapToggles != null && explicitTrapToggles.Length > 0)
             {
                 foreach (var mb in explicitTrapToggles)
                 {
-                    if (mb == null) continue;
-                    if (mb is ITrapToggle t) t.SetTrapEnabled(false);
+                    if (mb == null)
+                        continue;
+
+                    if (mb is ITrapToggle t)
+                        t.SetTrapEnabled(false);
                 }
+
                 return;
             }
 
@@ -81,6 +115,7 @@ namespace Dungeon.Traps
         private System.Collections.IEnumerator DestroyCo()
         {
             yield return null;
+
             if (destroyRoot != null)
                 Destroy(destroyRoot.gameObject);
         }

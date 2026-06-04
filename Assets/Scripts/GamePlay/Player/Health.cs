@@ -72,13 +72,14 @@ public class Health : MonoBehaviour
 
     private void ResolveSaveFileReference()
     {
-        if (saveFile != null)
+    // 이미 살아있는 진짜 싱글톤이 있으면 무조건 그걸 사용
+        if (StatusSaveFile.Instance != null)
+        {
+            saveFile = StatusSaveFile.Instance;
             return;
-
-        saveFile = StatusSaveFile.Instance;
-
-        if (saveFile == null)
-            saveFile = FindFirstObjectByType<StatusSaveFile>();
+        }
+    // Instance가 아직 없을 때만 임시로 찾기
+        saveFile = FindFirstObjectByType<StatusSaveFile>();
     }
 
     private void OnSaveDataChanged(StatusSaveData data)
@@ -89,6 +90,13 @@ public class Health : MonoBehaviour
 
     private void ApplySaveData(StatusSaveData data, bool fillCurrentHp)
     {
+        Debug.Log(
+    $"[Health] ApplySaveData. " +
+    $"Object={gameObject.name}, " +
+    $"SaveFileID={(saveFile != null ? saveFile.GetInstanceID().ToString() : "null")}, " +
+    $"maxHP from save={data.main_stats.max_HP}, " +
+    $"currentHP before={currentHP}"
+);
         if (!loadMaxHpFromSaveFile)
         {
             if (!initializedFromSaveFile)
