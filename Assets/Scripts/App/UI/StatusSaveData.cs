@@ -79,16 +79,6 @@ namespace Dungeon.UI
         [JsonProperty("freeze_resist")]
         public int freeze_resist = 0;
 
-        public int GetPoisonResist()
-        {
-            return poison_resist != 0 ? poison_resist : posion_resist;
-        }
-
-        public void SetPoisonResist(int value)
-        {
-            posion_resist = value;
-            poison_resist = value;
-        }
     }
 
     [Serializable]

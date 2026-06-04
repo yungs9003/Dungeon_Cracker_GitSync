@@ -100,7 +100,7 @@ namespace Dungeon.UI
                 speedRow.SetValue(data.sub_stats.speed);
 
             if (poisonRow != null)
-                poisonRow.SetValue(data.sub_stats.GetPoisonResist());
+                poisonRow.SetValue(data.sub_stats.poison_resist);
 
             if (electricRow != null)
                 electricRow.SetValue(data.sub_stats.electric_resist);

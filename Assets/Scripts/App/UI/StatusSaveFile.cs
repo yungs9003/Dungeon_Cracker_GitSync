@@ -133,7 +133,7 @@ namespace Dungeon.UI
             int freezeResist)
         {
             data.sub_stats.speed = speed;
-            data.sub_stats.SetPoisonResist(poisonResist);
+            data.sub_stats.poison_resist = poisonResist;
             data.sub_stats.electric_resist = electricResist;
             data.sub_stats.amber_resist = amberResist;
             data.sub_stats.freeze_resist = freezeResist;
