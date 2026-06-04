@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Dungeon.UI
+namespace Dungeon.Core
 {
     [Serializable]
     public class StatusSaveData

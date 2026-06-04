@@ -3,7 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Dungeon.UI
+namespace Dungeon.Core
 {
     public class StatusSaveFile : MonoBehaviour
     {

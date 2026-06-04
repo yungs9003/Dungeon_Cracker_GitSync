@@ -1236,6 +1236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 356825280}
   - component: {fileID: 356825281}
+  - component: {fileID: 356825282}
   m_Layer: 5
   m_Name: EmberRow
   m_TagString: Untagged
@@ -1286,6 +1287,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &356825282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356825279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bbabfd06d724774fa99140e3553df6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.StatusInfoRowUI
+  iconImage: {fileID: 1614078663}
+  labelText: {fileID: 1853035300}
+  valueText: {fileID: 1395298455}
 --- !u!1 &398504866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1331,6 +1347,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 420265170}
+  - component: {fileID: 420265171}
   m_Layer: 5
   m_Name: StatusSaveFileManager
   m_TagString: Untagged
@@ -1345,18 +1362,31 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 420265169}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7023714, y: 0.7023714, z: 0.7023714}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1192764041}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1082.0487, y: 479.09128}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &420265171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420265169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760e6ba2ca5ef2b48a04897afe0435db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.StatusSaveFile
+  fileName: savefile.json
 --- !u!1 &440308628
 GameObject:
   m_ObjectHideFlags: 0
@@ -2317,6 +2347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 619009437}
   - component: {fileID: 619009438}
+  - component: {fileID: 619009439}
   m_Layer: 5
   m_Name: FreezeRow
   m_TagString: Untagged
@@ -2367,6 +2398,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &619009439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619009436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bbabfd06d724774fa99140e3553df6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.StatusInfoRowUI
+  iconImage: {fileID: 1976108465}
+  labelText: {fileID: 1764836367}
+  valueText: {fileID: 95564670}
 --- !u!1 &635730306
 GameObject:
   m_ObjectHideFlags: 0
@@ -3575,6 +3621,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 925677273}
+  - component: {fileID: 925677274}
   m_Layer: 5
   m_Name: StatusPage
   m_TagString: Untagged
@@ -3605,6 +3652,31 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &925677274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925677272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 423faaf8cd39e284eabb485e5ed9278b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.StatusPageUI
+  saveFile: {fileID: 420265171}
+  health: {fileID: 1231916241}
+  nameValueText: {fileID: 48070994}
+  goldValueText: {fileID: 1530176565}
+  currentHpText: {fileID: 650661202}
+  maxHpText: {fileID: 1961293816}
+  physicalGuardValueText: {fileID: 703500594}
+  magicGuardValueText: {fileID: 566543466}
+  speedRow: {fileID: 1151671443}
+  poisonRow: {fileID: 1538165203}
+  electricRow: {fileID: 1496324424}
+  emberRow: {fileID: 356825282}
+  freezeRow: {fileID: 619009439}
 --- !u!1 &959507751
 GameObject:
   m_ObjectHideFlags: 0
@@ -4383,6 +4455,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1151671441}
   - component: {fileID: 1151671442}
+  - component: {fileID: 1151671443}
   m_Layer: 5
   m_Name: SpeedRow
   m_TagString: Untagged
@@ -4433,6 +4506,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1151671443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151671440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bbabfd06d724774fa99140e3553df6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.StatusInfoRowUI
+  iconImage: {fileID: 1330620976}
+  labelText: {fileID: 1619021801}
+  valueText: {fileID: 1266936162}
 --- !u!1 &1172102533
 GameObject:
   m_ObjectHideFlags: 0
@@ -4747,7 +4835,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 398504867}
-  - {fileID: 420265170}
   - {fileID: 1712522872}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4973,6 +5060,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1218862300}
   m_CullTransparentMesh: 1
+--- !u!1 &1231916240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1231916242}
+  - component: {fileID: 1231916241}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1231916241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231916240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d289bfec15dcb9f46add361302812f89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Player.Health
+  maxHP: 3
+  loadMaxHpFromSaveFile: 1
+  saveFile: {fileID: 420265171}
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onDied:
+    m_PersistentCalls:
+      m_Calls: []
+  useInvincibility: 1
+  invincibilityAfterHit: 0.35
+--- !u!4 &1231916242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231916240}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 767.5, y: 367, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1236917055
 GameObject:
   m_ObjectHideFlags: 0
@@ -6329,6 +6471,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1496324422}
   - component: {fileID: 1496324423}
+  - component: {fileID: 1496324424}
   m_Layer: 5
   m_Name: ElectricRow
   m_TagString: Untagged
@@ -6379,6 +6522,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1496324424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496324421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bbabfd06d724774fa99140e3553df6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.StatusInfoRowUI
+  iconImage: {fileID: 875213988}
+  labelText: {fileID: 447910910}
+  valueText: {fileID: 1671952076}
 --- !u!1 &1530176563
 GameObject:
   m_ObjectHideFlags: 0
@@ -6526,6 +6684,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1538165201}
   - component: {fileID: 1538165202}
+  - component: {fileID: 1538165203}
   m_Layer: 5
   m_Name: PoisonRow
   m_TagString: Untagged
@@ -6576,6 +6735,21 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1538165203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538165200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bbabfd06d724774fa99140e3553df6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.StatusInfoRowUI
+  iconImage: {fileID: 856885106}
+  labelText: {fileID: 1789972820}
+  valueText: {fileID: 190769985}
 --- !u!1 &1614078661
 GameObject:
   m_ObjectHideFlags: 0
@@ -7009,6 +7183,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1712522872}
+  - component: {fileID: 1712522873}
   m_Layer: 5
   m_Name: StatusWindowController
   m_TagString: Untagged
@@ -7035,6 +7210,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1712522873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712522871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc8375ac7538e94ba59e0400951d86d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.StatusWindowController
+  statusWindowRoot: {fileID: 398504866}
+  statusPageUI: {fileID: 925677274}
+  toggleKey: 9
+  refreshWhenOpened: 1
 --- !u!1 &1733623243
 GameObject:
   m_ObjectHideFlags: 0
@@ -8831,4 +9022,6 @@ SceneRoots:
   - {fileID: 256911231}
   - {fileID: 1459741368}
   - {fileID: 959507754}
+  - {fileID: 420265170}
   - {fileID: 1192764041}
+  - {fileID: 1231916242}

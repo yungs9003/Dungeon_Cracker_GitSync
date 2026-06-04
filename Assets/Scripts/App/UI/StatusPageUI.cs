@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using Dungeon.Player;
+using Dungeon.Core;
 
 namespace Dungeon.UI
 {
