@@ -16,11 +16,11 @@ namespace Dungeon.UI
         [SerializeField] private TMP_Text hitCountText;
 
         [Header("Format")]
-        [SerializeField] private string brokenTrapsFormat = "파괴한 함정 수: {0}";
-        [SerializeField] private string gettingGoldFormat = "획득한 골드: {0} G";
-        [SerializeField] private string totalGoldFormat = "총 골드: {0} G";
-        [SerializeField] private string clearTimeFormat = "클리어 타임: {0}";
-        [SerializeField] private string hitCountFormat = "피격 횟수: {0}";
+        [SerializeField] private string brokenTrapsFormat = "{0}개";
+        [SerializeField] private string gettingGoldFormat = "{0} G";
+        [SerializeField] private string totalGoldFormat = "{0} G";
+        [SerializeField] private string clearTimeFormat = "{0}";
+        [SerializeField] private string hitCountFormat = "{0}회";
 
         [Header("Leave Clear Scene")]
         [SerializeField] private string nextSceneName = "MainMenu";
