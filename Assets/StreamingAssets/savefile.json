@@ -26,7 +26,8 @@
   "checkpoint": {
     "sceneName": "",
     "mapIndex": -1,
-    "resumeRequested": false
+    "resumeRequested": false,
+    "broken_traps_snapshot": 0
   },
   "dungeon_status": [
     { "001": "" }

@@ -99,5 +99,8 @@ namespace Dungeon.Core
 
         [JsonProperty("resumeRequested")]
         public bool resumeRequested = false;
+
+        [JsonProperty("broken_traps_snapshot")]
+        public int broken_traps_snapshot = 0;
     }
 }

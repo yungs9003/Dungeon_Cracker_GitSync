@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -20,11 +21,11 @@ public class DungeonPopupPanelController : MonoBehaviour
     [SerializeField] private TMP_Text descriptionText;
 
     [Header("Farmable Items (dynamic prefab)")]
-    [SerializeField] private Transform farmItemContainer;   // FarmItemsContainer 연결
-    [SerializeField] private GameObject farmItemPrefab;     // FarmItemIcon 프리팹 연결
+    [SerializeField] private Transform farmItemContainer;
+    [SerializeField] private GameObject farmItemPrefab;
 
     [Header("Clear Circles (3)")]
-    [SerializeField] private Image[] clearCircles; // size 3
+    [SerializeField] private Image[] clearCircles;
     [SerializeField] private Sprite circleEmpty;
     [SerializeField] private Sprite circleBlueFilled;
     [SerializeField] private Sprite circleWhiteFilled;
@@ -34,7 +35,9 @@ public class DungeonPopupPanelController : MonoBehaviour
 
     private void Awake()
     {
-        if (panelRoot == null) panelRoot = gameObject;
+        if (panelRoot == null)
+            panelRoot = gameObject;
+
         panelRoot.SetActive(false);
     }
 
@@ -47,11 +50,6 @@ public class DungeonPopupPanelController : MonoBehaviour
             Debug.LogError("[DungeonPopup] DungeonDatabase.Instance is null. Add DungeonDatabase to scene.");
             return;
         }
-        if (SaveManager.Instance == null)
-        {
-            Debug.LogError("[DungeonPopup] SaveManager.Instance is null. Add SaveManager to scene.");
-            return;
-        }
 
         if (!DungeonDatabase.Instance.TryGetDungeon(dungeonId, out var info))
         {
@@ -61,75 +59,176 @@ public class DungeonPopupPanelController : MonoBehaviour
 
         targetSceneName = info.sceneName;
 
-        // --- Preview ---
-        if (previewImage != null)
-        {
-            var sp = Resources.Load<Sprite>(info.previewSpritePath);
-            if (sp == null)
-                Debug.LogError($"[DungeonPopup] Preview sprite not found: '{info.previewSpritePath}'");
-
-            previewImage.sprite = sp;
-            previewImage.enabled = (sp != null);
-            previewImage.preserveAspect = true;
-        }
-
-        // --- Texts ---
-        if (dungeonNameText != null) dungeonNameText.text = info.name ?? "";
-        if (descriptionText != null) descriptionText.text = info.description ?? "";
-
-        // --- Farm Items (dynamic) ---
+        ApplyPreview(info);
+        ApplyTexts(info);
         BuildFarmItems(info.farmableItems);
 
-        // --- Clear Circles from Save ---
-        var progress = SaveManager.Instance.GetOrCreateDungeonProgress(dungeonId);
-        ApplyClearCircles(progress);
+        int achieved = GetAchievedClearCount(dungeonId);
+        ApplyClearCircles(achieved);
 
         panelRoot.SetActive(true);
     }
 
-    private void BuildFarmItems(System.Collections.Generic.List<FarmItemInfo> items)
+    private void ApplyPreview(DungeonInfo info)
     {
-        if (farmItemContainer == null || farmItemPrefab == null) return;
+        if (previewImage == null)
+            return;
 
-        // 1) 이전에 생성된 아이콘 삭제
+        var sp = Resources.Load<Sprite>(info.previewSpritePath);
+
+        if (sp == null)
+            Debug.LogError($"[DungeonPopup] Preview sprite not found: '{info.previewSpritePath}'");
+
+        previewImage.sprite = sp;
+        previewImage.enabled = sp != null;
+        previewImage.preserveAspect = true;
+    }
+
+    private void ApplyTexts(DungeonInfo info)
+    {
+        if (dungeonNameText != null)
+            dungeonNameText.text = info.name ?? "";
+
+        if (descriptionText != null)
+            descriptionText.text = info.description ?? "";
+    }
+
+    private void BuildFarmItems(List<FarmItemInfo> items)
+    {
+        if (farmItemContainer == null || farmItemPrefab == null)
+            return;
+
         for (int i = farmItemContainer.childCount - 1; i >= 0; i--)
         {
             Destroy(farmItemContainer.GetChild(i).gameObject);
         }
 
-        if (items == null) return;
+        if (items == null)
+            return;
 
-        // 2) 아이템 개수만큼 프리팹 생성
         foreach (var item in items)
         {
             var go = Instantiate(farmItemPrefab, farmItemContainer);
 
             var img = go.GetComponent<Image>();
-            if (img == null) img = go.GetComponentInChildren<Image>();
+            if (img == null)
+                img = go.GetComponentInChildren<Image>();
 
-            if (img != null)
-            {
-                var sp = Resources.Load<Sprite>(item.iconSpritePath);
-                if (sp == null)
-                    Debug.LogError($"[DungeonPopup] Farm item icon not found: '{item.iconSpritePath}'");
+            if (img == null)
+                continue;
 
-                img.sprite = sp;
-                img.enabled = (sp != null);
-                img.preserveAspect = true;
-            }
+            var sp = Resources.Load<Sprite>(item.iconSpritePath);
+
+            if (sp == null)
+                Debug.LogError($"[DungeonPopup] Farm item icon not found: '{item.iconSpritePath}'");
+
+            img.sprite = sp;
+            img.enabled = sp != null;
+            img.preserveAspect = true;
         }
     }
 
-    private void ApplyClearCircles(DungeonProgress progress)
+    private int GetAchievedClearCount(string dungeonId)
     {
-        if (clearCircles == null || clearCircles.Length < 3) return;
+        StatusSaveFile saveFile = StatusSaveFile.Instance;
 
-        int achieved = 0;
-        if (progress?.criteria != null)
+        if (saveFile == null || saveFile.Data == null)
         {
-            for (int i = 0; i < progress.criteria.Length; i++)
-                if (progress.criteria[i]) achieved++;
+            Debug.LogWarning("[DungeonPopup] StatusSaveFile.Instance is missing. Clear circles will be empty.");
+            return 0;
         }
+
+        var dungeonStatus = saveFile.Data.dungeon_status;
+
+        if (dungeonStatus == null)
+            return 0;
+
+        foreach (var entry in dungeonStatus)
+        {
+            if (entry == null)
+                continue;
+
+            foreach (var pair in entry)
+            {
+                if (!IsSameDungeonKey(pair.Key, dungeonId))
+                    continue;
+
+                return ParseAchievedClearCount(pair.Value);
+            }
+        }
+
+        return 0;
+    }
+
+    private bool IsSameDungeonKey(string savedKey, string requestedDungeonId)
+    {
+        if (savedKey == requestedDungeonId)
+            return true;
+
+        string savedDigits = ExtractDigits(savedKey);
+        string requestedDigits = ExtractDigits(requestedDungeonId);
+
+        return !string.IsNullOrEmpty(savedDigits)
+               && !string.IsNullOrEmpty(requestedDigits)
+               && savedDigits == requestedDigits;
+    }
+
+    private string ExtractDigits(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+            return "";
+
+        string result = "";
+
+        foreach (char c in text)
+        {
+            if (char.IsDigit(c))
+                result += c;
+        }
+
+        return result;
+    }
+
+    private int ParseAchievedClearCount(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return 0;
+
+        value = value.Trim();
+
+        if (int.TryParse(value, out int numericCount))
+            return Mathf.Clamp(numericCount, 0, 4);
+
+        int count = 0;
+
+        string[] tokens = value.Split(':', ',', '/', '|', ';', ' ');
+
+        foreach (string rawToken in tokens)
+        {
+            string token = rawToken.Trim().ToLower();
+
+            if (string.IsNullOrEmpty(token))
+                continue;
+
+            if (token == "1" ||
+                token == "true" ||
+                token == "clear" ||
+                token == "cleared" ||
+                token == "yes")
+            {
+                count++;
+            }
+        }
+
+        return Mathf.Clamp(count, 0, 4);
+    }
+
+    private void ApplyClearCircles(int achieved)
+    {
+        if (clearCircles == null || clearCircles.Length < 3)
+            return;
+
+        achieved = Mathf.Clamp(achieved, 0, 4);
 
         if (achieved >= 4)
         {
@@ -140,17 +239,21 @@ public class DungeonPopupPanelController : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                if (i < achieved) SetCircle(clearCircles[i], circleBlueFilled);
-                else SetCircle(clearCircles[i], circleEmpty);
+                if (i < achieved)
+                    SetCircle(clearCircles[i], circleBlueFilled);
+                else
+                    SetCircle(clearCircles[i], circleEmpty);
             }
         }
     }
 
     private void SetCircle(Image img, Sprite sp)
     {
-        if (img == null) return;
+        if (img == null)
+            return;
+
         img.sprite = sp;
-        img.enabled = (sp != null);
+        img.enabled = sp != null;
         img.preserveAspect = true;
     }
 

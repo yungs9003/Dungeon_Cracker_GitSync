@@ -12,9 +12,9 @@ namespace Dungeon.UI
         [SerializeField] private TMP_Text totalGoldText;
 
         [Header("Format")]
-        [SerializeField] private string brokenTrapsFormat = "Broken Traps: {0}";
-        [SerializeField] private string gettingGoldFormat = "Getting Gold: {0} G";
-        [SerializeField] private string totalGoldFormat = "Total Gold: {0} G";
+        [SerializeField] private string brokenTrapsFormat = "파괴한 함정 수: {0}";
+        [SerializeField] private string gettingGoldFormat = "획득한 골드: {0} G";
+        [SerializeField] private string totalGoldFormat = "총 골드: {0} G";
 
         private void Start()
         {

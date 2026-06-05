@@ -1,19 +1,9 @@
-using System;
-using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Dungeon.Core;
 
 namespace Dungeon.Manager
 {
-    /// <summary>
-    /// SaveManager는 저장 데이터와 체크포인트 정보를 관리한다.
-    ///
-    /// 주의:
-    /// - 이 스크립트는 Assets/Scripts/App 쪽에 둔다.
-    /// - GamePlay asmdef에서 Dungeon.App을 참조하지 않아도 되도록,
-    ///   Respawn2D 쪽에서는 이 타입을 직접 참조하지 않고 reflection으로 호출하는 구조를 사용한다.
-    /// </summary>
     public class SaveManager : MonoBehaviour
     {
         public static SaveManager Instance { get; private set; }
@@ -22,36 +12,28 @@ namespace Dungeon.Manager
         [SerializeField] private string defaultCheckpointSceneName = "CheckpointScene";
         [SerializeField] private string clearSceneName = "ClearScene";
 
-        private PlayerSaveData data = new();
+        private int pendingMapIndex = -1;
+        private string pendingReturnSceneName = "";
 
-        private string SavePath => Path.Combine(Application.persistentDataPath, "player_save.json");
-
-        // --------------------------------------------------------------------
-        // Reflection 호환용 공개 프로퍼티
-        // Respawn2D_reflection_no_asmdef_cycle.cs에서 문자열 이름으로 찾을 수 있게 유지한다.
-        // --------------------------------------------------------------------
-
-        public bool HasCheckpoint => data != null && data.hasCheckpoint;
-
-        // 기존 코드와 호환용 별칭
-        public bool HasActiveCheckpoint => HasCheckpoint;
-
-        public string CheckpointSceneName
+        public bool HasCheckpoint
         {
             get
             {
-                if (data == null)
-                    data = new PlayerSaveData();
-
-                if (string.IsNullOrEmpty(data.checkpointSceneName))
-                    data.checkpointSceneName = defaultCheckpointSceneName;
-
-                return data.checkpointSceneName;
+                StatusSaveData data = GetData();
+                return data != null
+                       && data.checkpoint != null
+                       && data.checkpoint.resumeRequested
+                       && !string.IsNullOrEmpty(data.checkpoint.sceneName)
+                       && data.checkpoint.mapIndex >= 0;
             }
         }
 
-        public int PendingMapIndex => data != null ? data.pendingMapIndex : -1;
-        public string PendingReturnSceneName => data != null ? data.pendingReturnSceneName : "";
+        public bool HasActiveCheckpoint => HasCheckpoint;
+
+        public string CheckpointSceneName => defaultCheckpointSceneName;
+
+        public int PendingMapIndex => pendingMapIndex;
+        public string PendingReturnSceneName => pendingReturnSceneName;
 
         private void Awake()
         {
@@ -62,156 +44,86 @@ namespace Dungeon.Manager
             }
 
             Instance = this;
-            DontDestroyOnLoad(gameObject);
 
-            Load();
+            if (transform.parent != null)
+                transform.SetParent(null);
+
+            DontDestroyOnLoad(gameObject);
 
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
+
+            EnsureCheckpointData();
         }
 
         private void OnDestroy()
         {
             if (Instance == this)
+            {
                 SceneManager.sceneLoaded -= OnSceneLoaded;
+                Instance = null;
+            }
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            // ClearScene에 들어가면 마지막 체크포인트 정보를 초기화한다.
             if (scene.name == clearSceneName)
                 ClearCheckpoint();
         }
 
-        // --------------------------------------------------------------------
-        // Basic save / load
-        // --------------------------------------------------------------------
-
-        public void Load()
+        private StatusSaveFile GetSaveFile()
         {
-            try
-            {
-                if (!File.Exists(SavePath))
-                {
-                    data = CreateDefaultData();
-                    Save();
-                    return;
-                }
+            if (StatusSaveFile.Instance != null)
+                return StatusSaveFile.Instance;
 
-                string json = File.ReadAllText(SavePath);
-                data = JsonUtility.FromJson<PlayerSaveData>(json);
-
-                if (data == null)
-                    data = CreateDefaultData();
-
-                ValidateData();
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[SaveManager] Load failed: {e}");
-                data = CreateDefaultData();
-            }
+            return FindFirstObjectByType<StatusSaveFile>();
         }
 
-        public void Save()
+        private StatusSaveData GetData()
         {
-            try
-            {
-                ValidateData();
+            StatusSaveFile saveFile = GetSaveFile();
 
-                string directory = Path.GetDirectoryName(SavePath);
-                if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
-                    Directory.CreateDirectory(directory);
-
-                string json = JsonUtility.ToJson(data, true);
-                File.WriteAllText(SavePath, json);
-            }
-            catch (Exception e)
+            if (saveFile == null)
             {
-                Debug.LogError($"[SaveManager] Save failed: {e}");
+                Debug.LogWarning("[SaveManager] StatusSaveFile.Instance is missing.");
+                return null;
             }
+
+            return saveFile.Data;
         }
 
-        private PlayerSaveData CreateDefaultData()
+        private void EnsureCheckpointData()
         {
-            PlayerSaveData created = new PlayerSaveData();
+            StatusSaveData data = GetData();
 
-            if (created.dungeons == null)
-                created.dungeons = new();
-
-            created.hasCheckpoint = false;
-            created.checkpointSceneName = defaultCheckpointSceneName;
-            created.checkpointReturnSceneName = "";
-            created.checkpointNextMapIndex = 0;
-            created.pendingReturnSceneName = "";
-            created.pendingMapIndex = -1;
-
-            return created;
-        }
-
-        private void ValidateData()
-        {
             if (data == null)
-                data = CreateDefaultData();
+                return;
 
-            if (data.dungeons == null)
-                data.dungeons = new();
-
-            if (string.IsNullOrEmpty(data.checkpointSceneName))
-                data.checkpointSceneName = defaultCheckpointSceneName;
-
-            // pendingMapIndex는 예약이 없을 때 -1이어야 한다.
-            if (string.IsNullOrEmpty(data.pendingReturnSceneName) && data.pendingMapIndex < 0)
-                data.pendingMapIndex = -1;
+            if (data.checkpoint == null)
+                data.checkpoint = new CheckpointData();
         }
 
-        // --------------------------------------------------------------------
-        // Dungeon progress
-        // --------------------------------------------------------------------
-
-        public DungeonProgress GetOrCreateDungeonProgress(string dungeonId)
+        private void SaveStatusFile()
         {
-            ValidateData();
+            StatusSaveFile saveFile = GetSaveFile();
 
-            for (int i = 0; i < data.dungeons.Count; i++)
+            if (saveFile == null)
             {
-                if (data.dungeons[i].dungeonId == dungeonId)
-                {
-                    EnsureCriteriaLength(data.dungeons[i]);
-                    return data.dungeons[i];
-                }
+                Debug.LogWarning("[SaveManager] Save failed. StatusSaveFile.Instance is missing.");
+                return;
             }
 
-            DungeonProgress created = new DungeonProgress
-            {
-                dungeonId = dungeonId,
-                criteria = new bool[4],
-                bestTimeMs = 0,
-                clearCount = 0,
-                lastPlayedUtc = ""
-            };
-
-            data.dungeons.Add(created);
-            return created;
+            saveFile.Save();
         }
 
-        private void EnsureCriteriaLength(DungeonProgress progress)
-        {
-            if (progress.criteria == null || progress.criteria.Length != 4)
-                progress.criteria = new bool[4];
-        }
-
-        // --------------------------------------------------------------------
-        // Checkpoint
-        // --------------------------------------------------------------------
-
-        /// <summary>
-        /// 체크포인트에 도달했을 때 호출한다.
-        /// returnSceneName으로 돌아갔을 때 nextMapIndex 맵부터 재개하도록 저장한다.
-        /// </summary>
         public void SetCheckpoint(string returnSceneName, int nextMapIndex, string checkpointSceneName = "")
         {
-            ValidateData();
+            EnsureCheckpointData();
+
+            StatusSaveData data = GetData();
+
+            if (data == null || data.checkpoint == null)
+                return;
 
             if (string.IsNullOrEmpty(returnSceneName))
             {
@@ -219,58 +131,80 @@ namespace Dungeon.Manager
                 return;
             }
 
-            data.hasCheckpoint = true;
-            data.checkpointSceneName = string.IsNullOrEmpty(checkpointSceneName)
-                ? defaultCheckpointSceneName
-                : checkpointSceneName;
+            data.checkpoint.sceneName = returnSceneName;
+            data.checkpoint.mapIndex = Mathf.Max(0, nextMapIndex);
+            data.checkpoint.resumeRequested = true;
+            data.checkpoint.broken_traps_snapshot = data.broken_traps;
 
-            data.checkpointReturnSceneName = returnSceneName;
-            data.checkpointNextMapIndex = Mathf.Max(0, nextMapIndex);
+            pendingReturnSceneName = "";
+            pendingMapIndex = -1;
 
-            // 이전에 남아 있을 수 있는 1회성 예약값은 제거한다.
-            data.pendingReturnSceneName = "";
-            data.pendingMapIndex = -1;
-
-            Save();
+            SaveStatusFile();
 
             Debug.Log(
-                $"[SaveManager] Checkpoint saved. " +
-                $"CheckpointScene={data.checkpointSceneName}, " +
-                $"ReturnScene={data.checkpointReturnSceneName}, " +
-                $"NextMapIndex={data.checkpointNextMapIndex}"
+                $"[SaveManager] Checkpoint saved to savefile_dev_runtime. " +
+                $"CheckpointScene={defaultCheckpointSceneName}, " +
+                $"ReturnScene={data.checkpoint.sceneName}, " +
+                $"NextMapIndex={data.checkpoint.mapIndex}" +
+                $"broken_traps={data.broken_traps}, " +
+                $"snapshot={data.checkpoint.broken_traps_snapshot}"
             );
         }
 
-        /// <summary>
-        /// HP 0 리스폰용.
-        /// 활성 체크포인트가 있으면 CheckpointScene으로 이동한다.
-        /// Respawn2D reflection 코드에서 이 메서드명을 찾으므로 이름을 바꾸지 않는 것이 좋다.
-        /// </summary>
         public bool LoadCheckpointSceneIfAvailable()
         {
-            ValidateData();
+            EnsureCheckpointData();
 
-            if (!HasCheckpoint)
+            StatusSaveData data = GetData();
+
+            if (data == null || data.checkpoint == null)
                 return false;
-
-            string sceneName = CheckpointSceneName;
-            if (string.IsNullOrEmpty(sceneName))
+            Debug.Log(
+                $"[SaveManager] LoadCheckpointSceneIfAvailable called. " +
+                $"HasCheckpoint={HasCheckpoint}, " +
+                $"sceneName={data.checkpoint.sceneName}, " +
+                $"mapIndex={data.checkpoint.mapIndex}, " +
+                $"resumeRequested={data.checkpoint.resumeRequested}, " +
+                $"broken_traps={data.broken_traps}, " +
+                $"snapshot={data.checkpoint.broken_traps_snapshot}"
+            );
+            if (!HasCheckpoint)
             {
-                Debug.LogWarning("[SaveManager] Checkpoint scene name is empty.");
+                data.broken_traps = 0;
+                data.clear_reward_claimed = false;
+                data.last_getting_gold = 0;
+
+                SaveStatusFile();
+                Debug.Log($"[SaveManager] No checkpoint. Reset broken_traps to 0. " + $"Current broken_traps={data.broken_traps}");
                 return false;
             }
 
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            if (string.IsNullOrEmpty(defaultCheckpointSceneName))
+            {
+                Debug.LogWarning("[SaveManager] defaultCheckpointSceneName is empty.");
+                return false;
+            }
+
+            data.broken_traps = Mathf.Max(0, data.checkpoint.broken_traps_snapshot);
+            data.clear_reward_claimed = false;
+            data.last_getting_gold = 0;
+
+            SaveStatusFile();
+            Debug.Log($"[SaveManager] Has checkpoint. Restore broken_traps to snapshot. " + $"Current broken_traps={data.broken_traps}");
+            Debug.Log($"[SaveManager] Load checkpoint scene: {defaultCheckpointSceneName}");
+
+            SceneManager.LoadScene(defaultCheckpointSceneName, LoadSceneMode.Single);
             return true;
         }
 
-        /// <summary>
-        /// 체크포인트 씬의 출구에서 호출한다.
-        /// 저장된 던전 씬으로 돌아가고, 그 씬의 MapSequenceManager가 pendingMapIndex부터 로드한다.
-        /// </summary>
         public bool ExitCheckpointToSavedNextMap()
         {
-            ValidateData();
+            EnsureCheckpointData();
+
+            StatusSaveData data = GetData();
+
+            if (data == null || data.checkpoint == null)
+                return false;
 
             if (!HasCheckpoint)
             {
@@ -278,74 +212,77 @@ namespace Dungeon.Manager
                 return false;
             }
 
-            if (string.IsNullOrEmpty(data.checkpointReturnSceneName))
+            if (string.IsNullOrEmpty(data.checkpoint.sceneName))
             {
-                Debug.LogWarning("[SaveManager] checkpointReturnSceneName is empty.");
+                Debug.LogWarning("[SaveManager] checkpoint.sceneName is empty.");
                 return false;
             }
 
-            data.pendingReturnSceneName = data.checkpointReturnSceneName;
-            data.pendingMapIndex = Mathf.Max(0, data.checkpointNextMapIndex);
-
-            Save();
+            pendingReturnSceneName = data.checkpoint.sceneName;
+            pendingMapIndex = Mathf.Max(0, data.checkpoint.mapIndex);
 
             Debug.Log(
                 $"[SaveManager] Exit checkpoint. " +
-                $"ReturnScene={data.pendingReturnSceneName}, PendingMapIndex={data.pendingMapIndex}"
+                $"ReturnScene={pendingReturnSceneName}, PendingMapIndex={pendingMapIndex}"
             );
 
-            SceneManager.LoadScene(data.pendingReturnSceneName, LoadSceneMode.Single);
+            SceneManager.LoadScene(pendingReturnSceneName, LoadSceneMode.Single);
             return true;
         }
 
-        /// <summary>
-        /// MapSequenceManager.Start()에서 호출한다.
-        /// 체크포인트 출구가 예약한 맵 index가 현재 씬에 해당하면 한 번만 꺼내간다.
-        /// </summary>
         public bool TryConsumePendingMapIndex(string sceneName, out int mapIndex)
         {
-            ValidateData();
-
             mapIndex = -1;
 
-            if (data.pendingMapIndex < 0)
+            if (pendingMapIndex < 0)
                 return false;
 
-            if (data.pendingReturnSceneName != sceneName)
+            if (pendingReturnSceneName != sceneName)
                 return false;
 
-            mapIndex = data.pendingMapIndex;
+            mapIndex = pendingMapIndex;
 
-            data.pendingReturnSceneName = "";
-            data.pendingMapIndex = -1;
-
-            Save();
+            pendingReturnSceneName = "";
+            pendingMapIndex = -1;
 
             Debug.Log($"[SaveManager] Consumed pending map index: {mapIndex} for scene {sceneName}");
             return true;
         }
 
-        /// <summary>
-        /// 체크포인트 정보와 체크포인트 출구 예약 정보를 모두 초기화한다.
-        /// ClearScene 진입 시와, 체크포인트가 없는 상태에서 던전 전체 재시작 시 사용한다.
-        /// </summary>
         public void ClearCheckpoint()
         {
-            ValidateData();
+            EnsureCheckpointData();
 
-            data.hasCheckpoint = false;
-            data.checkpointReturnSceneName = "";
-            data.checkpointNextMapIndex = 0;
+            StatusSaveData data = GetData();
 
-            data.pendingReturnSceneName = "";
-            data.pendingMapIndex = -1;
+            if (data == null || data.checkpoint == null)
+                return;
 
-            if (string.IsNullOrEmpty(data.checkpointSceneName))
-                data.checkpointSceneName = defaultCheckpointSceneName;
+            data.checkpoint.sceneName = "";
+            data.checkpoint.mapIndex = -1;
+            data.checkpoint.resumeRequested = false;
 
-            Save();
+            pendingReturnSceneName = "";
+            pendingMapIndex = -1;
 
-            Debug.Log("[SaveManager] Checkpoint cleared.");
+            SaveStatusFile();
+
+            Debug.Log("[SaveManager] Checkpoint cleared in savefile_dev_runtime.");
+        }
+
+        public void RestartDungeonFromFirstMap(string dungeonSceneName)
+        {
+            ClearCheckpoint();
+
+            if (string.IsNullOrEmpty(dungeonSceneName))
+            {
+                Debug.LogWarning("[SaveManager] RestartDungeonFromFirstMap failed: dungeonSceneName is empty.");
+                return;
+            }
+
+            Debug.Log($"[SaveManager] Restart dungeon from first map. Scene={dungeonSceneName}");
+
+            SceneManager.LoadScene(dungeonSceneName, LoadSceneMode.Single);
         }
     }
 }

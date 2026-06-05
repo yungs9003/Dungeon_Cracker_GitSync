@@ -157,7 +157,7 @@ namespace Dungeon.Player
                     !string.IsNullOrEmpty(checkpointScene) &&
                     activeScene == checkpointScene;
 
-                if (!isAlreadyInCheckpointScene && HasCheckpoint())
+                if (!isAlreadyInCheckpointScene)
                 {
                     if (TryLoadCheckpointScene())
                         return;
