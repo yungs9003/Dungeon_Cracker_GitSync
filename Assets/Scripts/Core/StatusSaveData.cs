@@ -22,6 +22,12 @@ namespace Dungeon.Core
         [JsonProperty("last_getting_gold")]
         public int last_getting_gold = 0;
 
+        [JsonProperty("clear_time_seconds")]
+        public float clear_time_seconds = 0f;
+
+        [JsonProperty("hit_count")]
+        public int hit_count = 0;
+
         [JsonProperty("main_stats")]
         public MainStats main_stats = new();
 

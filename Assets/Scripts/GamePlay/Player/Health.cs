@@ -15,7 +15,7 @@ public class Health : MonoBehaviour
     [SerializeField] private StatusSaveFile saveFile;
 
     [Header("Events")]
-    public UnityEvent<int, int> onHealthChanged; // (current, max)
+    public UnityEvent<int, int> onHealthChanged;
     public UnityEvent onDied;
 
     [Header("Invincibility (i-frames)")]
@@ -44,8 +44,7 @@ public class Health : MonoBehaviour
         }
         else
         {
-            // savefile을 아직 못 읽은 경우 임시로 Inspector 값을 사용
-            currentHP = maxHP;
+            currentHP = Mathf.Max(1, maxHP);
             onHealthChanged?.Invoke(currentHP, maxHP);
         }
     }
@@ -56,9 +55,9 @@ public class Health : MonoBehaviour
 
         if (saveFile != null)
         {
+            saveFile.OnSaveDataChanged -= OnSaveDataChanged;
             saveFile.OnSaveDataChanged += OnSaveDataChanged;
 
-            // Awake 순서 문제로 나중에 연결된 경우 여기서 다시 한 번 적용
             if (saveFile.Data != null)
                 ApplySaveData(saveFile.Data, fillCurrentHp: !initializedFromSaveFile);
         }
@@ -72,36 +71,30 @@ public class Health : MonoBehaviour
 
     private void ResolveSaveFileReference()
     {
-    // 이미 살아있는 진짜 싱글톤이 있으면 무조건 그걸 사용
         if (StatusSaveFile.Instance != null)
         {
             saveFile = StatusSaveFile.Instance;
             return;
         }
-    // Instance가 아직 없을 때만 임시로 찾기
+
         saveFile = FindFirstObjectByType<StatusSaveFile>();
     }
 
     private void OnSaveDataChanged(StatusSaveData data)
     {
-        // savefile이 나중에 로드되었을 때 처음 한 번은 currentHP도 maxHP로 채움
         ApplySaveData(data, fillCurrentHp: !initializedFromSaveFile);
     }
 
     private void ApplySaveData(StatusSaveData data, bool fillCurrentHp)
     {
-        Debug.Log(
-    $"[Health] ApplySaveData. " +
-    $"Object={gameObject.name}, " +
-    $"SaveFileID={(saveFile != null ? saveFile.GetInstanceID().ToString() : "null")}, " +
-    $"maxHP from save={data.main_stats.max_HP}, " +
-    $"currentHP before={currentHP}"
-);
+        if (data == null)
+            return;
+
         if (!loadMaxHpFromSaveFile)
         {
             if (!initializedFromSaveFile)
             {
-                currentHP = maxHP;
+                currentHP = Mathf.Max(1, maxHP);
                 initializedFromSaveFile = true;
                 onHealthChanged?.Invoke(currentHP, maxHP);
             }
@@ -109,21 +102,25 @@ public class Health : MonoBehaviour
             return;
         }
 
-        if (data == null || data.main_stats == null)
+        if (data.main_stats == null)
             return;
+
+        Debug.Log(
+            $"[Health] ApplySaveData. " +
+            $"Object={gameObject.name}, " +
+            $"SaveFileID={(saveFile != null ? saveFile.GetInstanceID().ToString() : "null")}, " +
+            $"maxHP from save={data.main_stats.max_HP}, " +
+            $"currentHP before={currentHP}"
+        );
 
         int savedMaxHp = Mathf.Max(1, data.main_stats.max_HP);
 
         maxHP = savedMaxHp;
 
         if (fillCurrentHp)
-        {
             currentHP = maxHP;
-        }
         else
-        {
             currentHP = Mathf.Clamp(currentHP, 0, maxHP);
-        }
 
         initializedFromSaveFile = true;
         onHealthChanged?.Invoke(currentHP, maxHP);
@@ -142,6 +139,8 @@ public class Health : MonoBehaviour
         if (amount <= 0 || currentHP <= 0) return;
         if (IsInvincible) return;
 
+        CountDirectHit();
+
         int finalDamage = amount;
 
         if (isBleedingActive)
@@ -155,6 +154,19 @@ public class Health : MonoBehaviour
 
         if (currentHP == 0)
             Die();
+    }
+
+    private void CountDirectHit()
+    {
+        StatusSaveFile file = StatusSaveFile.Instance;
+
+        if (file == null)
+        {
+            Debug.LogWarning("[Health] Cannot count hit. StatusSaveFile.Instance is missing.");
+            return;
+        }
+
+        file.AddHitCount(1);
     }
 
     public void TakeBleedingDamage(int amount, float duration = 7f, float tickInterval = 0.5f)
@@ -193,6 +205,7 @@ public class Health : MonoBehaviour
         {
             currentHP = Mathf.Max(0, currentHP - bleedingDamagePerTick);
             onHealthChanged?.Invoke(currentHP, maxHP);
+
             lastBleedingDamageTime = Time.time + bleedingTickInterval;
 
             if (currentHP == 0)

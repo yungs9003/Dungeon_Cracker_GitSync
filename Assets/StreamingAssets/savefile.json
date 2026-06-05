@@ -32,6 +32,8 @@
   "dungeon_status": [
     { "001": "" }
   ],
+  "hit_count": 0,
+  "clear_time_seconds": 0,
   "play_time":"135:26",
   "clear_num_info":"28:73:96",
   "adventure_count":128,

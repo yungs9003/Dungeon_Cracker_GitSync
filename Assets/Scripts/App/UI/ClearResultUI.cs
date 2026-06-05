@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Dungeon.Core;
+using Dungeon.Manager;
 
 namespace Dungeon.UI
 {
@@ -10,11 +12,18 @@ namespace Dungeon.UI
         [SerializeField] private TMP_Text brokenTrapsText;
         [SerializeField] private TMP_Text gettingGoldText;
         [SerializeField] private TMP_Text totalGoldText;
+        [SerializeField] private TMP_Text clearTimeText;
+        [SerializeField] private TMP_Text hitCountText;
 
         [Header("Format")]
         [SerializeField] private string brokenTrapsFormat = "파괴한 함정 수: {0}";
         [SerializeField] private string gettingGoldFormat = "획득한 골드: {0} G";
         [SerializeField] private string totalGoldFormat = "총 골드: {0} G";
+        [SerializeField] private string clearTimeFormat = "클리어 타임: {0}";
+        [SerializeField] private string hitCountFormat = "피격 횟수: {0}";
+
+        [Header("Leave Clear Scene")]
+        [SerializeField] private string nextSceneName = "MainMenu";
 
         private void Start()
         {
@@ -23,6 +32,10 @@ namespace Dungeon.UI
 
         public void Refresh()
         {
+            DungeonRunTracker2D tracker = DungeonRunTracker2D.Instance;
+            if (tracker != null)
+                tracker.FlushTimeToSave();
+
             StatusSaveFile saveFile = StatusSaveFile.Instance;
 
             if (saveFile == null)
@@ -33,10 +46,11 @@ namespace Dungeon.UI
             }
 
             int brokenTraps = saveFile.GetBrokenTraps();
-
             int gettingGold = saveFile.ClaimClearRewardGold();
-
             int totalGold = saveFile.Data.gold;
+
+            float clearSeconds = saveFile.GetClearTimeSeconds();
+            int hitCount = saveFile.GetHitCount();
 
             if (brokenTrapsText != null)
                 brokenTrapsText.text = string.Format(brokenTrapsFormat, brokenTraps);
@@ -46,6 +60,24 @@ namespace Dungeon.UI
 
             if (totalGoldText != null)
                 totalGoldText.text = string.Format(totalGoldFormat, totalGold);
+
+            if (clearTimeText != null)
+                clearTimeText.text = string.Format(clearTimeFormat, FormatTime(clearSeconds));
+
+            if (hitCountText != null)
+                hitCountText.text = string.Format(hitCountFormat, hitCount);
+        }
+
+        private string FormatTime(float seconds)
+        {
+            seconds = Mathf.Max(0f, seconds);
+
+            int totalSeconds = Mathf.FloorToInt(seconds);
+            int minutes = totalSeconds / 60;
+            int secs = totalSeconds % 60;
+            int centiseconds = Mathf.FloorToInt((seconds - totalSeconds) * 100f);
+
+            return $"{minutes:00}:{secs:00}.{centiseconds:00}";
         }
 
         private void SetFallbackTexts()
@@ -58,6 +90,23 @@ namespace Dungeon.UI
 
             if (totalGoldText != null)
                 totalGoldText.text = string.Format(totalGoldFormat, 0);
+
+            if (clearTimeText != null)
+                clearTimeText.text = string.Format(clearTimeFormat, "00:00.00");
+
+            if (hitCountText != null)
+                hitCountText.text = string.Format(hitCountFormat, 0);
+        }
+
+        public void LeaveClearScene()
+        {
+            StatusSaveFile saveFile = StatusSaveFile.Instance;
+
+            if (saveFile != null)
+                saveFile.ResetRunResultStats();
+
+            if (!string.IsNullOrEmpty(nextSceneName))
+                SceneManager.LoadScene(nextSceneName);
         }
     }
 }

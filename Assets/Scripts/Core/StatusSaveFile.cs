@@ -198,7 +198,10 @@ namespace Dungeon.Core
                         $"[StatusSaveFile] Loaded. ID={GetInstanceID()}, " +
                         $"Path={ActiveSavePath}, " +
                         $"user_name={data.user_name}, gold={data.gold}, " +
-                        $"maxHP={data.main_stats.max_HP}, broken_traps={data.broken_traps}"
+                        $"maxHP={data.main_stats.max_HP}, " +
+                        $"broken_traps={data.broken_traps}, " +
+                        $"clear_time={data.clear_time_seconds:F2}, " +
+                        $"hit_count={data.hit_count}"
                     );
                 }
 
@@ -227,8 +230,12 @@ namespace Dungeon.Core
                 {
                     Debug.Log(
                         $"[StatusSaveFile] Saved. ID={GetInstanceID()}, " +
-                        $"Path={ActiveSavePath}, gold={data.gold}, " +
-                        $"maxHP={data.main_stats.max_HP}, broken_traps={data.broken_traps}"
+                        $"Path={ActiveSavePath}, " +
+                        $"gold={data.gold}, " +
+                        $"maxHP={data.main_stats.max_HP}, " +
+                        $"broken_traps={data.broken_traps}, " +
+                        $"clear_time={data.clear_time_seconds:F2}, " +
+                        $"hit_count={data.hit_count}"
                     );
                 }
 
@@ -400,6 +407,68 @@ namespace Dungeon.Core
             data.last_getting_gold = 0;
 
             Save();
+        }
+
+        public float GetClearTimeSeconds()
+        {
+            EnsureNotNull();
+            return Mathf.Max(0f, data.clear_time_seconds);
+        }
+
+        public int GetHitCount()
+        {
+            EnsureNotNull();
+            return Mathf.Max(0, data.hit_count);
+        }
+
+        public void AddClearTime(float deltaSeconds, bool saveImmediately = false)
+        {
+            EnsureNotNull();
+
+            if (deltaSeconds <= 0f)
+                return;
+
+            data.clear_time_seconds = Mathf.Max(0f, data.clear_time_seconds + deltaSeconds);
+
+            if (saveImmediately)
+                Save();
+        }
+
+        public void AddHitCount(int amount = 1)
+        {
+            EnsureNotNull();
+
+            if (amount <= 0)
+                return;
+
+            data.hit_count += amount;
+
+            Save();
+
+            Debug.Log($"[StatusSaveFile] hit_count increased: {data.hit_count}");
+        }
+
+        public void ResetRunResultStats()
+        {
+            EnsureNotNull();
+
+            data.broken_traps = 0;
+            data.clear_reward_claimed = false;
+            data.last_getting_gold = 0;
+            data.clear_time_seconds = 0f;
+            data.hit_count = 0;
+
+            if (data.checkpoint != null)
+            {
+                data.checkpoint.sceneName = "";
+                data.checkpoint.mapIndex = -1;
+                data.checkpoint.resumeRequested = false;
+                data.checkpoint.broken_traps_snapshot = 0;
+            }
+
+            Save();
+
+            Debug.Log("[StatusSaveFile] Run result stats reset.");
         }
 
         public string GetActiveSavePath()
