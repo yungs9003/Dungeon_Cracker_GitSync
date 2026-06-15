@@ -27,6 +27,13 @@ namespace Dungeon.Player
 
         private IDamageSystem damageSystem;
 
+        // Local bleeding fallback (used when no IDamageSystem is attached)
+        private bool isBleedingActive = false;
+        private float bleedingEndTime = 0f;
+        private int bleedingDamagePerTick = 1;
+        private float bleedingTickInterval = 0.5f;
+        private float lastBleedingDamageTime = 0f;
+
         private bool initializedFromSaveFile = false;
 
         private void Awake()
@@ -178,7 +185,27 @@ namespace Dungeon.Player
         {
             EnsureDamageSystem();
             if (damageSystem != null)
+            {
                 damageSystem.StartBleeding(amount, duration, tickInterval);
+                return;
+            }
+
+            // Fallback: local bleeding if no external damage system is present
+            if (amount <= 0 || currentHP <= 0) return;
+
+            if (isBleedingActive)
+            {
+                bleedingDamagePerTick = amount;
+                bleedingTickInterval = tickInterval;
+                bleedingEndTime = Time.time + duration;
+                return;
+            }
+
+            isBleedingActive = true;
+            bleedingDamagePerTick = amount;
+            bleedingTickInterval = tickInterval;
+            bleedingEndTime = Time.time + duration;
+            lastBleedingDamageTime = Time.time + bleedingTickInterval;
         }
 
         public void Heal(int amount)
@@ -191,7 +218,23 @@ namespace Dungeon.Player
 
         private void Update()
         {
-            // Health no longer manages bleeding/tick; DamageSystem handles gimmicks
+            // If an external damage system handles bleeding, prefer it. Otherwise handle local bleeding.
+            if (damageSystem == null)
+            {
+                if (isBleedingActive && Time.time >= bleedingEndTime)
+                    isBleedingActive = false;
+
+                if (isBleedingActive && Time.time >= lastBleedingDamageTime)
+                {
+                    currentHP = Mathf.Max(0, currentHP - bleedingDamagePerTick);
+                    onHealthChanged?.Invoke(currentHP, maxHP);
+
+                    lastBleedingDamageTime = Time.time + bleedingTickInterval;
+
+                    if (currentHP == 0)
+                        Die();
+                }
+            }
         }
 
         public void CountDirectHit()
