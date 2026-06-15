@@ -8,6 +8,9 @@ namespace Dungeon.Traps
     [RequireComponent(typeof(Collider2D))]
     public class Thorn2D : MonoBehaviour, ITrapToggle
     {
+        [Header("Type")]
+        [SerializeField] private Dungeon.Core.DamageType damageType = Dungeon.Core.DamageType.Physical;
+
         [Header("Damage")]
         [SerializeField] private int damage = 2;
         [SerializeField] private int bleedingDamage = 5;
@@ -70,7 +73,7 @@ namespace Dungeon.Traps
                 return;
 
             // 즉시 데미지 적용
-            health.TakeDamage(damage);
+            health.TakeDamage(damage, damageType);
             // 출혈 상태 유발: tick당 bleedingDamage 사용
             health.TakeBleedingDamage(bleedingDamage, 7f, 1f);
             nextDamageTime[health] = now + hitCooldown;
