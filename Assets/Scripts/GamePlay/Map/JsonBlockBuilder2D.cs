@@ -5,48 +5,64 @@ using Dungeon.Player;
 
 namespace Dungeon.Map
 {
+    /// <summary>
+    /// JSON의 hidden 필드에 들어가는 데이터입니다.
+    /// 실제 프리팹은 cell.code로 생성하고, hidden은 숨김 상태에서 덧씌울 스프라이트 정보로만 사용합니다.
+    /// </summary>
     [Serializable]
     public class HiddenCellData2D
     {
-        public string code;       // 숨겨졌을 때 보여줄 프리팹 코드. 예: "000-000"
-        public int assetNo;       // 숨겨졌을 때 보여줄 asset 번호
-        public string direction;  // 현재 버전에서는 저장만 하고, 부모 회전에는 적용하지 않음
+        public string code;       // 숨김 상태에서 보여줄 타일 코드. 예: "000-000", "001-001"
+        public int assetNo;       // 숨김 상태에서 사용할 해당 타일 코드의 스프라이트 번호
+        public string direction;  // 숨김용 오버레이 스프라이트 회전에 사용할 방향값
     }
 
+    /// <summary>
+    /// JSON grid 배열의 한 칸 데이터입니다.
+    /// code / assetNo / direction은 실제 생성될 타일 정보를 의미합니다.
+    /// hidden은 선택 사항이며, 함정 등을 일반 타일처럼 보이게 할 때만 사용합니다.
+    /// </summary>
     [Serializable]
     public class CellData2D
     {
-        public string coord;      // "0000"
-        public string code;       // "000-000"
-        public int assetNo;       // 0,1,2...
-        public string direction;  // "00","01","10","11"
-
-        // optional. 없으면 일반 타일처럼 그대로 표시됨.
+        public string coord;      // 4자리 hex 좌표. 예: "0000", "0a03"
+        public string code;       // 실제 생성할 프리팹 코드. 예: "000-000", "101-001"
+        public int assetNo;       // 실제 타일의 asset 번호
+        public string direction;  // 실제 타일의 방향값. "00", "01", "10", "11"
         public HiddenCellData2D hidden;
     }
 
     [Serializable]
     public class PlayerData2D
     {
-        public string start; // "0004"
+        public string start;      // 플레이어 시작 좌표. 예: "0004"
     }
 
     [Serializable]
     public class RelationData2D
     {
-        public string coord_m;
-        public string coord_t;
+        public string coord_m;    // relation을 받는 메인 타일 좌표
+        public string coord_t;    // relation 대상 타일 좌표
     }
 
     [Serializable]
     public class MapData2D
     {
-        public string size; // 예: "0a07"
+        public string size;       // 맵 크기. 예: "0a07"
         public CellData2D[] grid;
         public RelationData2D[] relation;
         public PlayerData2D player;
     }
 
+    /// <summary>
+    /// Resources에 있는 JSON 맵 파일을 읽어서 2D 타일 프리팹을 생성하는 빌더입니다.
+    ///
+    /// 핵심 역할:
+    /// 1. JSON grid의 code / assetNo / direction을 실제 프리팹에 반영합니다.
+    /// 2. relation 정보를 각 타일에 전달합니다.
+    /// 3. player.start 위치로 플레이어와 Respawn2D 기준점을 이동합니다.
+    /// 4. hidden 필드가 있는 함정 타일은 HiddenTrapVisual2D와 ForwardZoneVisionMask2D에 등록합니다.
+    /// </summary>
     public class JsonBlockBuilder2D : MonoBehaviour
     {
         [Header("JSON 파일 이름 (Assets/Resources 기준, 확장자 제외)")]
@@ -73,19 +89,19 @@ namespace Dungeon.Map
         public bool autoBuildOnStart = true;
 
         [Header("Hidden Tile / Forward Zone Vision")]
-        [Tooltip("앞서 만든 ForwardZoneVisionMask2D가 있다면 연결하세요. 비워두면 자동 검색합니다.")]
+        [Tooltip("ForwardZoneVisionMask2D가 있다면 연결하세요. 비워두면 자동 검색합니다.")]
         public ForwardZoneVisionMask2D visionSystem;
 
-        [Tooltip("한 번 forward zone에 들어와 발견된 타일을 계속 실제 모습으로 유지할지 여부입니다.")]
+        [Tooltip("한 번 forward zone에 들어와 발견된 hidden 타일을 계속 실제 모습으로 유지할지 여부입니다.")]
         public bool hiddenTilesStayRevealed = true;
 
-        [Tooltip("hidden 필드가 없는 예전 맵에서도 102-xxx=>000-000, 101-xxx=>001-001 규칙을 자동 적용할지 여부입니다.")]
+        [Tooltip("hidden 필드가 없는 예전 맵에도 102-xxx=>000-000, 101-xxx=>001-001 규칙을 자동 적용할지 여부입니다.")]
         public bool useLegacyTrapDisguiseFallback = false;
 
         [Tooltip("이 prefix에 해당하는 실제 코드에만 hidden overlay를 허용합니다. 일반 바닥/벽/구멍에는 hidden이 있어도 무시합니다.")]
         public List<string> hiddenAllowedActualCodePrefixes = new List<string> { "101-", "102-" };
 
-        [Tooltip("hidden 대상이 아닌 타일에 남아 있는 HiddenTrapVisual2D나 __HiddenVisualOverlay 자식을 자동 제거합니다. 테스트 중 프리팹에 잘못 붙은 overlay를 제거할 때 유용합니다.")]
+        [Tooltip("hidden 대상이 아닌 타일에 남아 있는 HiddenTrapVisual2D나 __HiddenVisualOverlay 자식을 자동 제거합니다.")]
         public bool removeStaleHiddenVisualFromNonHiddenTiles = true;
 
         [Tooltip("자동 제거할 hidden overlay 자식 오브젝트 이름입니다.")]
@@ -98,16 +114,6 @@ namespace Dungeon.Map
         [Tooltip("applyDirectionRotationOnlyToPrefixes가 켜졌을 때 direction 회전을 적용할 코드 prefix입니다. 예: 101-, 102-")]
         public List<string> directionRotationPrefixes = new List<string> { "101-", "102-" };
 
-        [Header("Debug Tile Build")]
-        [Tooltip("켜면 타일 생성 과정 로그를 출력합니다. Debug Only Coord가 비어 있으면 모든 타일을 출력합니다.")]
-        public bool logTileBuild = false;
-
-        [Tooltip("특정 좌표만 로그로 보고 싶을 때 입력합니다. 예: 031b, 0000. 비워두면 전체 타일을 출력합니다.")]
-        public string debugOnlyCoord = "";
-
-        [Tooltip("켜면 hidden overlay 등록/스프라이트 탐색 결과도 함께 출력합니다.")]
-        public bool logHiddenBuild = true;
-
         private readonly Dictionary<string, GameObject> prefabCache = new();
         private readonly Dictionary<Vector2Int, List<string>> relationMap = new();
 
@@ -119,43 +125,31 @@ namespace Dungeon.Map
                 BuildFromJson();
         }
 
+        /// <summary>
+        /// 외부 매니저가 맵 경로를 지정해서 빌드할 때 사용합니다.
+        /// resourcesPathWithoutExt는 Assets/Resources 기준 경로이며 .json 확장자는 제외합니다.
+        /// </summary>
         public void BuildFromJsonPath(string resourcesPathWithoutExt)
         {
             jsonFileName = resourcesPathWithoutExt;
             BuildFromJson();
         }
 
+        /// <summary>
+        /// 현재 jsonFileName을 기준으로 맵을 새로 생성합니다.
+        /// 이전에 이 빌더 아래 생성된 타일은 먼저 제거됩니다.
+        /// </summary>
         public void BuildFromJson()
         {
             ClearChildren();
             prefabCache.Clear();
             relationMap.Clear();
 
-            if (visionSystem == null)
-                visionSystem = FindFirstObjectByType<ForwardZoneVisionMask2D>();
+            PrepareVisionSystem();
 
-            if (visionSystem != null)
-                visionSystem.ClearRegisteredTraps();
-
-            if (string.IsNullOrWhiteSpace(jsonFileName))
-            {
-                Debug.LogError(
-                    "JSON 파일 이름이 비어 있습니다. " +
-                    "JsonBlockBuilder2D의 Json File Name에 Resources 기준 경로를 입력하세요. " +
-                    "예: Maps/Dungeon_001/map_002"
-                );
-                return;
-            }
-
-            TextAsset json = Resources.Load<TextAsset>(jsonFileName);
+            TextAsset json = LoadMapJson();
             if (json == null)
-            {
-                Debug.LogError(
-                    $"JSON 파일을 찾을 수 없습니다: {jsonFileName}\n" +
-                    $"실제 파일 위치 예시: Assets/Resources/{jsonFileName}.json"
-                );
                 return;
-            }
 
             LoadedMapData = JsonUtility.FromJson<MapData2D>(json.text);
             if (LoadedMapData == null || LoadedMapData.grid == null)
@@ -165,163 +159,175 @@ namespace Dungeon.Map
             }
 
             CacheRelations(LoadedMapData.relation);
+            BuildGridTiles(LoadedMapData.grid);
+            PositionPlayerAndSetRespawn(LoadedMapData);
 
-            if (logTileBuild)
+            // 마스크는 실제 생성된 맵 데이터 기준으로 다시 만듭니다.
+            if (visionSystem != null)
+                visionSystem.RebuildMask(LoadedMapData, cellSize, transform);
+        }
+
+        /// <summary>
+        /// ForwardZoneVisionMask2D를 준비하고, 이전 맵에서 등록된 hidden 타일 목록을 초기화합니다.
+        /// </summary>
+        private void PrepareVisionSystem()
+        {
+            if (visionSystem == null)
+                visionSystem = FindFirstObjectByType<ForwardZoneVisionMask2D>();
+
+            if (visionSystem != null)
+                visionSystem.ClearRegisteredTraps();
+        }
+
+        /// <summary>
+        /// Resources에서 JSON TextAsset을 불러옵니다.
+        /// </summary>
+        private TextAsset LoadMapJson()
+        {
+            if (string.IsNullOrWhiteSpace(jsonFileName))
             {
-                Debug.Log(
-                    $"[JsonBlockBuilder2D] JSON loaded: {jsonFileName}, " +
-                    $"gridCount={LoadedMapData.grid.Length}, " +
-                    $"debugOnlyCoord={(string.IsNullOrWhiteSpace(debugOnlyCoord) ? "ALL" : NormalizeCoord(debugOnlyCoord))}"
+                Debug.LogError(
+                    "JSON 파일 이름이 비어 있습니다. " +
+                    "JsonBlockBuilder2D의 Json File Name에 Resources 기준 경로를 입력하세요. " +
+                    "예: Maps/Dungeon_001/map_002"
+                );
+                return null;
+            }
+
+            TextAsset json = Resources.Load<TextAsset>(jsonFileName);
+            if (json == null)
+            {
+                Debug.LogError(
+                    $"JSON 파일을 찾을 수 없습니다: {jsonFileName}\n" +
+                    $"실제 파일 위치 예시: Assets/Resources/{jsonFileName}.json"
                 );
             }
 
-            foreach (var cell in LoadedMapData.grid)
+            return json;
+        }
+
+        /// <summary>
+        /// JSON grid 배열을 순회하면서 실제 타일 프리팹을 생성합니다.
+        /// </summary>
+        private void BuildGridTiles(CellData2D[] cells)
+        {
+            foreach (var cell in cells)
             {
-                if (cell == null) continue;
-                if (!TryParseCoord(cell.coord, out int x, out int y)) continue;
-                if (string.IsNullOrWhiteSpace(cell.code)) continue;
-
-                string code = cell.code.Trim().ToUpperInvariant();
-                bool shouldLogThisTile = ShouldLogTile(cell);
-
-                if (shouldLogThisTile)
-                {
-                    Debug.Log(
-                        $"[BuildTile] coord={NormalizeCoord(cell.coord)}, " +
-                        $"actual={code}, assetNo={cell.assetNo}, dir={cell.direction}, " +
-                        $"hidden={HiddenInfoToDebugString(cell.hidden)}"
-                    );
-                }
+                if (!TryValidateCell(cell, out int x, out int y, out string code))
+                    continue;
 
                 if (skipCodes.Contains(code))
-                {
-                    if (shouldLogThisTile)
-                        Debug.Log($"[BuildTile Skip] coord={NormalizeCoord(cell.coord)}, code={code} is in skipCodes.");
                     continue;
-                }
 
                 GameObject prefab = LoadPrefab(code);
-                if (shouldLogThisTile)
-                {
-                    Debug.Log(
-                        $"[BuildTile Prefab] coord={NormalizeCoord(cell.coord)}, " +
-                        $"requestedCode={code}, loadedPrefab={(prefab != null ? prefab.name : "NULL")}, " +
-                        $"path={prefabFolder}{code}"
-                    );
-                }
-
                 if (prefab == null)
                 {
                     Debug.LogWarning($"프리팹 없음: {prefabFolder}{code}");
                     continue;
                 }
 
-                float zRot = GetAppliedZRotation(code, cell.direction);
-                Vector3 pos = new Vector3(x * cellSize, y * cellSize, baseZ);
-                Quaternion rot = Quaternion.Euler(0f, 0f, zRot);
-
-                GameObject block = Instantiate(prefab, pos, rot, transform);
-                block.name = $"{code}_{x:X2}{y:X2}";
-
-                // 실제 타일 assetNo 적용
-                var variant = block.GetComponent<AssetVariantSprite2D>();
-                if (variant != null)
-                    variant.SetAssetNo(cell.assetNo);
-
-                if (shouldLogThisTile)
-                {
-                    Debug.Log(
-                        $"[BuildTile Result] coord={NormalizeCoord(cell.coord)}, " +
-                        $"objectName={block.name}, " +
-                        $"variant={(variant != null ? "YES" : "NO")}, " +
-                        $"sprite={GetFirstSpriteName(block)}, " +
-                        $"rotationZ={block.transform.eulerAngles.z}, " +
-                        $"pos=({block.transform.position.x:0.###}, {block.transform.position.y:0.###}, {block.transform.position.z:0.###})"
-                    );
-
-                    LogAllSpriteRenderers(block, NormalizeCoord(cell.coord));
-                }
-
-                // hidden 정보가 있으면 처음에는 숨김용 스프라이트로 보이게 등록
-                SetupHiddenVisualIfNeeded(block, code, cell, shouldLogThisTile);
-
-                // coord 기록용
-                string coordStr = $"{x:X2}{y:X2}".ToLowerInvariant();
-
-                var bc = block.GetComponent<BlockCoord>();
-                if (bc == null) bc = block.AddComponent<BlockCoord>();
-                bc.SetCoord(coordStr);
-
-                if (BlockRegistry.Instance != null)
-                    BlockRegistry.Instance.Register(coordStr, block);
-
-                // relation 전달
-                var key = new Vector2Int(x, y);
-                if (relationMap.TryGetValue(key, out var targets) && targets != null)
-                {
-                    block.SendMessage(
-                        "SetRelationTargets",
-                        new List<string>(targets),
-                        SendMessageOptions.DontRequireReceiver
-                    );
-                }
+                GameObject block = CreateTileInstance(prefab, code, cell, x, y);
+                ApplyBlockCoordAndRegistry(block, x, y);
+                ApplyAssetVariant(block, cell.assetNo);
+                SetupHiddenVisualIfNeeded(block, code, cell);
+                SendRelationsIfNeeded(block, x, y);
             }
-
-            PositionPlayerAndSetRespawn(LoadedMapData);
-
-            if (visionSystem != null)
-                visionSystem.RebuildMask(LoadedMapData, cellSize, transform);
-
-            Debug.Log($"2D Build 완료: {jsonFileName}");
         }
 
-        private void SetupHiddenVisualIfNeeded(GameObject block, string actualCode, CellData2D cell, bool shouldLogThisTile)
+        /// <summary>
+        /// grid cell이 실제로 생성 가능한 데이터인지 확인하고, 좌표와 코드 값을 정리합니다.
+        /// </summary>
+        private bool TryValidateCell(CellData2D cell, out int x, out int y, out string code)
+        {
+            x = y = 0;
+            code = null;
+
+            if (cell == null)
+                return false;
+
+            if (!TryParseCoord(cell.coord, out x, out y))
+                return false;
+
+            if (string.IsNullOrWhiteSpace(cell.code))
+                return false;
+
+            code = cell.code.Trim().ToUpperInvariant();
+            return true;
+        }
+
+        /// <summary>
+        /// 타일 프리팹을 실제 월드 좌표에 생성하고, direction 정책에 따라 회전을 적용합니다.
+        /// </summary>
+        private GameObject CreateTileInstance(GameObject prefab, string code, CellData2D cell, int x, int y)
+        {
+            float zRot = GetAppliedZRotation(code, cell.direction);
+            Vector3 pos = new Vector3(x * cellSize, y * cellSize, baseZ);
+            Quaternion rot = Quaternion.Euler(0f, 0f, zRot);
+
+            GameObject block = Instantiate(prefab, pos, rot, transform);
+            block.name = $"{code}_{x:X2}{y:X2}";
+
+            return block;
+        }
+
+        /// <summary>
+        /// BlockCoord와 BlockRegistry에 좌표 정보를 등록합니다.
+        /// 다른 타일/함정 스크립트가 좌표 기반으로 이 오브젝트를 찾을 수 있게 하기 위한 단계입니다.
+        /// </summary>
+        private void ApplyBlockCoordAndRegistry(GameObject block, int x, int y)
+        {
+            string coordStr = $"{x:X2}{y:X2}".ToLowerInvariant();
+
+            var bc = block.GetComponent<BlockCoord>();
+            if (bc == null)
+                bc = block.AddComponent<BlockCoord>();
+
+            bc.SetCoord(coordStr);
+
+            if (BlockRegistry.Instance != null)
+                BlockRegistry.Instance.Register(coordStr, block);
+        }
+
+        /// <summary>
+        /// 프리팹에 AssetVariantSprite2D가 있으면 JSON의 assetNo를 적용합니다.
+        /// </summary>
+        private static void ApplyAssetVariant(GameObject block, int assetNo)
+        {
+            var variant = block.GetComponent<AssetVariantSprite2D>();
+            if (variant != null)
+                variant.SetAssetNo(assetNo);
+        }
+
+        /// <summary>
+        /// hidden 정보가 있는 함정 타일을 HiddenTrapVisual2D와 ForwardZoneVisionMask2D에 등록합니다.
+        /// 실제 타일의 콜라이더/함정 기능은 유지하고, 숨김 상태에서만 별도 overlay 스프라이트를 보여주는 방식입니다.
+        /// </summary>
+        private void SetupHiddenVisualIfNeeded(GameObject block, string actualCode, CellData2D cell)
         {
             if (block == null || cell == null)
                 return;
 
-            // 핵심 안전장치:
-            // hidden 정보가 JSON에 잘못 들어 있거나, 이전 테스트 중 프리팹에 HiddenTrapVisual2D가 남아 있어도
-            // 실제 코드가 101-/102- 같은 허용 대상이 아니면 절대 hidden overlay를 만들지 않습니다.
+            // 일반 바닥/벽/구멍에 실수로 hidden 필드가 들어가도 무시합니다.
+            // hidden은 기본적으로 101-/102- 같은 함정 계열에만 허용합니다.
             if (!IsHiddenAllowedActualCode(actualCode))
             {
                 if (removeStaleHiddenVisualFromNonHiddenTiles)
                     CleanupStaleHiddenVisual(block);
-
-                if (shouldLogThisTile && logHiddenBuild && HasUsableHiddenInfo(cell.hidden))
-                {
-                    Debug.Log(
-                        $"[HiddenTile Ignored] coord={NormalizeCoord(cell.coord)}, object={block.name}, " +
-                        $"actualCode={actualCode}, hidden={HiddenInfoToDebugString(cell.hidden)}. " +
-                        "이 actualCode는 hiddenAllowedActualCodePrefixes 대상이 아니어서 hidden 처리를 무시합니다."
-                    );
-                }
 
                 return;
             }
 
             HiddenCellData2D hidden = cell.hidden;
 
-            // Unity JsonUtility 환경에서는 JSON에 hidden 필드가 아예 없어도
-            // nested class 필드가 null이 아닌 "빈 객체"처럼 들어오는 경우가 있습니다.
-            // 따라서 hidden == null 여부가 아니라 hidden.code가 실제로 있는지를 기준으로 처리합니다.
-            // hidden 필드가 없거나 hidden.code가 비어 있으면 일반 타일로 보고 조용히 건너뜁니다.
+            // hidden 필드가 없거나 code가 비어 있으면 일반 타일처럼 처리합니다.
+            // JsonUtility 특성상 hidden == null 체크만으로는 부족할 수 있으므로 code 유무를 기준으로 판단합니다.
             if (!HasUsableHiddenInfo(hidden))
             {
                 if (useLegacyTrapDisguiseFallback)
                     hidden = CreateLegacyHiddenInfo(actualCode, cell.assetNo);
 
                 if (!HasUsableHiddenInfo(hidden))
-                {
-                    if (shouldLogThisTile && logHiddenBuild)
-                    {
-                        Debug.Log(
-                            $"[HiddenTile Skip] coord={NormalizeCoord(cell.coord)}, object={block.name}, " +
-                            "usable hidden 정보가 없어 일반 타일로 처리합니다."
-                        );
-                    }
                     return;
-                }
             }
 
             Sprite hiddenSprite = GetSpriteFromPrefab(hidden.code, hidden.assetNo);
@@ -334,16 +340,6 @@ namespace Dungeon.Map
                 return;
             }
 
-            if (shouldLogThisTile && logHiddenBuild)
-            {
-                Debug.Log(
-                    $"[HiddenTile Sprite] coord={NormalizeCoord(cell.coord)}, object={block.name}, " +
-                    $"hiddenCode={hidden.code}, hiddenAssetNo={hidden.assetNo}, " +
-                    $"hiddenDir={(string.IsNullOrWhiteSpace(hidden.direction) ? cell.direction : hidden.direction)}, " +
-                    $"sprite={hiddenSprite.name}"
-                );
-            }
-
             var hiddenVisual = block.GetComponent<HiddenTrapVisual2D>();
             if (hiddenVisual == null)
                 hiddenVisual = block.AddComponent<HiddenTrapVisual2D>();
@@ -352,104 +348,29 @@ namespace Dungeon.Map
             string hiddenDirection = string.IsNullOrWhiteSpace(hidden.direction) ? cell.direction : hidden.direction;
             float hiddenZRot = GetAppliedZRotation(hidden.code, hiddenDirection);
 
-            // 실제 오브젝트의 방향/콜라이더/함정 스크립트는 actualZRot 그대로 유지하고,
-            // 숨김 상태에서는 별도 자식 SpriteRenderer만 hiddenZRot 방향으로 얹어서 보여준다.
+            // 실제 오브젝트는 actualZRot 그대로 유지합니다.
+            // hiddenZRot은 숨김용 자식 SpriteRenderer에만 적용되어 콜라이더/함정 방향을 건드리지 않습니다.
             hiddenVisual.Configure(hiddenSprite, actualZRot, hiddenZRot, hiddenTilesStayRevealed);
 
             if (visionSystem != null)
                 visionSystem.RegisterTrap(hiddenVisual);
-
-            if (shouldLogThisTile && logHiddenBuild)
-            {
-                Debug.Log(
-                    $"[HiddenTile Registered] coord={NormalizeCoord(cell.coord)}, object={block.name}, " +
-                    $"actualZRot={actualZRot}, hiddenZRot={hiddenZRot}, " +
-                    $"stayRevealed={hiddenTilesStayRevealed}, visionSystem={(visionSystem != null ? "YES" : "NO")}"
-                );
-            }
         }
 
-        private bool ShouldLogTile(CellData2D cell)
+        /// <summary>
+        /// relation이 지정된 타일이면, 해당 타일 스크립트에 relation 대상 목록을 전달합니다.
+        /// 받는 쪽이 없을 수도 있으므로 SendMessageOptions.DontRequireReceiver를 사용합니다.
+        /// </summary>
+        private void SendRelationsIfNeeded(GameObject block, int x, int y)
         {
-            if (!logTileBuild || cell == null)
-                return false;
+            var key = new Vector2Int(x, y);
+            if (!relationMap.TryGetValue(key, out var targets) || targets == null)
+                return;
 
-            if (string.IsNullOrWhiteSpace(debugOnlyCoord))
-                return true;
-
-            return string.Equals(
-                NormalizeCoord(cell.coord),
-                NormalizeCoord(debugOnlyCoord),
-                StringComparison.OrdinalIgnoreCase
+            block.SendMessage(
+                "SetRelationTargets",
+                new List<string>(targets),
+                SendMessageOptions.DontRequireReceiver
             );
-        }
-
-        private static string HiddenInfoToDebugString(HiddenCellData2D hidden)
-        {
-            if (!HasUsableHiddenInfo(hidden))
-                return "none";
-
-            return $"code={hidden.code}, assetNo={hidden.assetNo}, dir={hidden.direction}";
-        }
-
-        private static string GetFirstSpriteName(GameObject obj)
-        {
-            if (obj == null)
-                return "NULL";
-
-            var sr = obj.GetComponentInChildren<SpriteRenderer>(true);
-            if (sr == null)
-                return "NO_SPRITE_RENDERER";
-
-            return sr.sprite != null ? sr.sprite.name : "NULL_SPRITE";
-        }
-
-        private void LogAllSpriteRenderers(GameObject obj, string coord)
-        {
-            if (obj == null)
-                return;
-
-            var renderers = obj.GetComponentsInChildren<SpriteRenderer>(true);
-            if (renderers == null || renderers.Length == 0)
-            {
-                Debug.Log($"[SpriteRenderers] coord={coord}, object={obj.name}, count=0");
-                return;
-            }
-
-            for (int i = 0; i < renderers.Length; i++)
-            {
-                var sr = renderers[i];
-                if (sr == null) continue;
-
-                Debug.Log(
-                    $"[SpriteRenderer {i}] coord={coord}, object={obj.name}, " +
-                    $"rendererPath={GetTransformPath(sr.transform, obj.transform)}, " +
-                    $"enabled={sr.enabled}, sprite={(sr.sprite != null ? sr.sprite.name : "NULL")}, " +
-                    $"sortingLayer={sr.sortingLayerName}, sortingOrder={sr.sortingOrder}, " +
-                    $"localRotZ={sr.transform.localEulerAngles.z}, worldRotZ={sr.transform.eulerAngles.z}"
-                );
-            }
-        }
-
-        private static string GetTransformPath(Transform target, Transform root)
-        {
-            if (target == null)
-                return "NULL";
-
-            if (root == null || target == root)
-                return target.name;
-
-            var stack = new Stack<string>();
-            Transform t = target;
-            while (t != null)
-            {
-                stack.Push(t.name);
-                if (t == root)
-                    break;
-                t = t.parent;
-            }
-
-            return string.Join("/", stack);
         }
 
         private static bool HasUsableHiddenInfo(HiddenCellData2D hidden)
@@ -457,6 +378,10 @@ namespace Dungeon.Map
             return hidden != null && !string.IsNullOrWhiteSpace(hidden.code);
         }
 
+        /// <summary>
+        /// 현재 actualCode가 hidden 처리 허용 대상인지 검사합니다.
+        /// 예: 101-, 102-만 허용하면 일반 바닥/벽은 hidden overlay를 만들지 않습니다.
+        /// </summary>
         private bool IsHiddenAllowedActualCode(string actualCode)
         {
             if (string.IsNullOrWhiteSpace(actualCode))
@@ -480,6 +405,10 @@ namespace Dungeon.Map
             return false;
         }
 
+        /// <summary>
+        /// 일반 타일 프리팹이나 인스턴스에 실수로 남아 있는 hidden 관련 컴포넌트/자식을 제거합니다.
+        /// 이전 테스트 중 잘못 저장된 __HiddenVisualOverlay가 보이는 문제를 방지합니다.
+        /// </summary>
         private void CleanupStaleHiddenVisual(GameObject block)
         {
             if (block == null)
@@ -488,7 +417,8 @@ namespace Dungeon.Map
             var hiddenVisuals = block.GetComponentsInChildren<HiddenTrapVisual2D>(true);
             foreach (var hv in hiddenVisuals)
             {
-                if (hv == null) continue;
+                if (hv == null)
+                    continue;
 
                 if (Application.isPlaying)
                     Destroy(hv);
@@ -496,25 +426,29 @@ namespace Dungeon.Map
                     DestroyImmediate(hv);
             }
 
-            if (!string.IsNullOrWhiteSpace(hiddenOverlayChildName))
+            if (string.IsNullOrWhiteSpace(hiddenOverlayChildName))
+                return;
+
+            Transform[] children = block.GetComponentsInChildren<Transform>(true);
+            foreach (var t in children)
             {
-                Transform[] children = block.GetComponentsInChildren<Transform>(true);
-                foreach (var t in children)
-                {
-                    if (t == null || t == block.transform)
-                        continue;
+                if (t == null || t == block.transform)
+                    continue;
 
-                    if (t.name != hiddenOverlayChildName)
-                        continue;
+                if (t.name != hiddenOverlayChildName)
+                    continue;
 
-                    if (Application.isPlaying)
-                        Destroy(t.gameObject);
-                    else
-                        DestroyImmediate(t.gameObject);
-                }
+                if (Application.isPlaying)
+                    Destroy(t.gameObject);
+                else
+                    DestroyImmediate(t.gameObject);
             }
         }
 
+        /// <summary>
+        /// hidden 필드가 없는 구버전 맵을 위한 자동 숨김 규칙입니다.
+        /// 102 계열은 바닥처럼, 101 계열은 벽처럼 보이도록 기본 hidden 정보를 생성합니다.
+        /// </summary>
         private HiddenCellData2D CreateLegacyHiddenInfo(string actualCode, int actualAssetNo)
         {
             if (string.IsNullOrWhiteSpace(actualCode))
@@ -543,6 +477,10 @@ namespace Dungeon.Map
             return null;
         }
 
+        /// <summary>
+        /// hidden overlay에 사용할 스프라이트를 찾습니다.
+        /// 함정 프리팹이 아니라 hidden.code에 해당하는 프리팹에서 assetNo를 조회합니다.
+        /// </summary>
         private Sprite GetSpriteFromPrefab(string code, int assetNo)
         {
             GameObject prefab = LoadPrefab(code);
@@ -561,11 +499,18 @@ namespace Dungeon.Map
             return sr != null ? sr.sprite : null;
         }
 
+        /// <summary>
+        /// direction 회전 정책을 반영한 최종 Z 회전값을 반환합니다.
+        /// </summary>
         private float GetAppliedZRotation(string code, string dir)
         {
             return ShouldApplyDirectionRotation(code) ? GetZRotationFromDir(dir) : 0f;
         }
 
+        /// <summary>
+        /// 특정 코드에 direction 회전을 적용할지 결정합니다.
+        /// applyDirectionRotationOnlyToPrefixes가 꺼져 있으면 모든 타일에 direction을 적용합니다.
+        /// </summary>
         private bool ShouldApplyDirectionRotation(string code)
         {
             if (!applyDirectionRotationOnlyToPrefixes)
@@ -592,6 +537,10 @@ namespace Dungeon.Map
             return false;
         }
 
+        /// <summary>
+        /// JSON의 방향 문자열을 Unity Z 회전값으로 변환합니다.
+        /// 현재 프로젝트 기준: 00=위, 01=오른쪽, 10=왼쪽, 11=아래.
+        /// </summary>
         private float GetZRotationFromDir(string dir)
         {
             return dir switch
@@ -604,16 +553,26 @@ namespace Dungeon.Map
             };
         }
 
+        /// <summary>
+        /// relation 배열을 메인 좌표 기준 Dictionary로 캐싱합니다.
+        /// 이후 타일 생성 시 빠르게 relation target 목록을 전달하기 위함입니다.
+        /// </summary>
         private void CacheRelations(RelationData2D[] relations)
         {
-            if (relations == null) return;
+            if (relations == null)
+                return;
 
             foreach (var r in relations)
             {
-                if (r == null) continue;
-                if (!TryParseCoord(r.coord_m, out int mx, out int my)) continue;
+                if (r == null)
+                    continue;
+
+                if (!TryParseCoord(r.coord_m, out int mx, out int my))
+                    continue;
+
                 string t = NormalizeCoord(r.coord_t);
-                if (string.IsNullOrEmpty(t)) continue;
+                if (string.IsNullOrEmpty(t))
+                    continue;
 
                 var key = new Vector2Int(mx, my);
                 if (!relationMap.TryGetValue(key, out var list))
@@ -626,10 +585,15 @@ namespace Dungeon.Map
             }
         }
 
+        /// <summary>
+        /// Resources에서 프리팹을 로드합니다.
+        /// 같은 code는 여러 번 요청될 수 있으므로 prefabCache로 중복 로드를 줄입니다.
+        /// </summary>
         private GameObject LoadPrefab(string code)
         {
             code = code?.Trim().ToUpperInvariant();
-            if (string.IsNullOrEmpty(code)) return null;
+            if (string.IsNullOrEmpty(code))
+                return null;
 
             if (prefabCache.TryGetValue(code, out var cached) && cached != null)
                 return cached;
@@ -640,6 +604,9 @@ namespace Dungeon.Map
             return prefab;
         }
 
+        /// <summary>
+        /// JSON의 player.start 좌표로 플레이어를 이동시키고 Respawn2D 기준점도 갱신합니다.
+        /// </summary>
         private void PositionPlayerAndSetRespawn(MapData2D mapData)
         {
             if (mapData?.player == null || string.IsNullOrEmpty(mapData.player.start))
@@ -663,22 +630,32 @@ namespace Dungeon.Map
                 Debug.LogWarning("Respawn2D를 찾지 못했습니다.");
         }
 
+        /// <summary>
+        /// 이전 빌드에서 이 빌더의 자식으로 생성된 타일들을 제거합니다.
+        /// </summary>
         private void ClearChildren()
         {
             for (int i = transform.childCount - 1; i >= 0; i--)
             {
-                var child = transform.GetChild(i).gameObject;
+                GameObject child = transform.GetChild(i).gameObject;
 
-                if (Application.isPlaying) Destroy(child);
-                else DestroyImmediate(child);
+                if (Application.isPlaying)
+                    Destroy(child);
+                else
+                    DestroyImmediate(child);
             }
         }
 
+        /// <summary>
+        /// 4자리 hex 좌표를 x/y 정수 좌표로 변환합니다.
+        /// 예: "0a03" → x=10, y=3.
+        /// </summary>
         private static bool TryParseCoord(string coord, out int x, out int y)
         {
             x = y = 0;
             coord = NormalizeCoord(coord);
-            if (string.IsNullOrEmpty(coord) || coord.Length < 4) return false;
+            if (string.IsNullOrEmpty(coord) || coord.Length < 4)
+                return false;
 
             try
             {
