@@ -5,7 +5,23 @@ public class AssetVariantSprite2D : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite[] variants;
 
+    public SpriteRenderer Renderer
+    {
+        get
+        {
+            EnsureRenderer();
+            return spriteRenderer;
+        }
+    }
+
+    public int CurrentAssetNo { get; private set; } = -1;
+
     private void Awake()
+    {
+        EnsureRenderer();
+    }
+
+    private void EnsureRenderer()
     {
         if (spriteRenderer == null)
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -13,24 +29,41 @@ public class AssetVariantSprite2D : MonoBehaviour
 
     public void SetAssetNo(int assetNo)
     {
+        EnsureRenderer();
+
         if (spriteRenderer == null)
         {
             Debug.LogWarning($"{name}: SpriteRenderer가 없습니다.");
             return;
         }
 
-        if (variants == null || variants.Length == 0)
+        Sprite sprite = GetSpriteForAssetNo(assetNo, true);
+        if (sprite == null)
         {
-            Debug.LogWarning($"{name}: variants 배열이 비어 있습니다.");
+            Debug.LogWarning($"{name}: 적용할 Sprite가 없습니다.");
             return;
         }
 
+        CurrentAssetNo = assetNo;
+        spriteRenderer.sprite = sprite;
+    }
+
+    public Sprite GetSpriteForAssetNo(int assetNo, bool fallbackToZero = true)
+    {
+        EnsureRenderer();
+
+        if (variants == null || variants.Length == 0)
+            return spriteRenderer != null ? spriteRenderer.sprite : null;
+
         if (assetNo < 0 || assetNo >= variants.Length)
         {
+            if (!fallbackToZero)
+                return null;
+
             Debug.LogWarning($"{name}: assetNo {assetNo}는 범위를 벗어났습니다. 0번으로 대체합니다.");
             assetNo = 0;
         }
 
-        spriteRenderer.sprite = variants[assetNo];
+        return variants[assetNo];
     }
 }

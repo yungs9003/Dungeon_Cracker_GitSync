@@ -63,5 +63,8 @@ TagManager:
   - name: ProjectileFront
     uniqueID: 3305503453
     locked: 0
+  - name: VisionMask
+    uniqueID: 4280647803
+    locked: 0
   m_RenderingLayers:
   - Default
