@@ -1103,7 +1103,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "- \uD53C\uACA9 \uD69F\uC218 -"
+  m_text: "- \uD574\uCCB4 \uD69F\uC218 -"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b0e67e7c413c0c84cb49e25168d4d7cb, type: 2}
   m_sharedMaterial: {fileID: 4802223219315078362, guid: b0e67e7c413c0c84cb49e25168d4d7cb, type: 2}
@@ -2642,7 +2642,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "- \uD53C\uACA9 \uD69F\uC218 -"
+  m_text: "- \uC18C\uC694 \uC2DC\uAC04 -"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b0e67e7c413c0c84cb49e25168d4d7cb, type: 2}
   m_sharedMaterial: {fileID: 4802223219315078362, guid: b0e67e7c413c0c84cb49e25168d4d7cb, type: 2}
@@ -2795,10 +2795,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc35b6f6e1d4e6940921a3dbe5153a42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  brokenTrapsText: {fileID: 315610529}
-  gettingGoldText: {fileID: 0}
+  brokenTrapsText: {fileID: 985307418}
+  gettingGoldText: {fileID: 1787920268}
   totalGoldText: {fileID: 0}
-  clearTimeText: {fileID: 0}
+  clearTimeText: {fileID: 1632623965}
   hitCountText: {fileID: 1326141098}
   brokenTrapsFormat: '{0}'
   gettingGoldFormat: + {0} G
@@ -3169,7 +3169,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "- \uD53C\uACA9 \uD69F\uC218 -"
+  m_text: "- \uACE8\uB4DC -"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b0e67e7c413c0c84cb49e25168d4d7cb, type: 2}
   m_sharedMaterial: {fileID: 4802223219315078362, guid: b0e67e7c413c0c84cb49e25168d4d7cb, type: 2}
