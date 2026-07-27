@@ -1,50 +1,64 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Dungeon.Player;
 
 namespace Dungeon.Map
 {
     /// <summary>
-    /// 실제 함정/파괴가능 타일 오브젝트의 방향/콜라이더/스크립트는 그대로 유지하고,
-    /// 숨김 상태에서는 별도의 SpriteRenderer를 같은 타일 위치에 얹어서 가짜 타일처럼 보이게 합니다.
+    /// 숨겨진 함정 타일의 표시 상태를 관리합니다.
     ///
-    /// 중요 수정점:
-    /// - 실제 SpriteRenderer가 루트 오브젝트에 있을 때, overlay의 localPosition을 루트의 localPosition으로 복사하지 않습니다.
-    /// - overlay는 항상 실제 렌더러와 같은 위치에만 놓입니다.
-    /// - 이전 버전에서 잘못 생성된 중복 __HiddenVisualOverlay를 정리합니다.
+    /// 핵심 동작:
+    /// - 숨김 상태: 메인 SpriteRenderer는 hidden/disguise sprite로 바꾸고,
+    ///              함정의 화살/가시/마스크 같은 자식 SpriteRenderer는 꺼둡니다.
+    /// - 발견 상태: 메인 SpriteRenderer를 실제 sprite로 되돌리고,
+    ///              숨겨두었던 자식 SpriteRenderer를 다시 켭니다.
+    ///
+    /// 기존 버전은 메인 SpriteRenderer 하나만 sprite 교체를 했기 때문에,
+    /// Bow/Spike 프리팹의 자식 SpriteRenderer가 계속 보여서
+    /// clearRadius 밖에서도 화살/가시가 보이는 문제가 생길 수 있었습니다.
     /// </summary>
     public class HiddenTrapVisual2D : MonoBehaviour
     {
-        [Header("Actual Renderer")]
-        [SerializeField] private SpriteRenderer actualRenderer;
+        [Header("Main Tile Renderer")]
+        [Tooltip("실제 타일의 대표 SpriteRenderer입니다. 비워두면 AssetVariantSprite2D.Renderer 또는 첫 번째 SpriteRenderer를 자동으로 사용합니다.")]
+        [SerializeField] private SpriteRenderer targetRenderer;
 
-        [Header("Hidden Overlay Renderer")]
-        [SerializeField] private SpriteRenderer hiddenOverlayRenderer;
-        [SerializeField] private string hiddenOverlayName = "__HiddenVisualOverlay";
-        [SerializeField] private int hiddenOverlaySortingOrderOffset = 1;
+        [Header("Reveal Position")]
+        [Tooltip("켜져 있으면 큰 감지 콜라이더가 아니라 타일 오브젝트 중심(transform.position) 기준으로 reveal 판정합니다.")]
+        [SerializeField] private bool useTileCenterForReveal = true;
 
-        [Header("Reveal Collider")]
-        [Tooltip("비워두면 transform.position 기준으로 판정합니다. 가능하면 타일 본체 Collider2D를 넣는 것을 권장합니다.")]
+        [Tooltip("useTileCenterForReveal이 꺼져 있을 때 사용할 콜라이더입니다. 비워두면 자동으로 찾습니다.")]
         [SerializeField] private Collider2D revealCollider;
 
-        [Header("Optional Extra Visuals")]
-        [Tooltip("숨김 상태에서 같이 꺼둘 자식 오브젝트가 있다면 넣으세요. 예: 함정 마스크, 장식 Sprite 등")]
+        [Header("Extra Trap Visuals")]
+        [Tooltip("켜져 있으면 targetRenderer를 제외한 자식 SpriteRenderer를 숨김 상태에서 자동으로 꺼둡니다. 화살/가시/함정 장식이 미리 보이는 문제를 막습니다.")]
+        [SerializeField] private bool hideChildSpriteRenderersUntilRevealed = true;
+
+        [Tooltip("자동 수집 외에 숨김 상태에서 꺼둘 SpriteRenderer를 직접 지정할 수 있습니다.")]
+        [SerializeField] private SpriteRenderer[] extraSpriteRenderersToHideUntilRevealed;
+
+        [Tooltip("숨김 상태에서 통째로 꺼둘 오브젝트가 있다면 지정합니다. 예: 함정 마스크, 발사구 장식, 이펙트 루트.")]
         [SerializeField] private GameObject[] extraVisualsToHideUntilRevealed;
 
         [Header("Reveal Mode")]
-        [Tooltip("켜져 있으면 한 번 발견된 뒤에는 ForwardZone 밖으로 나가도 실제 모습이 유지됩니다.")]
+        [Tooltip("켜져 있으면 한 번 발견된 뒤에는 조명 밖으로 나가도 실제 모습이 유지됩니다.")]
         [SerializeField] private bool stayRevealedAfterSeen = true;
 
-        [Tooltip("숨김 상태에서 실제 함정 SpriteRenderer를 꺼두고, hidden overlay만 보이게 합니다.")]
-        [SerializeField] private bool disableActualRendererWhileHidden = true;
+        [Tooltip("이 이름을 가진 overlay 렌더러는 자동 숨김 대상에서 제외합니다. 이전 overlay 방식과의 호환용입니다.")]
+        [SerializeField] private string hiddenOverlayName = "__HiddenVisualOverlay";
 
+        private Sprite actualSprite;
+        private Sprite disguiseSprite;
+
+        private bool configured;
         private bool discovered;
         private bool lastInsideForwardZone;
-        private bool actualRendererInitialEnabled = true;
-        private Sprite hiddenSprite;
-        private float configuredHiddenWorldZRotation;
+
+        private readonly List<SpriteRenderer> renderersToHide = new();
+        private readonly List<bool> rendererInitialEnabled = new();
 
         /// <summary>
-        /// 구버전 호출 호환용입니다.
+        /// 구버전 JsonBlockBuilder2D 호환용 Configure입니다.
         /// </summary>
         public void Configure(Sprite disguise, bool stayRevealed)
         {
@@ -52,31 +66,30 @@ namespace Dungeon.Map
         }
 
         /// <summary>
-        /// actualZRotation은 호환용으로 받지만, overlay 위치 계산에는 사용하지 않습니다.
-        /// hiddenZRotation은 숨김용 스프라이트가 월드 기준으로 보여야 하는 Z 회전값입니다.
+        /// 최신 JsonBlockBuilder2D 호환용 Configure입니다.
+        /// actualZRotation/hiddenZRotation은 overlay 방식에서 쓰던 값이므로,
+        /// 현재 direct sprite swap 방식에서는 받기만 하고 사용하지 않습니다.
         /// </summary>
         public void Configure(Sprite disguise, float actualZRotation, float hiddenZRotation, bool stayRevealed)
         {
-            ResolveActualRenderer();
+            ResolveRenderer();
             ResolveRevealCollider();
 
-            if (actualRenderer == null)
+            if (targetRenderer == null)
             {
-                Debug.LogWarning($"{name}: HiddenTrapVisual2D에 사용할 실제 SpriteRenderer가 없습니다.");
+                Debug.LogWarning($"{name}: HiddenTrapVisual2D에 사용할 SpriteRenderer가 없습니다.");
                 return;
             }
 
-            actualRendererInitialEnabled = actualRenderer.enabled;
-            hiddenSprite = disguise;
-            configuredHiddenWorldZRotation = hiddenZRotation;
+            actualSprite = targetRenderer.sprite;
+            disguiseSprite = disguise;
             stayRevealedAfterSeen = stayRevealed;
-
-            EnsureHiddenOverlayRenderer();
-            ApplyHiddenOverlaySpriteAndTransform(hiddenZRotation);
 
             discovered = false;
             lastInsideForwardZone = false;
+            configured = true;
 
+            CollectExtraRenderersToHide();
             ApplyForwardZoneState(false);
         }
 
@@ -86,10 +99,18 @@ namespace Dungeon.Map
             ApplyForwardZoneState(lastInsideForwardZone);
         }
 
+        /// <summary>
+        /// ForwardZoneVisionMask2D가 직접 center 판정을 하지 않는 경우에도,
+        /// 기본적으로 타일 중심 기준으로 reveal되도록 합니다.
+        /// 큰 공격/감지용 Trigger Collider 때문에 멀리서 reveal되는 것을 방지합니다.
+        /// </summary>
         public bool IsInsideForwardZone(ForwardZoneCollector collector)
         {
             if (collector == null)
                 return false;
+
+            if (useTileCenterForReveal)
+                return collector.IsWorldPointInsideZone(transform.position);
 
             ResolveRevealCollider();
 
@@ -124,70 +145,55 @@ namespace Dungeon.Map
 
         public void SetActualSprite(Sprite sprite)
         {
-            ResolveActualRenderer();
-            if (actualRenderer != null && sprite != null)
-                actualRenderer.sprite = sprite;
+            if (sprite == null)
+                return;
+
+            actualSprite = sprite;
+            ApplyForwardZoneState(lastInsideForwardZone);
         }
 
+        /// <summary>
+        /// 최신 overlay 방식 JsonBlockBuilder2D와의 컴파일 호환용입니다.
+        /// 현재 방식에서는 hidden sprite만 교체하고 회전값은 사용하지 않습니다.
+        /// </summary>
         public void SetHiddenSpriteAndRotation(Sprite sprite, float actualZRotation, float hiddenZRotation)
         {
-            hiddenSprite = sprite;
-            configuredHiddenWorldZRotation = hiddenZRotation;
-            EnsureHiddenOverlayRenderer();
-            ApplyHiddenOverlaySpriteAndTransform(hiddenZRotation);
+            disguiseSprite = sprite;
             ApplyForwardZoneState(lastInsideForwardZone);
         }
 
         private void ApplyVisual(bool showActual)
         {
-            ResolveActualRenderer();
-            EnsureHiddenOverlayRenderer();
+            ResolveRenderer();
 
-            if (actualRenderer != null)
+            if (targetRenderer != null)
             {
-                if (showActual)
-                    actualRenderer.enabled = actualRendererInitialEnabled;
-                else if (disableActualRendererWhileHidden)
-                    actualRenderer.enabled = false;
-                else
-                    actualRenderer.enabled = actualRendererInitialEnabled;
+                if (showActual && actualSprite != null)
+                    targetRenderer.sprite = actualSprite;
+                else if (!showActual && disguiseSprite != null)
+                    targetRenderer.sprite = disguiseSprite;
             }
 
-            if (hiddenOverlayRenderer != null)
-            {
-                // 혹시 런타임 중 부모/위치가 틀어진 경우에도 매번 올바른 위치로 되돌립니다.
-                ApplyHiddenOverlaySpriteAndTransform(configuredHiddenWorldZRotation);
-                hiddenOverlayRenderer.enabled = !showActual && hiddenSprite != null;
-            }
-
-            if (extraVisualsToHideUntilRevealed != null)
-            {
-                foreach (var obj in extraVisualsToHideUntilRevealed)
-                {
-                    if (obj != null)
-                        obj.SetActive(showActual);
-                }
-            }
+            ApplyExtraRendererVisibility(showActual);
+            ApplyExtraObjectVisibility(showActual);
         }
 
-        private void ResolveActualRenderer()
+        private void ResolveRenderer()
         {
-            if (actualRenderer != null && actualRenderer.name != hiddenOverlayName)
+            if (targetRenderer != null)
                 return;
 
-            actualRenderer = null;
-
             var variant = GetComponent<AssetVariantSprite2D>();
-            if (variant != null && variant.Renderer != null && variant.Renderer.name != hiddenOverlayName)
+            if (variant != null && variant.Renderer != null)
             {
-                actualRenderer = variant.Renderer;
+                targetRenderer = variant.Renderer;
                 return;
             }
 
             var rootRenderer = GetComponent<SpriteRenderer>();
-            if (rootRenderer != null && rootRenderer.name != hiddenOverlayName)
+            if (rootRenderer != null)
             {
-                actualRenderer = rootRenderer;
+                targetRenderer = rootRenderer;
                 return;
             }
 
@@ -197,7 +203,7 @@ namespace Dungeon.Map
                 if (sr == null) continue;
                 if (sr.name == hiddenOverlayName) continue;
 
-                actualRenderer = sr;
+                targetRenderer = sr;
                 return;
             }
         }
@@ -213,114 +219,74 @@ namespace Dungeon.Map
                 revealCollider = GetComponentInChildren<Collider2D>(true);
         }
 
-        private void EnsureHiddenOverlayRenderer()
+        /// <summary>
+        /// 숨김 상태에서 꺼둘 자식 SpriteRenderer들을 수집합니다.
+        /// targetRenderer는 hidden sprite를 보여줘야 하므로 제외합니다.
+        /// </summary>
+        private void CollectExtraRenderersToHide()
         {
-            ResolveActualRenderer();
+            renderersToHide.Clear();
+            rendererInitialEnabled.Clear();
 
-            Transform desiredParent = GetDesiredOverlayParent();
-            CleanupWrongOrDuplicateOverlays(desiredParent);
-
-            Transform found = desiredParent.Find(hiddenOverlayName);
-            GameObject overlayObj;
-
-            if (found != null)
+            if (hideChildSpriteRenderersUntilRevealed)
             {
-                overlayObj = found.gameObject;
-            }
-            else
-            {
-                overlayObj = new GameObject(hiddenOverlayName);
-                overlayObj.transform.SetParent(desiredParent, false);
+                var renderers = GetComponentsInChildren<SpriteRenderer>(true);
+                foreach (var sr in renderers)
+                {
+                    AddRendererToHideList(sr);
+                }
             }
 
-            hiddenOverlayRenderer = overlayObj.GetComponent<SpriteRenderer>();
-            if (hiddenOverlayRenderer == null)
-                hiddenOverlayRenderer = overlayObj.AddComponent<SpriteRenderer>();
-
-            hiddenOverlayRenderer.enabled = false;
+            if (extraSpriteRenderersToHideUntilRevealed != null)
+            {
+                foreach (var sr in extraSpriteRenderersToHideUntilRevealed)
+                {
+                    AddRendererToHideList(sr);
+                }
+            }
         }
 
-        private Transform GetDesiredOverlayParent()
+        private void AddRendererToHideList(SpriteRenderer sr)
         {
-            // 실제 SpriteRenderer가 루트 오브젝트라면 overlay는 반드시 루트의 자식이어야 합니다.
-            // 이전 버전처럼 루트의 localPosition을 overlay localPosition으로 복사하면
-            // 특정 좌표, 특히 0000 근처에 다른 타일 overlay가 겹치는 문제가 생길 수 있습니다.
-            if (actualRenderer == null || actualRenderer.transform == transform)
-                return transform;
+            if (sr == null) return;
+            if (sr == targetRenderer) return;
+            if (sr.name == hiddenOverlayName) return;
+            if (renderersToHide.Contains(sr)) return;
 
-            // 실제 SpriteRenderer가 자식 오브젝트에 붙어 있는 프리팹이면 같은 부모 아래에 overlay를 만듭니다.
-            if (actualRenderer.transform.parent != null)
-                return actualRenderer.transform.parent;
-
-            return transform;
+            renderersToHide.Add(sr);
+            rendererInitialEnabled.Add(sr.enabled);
         }
 
-        private void CleanupWrongOrDuplicateOverlays(Transform desiredParent)
+        private void ApplyExtraRendererVisibility(bool showActual)
         {
-            if (desiredParent == null)
+            if (!configured)
                 return;
 
-            var transforms = GetComponentsInChildren<Transform>(true);
-            foreach (var t in transforms)
+            for (int i = renderersToHide.Count - 1; i >= 0; i--)
             {
-                if (t == null) continue;
-                if (t == transform) continue;
-                if (t.name != hiddenOverlayName) continue;
+                SpriteRenderer sr = renderersToHide[i];
 
-                bool isDesiredDirectChild = t.parent == desiredParent;
-                bool isCurrentRenderer = hiddenOverlayRenderer != null && t == hiddenOverlayRenderer.transform;
-
-                if (isDesiredDirectChild && !isCurrentRenderer)
+                if (sr == null)
+                {
+                    renderersToHide.RemoveAt(i);
+                    rendererInitialEnabled.RemoveAt(i);
                     continue;
+                }
 
-                if (isCurrentRenderer && isDesiredDirectChild)
-                    continue;
-
-                if (Application.isPlaying)
-                    Destroy(t.gameObject);
-                else
-                    DestroyImmediate(t.gameObject);
+                bool initialEnabled = i < rendererInitialEnabled.Count && rendererInitialEnabled[i];
+                sr.enabled = showActual && initialEnabled;
             }
         }
 
-        private void ApplyHiddenOverlaySpriteAndTransform(float hiddenWorldZRotation)
+        private void ApplyExtraObjectVisibility(bool showActual)
         {
-            if (hiddenOverlayRenderer == null)
+            if (extraVisualsToHideUntilRevealed == null)
                 return;
 
-            Transform desiredParent = GetDesiredOverlayParent();
-            if (hiddenOverlayRenderer.transform.parent != desiredParent)
-                hiddenOverlayRenderer.transform.SetParent(desiredParent, false);
-
-            hiddenOverlayRenderer.sprite = hiddenSprite;
-
-            if (actualRenderer != null && actualRenderer.transform != transform)
+            foreach (var obj in extraVisualsToHideUntilRevealed)
             {
-                // 실제 SpriteRenderer가 자식이면 그 자식 SpriteRenderer의 상대 위치/스케일을 따라갑니다.
-                hiddenOverlayRenderer.transform.localPosition = actualRenderer.transform.localPosition;
-                hiddenOverlayRenderer.transform.localScale = actualRenderer.transform.localScale;
-            }
-            else
-            {
-                // 실제 SpriteRenderer가 루트에 있으면 overlay는 루트 타일 중심에 정확히 붙어야 합니다.
-                hiddenOverlayRenderer.transform.localPosition = Vector3.zero;
-                hiddenOverlayRenderer.transform.localScale = Vector3.one;
-            }
-
-            float parentWorldZ = hiddenOverlayRenderer.transform.parent != null
-                ? hiddenOverlayRenderer.transform.parent.eulerAngles.z
-                : 0f;
-            float localZ = Mathf.DeltaAngle(parentWorldZ, hiddenWorldZRotation);
-            hiddenOverlayRenderer.transform.localRotation = Quaternion.Euler(0f, 0f, localZ);
-
-            if (actualRenderer != null)
-            {
-                hiddenOverlayRenderer.sortingLayerID = actualRenderer.sortingLayerID;
-                hiddenOverlayRenderer.sortingOrder = actualRenderer.sortingOrder + hiddenOverlaySortingOrderOffset;
-                hiddenOverlayRenderer.flipX = actualRenderer.flipX;
-                hiddenOverlayRenderer.flipY = actualRenderer.flipY;
-                hiddenOverlayRenderer.color = Color.white;
-                hiddenOverlayRenderer.material = actualRenderer.sharedMaterial;
+                if (obj != null)
+                    obj.SetActive(showActual);
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Dungeon.UI
 {
     /// <summary>
     /// 사각형 막대형 HP UI를 제어합니다.
-    /// 
+    ///
     /// 권장 계층 구조:
     /// HealthPanelRoot (Image: 흰색 패널)
     /// ├─ HealthBarBack   (Image: 검은색 배경 막대)
@@ -20,6 +20,11 @@ namespace Dungeon.UI
     /// │  └─ Dividers     (BarHealthDividersUI, 10HP/50HP 경계선)
     /// ├─ HPText          (TMP_Text: 현재HP/최대HP)
     /// └─ TrapGoldText    (TMP_Text: 부순 함정 보너스 골드)
+    ///
+    /// 주의:
+    /// broken_traps 조회는 UnityEngine.Transform/GameObject 같은 엔진 객체 내부까지
+    /// reflection으로 훑지 않습니다. 그런 접근은 Unity 내부 Assertion(ValidTRS)을
+    /// 발생시킬 수 있고, 매 프레임 반복되면 성능 저하가 큽니다.
     /// </summary>
     public class BarHealthUI : MonoBehaviour
     {
@@ -59,7 +64,7 @@ namespace Dungeon.UI
         [Tooltip("부순 함정 보너스 골드를 표시할 텍스트입니다.")]
         public TMP_Text brokenTrapGoldText;
 
-        [Tooltip("필요하면 씬의 SaveManager를 직접 드래그해서 넣을 수 있습니다. 비워도 자동 탐색합니다.")]
+        [Tooltip("가능하면 SaveManager 오브젝트를 직접 넣으세요. 비워두면 이름에 SaveManager가 들어간 컴포넌트를 1회 탐색합니다.")]
         public MonoBehaviour saveManagerOverride;
 
         [Tooltip("부순 함정 1개당 표시할 골드입니다.")]
@@ -71,11 +76,15 @@ namespace Dungeon.UI
         [Tooltip("{0} 위치에 계산된 골드가 들어갑니다.")]
         public string brokenTrapGoldFormat = "획득 골드 : {0}";
 
-        [Tooltip("런타임 중 함정 파괴 수를 다시 읽는 주기입니다.")]
-        public float brokenTrapRefreshInterval = 0.25f;
+        [Tooltip("런타임 중 함정 파괴 수를 다시 읽는 주기입니다. 너무 낮게 잡으면 파일/저장소 조회가 잦아집니다.")]
+        public float brokenTrapRefreshInterval = 0.5f;
 
         private float nextBrokenTrapRefreshTime;
         private int lastDisplayedBrokenTrapCount = int.MinValue;
+
+        // SaveManager 자동 탐색은 비싸므로 한 번 찾으면 캐시합니다.
+        private MonoBehaviour cachedSaveManager;
+        private bool triedFindSaveManager;
 
         private void Awake()
         {
@@ -105,12 +114,13 @@ namespace Dungeon.UI
 
         private void Update()
         {
-            // broken_traps는 Health 이벤트와 별개로 바뀌므로 일정 주기로만 가볍게 갱신합니다.
+            // broken_traps는 Health 이벤트와 별개로 바뀌므로 일정 주기로만 갱신합니다.
+            // 이전 버전처럼 모든 MonoBehaviour를 매번 재귀 reflection으로 훑지 않습니다.
             if (brokenTrapGoldText == null) return;
             if (Time.unscaledTime < nextBrokenTrapRefreshTime) return;
 
             RefreshBrokenTrapGold(force: false);
-            nextBrokenTrapRefreshTime = Time.unscaledTime + Mathf.Max(0.05f, brokenTrapRefreshInterval);
+            nextBrokenTrapRefreshTime = Time.unscaledTime + Mathf.Max(0.1f, brokenTrapRefreshInterval);
         }
 
         /// <summary>
@@ -220,7 +230,6 @@ namespace Dungeon.UI
 
         /// <summary>
         /// savefile의 broken_traps 값을 읽어서 "부순 함정 수 * goldPerBrokenTrap" 보상을 표시합니다.
-        /// 현재 프로젝트의 SaveManager API가 바뀌어도 깨지지 않도록 reflection과 JSON fallback을 함께 사용합니다.
         /// </summary>
         public void RefreshBrokenTrapGold(bool force = true)
         {
@@ -239,97 +248,126 @@ namespace Dungeon.UI
         }
 
         /// <summary>
-        /// 1순위: Inspector에 지정한 SaveManager
-        /// 2순위: 씬의 SaveManager류 MonoBehaviour
-        /// 3순위: persistentDataPath / StreamingAssets의 JSON 파일
-        /// 순서로 broken_traps 값을 찾습니다.
+        /// broken_traps 조회 순서:
+        /// 1) Inspector에 직접 넣은 SaveManager
+        /// 2) 씬에서 1회 캐시한 SaveManager류 컴포넌트
+        /// 3) JSON 파일 fallback
+        ///
+        /// 중요한 점:
+        /// 이전 버전처럼 모든 MonoBehaviour와 Transform/GameObject 속성을 재귀 탐색하지 않습니다.
+        /// Unity 엔진 객체의 property를 reflection으로 읽으면 ValidTRS Assertion이 발생할 수 있습니다.
         /// </summary>
         private bool TryGetBrokenTrapCount(out int count)
         {
             count = 0;
 
-            if (saveManagerOverride != null && TryFindIntMemberRecursive(saveManagerOverride, "broken_traps", out count))
+            MonoBehaviour saveManager = saveManagerOverride != null ? saveManagerOverride : GetCachedSaveManager();
+            if (saveManager != null && TryFindBrokenTrapsInSaveObject(saveManager, out count))
                 return true;
-
-            MonoBehaviour[] behaviours = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-
-            // SaveManager 이름을 가진 오브젝트를 먼저 확인합니다.
-            foreach (var mb in behaviours)
-            {
-                if (mb == null) continue;
-                string typeName = mb.GetType().Name;
-
-                if (typeName.IndexOf("SaveManager", StringComparison.OrdinalIgnoreCase) >= 0 &&
-                    TryFindIntMemberRecursive(mb, "broken_traps", out count))
-                    return true;
-            }
-
-            // 이름은 다르지만 save data를 들고 있는 매니저가 있을 수 있어 한 번 더 넓게 탐색합니다.
-            foreach (var mb in behaviours)
-            {
-                if (mb == null) continue;
-                if (TryFindIntMemberRecursive(mb, "broken_traps", out count))
-                    return true;
-            }
 
             return TryGetBrokenTrapCountFromJson(out count);
         }
 
-        /// <summary>
-        /// private field/property 안쪽에 들어있는 save data까지 재귀적으로 탐색합니다.
-        /// 예: SaveManager.data.broken_traps 같은 구조를 찾기 위한 처리입니다.
-        /// </summary>
-        private static bool TryFindIntMemberRecursive(object root, string targetName, out int value)
+        private MonoBehaviour GetCachedSaveManager()
         {
-            var visited = new HashSet<object>(ReferenceEqualityComparer.Instance);
-            return TryFindIntMemberRecursiveInternal(root, targetName, out value, visited, depth: 0);
+            if (cachedSaveManager != null)
+                return cachedSaveManager;
+
+            if (triedFindSaveManager)
+                return null;
+
+            triedFindSaveManager = true;
+
+            MonoBehaviour[] behaviours = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (var mb in behaviours)
+            {
+                if (mb == null) continue;
+
+                string typeName = mb.GetType().Name;
+                if (typeName.IndexOf("SaveManager", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    typeName.IndexOf("StatusSave", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    cachedSaveManager = mb;
+                    return cachedSaveManager;
+                }
+            }
+
+            return null;
         }
 
-        private static bool TryFindIntMemberRecursiveInternal(object obj, string targetName, out int value, HashSet<object> visited, int depth)
+        private static bool TryFindBrokenTrapsInSaveObject(object root, out int value)
+        {
+            var visited = new HashSet<object>(ReferenceEqualityComparer.Instance);
+            return TryFindBrokenTrapsInSaveObjectInternal(root, out value, visited, depth: 0);
+        }
+
+        private static bool TryFindBrokenTrapsInSaveObjectInternal(object obj, out int value, HashSet<object> visited, int depth)
         {
             value = 0;
             if (obj == null) return false;
-            if (depth > 4) return false;
+            if (depth > 5) return false;
 
             Type type = obj.GetType();
             if (IsTerminalType(type)) return false;
             if (!visited.Add(obj)) return false;
 
-            const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
 
-            foreach (var field in type.GetFields(flags))
+            // MonoBehaviour 자체의 Transform/GameObject/Renderer 같은 Unity 속성은 건드리지 않고,
+            // 사용자가 만든 클래스에 선언된 필드만 확인합니다.
+            Type current = type;
+            while (current != null && current != typeof(MonoBehaviour) && current != typeof(Behaviour) && current != typeof(Component) && current != typeof(UnityEngine.Object))
             {
-                object fieldValue;
-                try { fieldValue = field.GetValue(obj); }
-                catch { continue; }
+                foreach (var field in current.GetFields(flags))
+                {
+                    object fieldValue;
+                    try { fieldValue = field.GetValue(obj); }
+                    catch { continue; }
 
-                if (string.Equals(field.Name, targetName, StringComparison.OrdinalIgnoreCase) && TryConvertToInt(fieldValue, out value))
-                    return true;
+                    if (IsBrokenTrapsName(field.Name) && TryConvertToInt(fieldValue, out value))
+                        return true;
 
-                if (ShouldSearchChild(field.FieldType) && TryFindIntMemberRecursiveInternal(fieldValue, targetName, out value, visited, depth + 1))
-                    return true;
-            }
+                    if (ShouldSearchChild(field.FieldType) && TryFindBrokenTrapsInSaveObjectInternal(fieldValue, out value, visited, depth + 1))
+                        return true;
+                }
 
-            foreach (var prop in type.GetProperties(flags))
-            {
-                if (prop.GetIndexParameters().Length > 0) continue;
+                // 프로퍼티는 getter 실행 부작용이 있을 수 있으므로 UnityEngine.Object에서는 절대 읽지 않습니다.
+                // 순수 C# save data 클래스에서 선언된 단순 프로퍼티만 제한적으로 확인합니다.
+                if (!typeof(UnityEngine.Object).IsAssignableFrom(current))
+                {
+                    foreach (var prop in current.GetProperties(flags))
+                    {
+                        if (prop.GetIndexParameters().Length > 0) continue;
+                        if (!prop.CanRead) continue;
 
-                object propValue;
-                try { propValue = prop.GetValue(obj); }
-                catch { continue; }
+                        object propValue;
+                        try { propValue = prop.GetValue(obj); }
+                        catch { continue; }
 
-                if (string.Equals(prop.Name, targetName, StringComparison.OrdinalIgnoreCase) && TryConvertToInt(propValue, out value))
-                    return true;
+                        if (IsBrokenTrapsName(prop.Name) && TryConvertToInt(propValue, out value))
+                            return true;
 
-                if (ShouldSearchChild(prop.PropertyType) && TryFindIntMemberRecursiveInternal(propValue, targetName, out value, visited, depth + 1))
-                    return true;
+                        if (ShouldSearchChild(prop.PropertyType) && TryFindBrokenTrapsInSaveObjectInternal(propValue, out value, visited, depth + 1))
+                            return true;
+                    }
+                }
+
+                current = current.BaseType;
             }
 
             return false;
         }
 
+        private static bool IsBrokenTrapsName(string name)
+        {
+            return string.Equals(name, "broken_traps", StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(name, "brokenTraps", StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(name, "brokenTrapCount", StringComparison.OrdinalIgnoreCase);
+        }
+
         /// <summary>
         /// Reflection으로 찾지 못했을 때 JSON 파일에서 직접 "broken_traps" 값을 찾습니다.
+        /// 프로젝트에서 저장 파일명이 다르면 candidateFiles에 추가하면 됩니다.
         /// </summary>
         private static bool TryGetBrokenTrapCountFromJson(out int count)
         {
@@ -361,12 +399,16 @@ namespace Dungeon.UI
                     return false;
 
                 string json = File.ReadAllText(path);
-                Match match = Regex.Match(json, "\\\"broken_traps\\\"\\s*:\\s*(\\d+)");
+                Match match = Regex.Match(json, "\\\"broken_traps\\\"\\s*:\\s*(-?\\d+)");
 
                 if (!match.Success)
                     return false;
 
-                return int.TryParse(match.Groups[1].Value, out count);
+                if (!int.TryParse(match.Groups[1].Value, out count))
+                    return false;
+
+                count = Mathf.Max(0, count);
+                return true;
             }
             catch
             {
@@ -381,7 +423,7 @@ namespace Dungeon.UI
 
             if (obj is int i)
             {
-                value = i;
+                value = Mathf.Max(0, i);
                 return true;
             }
 
@@ -391,15 +433,27 @@ namespace Dungeon.UI
                 return true;
             }
 
-            return int.TryParse(obj.ToString(), out value);
+            if (int.TryParse(obj.ToString(), out value))
+            {
+                value = Mathf.Max(0, value);
+                return true;
+            }
+
+            return false;
         }
 
         private static bool ShouldSearchChild(Type type)
         {
             if (type == null) return false;
             if (IsTerminalType(type)) return false;
-            if (typeof(UnityEngine.Object).IsAssignableFrom(type) && !typeof(MonoBehaviour).IsAssignableFrom(type)) return false;
-            if (type.Namespace != null && type.Namespace.StartsWith("System")) return false;
+
+            // UnityEngine.Object 계열은 Transform/GameObject/Renderer 등 엔진 상태를 포함하므로 재귀 탐색 금지.
+            if (typeof(UnityEngine.Object).IsAssignableFrom(type)) return false;
+
+            // 컬렉션은 프로젝트 save data에 따라 필요할 수 있지만, 여기서는 broken_traps 단일 값 탐색이 목적이라 제외합니다.
+            if (typeof(System.Collections.IEnumerable).IsAssignableFrom(type) && type != typeof(string)) return false;
+
+            if (type.Namespace != null && type.Namespace.StartsWith("System", StringComparison.Ordinal)) return false;
             return true;
         }
 
@@ -437,7 +491,7 @@ namespace Dungeon.UI
         }
 
         /// <summary>
-        /// object 참조를 기준으로 HashSet을 만들기 위한 comparer입니다.
+        /// object 참조 기준 HashSet comparer입니다.
         /// save data 순환 참조 때문에 재귀가 무한히 도는 것을 방지합니다.
         /// </summary>
         private sealed class ReferenceEqualityComparer : IEqualityComparer<object>

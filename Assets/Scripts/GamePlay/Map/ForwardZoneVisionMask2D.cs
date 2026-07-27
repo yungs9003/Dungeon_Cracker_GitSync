@@ -6,8 +6,14 @@ using Dungeon.Player;
 namespace Dungeon.Map
 {
     /// <summary>
-    /// 플레이어 ForwardZone 밖을 하나의 투명 Mesh로 덮습니다.
-    /// ForwardZoneCollector가 계산한 tangent-outline 기반 시야 외곽선을 그대로 사용합니다.
+    /// 플레이어 중심 원형 조명 마스크입니다.
+    ///
+    /// 동작 방식:
+    /// - clearRadius 안쪽: 마스크가 없어 정상 표시
+    /// - clearRadius ~ clearRadius + fadeBandRadius: 원형 그라데이션으로 급격히 어두워짐
+    /// - 그 바깥: 완전 검은색으로 덮음
+    ///
+    /// clearRadius와 fadeBandRadius는 ForwardZoneCollector에서 가져옵니다.
     /// </summary>
     public class ForwardZoneVisionMask2D : MonoBehaviour
     {
@@ -15,23 +21,39 @@ namespace Dungeon.Map
         [SerializeField] private ForwardZoneCollector collector;
 
         [Header("Dark Mask")]
-        [SerializeField, Range(0f, 1f)] private float darkAlpha = 0.75f;
+        [Tooltip("바깥 완전 암전 영역의 색입니다. 보통 검은색을 사용합니다.")]
         [SerializeField] private Color darkColor = Color.black;
+
+        [Tooltip("clearRadius + fadeBandRadius 바깥의 최종 어두움입니다. 완전히 가리려면 1로 둡니다.")]
+        [SerializeField, Range(0f, 1f)] private float darkAlpha = 1f;
+
+        [Tooltip("감쇠 구간의 어두워지는 속도입니다. 값이 클수록 clearRadius 바깥에서 더 급격히 어두워집니다.")]
+        [SerializeField, Range(0.5f, 8f)] private float fadeSteepness = 4f;
+
+        [Tooltip("감쇠 구간을 몇 단계의 링으로 나눌지 정합니다. 8~16 정도면 충분합니다.")]
+        [SerializeField, Range(1, 32)] private int fadeSteps = 10;
+
+        [Tooltip("원의 부드러움입니다. 96~192 정도를 추천합니다.")]
+        [SerializeField, Range(24, 360)] private int radialSegments = 144;
+
+        [Tooltip("맵 전체를 덮기 위해 계산된 외곽 반지름에 더하는 여유값입니다.")]
+        [SerializeField] private float outerRadiusPadding = 6f;
+
         [SerializeField] private int maskSortingOrder = 5000;
         [SerializeField] private string maskSortingLayerName = "";
 
-        [Tooltip("마스크 외곽 원의 부드러움입니다. 96~192 정도를 추천합니다.")]
-        [SerializeField, Range(24, 360)] private int radialSegments = 144;
-
-        [Tooltip("맵 전체를 충분히 덮기 위해 외곽 반지름에 더하는 여유값입니다.")]
-        [SerializeField] private float outerRadiusPadding = 6f;
-
-        [Tooltip("호환용 옵션입니다. 이 버전은 타일별 사각형이 아니라 하나의 Mesh 마스크를 사용하므로 실제 동작에는 영향이 거의 없습니다.")]
+        [Tooltip("호환용 옵션입니다. 현재 버전은 타일별 사각 마스크가 아니라 하나의 원형 Mesh 마스크를 사용합니다.")]
         [SerializeField] private bool coverOnlyExistingGridCells = true;
 
         [Header("Trap Reveal")]
-        [Tooltip("켜져 있으면 한 번 발견된 숨김 타일은 ForwardZone 밖으로 나가도 계속 실제 모습으로 유지됩니다.")]
-        [SerializeField] private bool stayRevealedAfterSeen = true;
+        [Tooltip("켜져 있으면 한 번 발견된 숨김 타일은 조명 밖으로 나가도 실제 모습으로 유지됩니다. 현재 조명 방식에서는 false 권장입니다.")]
+        [SerializeField] private bool stayRevealedAfterSeen = false;
+
+        [Tooltip("켜져 있으면 함정의 큰 감지 콜라이더가 아니라 타일 중심 위치가 clearRadius 안에 들어왔을 때만 reveal합니다.")]
+        [SerializeField] private bool revealByTileCenterOnly = true;
+
+        [Tooltip("타일 중심 reveal 판정에 더할 여유 반지름입니다. 경계에서 너무 빡빡하면 0.05~0.2 정도로 조정하세요.")]
+        [SerializeField] private float revealRadiusPadding = 0.05f;
 
         private readonly List<HiddenTrapVisual2D> hiddenTraps = new();
 
@@ -42,9 +64,13 @@ namespace Dungeon.Map
         private Material maskMaterial;
 
         private float outerRadius = 20f;
+
         private Vector2 lastCenter = new Vector2(float.NaN, float.NaN);
-        private Vector2 lastForward = new Vector2(float.NaN, float.NaN);
+        private float lastClearRadius = -1f;
+        private float lastFadeBandRadius = -1f;
         private float lastDarkAlpha = -1f;
+        private float lastFadeSteepness = -1f;
+        private int lastFadeSteps = -1;
         private int lastSegments = -1;
         private float lastOuterRadius = -1f;
 
@@ -98,6 +124,10 @@ namespace Dungeon.Map
             hiddenTraps.Add(trap);
         }
 
+        /// <summary>
+        /// JsonBlockBuilder2D가 맵을 만든 뒤 호출합니다.
+        /// 맵 크기를 기준으로 마스크 외곽 반지름을 충분히 크게 잡습니다.
+        /// </summary>
         public void RebuildMask(MapData2D mapData, float cellSize, Transform parent)
         {
             ClearMaskObjects();
@@ -113,32 +143,52 @@ namespace Dungeon.Map
                 return;
 
             Vector2 center = collector.ZoneCenter;
-            Vector2 forward = collector.CurrentForwardDirection;
+            float clearRadius = collector.ClearRadius;
+            float fadeBandRadius = collector.FadeBandRadius;
+            float requiredOuterRadius = Mathf.Max(outerRadius, collector.OuterLightRadius + outerRadiusPadding);
 
+            // 마스크 Mesh는 플레이어 중심을 원점으로 하는 local 좌표로 만들고,
+            // Root 오브젝트만 플레이어 위치로 이동시킵니다.
             maskRoot.position = new Vector3(center.x, center.y, transform.position.z);
 
             bool needRebuild =
                 Vector2.Distance(center, lastCenter) > 0.001f ||
-                Vector2.Distance(forward, lastForward) > 0.001f ||
-                !Mathf.Approximately(lastDarkAlpha, darkAlpha) ||
-                !Mathf.Approximately(lastOuterRadius, outerRadius) ||
+                !Mathf.Approximately(clearRadius, lastClearRadius) ||
+                !Mathf.Approximately(fadeBandRadius, lastFadeBandRadius) ||
+                !Mathf.Approximately(darkAlpha, lastDarkAlpha) ||
+                !Mathf.Approximately(fadeSteepness, lastFadeSteepness) ||
+                !Mathf.Approximately(requiredOuterRadius, lastOuterRadius) ||
+                lastFadeSteps != fadeSteps ||
                 lastSegments != radialSegments ||
                 meshFilter.sharedMesh == null;
 
             if (needRebuild)
             {
-                BuildDarknessMesh();
+                BuildRadialDarknessMesh(clearRadius, fadeBandRadius, requiredOuterRadius);
+
                 lastCenter = center;
-                lastForward = forward;
+                lastClearRadius = clearRadius;
+                lastFadeBandRadius = fadeBandRadius;
                 lastDarkAlpha = darkAlpha;
+                lastFadeSteepness = fadeSteepness;
+                lastFadeSteps = fadeSteps;
                 lastSegments = radialSegments;
-                lastOuterRadius = outerRadius;
+                lastOuterRadius = requiredOuterRadius;
             }
 
             if (meshRenderer != null)
                 meshRenderer.enabled = darkAlpha > 0.001f;
         }
 
+        /// <summary>
+        /// hidden trap reveal은 조명의 clearRadius 안쪽에서만 발생시킵니다.
+        ///
+        /// 주의:
+        /// HiddenTrapVisual2D.IsInsideForwardZone(collector)는 내부적으로 trap의 Collider2D를 사용할 수 있습니다.
+        /// 화살/가시 함정처럼 감지용 Trigger Collider가 큰 프리팹은 실제 타일 중심이 r 밖에 있어도
+        /// 큰 콜라이더 일부가 r 안에 걸려서 너무 일찍 reveal될 수 있습니다.
+        /// 그래서 기본값은 revealByTileCenterOnly = true로 두고, trap.transform.position 기준으로만 판정합니다.
+        /// </summary>
         private void RefreshHiddenTraps()
         {
             if (collector == null)
@@ -154,14 +204,33 @@ namespace Dungeon.Map
                     continue;
                 }
 
-                bool insideForwardZone = trap.IsInsideForwardZone(collector);
-                trap.ApplyForwardZoneState(insideForwardZone);
+                bool insideVisibleZone = revealByTileCenterOnly
+                    ? IsTrapCenterInsideClearRadius(trap)
+                    : trap.IsInsideForwardZone(collector);
+
+                trap.ApplyForwardZoneState(insideVisibleZone);
             }
+        }
+
+        /// <summary>
+        /// 함정 타일의 중심점이 clearRadius 안에 들어왔는지만 검사합니다.
+        /// 이 판정은 함정의 공격/감지 콜라이더 크기에 영향을 받지 않습니다.
+        /// </summary>
+        private bool IsTrapCenterInsideClearRadius(HiddenTrapVisual2D trap)
+        {
+            if (trap == null || collector == null)
+                return false;
+
+            Vector2 center = collector.ZoneCenter;
+            Vector2 trapPos = trap.transform.position;
+
+            float radius = collector.ClearRadius + Mathf.Max(0f, revealRadiusPadding);
+            return (trapPos - center).sqrMagnitude <= radius * radius;
         }
 
         private void CreateMaskMeshObject(Transform parent)
         {
-            maskRoot = new GameObject("ForwardZone_DarkMaskRoot").transform;
+            maskRoot = new GameObject("RadialVision_DarkMaskRoot").transform;
             maskRoot.SetParent(parent != null ? parent : transform, false);
             maskRoot.localPosition = Vector3.zero;
             maskRoot.localRotation = Quaternion.identity;
@@ -171,7 +240,7 @@ namespace Dungeon.Map
             meshRenderer = maskRoot.gameObject.AddComponent<MeshRenderer>();
 
             maskMesh = new Mesh();
-            maskMesh.name = "ForwardZone_DarknessMesh";
+            maskMesh.name = "RadialVision_DarknessMesh";
             meshFilter.sharedMesh = maskMesh;
 
             maskMaterial = CreateMaskMaterial();
@@ -195,81 +264,131 @@ namespace Dungeon.Map
                 shader = Shader.Find("Unlit/Transparent");
 
             Material mat = new Material(shader);
-            mat.name = "ForwardZone_DarkMask_Material_Runtime";
+            mat.name = "RadialVision_DarkMask_Material_Runtime";
             mat.renderQueue = 3000;
 
-            Texture2D whiteTex = Texture2D.whiteTexture;
             if (mat.HasProperty("_MainTex"))
-                mat.SetTexture("_MainTex", whiteTex);
+                mat.SetTexture("_MainTex", Texture2D.whiteTexture);
 
             return mat;
         }
 
+        /// <summary>
+        /// 색 자체는 머티리얼 tint로, 투명도 변화는 vertex color alpha로 처리합니다.
+        /// </summary>
         private void ApplyMaterialColor()
         {
             if (maskMaterial == null)
                 return;
 
-            Color c = darkColor;
-            c.a = darkAlpha;
+            Color tint = darkColor;
+            tint.a = 1f;
 
             if (maskMaterial.HasProperty("_Color"))
-                maskMaterial.color = c;
+                maskMaterial.color = tint;
         }
 
         /// <summary>
-        /// 중심 기준 외곽 원과 ForwardZone outline 사이를 링 형태로 채워서 어두운 영역을 만듭니다.
-        /// ForwardZone의 경계 반지름은 collector.GetAllowedRadiusForWorldDirection()이 계산합니다.
+        /// 원형 링 Mesh를 만듭니다.
+        /// clearRadius 안쪽에는 정점이 없어서 화면이 그대로 보입니다.
+        /// clearRadius~outerLightRadius는 여러 개의 링으로 나누어 alpha를 점점 높입니다.
+        /// outerLightRadius 바깥은 darkAlpha로 완전히 덮습니다.
         /// </summary>
-        private void BuildDarknessMesh()
+        private void BuildRadialDarknessMesh(float clearRadius, float fadeBandRadius, float meshOuterRadius)
         {
-            if (maskMesh == null || collector == null)
+            if (maskMesh == null)
                 return;
 
             int segments = Mathf.Max(24, radialSegments);
+            int steps = Mathf.Max(1, fadeSteps);
 
-            Vector3[] vertices = new Vector3[segments * 4];
-            Vector2[] uvs = new Vector2[vertices.Length];
-            int[] triangles = new int[segments * 6];
-            Color[] colors = new Color[vertices.Length];
+            clearRadius = Mathf.Max(0.01f, clearRadius);
+            fadeBandRadius = Mathf.Max(0f, fadeBandRadius);
+            meshOuterRadius = Mathf.Max(meshOuterRadius, clearRadius + fadeBandRadius + 0.1f);
 
-            Color c = darkColor;
-            c.a = darkAlpha;
+            float[] radii;
+            float[] alphas;
 
-            for (int i = 0; i < segments; i++)
+            if (fadeBandRadius <= 0.0001f)
             {
-                float a0 = i * 360f / segments;
-                float a1 = (i + 1) * 360f / segments;
+                // 감쇠 구간이 없으면 clearRadius 경계부터 바로 암전시킵니다.
+                radii = new[] { clearRadius, meshOuterRadius };
+                alphas = new[] { darkAlpha, darkAlpha };
+            }
+            else
+            {
+                // 0번 링은 투명, 마지막 전 링은 완전 암전 시작점,
+                // 마지막 링은 맵 외곽까지 덮는 검은 영역입니다.
+                radii = new float[steps + 2];
+                alphas = new float[steps + 2];
 
-                Vector2 d0 = DirectionFromAngle(a0);
-                Vector2 d1 = DirectionFromAngle(a1);
+                radii[0] = clearRadius;
+                alphas[0] = 0f;
 
-                float inner0 = collector.GetAllowedRadiusForWorldDirection(d0);
-                float inner1 = collector.GetAllowedRadiusForWorldDirection(d1);
+                for (int i = 1; i <= steps; i++)
+                {
+                    float t = i / (float)steps;
+                    radii[i] = clearRadius + fadeBandRadius * t;
+                    alphas[i] = darkAlpha * EvaluateFalloff(t);
+                }
 
-                int vi = i * 4;
-                vertices[vi + 0] = d0 * inner0;
-                vertices[vi + 1] = d1 * inner1;
-                vertices[vi + 2] = d1 * outerRadius;
-                vertices[vi + 3] = d0 * outerRadius;
+                radii[steps + 1] = meshOuterRadius;
+                alphas[steps + 1] = darkAlpha;
+            }
 
-                uvs[vi + 0] = Vector2.zero;
-                uvs[vi + 1] = Vector2.zero;
-                uvs[vi + 2] = Vector2.one;
-                uvs[vi + 3] = Vector2.one;
+            int ringIntervals = radii.Length - 1;
+            int quadCount = segments * ringIntervals;
 
-                colors[vi + 0] = c;
-                colors[vi + 1] = c;
-                colors[vi + 2] = c;
-                colors[vi + 3] = c;
+            Vector3[] vertices = new Vector3[quadCount * 4];
+            Vector2[] uvs = new Vector2[vertices.Length];
+            Color[] colors = new Color[vertices.Length];
+            int[] triangles = new int[quadCount * 6];
 
-                int ti = i * 6;
-                triangles[ti + 0] = vi + 0;
-                triangles[ti + 1] = vi + 1;
-                triangles[ti + 2] = vi + 2;
-                triangles[ti + 3] = vi + 0;
-                triangles[ti + 4] = vi + 2;
-                triangles[ti + 5] = vi + 3;
+            int quad = 0;
+
+            for (int r = 0; r < ringIntervals; r++)
+            {
+                float innerRadius = radii[r];
+                float outerRingRadius = radii[r + 1];
+                float innerAlpha = Mathf.Clamp01(alphas[r]);
+                float outerAlpha = Mathf.Clamp01(alphas[r + 1]);
+
+                for (int i = 0; i < segments; i++)
+                {
+                    float a0 = i * 360f / segments;
+                    float a1 = (i + 1) * 360f / segments;
+
+                    Vector2 d0 = DirectionFromAngle(a0);
+                    Vector2 d1 = DirectionFromAngle(a1);
+
+                    int vi = quad * 4;
+
+                    vertices[vi + 0] = d0 * innerRadius;
+                    vertices[vi + 1] = d1 * innerRadius;
+                    vertices[vi + 2] = d1 * outerRingRadius;
+                    vertices[vi + 3] = d0 * outerRingRadius;
+
+                    uvs[vi + 0] = Vector2.zero;
+                    uvs[vi + 1] = Vector2.zero;
+                    uvs[vi + 2] = Vector2.one;
+                    uvs[vi + 3] = Vector2.one;
+
+                    // 머티리얼 색을 검은색으로 두고, vertex alpha만 이용해 어두움 정도를 조절합니다.
+                    colors[vi + 0] = new Color(1f, 1f, 1f, innerAlpha);
+                    colors[vi + 1] = new Color(1f, 1f, 1f, innerAlpha);
+                    colors[vi + 2] = new Color(1f, 1f, 1f, outerAlpha);
+                    colors[vi + 3] = new Color(1f, 1f, 1f, outerAlpha);
+
+                    int ti = quad * 6;
+                    triangles[ti + 0] = vi + 0;
+                    triangles[ti + 1] = vi + 1;
+                    triangles[ti + 2] = vi + 2;
+                    triangles[ti + 3] = vi + 0;
+                    triangles[ti + 4] = vi + 2;
+                    triangles[ti + 5] = vi + 3;
+
+                    quad++;
+                }
             }
 
             maskMesh.Clear();
@@ -278,6 +397,17 @@ namespace Dungeon.Map
             maskMesh.colors = colors;
             maskMesh.triangles = triangles;
             maskMesh.RecalculateBounds();
+        }
+
+        /// <summary>
+        /// 0~1 구간의 감쇠 곡선입니다.
+        /// fadeSteepness가 클수록 clearRadius 바깥에서 빠르게 검어집니다.
+        /// </summary>
+        private float EvaluateFalloff(float t)
+        {
+            t = Mathf.Clamp01(t);
+            float steepness = Mathf.Max(0.01f, fadeSteepness);
+            return 1f - Mathf.Pow(1f - t, steepness);
         }
 
         private float CalculateOuterRadius(MapData2D mapData, float cellSize)
@@ -324,8 +454,11 @@ namespace Dungeon.Map
         private void ForceMeshRefresh()
         {
             lastCenter = new Vector2(float.NaN, float.NaN);
-            lastForward = new Vector2(float.NaN, float.NaN);
+            lastClearRadius = -1f;
+            lastFadeBandRadius = -1f;
             lastDarkAlpha = -1f;
+            lastFadeSteepness = -1f;
+            lastFadeSteps = -1;
             lastSegments = -1;
             lastOuterRadius = -1f;
         }
