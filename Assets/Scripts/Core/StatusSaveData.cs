@@ -34,6 +34,15 @@ namespace Dungeon.Core
         [JsonProperty("sub_stats")]
         public SubStats sub_stats = new();
 
+        // 장비 보정이 적용되기 전의 기준 스탯입니다.
+        // 기존 savefile에 이 필드가 없으면 EquipmentStatCalculator가 최초 계산 시
+        // 현재 main_stats/sub_stats 값을 기준 스탯으로 복사합니다.
+        [JsonProperty("base_main_stats", NullValueHandling = NullValueHandling.Ignore)]
+        public MainStats base_main_stats;
+
+        [JsonProperty("base_sub_stats", NullValueHandling = NullValueHandling.Ignore)]
+        public SubStats base_sub_stats;
+
         // savefile(1).json 기준의 보유 인벤토리입니다.
         // item      : 소비 아이템/일반 아이템 보유 수량
         // equipment : 장비 아이템 보유 수량

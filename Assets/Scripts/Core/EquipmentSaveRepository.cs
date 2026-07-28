@@ -23,6 +23,9 @@ namespace Dungeon.Core
         public string CurrentPath { get; private set; }
         public string LastError { get; private set; }
 
+        // EquipmentStatCalculator가 같은 세이브 데이터를 기준으로 계산할 수 있도록 공개합니다.
+        public StatusSaveData Data => data;
+
         private StatusSaveFile statusSaveFile;
         private StatusSaveData data;
         private bool usingStatusSaveFile;

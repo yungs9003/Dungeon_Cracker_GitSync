@@ -307,6 +307,13 @@ namespace Dungeon.UI
                 return;
             }
 
+            // 장착 정보가 바뀐 직후, DB의 장비 스탯 보너스를 반영해서 최종 스탯을 다시 계산합니다.
+            // 기준 스탯에서 매번 재계산하므로 장비 보너스가 중복 누적되지 않습니다.
+            if (!EquipmentStatCalculator.Recalculate(saveRepository.Data, database))
+            {
+                Debug.LogWarning("[EquipmentPageUI] 장비 스탯 재계산에 실패했습니다.");
+            }
+
             if (!saveRepository.Save())
             {
                 Debug.LogWarning($"[EquipmentPageUI] savefile 저장 실패: {saveRepository.LastError}");

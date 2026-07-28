@@ -460,7 +460,52 @@ namespace Dungeon.Core
         public string slot;
         public string desc;
 
+        // db.json의 desc에서 단순 수치 보정으로 해석 가능한 효과를 구조화해서 넣습니다.
+        // 예: "최대체력 +50" -> main_stats.max_HP = 50
+        // 예: "물리저항 +10" -> main_stats.physical_resist = 10
+        // 예: "이동속도 2배" -> sub_stats_multiplier.speed = 2
+        public EquipmentMainStatBonus main_stats;
+        public EquipmentSubStatBonus sub_stats;
+        public EquipmentMainStatMultiplier main_stats_multiplier;
+        public EquipmentSubStatMultiplier sub_stats_multiplier;
+
         public string Key => GameDatabase.MakeKey(GameDatabase.CategoryEquip, id);
+    }
+
+    [Serializable]
+    public class EquipmentMainStatBonus
+    {
+        public int max_HP;
+        public int physical_resist;
+        public int magical_resist;
+    }
+
+    [Serializable]
+    public class EquipmentSubStatBonus
+    {
+        public int speed;
+        public int poison_resist;
+        public int electric_resist;
+        public int amber_resist;
+        public int freeze_resist;
+    }
+
+    [Serializable]
+    public class EquipmentMainStatMultiplier
+    {
+        public float max_HP;
+        public float physical_resist;
+        public float magical_resist;
+    }
+
+    [Serializable]
+    public class EquipmentSubStatMultiplier
+    {
+        public float speed;
+        public float poison_resist;
+        public float electric_resist;
+        public float amber_resist;
+        public float freeze_resist;
     }
 
     [Serializable]

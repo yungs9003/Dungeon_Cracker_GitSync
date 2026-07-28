@@ -1,37 +1,67 @@
 {
-  "user_name":"Toluse",
+  "user_name": "Toluse",
   "gold": 35600,
-  "main_stats":{
-    "max_HP":150,
-    "physical_resist":10,
-    "magical_resist":20
+  "main_stats": {
+    "max_HP": 150,
+    "physical_resist": 10,
+    "magical_resist": 20
   },
-  "sub_stats":{
-    "speed":10
+  "sub_stats": {
+    "speed": 10,
+    "poison_resist": 0,
+    "electric_resist": 0,
+    "amber_resist": 0,
+    "freeze_resist": 0
   },
-  "inventory":{
+  "inventory": {
     "item": [
-    { "000": 2 },
-    { "002": 3 }
+      {
+        "000": 2
+      },
+      {
+        "002": 3
+      }
     ],
     "equipment": [
-      { "000": 1 },
-      { "001": 1 },
-      { "002": 1 }
+      {
+        "000": 1
+      },
+      {
+        "001": 1
+      },
+      {
+        "002": 1
+      }
     ]
   },
-  "equips":{
-    "item":[
-      {"slot1": "000"},
-      {"slot2": "none"},
-      {"slot3": "none"},
-      {"slot4": "none"},
-      {"slot5": "none"}
+  "equips": {
+    "item": [
+      {
+        "slot1": "000"
+      },
+      {
+        "slot2": "none"
+      },
+      {
+        "slot3": "none"
+      },
+      {
+        "slot4": "none"
+      },
+      {
+        "slot5": "none"
+      }
     ],
-    "equip":[
-      {"head": "none"},
-      {"body": "none"},
-      {"legs": "none"}
+    "equip": [
+      {
+        "head": "none"
+      },
+      {
+        "body": "none"
+      },
+      {
+        "legs": "none"
+      }
     ]
   },
   "checkpoint": {
@@ -40,11 +70,25 @@
     "resumeRequested": false
   },
   "dungeon_status": [
-    { "001": "" }
+    {
+      "001": ""
+    }
   ],
-  "play_time":"135:26",
-  "clear_num_info":"28:73:96",
-  "adventure_count":128,
-  "achievement":"87:300",
-  "player_rank":"s"
+  "play_time": "135:26",
+  "clear_num_info": "28:73:96",
+  "adventure_count": 128,
+  "achievement": "87:300",
+  "player_rank": "s",
+  "base_main_stats": {
+    "max_HP": 150,
+    "physical_resist": 10,
+    "magical_resist": 20
+  },
+  "base_sub_stats": {
+    "speed": 10,
+    "poison_resist": 0,
+    "electric_resist": 0,
+    "amber_resist": 0,
+    "freeze_resist": 0
+  }
 }
