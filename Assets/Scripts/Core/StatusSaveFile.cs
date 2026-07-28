@@ -582,6 +582,135 @@ namespace Dungeon.Core
             Debug.Log("[StatusSaveFile] Run result stats reset.");
         }
 
+        /// <summary>
+        /// 지정한 퀵슬롯에 저장된 소비 아이템 키를 반환합니다.
+        /// 저장 파일에는 raw ID가 저장되며, 반환값은 item:000 형식입니다.
+        /// </summary>
+        public string GetQuickSlotItemKey(int slotNumber)
+        {
+            EnsureNotNull();
+
+            if (slotNumber < 1 || slotNumber > 5)
+                return GameDatabase.NoneKey;
+
+            string slotKey = $"slot{slotNumber}";
+
+            foreach (Dictionary<string, string> map in data.equips.item)
+            {
+                if (map == null)
+                    continue;
+
+                if (!map.TryGetValue(slotKey, out string rawId))
+                    continue;
+
+                rawId = GameDatabase.NormalizeId(rawId);
+
+                if (string.IsNullOrWhiteSpace(rawId) ||
+                    rawId == GameDatabase.NoneKey)
+                {
+                    return GameDatabase.NoneKey;
+                }
+
+                return GameDatabase.MakeKey(
+                    GameDatabase.CategoryItem,
+                    rawId
+                );
+            }
+
+            return GameDatabase.NoneKey;
+        }
+
+        /// <summary>
+        /// 지정한 퀵슬롯에 소비 아이템을 등록하고 즉시 저장합니다.
+        /// itemKey는 item:000 또는 000 형식을 받을 수 있습니다.
+        /// </summary>
+        public bool SetQuickSlotItemKey(int slotNumber, string itemKey)
+        {
+            EnsureNotNull();
+
+            if (slotNumber < 1 || slotNumber > 5)
+            {
+                Debug.LogWarning(
+                    $"[StatusSaveFile] 잘못된 퀵 슬롯 번호입니다: {slotNumber}"
+                );
+
+                return false;
+            }
+
+            string rawId;
+
+            if (string.IsNullOrWhiteSpace(itemKey) ||
+                itemKey == GameDatabase.NoneKey)
+            {
+                rawId = GameDatabase.NoneKey;
+            }
+            else if (GameDatabase.TryParseKey(
+                         itemKey,
+                         out string category,
+                         out string parsedId))
+            {
+                if (category != GameDatabase.CategoryItem)
+                {
+                    Debug.LogWarning(
+                        $"[StatusSaveFile] 퀵 슬롯에는 아이템만 등록할 수 있습니다: {itemKey}"
+                    );
+
+                    return false;
+                }
+
+                rawId = GameDatabase.NormalizeId(parsedId);
+            }
+            else
+            {
+                // "000"처럼 raw ID를 직접 전달한 경우입니다.
+                rawId = GameDatabase.NormalizeId(itemKey);
+            }
+
+            if (string.IsNullOrWhiteSpace(rawId))
+                rawId = GameDatabase.NoneKey;
+
+            string slotKey = $"slot{slotNumber}";
+            Dictionary<string, string> targetMap = null;
+
+            // 같은 slotKey가 중복돼 있다면 첫 번째 항목만 유지합니다.
+            foreach (Dictionary<string, string> map in data.equips.item)
+            {
+                if (map == null || !map.ContainsKey(slotKey))
+                    continue;
+
+                if (targetMap == null)
+                {
+                    targetMap = map;
+                }
+                else
+                {
+                    map.Remove(slotKey);
+                }
+            }
+
+            if (targetMap == null)
+            {
+                targetMap = new Dictionary<string, string>();
+                data.equips.item.Add(targetMap);
+            }
+
+            targetMap[slotKey] = rawId;
+
+            Save();
+            return true;
+        }
+
+        /// <summary>
+        /// 지정한 퀵슬롯의 등록을 해제합니다.
+        /// </summary>
+        public bool ClearQuickSlotItem(int slotNumber)
+        {
+            return SetQuickSlotItemKey(
+                slotNumber,
+                GameDatabase.NoneKey
+            );
+        }
+
         public string GetActiveSavePath()
         {
             return ActiveSavePath;
@@ -637,5 +766,6 @@ namespace Dungeon.Core
                 Debug.LogWarning($"[StatusSaveFile] Failed to delete development runtime save: {e}");
             }
         }
+
     }
 }
