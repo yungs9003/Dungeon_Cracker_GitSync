@@ -115,14 +115,6 @@ namespace Dungeon.Player
             if (data.main_stats == null)
                 return;
 
-            Debug.Log(
-                $"[Health] ApplySaveData. " +
-                $"Object={gameObject.name}, " +
-                $"SaveFileID={(saveFile != null ? saveFile.GetInstanceID().ToString() : "null")}, " +
-                $"maxHP from save={data.main_stats.max_HP}, " +
-                $"currentHP before={currentHP}"
-            );
-
             int savedMaxHp = Mathf.Max(1, data.main_stats.max_HP);
 
             maxHP = savedMaxHp;

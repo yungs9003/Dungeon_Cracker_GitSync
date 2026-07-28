@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -22,9 +24,26 @@ namespace Dungeon.Core
         [Header("Debug")]
         [SerializeField] private bool logSavePath = true;
 
+        [Tooltip("Load()에서 세이브 요약을 출력합니다. 장비/아이템 데이터가 제대로 읽혔는지 확인할 때 사용합니다.")]
+        [SerializeField] private bool logLoadSummary = true;
+
+        [Tooltip("Save()에서 세이브 요약을 출력합니다. 너무 자주 저장되는 경우 아래 간격/횟수 제한을 함께 사용합니다.")]
+        [SerializeField] private bool logSaveSummary = true;
+
+        [Tooltip("로그에 inventory/equips 정보를 포함합니다.")]
+        [SerializeField] private bool logInventorySummary = true;
+
+        [Tooltip("Save 로그를 최소 몇 초 간격으로 출력할지 설정합니다. 0이면 시간 제한 없음.")]
+        [SerializeField] private float saveSummaryLogInterval = 3f;
+
+        [Tooltip("Save 로그를 몇 회 저장마다 출력할지 설정합니다. 1이면 매번, 10이면 10번째 저장마다 출력합니다.")]
+        [SerializeField] private int saveSummaryLogEveryNthSave = 10;
+
         private StatusSaveData data = new();
         private bool runtimeCopyDeleted;
         private bool isQuitting;
+        private int saveSummaryRequestCount;
+        private float lastSaveSummaryLogTime = -9999f;
 
         public StatusSaveData Data => data;
 
@@ -192,18 +211,8 @@ namespace Dungeon.Core
 
                 EnsureNotNull();
 
-                if (logSavePath)
-                {
-                    Debug.Log(
-                        $"[StatusSaveFile] Loaded. ID={GetInstanceID()}, " +
-                        $"Path={ActiveSavePath}, " +
-                        $"user_name={data.user_name}, gold={data.gold}, " +
-                        $"maxHP={data.main_stats.max_HP}, " +
-                        $"broken_traps={data.broken_traps}, " +
-                        $"clear_time={data.clear_time_seconds:F2}, " +
-                        $"hit_count={data.hit_count}"
-                    );
-                }
+                if (logSavePath && logLoadSummary)
+                    Debug.Log(BuildSaveSummary("Loaded"));
 
                 OnSaveDataChanged?.Invoke(data);
             }
@@ -226,18 +235,8 @@ namespace Dungeon.Core
                 string json = JsonConvert.SerializeObject(data, Formatting.Indented);
                 File.WriteAllText(ActiveSavePath, json);
 
-                if (logSavePath)
-                {
-                    Debug.Log(
-                        $"[StatusSaveFile] Saved. ID={GetInstanceID()}, " +
-                        $"Path={ActiveSavePath}, " +
-                        $"gold={data.gold}, " +
-                        $"maxHP={data.main_stats.max_HP}, " +
-                        $"broken_traps={data.broken_traps}, " +
-                        $"clear_time={data.clear_time_seconds:F2}, " +
-                        $"hit_count={data.hit_count}"
-                    );
-                }
+                if (ShouldLogSaveSummary())
+                    Debug.Log(BuildSaveSummary("Saved"));
 
                 OnSaveDataChanged?.Invoke(data);
             }
@@ -267,9 +266,121 @@ namespace Dungeon.Core
             data.sub_stats ??= new SubStats();
             data.checkpoint ??= new CheckpointData();
 
-            data.item ??= new();
-            data.equip ??= new();
+            // savefile(1).json 기준 구조를 보존하기 위한 래퍼입니다.
+            // inventory: 실제 보유 중인 소비 아이템/장비 목록
+            // equips: 퀵슬롯과 장착 슬롯 상태
+            data.inventory ??= new InventoryData();
+            data.inventory.item ??= new();
+            data.inventory.equipment ??= new();
+
+            data.equips ??= new EquipsData();
+            data.equips.item ??= new();
+            data.equips.equip ??= new();
+
             data.dungeon_status ??= new();
+        }
+
+        private bool ShouldLogSaveSummary()
+        {
+            if (!logSavePath || !logSaveSummary)
+                return false;
+
+            saveSummaryRequestCount++;
+
+            // 첫 저장은 항상 찍어서 어떤 파일에 저장되는지 바로 확인할 수 있게 합니다.
+            if (saveSummaryRequestCount == 1)
+            {
+                lastSaveSummaryLogTime = Time.unscaledTime;
+                return true;
+            }
+
+            int every = Mathf.Max(1, saveSummaryLogEveryNthSave);
+            if (every > 1 && saveSummaryRequestCount % every != 0)
+                return false;
+
+            if (saveSummaryLogInterval > 0f && Time.unscaledTime - lastSaveSummaryLogTime < saveSummaryLogInterval)
+                return false;
+
+            lastSaveSummaryLogTime = Time.unscaledTime;
+            return true;
+        }
+
+        private string BuildSaveSummary(string action)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append($"[StatusSaveFile] {action}. ID={GetInstanceID()}, ");
+            sb.Append($"Path={ActiveSavePath}, ");
+            sb.Append($"user_name={data.user_name}, ");
+            sb.Append($"gold={data.gold}, ");
+            sb.Append($"maxHP={data.main_stats.max_HP}, ");
+            sb.Append($"broken_traps={data.broken_traps}, ");
+            sb.Append($"clear_time={data.clear_time_seconds:F2}, ");
+            sb.Append($"hit_count={data.hit_count}");
+
+            if (logInventorySummary)
+            {
+                sb.AppendLine();
+                sb.Append($"  inventory.item={FormatIntMapList(data.inventory?.item)}, ");
+                sb.Append($"inventory.equipment={FormatIntMapList(data.inventory?.equipment)}");
+                sb.AppendLine();
+                sb.Append($"  equips.item={FormatStringMapList(data.equips?.item)}, ");
+                sb.Append($"equips.equip={FormatStringMapList(data.equips?.equip)}");
+            }
+
+            return sb.ToString();
+        }
+
+        private static string FormatIntMapList(List<Dictionary<string, int>> list)
+        {
+            if (list == null || list.Count == 0)
+                return "[]";
+
+            var sb = new StringBuilder("[");
+            bool first = true;
+
+            foreach (Dictionary<string, int> map in list)
+            {
+                if (map == null) continue;
+
+                foreach (KeyValuePair<string, int> pair in map)
+                {
+                    if (!first) sb.Append(", ");
+                    first = false;
+                    sb.Append(pair.Key);
+                    sb.Append("x");
+                    sb.Append(pair.Value);
+                }
+            }
+
+            sb.Append("]");
+            return sb.ToString();
+        }
+
+        private static string FormatStringMapList(List<Dictionary<string, string>> list)
+        {
+            if (list == null || list.Count == 0)
+                return "[]";
+
+            var sb = new StringBuilder("[");
+            bool first = true;
+
+            foreach (Dictionary<string, string> map in list)
+            {
+                if (map == null) continue;
+
+                foreach (KeyValuePair<string, string> pair in map)
+                {
+                    if (!first) sb.Append(", ");
+                    first = false;
+                    sb.Append(pair.Key);
+                    sb.Append("=");
+                    sb.Append(string.IsNullOrWhiteSpace(pair.Value) ? "none" : pair.Value);
+                }
+            }
+
+            sb.Append("]");
+            return sb.ToString();
         }
 
         public void SetUserName(string userName)

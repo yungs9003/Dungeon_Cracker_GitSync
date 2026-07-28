@@ -34,11 +34,51 @@ namespace Dungeon.Core
         [JsonProperty("sub_stats")]
         public SubStats sub_stats = new();
 
-        [JsonProperty("item")]
-        public List<Dictionary<string, int>> item = new();
+        // savefile(1).json 기준의 보유 인벤토리입니다.
+        // item      : 소비 아이템/일반 아이템 보유 수량
+        // equipment : 장비 아이템 보유 수량
+        [JsonProperty("inventory")]
+        public InventoryData inventory = new();
 
-        [JsonProperty("equip")]
-        public List<Dictionary<string, int>> equip = new();
+        // savefile(1).json 기준의 장착/퀵슬롯 정보입니다.
+        // item  : 퀵슬롯에 등록된 아이템
+        // equip : head/body/legs 장착 장비
+        [JsonProperty("equips")]
+        public EquipsData equips = new();
+
+        // 기존 코드 호환용입니다.
+        // JSON에는 최상위 item/equip으로 저장하지 않고 inventory 내부 값만 사용합니다.
+        [JsonIgnore]
+        public List<Dictionary<string, int>> item
+        {
+            get
+            {
+                inventory ??= new InventoryData();
+                inventory.item ??= new List<Dictionary<string, int>>();
+                return inventory.item;
+            }
+            set
+            {
+                inventory ??= new InventoryData();
+                inventory.item = value ?? new List<Dictionary<string, int>>();
+            }
+        }
+
+        [JsonIgnore]
+        public List<Dictionary<string, int>> equip
+        {
+            get
+            {
+                inventory ??= new InventoryData();
+                inventory.equipment ??= new List<Dictionary<string, int>>();
+                return inventory.equipment;
+            }
+            set
+            {
+                inventory ??= new InventoryData();
+                inventory.equipment = value ?? new List<Dictionary<string, int>>();
+            }
+        }
 
         [JsonProperty("checkpoint")]
         public CheckpointData checkpoint = new();
@@ -60,6 +100,26 @@ namespace Dungeon.Core
 
         [JsonProperty("player_rank")]
         public string player_rank = "";
+    }
+
+    [Serializable]
+    public class InventoryData
+    {
+        [JsonProperty("item")]
+        public List<Dictionary<string, int>> item = new();
+
+        [JsonProperty("equipment")]
+        public List<Dictionary<string, int>> equipment = new();
+    }
+
+    [Serializable]
+    public class EquipsData
+    {
+        [JsonProperty("item")]
+        public List<Dictionary<string, string>> item = new();
+
+        [JsonProperty("equip")]
+        public List<Dictionary<string, string>> equip = new();
     }
 
     [Serializable]

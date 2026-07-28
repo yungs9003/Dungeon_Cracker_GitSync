@@ -1,0 +1,15 @@
+{
+  "gold": 0,
+  "item": [
+    { "dummy1": 10},
+    { "dummy2": 0 }
+  ],
+  "checkpoint": {
+    "sceneName": "",
+    "mapIndex": -1,
+    "resumeRequested": false
+  },
+  "dungeon_status": [
+    { "001": "" }
+  ]
+}

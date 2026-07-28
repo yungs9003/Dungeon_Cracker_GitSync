@@ -1,39 +1,47 @@
 {
   "user_name":"Toluse",
-  "gold": 2500,
-  "broken_traps": 0,
-  "clear_reward_claimed": false,
-  "last_getting_gold": 0,
+  "gold": 35600,
   "main_stats":{
     "max_HP":150,
     "physical_resist":10,
     "magical_resist":20
   },
   "sub_stats":{
-    "speed":10,
-    "poison_resist": 0,
-    "electric_resist": 0,
-    "amber_resist": 0,
-    "freeze_resist": 0
+    "speed":10
   },
-  "item": [
-    { "000": 2 }
-  ],
-  "equip": [
-    { "000": 3 },
-    { "001": 5 }
-  ],
+  "inventory":{
+    "item": [
+    { "000": 2 },
+    { "002": 3 }
+    ],
+    "equipment": [
+      { "000": 1 },
+      { "001": 1 },
+      { "002": 1 }
+    ]
+  },
+  "equips":{
+    "item":[
+      {"slot1": "000"},
+      {"slot2": "none"},
+      {"slot3": "none"},
+      {"slot4": "none"},
+      {"slot5": "none"}
+    ],
+    "equip":[
+      {"head": "none"},
+      {"body": "none"},
+      {"legs": "none"}
+    ]
+  },
   "checkpoint": {
     "sceneName": "",
     "mapIndex": -1,
-    "resumeRequested": false,
-    "broken_traps_snapshot": 0
+    "resumeRequested": false
   },
   "dungeon_status": [
     { "001": "" }
   ],
-  "hit_count": 0,
-  "clear_time_seconds": 0,
   "play_time":"135:26",
   "clear_num_info":"28:73:96",
   "adventure_count":128,
