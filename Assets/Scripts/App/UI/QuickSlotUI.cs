@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Dungeon.Core;
@@ -25,6 +27,15 @@ namespace Dungeon.UI
         [SerializeField] private Button slotButton;
         [SerializeField] private Image itemIcon;
         [SerializeField] private GameObject emptyPlusImage;
+
+        [Tooltip("인게임 HUD에서 아이템의 남은 수량을 표시할 TMP 텍스트입니다.")]
+        [SerializeField] private TMP_Text itemCountText;
+
+        [Tooltip("체크하면 이 QuickSlotUI에서 보유 수량을 표시합니다. 인게임 HUD만 체크하고 스테이터스창은 끄세요.")]
+        [SerializeField] private bool showItemCount;
+
+        [Tooltip("수량 앞에 붙일 문자입니다. 예: x2. 숫자만 표시하려면 비워두세요.")]
+        [SerializeField] private string itemCountPrefix = "x";
 
         [Tooltip("QuickSlot 버튼 자식의 FrameImage Image 컴포넌트입니다.")]
         [SerializeField] private Image frameImage;
@@ -199,7 +210,7 @@ namespace Dungeon.UI
 
             if (saveFile == null)
             {
-                ApplyVisual(GameDatabase.NoneKey, null);
+                ApplyVisual(GameDatabase.NoneKey, null, 0);
                 return;
             }
 
@@ -214,7 +225,12 @@ namespace Dungeon.UI
                 icon = database.GetIconByKey(itemKey);
             }
 
-            ApplyVisual(itemKey, icon);
+            int itemCount = GetOwnedItemCount(
+                saveFile.Data,
+                itemKey
+            );
+
+            ApplyVisual(itemKey, icon, itemCount);
         }
 
         /// <summary>
@@ -237,7 +253,10 @@ namespace Dungeon.UI
                 : normalFrameColor;
         }
 
-        private void ApplyVisual(string itemKey, Sprite icon)
+        private void ApplyVisual(
+            string itemKey,
+            Sprite icon,
+            int itemCount)
         {
             CurrentItemKey = string.IsNullOrWhiteSpace(itemKey)
                 ? GameDatabase.NoneKey
@@ -258,6 +277,94 @@ namespace Dungeon.UI
             // HUD 슬롯에서는 emptyPlusImage를 연결하지 않아도 됩니다.
             if (emptyPlusImage != null)
                 emptyPlusImage.SetActive(!hasItem);
+
+            RefreshItemCountVisual(hasItem, itemCount);
+        }
+
+        /// <summary>
+        /// 인게임 HUD에서만 아이템 보유 수량을 표시합니다.
+        /// 스테이터스창의 QuickSlotUI는 showItemCount를 끄면 표시하지 않습니다.
+        /// </summary>
+        private void RefreshItemCountVisual(
+            bool hasItem,
+            int itemCount)
+        {
+            if (itemCountText == null)
+                return;
+
+            bool shouldShow =
+                showItemCount && hasItem;
+
+            itemCountText.gameObject.SetActive(shouldShow);
+
+            if (!shouldShow)
+            {
+                itemCountText.text = string.Empty;
+                return;
+            }
+
+            int safeCount = Mathf.Max(0, itemCount);
+            itemCountText.text =
+                $"{itemCountPrefix}{safeCount}";
+            itemCountText.raycastTarget = false;
+        }
+
+        /// <summary>
+        /// savefile.inventory.item에서 현재 아이템의 총 보유 수량을 구합니다.
+        /// 동일한 id가 여러 Dictionary에 나뉘어 있어도 모두 합산합니다.
+        /// </summary>
+        private static int GetOwnedItemCount(
+            StatusSaveData saveData,
+            string itemKey)
+        {
+            if (saveData == null ||
+                saveData.inventory == null ||
+                saveData.inventory.item == null ||
+                string.IsNullOrWhiteSpace(itemKey) ||
+                itemKey == GameDatabase.NoneKey)
+            {
+                return 0;
+            }
+
+            string rawId;
+
+            if (GameDatabase.TryParseKey(
+                    GameDatabase.NormalizeKey(itemKey),
+                    out string category,
+                    out string parsedId))
+            {
+                if (category != GameDatabase.CategoryItem)
+                    return 0;
+
+                rawId = GameDatabase.NormalizeId(parsedId);
+            }
+            else
+            {
+                rawId = GameDatabase.NormalizeId(itemKey);
+            }
+
+            int totalCount = 0;
+
+            foreach (Dictionary<string, int> map
+                     in saveData.inventory.item)
+            {
+                if (map == null)
+                    continue;
+
+                foreach (KeyValuePair<string, int> pair
+                         in map)
+                {
+                    string ownedRawId =
+                        GameDatabase.NormalizeId(pair.Key);
+
+                    if (ownedRawId != rawId)
+                        continue;
+
+                    totalCount += Mathf.Max(0, pair.Value);
+                }
+            }
+
+            return totalCount;
         }
 
         private void HandleClicked()
@@ -394,6 +501,16 @@ namespace Dungeon.UI
                     emptyPlusImage = target.gameObject;
             }
 
+            if (itemCountText == null)
+            {
+                itemCountText = FindChildText(
+                    "ItemCountText",
+                    "CountText",
+                    "New Text",
+                    "NewText"
+                );
+            }
+
             if (frameImage == null)
             {
                 frameImage = FindChildImage(
@@ -419,6 +536,27 @@ namespace Dungeon.UI
                         image.name == targetName)
                     {
                         return image;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private TMP_Text FindChildText(
+            params string[] targetNames)
+        {
+            TMP_Text[] texts =
+                GetComponentsInChildren<TMP_Text>(true);
+
+            foreach (string targetName in targetNames)
+            {
+                foreach (TMP_Text text in texts)
+                {
+                    if (text != null &&
+                        text.name == targetName)
+                    {
+                        return text;
                     }
                 }
             }
