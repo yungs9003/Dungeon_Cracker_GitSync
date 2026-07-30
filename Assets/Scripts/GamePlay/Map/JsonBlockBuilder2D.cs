@@ -45,6 +45,18 @@ namespace Dungeon.Map
         public string coord_t;    // relation 대상 타일 좌표
     }
 
+    /// <summary>
+    /// 맵 전체에 적용되는 필드 효과 데이터입니다.
+    /// type은 "burn", "ice", 또는 비어 있는 값/"none"을 사용합니다.
+    /// damage는 FieldEffectManager가 주기적으로 적용할 1회 피해량입니다.
+    /// </summary>
+    [Serializable]
+    public class FieldEffectData2D
+    {
+        public string type;
+        public int damage;
+    }
+
     [Serializable]
     public class MapData2D
     {
@@ -52,6 +64,7 @@ namespace Dungeon.Map
         public CellData2D[] grid;
         public RelationData2D[] relation;
         public PlayerData2D player;
+        public FieldEffectData2D field_effect;
     }
 
     /// <summary>
@@ -87,6 +100,10 @@ namespace Dungeon.Map
 
         [Header("Auto Build On Start")]
         public bool autoBuildOnStart = true;
+
+        [Header("Field Effect")]
+        [Tooltip("맵의 field_effect를 적용할 FieldEffectManager입니다. 비워두면 자동 검색합니다.")]
+        public FieldEffectManager fieldEffectManager;
 
         [Header("Hidden Tile / Forward Zone Vision")]
         [Tooltip("ForwardZoneVisionMask2D가 있다면 연결하세요. 비워두면 자동 검색합니다.")]
@@ -161,10 +178,37 @@ namespace Dungeon.Map
             CacheRelations(LoadedMapData.relation);
             BuildGridTiles(LoadedMapData.grid);
             PositionPlayerAndSetRespawn(LoadedMapData);
+            ApplyLoadedFieldEffect(LoadedMapData.field_effect);
 
             // 마스크는 실제 생성된 맵 데이터 기준으로 다시 만듭니다.
             if (visionSystem != null)
                 visionSystem.RebuildMask(LoadedMapData, cellSize, transform);
+        }
+
+        /// <summary>
+        /// JSON 루트의 field_effect를 FieldEffectManager에 전달합니다.
+        /// field_effect가 없거나 type이 none이면 이전 필드 효과를 해제합니다.
+        /// </summary>
+        private void ApplyLoadedFieldEffect(FieldEffectData2D fieldEffect)
+        {
+            if (fieldEffectManager == null)
+                fieldEffectManager = FindFirstObjectByType<FieldEffectManager>();
+
+            if (fieldEffectManager == null)
+            {
+                if (fieldEffect != null &&
+                    !string.IsNullOrWhiteSpace(fieldEffect.type) &&
+                    !string.Equals(fieldEffect.type, "none", StringComparison.OrdinalIgnoreCase))
+                {
+                    Debug.LogWarning(
+                        "[JsonBlockBuilder2D] field_effect가 있지만 FieldEffectManager를 찾지 못했습니다."
+                    );
+                }
+
+                return;
+            }
+
+            fieldEffectManager.ApplyMapEffect(fieldEffect, player);
         }
 
         /// <summary>
