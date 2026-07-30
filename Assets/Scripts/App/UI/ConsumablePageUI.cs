@@ -58,6 +58,8 @@ namespace Dungeon.UI
         {
             AutoBindReferences();
             BindQuickSlotEvents();
+            // 최초 진입 시에도 모든 FrameImage 색상을 명시적으로 설정합니다.
+            RefreshQuickSlotSelectionVisuals();
             HideSceneTemplateIfNeeded();
             ReloadFromSave();
         }
@@ -237,10 +239,16 @@ namespace Dungeon.UI
 
                 slotView.gameObject.SetActive(true);
 
+                bool isEquipped =
+                    IsRegisteredInAnyQuickSlot(
+                        capturedDefinition.Key
+                    );
+
                 slotView.SetupConsumable(
                     capturedDefinition,
                     capturedCount,
                     icon,
+                    isEquipped,
                     () => OnInventoryItemClicked(
                         capturedDefinition
                     )
@@ -260,24 +268,76 @@ namespace Dungeon.UI
 
             RefreshScrollbar(shownCount);
         }
+        /// <summary>
+        /// 선택된 퀵슬롯은 빨간색,
+        /// 나머지 퀵슬롯은 기본색으로 갱신합니다.
+        /// 선택된 슬롯이 없으면 모두 기본색이 됩니다.
+        /// </summary>
+        private void RefreshQuickSlotSelectionVisuals()
+        {
+            if (quickSlots == null)
+                return;
+            foreach (QuickSlotUI slot in quickSlots)
+                {
+                    if (slot == null)
+                    continue;
+                    slot.SetSelected(
+                    slot == selectedQuickSlot
+                    );
+                }
+        }
+
+        private bool IsRegisteredInAnyQuickSlot(
+            string itemKey)
+        {
+            return FindQuickSlotContainingItem(itemKey) != null;
+        }
 
         /// <summary>
-        /// 위쪽 퀵슬롯을 눌렀을 때 호출됩니다.
+        /// 해당 아이템이 이미 등록되어 있는 퀵슬롯을 찾습니다.
+        /// 같은 종류의 소비 아이템은 여러 퀵슬롯에 중복 등록할 수 없습니다.
+        /// </summary>
+        private QuickSlotUI FindQuickSlotContainingItem(
+            string itemKey)
+        {
+            if (quickSlots == null ||
+                string.IsNullOrWhiteSpace(itemKey))
+            {
+                return null;
+            }
+
+            string normalizedKey =
+                GameDatabase.NormalizeKey(itemKey);
+
+            if (normalizedKey == GameDatabase.NoneKey)
+                return null;
+
+            foreach (QuickSlotUI slot in quickSlots)
+            {
+                if (slot == null)
+                    continue;
+
+                string registeredKey =
+                    GameDatabase.NormalizeKey(
+                        slot.CurrentItemKey
+                    );
+
+                if (registeredKey == normalizedKey)
+                    return slot;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 위쪽 퀵슬롯을 좌클릭했을 때 호출됩니다.
         /// </summary>
         private void OnQuickSlotClicked(
             QuickSlotUI clickedSlot)
         {
             selectedQuickSlot = clickedSlot;
 
-            foreach (QuickSlotUI slot in quickSlots)
-            {
-                if (slot != null)
-                {
-                    slot.SetSelected(
-                        slot == selectedQuickSlot
-                    );
-                }
-            }
+            RefreshQuickSlotSelectionVisuals();
 
             if (logActions && selectedQuickSlot != null)
             {
@@ -289,11 +349,59 @@ namespace Dungeon.UI
         }
 
         /// <summary>
+        /// 위쪽 퀵슬롯을 우클릭하면 등록된 아이템을 해제합니다.
+        /// 현재 선택 상태는 유지해서 다른 아이템을 바로 등록할 수 있습니다.
+        /// </summary>
+        private void OnQuickSlotRightClicked(
+            QuickSlotUI clickedSlot)
+        {
+            if (clickedSlot == null || !clickedSlot.HasItem)
+                return;
+
+            // 페이지를 처음 연 직후에는 selectedQuickSlot이 아직 null일 수 있습니다.
+            // 우클릭으로 해제한 슬롯을 곧바로 다시 등록 대상으로 사용할 수 있도록
+            // 해제 전에 해당 슬롯을 선택 상태로 만듭니다.
+            selectedQuickSlot = clickedSlot;
+            RefreshQuickSlotSelectionVisuals();
+
+            if (!clickedSlot.ClearItem())
+            {
+                Debug.LogWarning(
+                    $"[ConsumablePageUI] 퀵슬롯 해제 실패. " +
+                    $"slot={clickedSlot.SlotNumber}"
+                );
+
+                return;
+            }
+
+            RefreshAllQuickSlots();
+            RefreshQuickSlotSelectionVisuals();
+            PopulateInventoryList();
+
+            if (logActions)
+            {
+                Debug.Log(
+                    $"[ConsumablePageUI] Quick slot cleared. " +
+                    $"slot={clickedSlot.SlotNumber}"
+                );
+            }
+        }
+
+        /// <summary>
         /// 아래 목록의 소비 아이템을 눌렀을 때 호출됩니다.
         /// </summary>
         private void OnInventoryItemClicked(
             ItemDefinition definition)
         {
+            if (logActions)
+            {
+                Debug.Log(
+                    $"[ConsumablePageUI] Inventory item click received. " +
+                    $"key={(definition != null ? definition.Key : "null")}, " +
+                    $"selectedSlot={(selectedQuickSlot != null ? selectedQuickSlot.SlotNumber.ToString() : "none")}"
+                );
+            }
+
             if (definition == null)
                 return;
 
@@ -326,6 +434,25 @@ namespace Dungeon.UI
                 return;
             }
 
+            // 이미 다른 퀵슬롯에 등록된 아이템이라면 중복 등록하지 않습니다.
+            // 위치를 바꾸려면 기존 슬롯을 우클릭해 먼저 해제해야 합니다.
+            QuickSlotUI occupiedSlot =
+                FindQuickSlotContainingItem(
+                    definition.Key
+                );
+
+            if (occupiedSlot != null)
+            {
+                Debug.LogWarning(
+                    $"[ConsumablePageUI] 이미 퀵슬롯에 등록된 아이템입니다. " +
+                    $"item={definition.Key}, " +
+                    $"registeredSlot={occupiedSlot.SlotNumber}. " +
+                    $"기존 슬롯을 우클릭해 해제한 뒤 다시 등록하세요."
+                );
+
+                return;
+            }
+
             bool registered =
                 selectedQuickSlot.RegisterItem(
                     definition.Key
@@ -352,8 +479,9 @@ namespace Dungeon.UI
                 );
             }
 
-            // 아이템창과 HUD의 슬롯을 모두 최신 저장값으로 갱신합니다.
+            // 아이템창과 HUD의 슬롯 및 목록의 E 표시를 모두 갱신합니다.
             RefreshAllQuickSlots();
+            PopulateInventoryList();
         }
 
         private void RefreshAllQuickSlots()
@@ -384,6 +512,7 @@ namespace Dungeon.UI
                     continue;
 
                 slot.Clicked += OnQuickSlotClicked;
+                slot.RightClicked += OnQuickSlotRightClicked;
                 boundAny = true;
             }
 
@@ -401,7 +530,10 @@ namespace Dungeon.UI
             foreach (QuickSlotUI slot in quickSlots)
             {
                 if (slot != null)
+                {
                     slot.Clicked -= OnQuickSlotClicked;
+                    slot.RightClicked -= OnQuickSlotRightClicked;
+                }
             }
 
             quickSlotEventsBound = false;

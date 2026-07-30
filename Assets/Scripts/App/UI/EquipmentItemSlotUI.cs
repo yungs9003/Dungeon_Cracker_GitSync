@@ -19,6 +19,9 @@ namespace Dungeon.UI
         [SerializeField] private TMP_Text countText;
         [SerializeField] private TMP_Text slotText;
 
+        [Tooltip("현재 장착 중인 장비라면 E를 표시합니다.")]
+        [SerializeField] private TMP_Text equippedMarkText;
+
         [Header("Debug")]
         [SerializeField] private bool logClick;
 
@@ -31,7 +34,12 @@ namespace Dungeon.UI
             EnsureTransparentButtonGraphic();
         }
 
-        public void SetupEquipment(EquipmentDefinition definition, int count, Sprite icon, UnityAction onClick)
+        public void SetupEquipment(
+            EquipmentDefinition definition,
+            int count,
+            Sprite icon,
+            bool isEquipped,
+            UnityAction onClick)
         {
             AutoBindReferences();
             EnsureTransparentButtonGraphic();
@@ -65,6 +73,8 @@ namespace Dungeon.UI
                 countText.gameObject.SetActive(count > 1);
             }
 
+            SetEquippedMark(isEquipped);
+
             if (button != null)
             {
                 button.onClick.RemoveAllListeners();
@@ -87,10 +97,36 @@ namespace Dungeon.UI
             }
         }
 
+        // 기존 호출부 호환용입니다.
+        public void SetupEquipment(
+            EquipmentDefinition definition,
+            int count,
+            Sprite icon,
+            UnityAction onClick)
+        {
+            SetupEquipment(
+                definition,
+                count,
+                icon,
+                false,
+                onClick
+            );
+        }
+
         // 이전 버전 호환용입니다.
         public void Setup(EquipmentDefinition definition, int count, Sprite icon, UnityAction onClick)
         {
             SetupEquipment(definition, count, icon, onClick);
+        }
+
+        public void SetEquippedMark(bool isEquipped)
+        {
+            if (equippedMarkText == null)
+                return;
+
+            equippedMarkText.text = "E";
+            equippedMarkText.raycastTarget = false;
+            equippedMarkText.gameObject.SetActive(isEquipped);
         }
 
         private void EnsureTransparentButtonGraphic()
@@ -131,6 +167,16 @@ namespace Dungeon.UI
 
             if (slotText == null)
                 slotText = FindTextByName("SlotText", "TypeText");
+
+            if (equippedMarkText == null)
+            {
+                equippedMarkText = FindTextByName(
+                    "EquippedMarkText",
+                    "EquippedMark",
+                    "EquippedText",
+                    "EText"
+                );
+            }
         }
 
         private Image FindImageByName(params string[] names)

@@ -44,6 +44,13 @@ namespace Dungeon.UI
         [Tooltip("페이지가 열렸을 때 처음에는 모든 보유 장비를 보여줍니다.")]
         [SerializeField] private bool showAllEquipmentOnOpen = true;
 
+        [Header("Selection Visual")]
+        [Tooltip("선택되지 않은 장비 슬롯의 SlotFrameOverlay 색상입니다.")]
+        [SerializeField] private Color normalSlotFrameColor = Color.black;
+
+        [Tooltip("선택된 장비 슬롯의 SlotFrameOverlay 색상입니다.")]
+        [SerializeField] private Color selectedSlotFrameColor = Color.red;
+
         [Header("Debug")]
         [SerializeField] private bool logEquipmentActions = true;
         [SerializeField] private bool logMissingIcons = true;
@@ -65,6 +72,12 @@ namespace Dungeon.UI
         {
             HideSceneTemplateIfNeeded();
             ReloadFromSave();
+        }
+
+        private void OnDisable()
+        {
+            selectedSlotKey = null;
+            RefreshSlotSelectionVisuals();
         }
 
         public void ReloadFromSave()
@@ -98,10 +111,12 @@ namespace Dungeon.UI
             RefreshEquippedSlotsOnly();
 
             if (showAllEquipmentOnOpen)
-            {
                 selectedSlotKey = null;
+
+            RefreshSlotSelectionVisuals();
+
+            if (showAllEquipmentOnOpen)
                 PopulateInventoryList(null);
-            }
         }
 
         private void AutoBindReferences()
@@ -194,18 +209,169 @@ namespace Dungeon.UI
                 return false;
 
             string key = GameDatabase.NormalizeSlot(slot.slotKey);
-            slot.slotButton.onClick.AddListener(() => OnPartSlotClicked(key));
+
+            slot.slotButton.onClick.AddListener(
+                () => OnPartSlotClicked(key)
+            );
+
+            SlotPointerClickRelay relay =
+                slot.GetOrCreatePointerClickRelay();
+
+            if (relay != null)
+            {
+                relay.RightClicked +=
+                    () => OnPartSlotRightClicked(key);
+            }
+
             return true;
         }
 
         private void OnPartSlotClicked(string slotKey)
         {
-            selectedSlotKey = GameDatabase.NormalizeSlot(slotKey);
+            string normalizedSlotKey =
+                GameDatabase.NormalizeSlot(slotKey);
+
+            // 현재 선택된 슬롯을 다시 좌클릭하면 필터를 해제하고
+            // 전체 장비 목록으로 돌아갑니다.
+            if (selectedSlotKey == normalizedSlotKey)
+            {
+                selectedSlotKey = null;
+                RefreshSlotSelectionVisuals();
+                PopulateInventoryList(null);
+
+                if (logEquipmentActions)
+                {
+                    Debug.Log(
+                        "[EquipmentPageUI] Slot filter cleared. " +
+                        "Showing all equipment."
+                    );
+                }
+
+                return;
+            }
+
+            selectedSlotKey = normalizedSlotKey;
+            RefreshSlotSelectionVisuals();
 
             if (logEquipmentActions)
                 Debug.Log($"[EquipmentPageUI] Part slot clicked: {selectedSlotKey}");
 
             PopulateInventoryList(selectedSlotKey);
+        }
+
+        /// <summary>
+        /// 장비 슬롯을 우클릭하면 해당 부위의 장비를 해제합니다.
+        /// 선택 중인 필터는 유지합니다.
+        /// </summary>
+        private void OnPartSlotRightClicked(string slotKey)
+        {
+            string normalizedSlotKey =
+                GameDatabase.NormalizeSlot(slotKey);
+
+            if (!saveRepository.Load(
+                    saveFileName,
+                    saveFilePathOverride))
+            {
+                Debug.LogWarning(
+                    $"[EquipmentPageUI] 장비 해제용 save 로드 실패: " +
+                    $"{saveRepository.LastError}"
+                );
+
+                return;
+            }
+
+            string equippedKey =
+                saveRepository.GetEquippedKey(
+                    normalizedSlotKey
+                );
+
+            if (string.IsNullOrWhiteSpace(equippedKey) ||
+                equippedKey == GameDatabase.NoneKey)
+            {
+                return;
+            }
+
+            // SetEquippedKey는 equip:xxx 형식만 받으므로,
+            // 해제할 때는 raw id를 받는 SetEquippedId를 사용합니다.
+            if (!saveRepository.SetEquippedId(
+                    normalizedSlotKey,
+                    GameDatabase.NoneKey))
+            {
+                Debug.LogWarning(
+                    $"[EquipmentPageUI] 장비 해제 실패: " +
+                    $"{saveRepository.LastError}"
+                );
+
+                return;
+            }
+
+            if (!EquipmentStatCalculator.Recalculate(
+                    saveRepository.Data,
+                    database))
+            {
+                Debug.LogWarning(
+                    "[EquipmentPageUI] 장비 해제 후 " +
+                    "스탯 재계산에 실패했습니다."
+                );
+            }
+
+            if (!saveRepository.Save())
+            {
+                Debug.LogWarning(
+                    $"[EquipmentPageUI] 장비 해제 저장 실패: " +
+                    $"{saveRepository.LastError}"
+                );
+
+                return;
+            }
+
+            saveRepository.Load(
+                saveFileName,
+                saveFilePathOverride
+            );
+
+            RefreshEquippedSlotsOnly();
+            RefreshSlotSelectionVisuals();
+            PopulateInventoryList(selectedSlotKey);
+
+            if (logEquipmentActions)
+            {
+                Debug.Log(
+                    $"[EquipmentPageUI] Unequipped. " +
+                    $"slot={normalizedSlotKey}, " +
+                    $"key={equippedKey}"
+                );
+            }
+        }
+
+        /// <summary>
+        /// 현재 선택된 장비 슬롯만 SlotFrameOverlay를 빨간색으로 표시합니다.
+        /// 선택되지 않은 슬롯은 각 이미지가 원래 가지고 있던 색으로 되돌립니다.
+        /// </summary>
+        private void RefreshSlotSelectionVisuals()
+        {
+            RefreshPartSlotSelection(headSlot);
+            RefreshPartSlotSelection(bodySlot);
+            RefreshPartSlotSelection(legsSlot);
+        }
+
+        private void RefreshPartSlotSelection(EquipmentPartSlotUI slot)
+        {
+            if (slot == null)
+                return;
+
+            string normalizedSlotKey =
+                GameDatabase.NormalizeSlot(slot.slotKey);
+
+            bool selected =
+                !string.IsNullOrWhiteSpace(selectedSlotKey) &&
+                normalizedSlotKey == selectedSlotKey;
+
+            slot.SetSelected(
+                selected,
+                normalSlotFrameColor,
+                selectedSlotFrameColor
+            );
         }
 
         private void PopulateInventoryList(string slotFilter)
@@ -258,6 +424,17 @@ namespace Dungeon.UI
                     );
                 }
 
+                string equippedKey =
+                    saveRepository.GetEquippedKey(
+                        definitionSlot
+                    );
+
+                bool isEquipped =
+                    GameDatabase.NormalizeKey(equippedKey) ==
+                    GameDatabase.NormalizeKey(
+                        capturedDefinition.Key
+                    );
+
                 EquipmentItemSlotUI slotView = Instantiate(itemSlotPrefab, itemGridContent);
                 slotView.gameObject.name = $"EquipmentSlot_{capturedDefinition.Key}_{definitionSlot}_{capturedDefinition.name}";
                 slotView.gameObject.SetActive(true);
@@ -265,6 +442,7 @@ namespace Dungeon.UI
                     capturedDefinition,
                     capturedStack.count,
                     icon,
+                    isEquipped,
                     () => OnInventoryEquipmentClicked(capturedDefinition)
                 );
 
@@ -328,7 +506,7 @@ namespace Dungeon.UI
             // StatusSaveFile.Save()로 저장한 뒤 다시 읽어, 장착 슬롯과 목록을 최신 상태로 맞춥니다.
             saveRepository.Load(saveFileName, saveFilePathOverride);
             RefreshEquippedSlotsOnly();
-            PopulateInventoryList(targetSlot);
+            PopulateInventoryList(selectedSlotKey);
         }
 
         private void RefreshEquippedSlotsOnly()
@@ -415,6 +593,9 @@ namespace Dungeon.UI
         public GameObject emptyPlusIcon;
         public GameObject slotFrameOverlay;
 
+        [NonSerialized] private Image slotFrameImage;
+        [NonSerialized] private SlotPointerClickRelay pointerClickRelay;
+
         public void SetEquippedState(bool equipped, Sprite icon)
         {
             if (equipItemIcon != null)
@@ -431,6 +612,66 @@ namespace Dungeon.UI
 
             if (slotFrameOverlay != null)
                 slotFrameOverlay.SetActive(true);
+        }
+
+        /// <summary>
+        /// SlotButton 자식의 SlotFrameOverlay Image 색만 변경합니다.
+        /// 오브젝트 활성 상태는 바꾸지 않습니다.
+        ///
+        /// 주의: Image.color 틴트가 보이려면 원본 테두리 스프라이트가
+        /// 검정색이 아니라 흰색으로 제작되어 있어야 합니다.
+        /// </summary>
+        public void SetSelected(
+            bool selected,
+            Color normalColor,
+            Color selectedColor)
+        {
+            Image frameImage = GetSlotFrameImage();
+
+            if (frameImage == null)
+                return;
+
+            frameImage.color = selected
+                ? selectedColor
+                : normalColor;
+        }
+
+        public SlotPointerClickRelay GetOrCreatePointerClickRelay()
+        {
+            if (pointerClickRelay != null)
+                return pointerClickRelay;
+
+            if (slotButton == null)
+                return null;
+
+            pointerClickRelay =
+                slotButton.GetComponent<SlotPointerClickRelay>();
+
+            if (pointerClickRelay == null)
+            {
+                pointerClickRelay =
+                    slotButton.gameObject.AddComponent<
+                        SlotPointerClickRelay
+                    >();
+            }
+
+            return pointerClickRelay;
+        }
+
+        private Image GetSlotFrameImage()
+        {
+            if (slotFrameImage != null)
+                return slotFrameImage;
+
+            if (slotFrameOverlay == null)
+                return null;
+
+            // SlotFrameOverlay 오브젝트 자체의 Image만 사용합니다.
+            // 다른 자식 이미지(numberImage 등)는 검색하지 않습니다.
+            slotFrameImage =
+                slotFrameOverlay.GetComponent<Image>();
+
+            return slotFrameImage;
         }
     }
 }

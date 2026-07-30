@@ -25,11 +25,19 @@ namespace Dungeon.UI
         [SerializeField] private Button slotButton;
         [SerializeField] private Image itemIcon;
         [SerializeField] private GameObject emptyPlusImage;
-        [SerializeField] private GameObject selectedFrame;
+
+        [Tooltip("QuickSlot 버튼 자식의 FrameImage Image 컴포넌트입니다.")]
+        [SerializeField] private Image frameImage;
+
+        [Header("Selection Visual")]
+        [Tooltip("선택되지 않은 슬롯의 테두리 색입니다. 흰색 틴트용 스프라이트를 사용할 때 검정으로 표시됩니다.")]
+        [SerializeField] private Color normalFrameColor = Color.black;
+
+        [Tooltip("선택된 슬롯의 테두리 색입니다.")]
+        [SerializeField] private Color selectedFrameColor = Color.red;
 
         [Header("Debug")]
         [SerializeField] private bool logActions;
-        [SerializeField] private bool logMissingIcons = true;
 
         private StatusSaveFile subscribedSaveFile;
 
@@ -47,6 +55,13 @@ namespace Dungeon.UI
         /// HUD에서는 아이템 사용 요청에 이용할 수 있습니다.
         /// </summary>
         public event Action<QuickSlotUI> Clicked;
+
+        /// <summary>
+        /// 아이템창에서 퀵슬롯을 우클릭했을 때 호출됩니다.
+        /// </summary>
+        public event Action<QuickSlotUI> RightClicked;
+
+        private SlotPointerClickRelay pointerClickRelay;
 
         private void Awake()
         {
@@ -79,6 +94,9 @@ namespace Dungeon.UI
 
             if (slotButton != null)
                 slotButton.onClick.RemoveListener(HandleClicked);
+
+            if (pointerClickRelay != null)
+                pointerClickRelay.RightClicked -= HandleRightClicked;
         }
 
         /// <summary>
@@ -125,20 +143,6 @@ namespace Dungeon.UI
                 return false;
             }
 
-            if (!string.Equals(
-                    definition.type,
-                    "consumable",
-                    StringComparison.OrdinalIgnoreCase))
-            {
-                Debug.LogWarning(
-                    $"[QuickSlotUI] 소비 아이템만 등록할 수 있습니다. " +
-                    $"key={normalizedKey}, " +
-                    $"type={definition.type}"
-                );
-
-                return false;
-            }
-
             StatusSaveFile saveFile = GetSaveFile();
 
             if (saveFile == null)
@@ -155,13 +159,7 @@ namespace Dungeon.UI
                 normalizedKey
             );
 
-            if (!saved)
-                return false;
-
-            // 저장 이벤트 구독 상태와 관계없이 클릭한 슬롯은 즉시 갱신합니다.
-            RefreshFromSave();
-
-            if (logActions)
+            if (saved && logActions)
             {
                 Debug.Log(
                     $"[QuickSlotUI] Item registered. " +
@@ -171,7 +169,7 @@ namespace Dungeon.UI
                 );
             }
 
-            return true;
+            return saved;
         }
 
         /// <summary>
@@ -184,13 +182,7 @@ namespace Dungeon.UI
             if (saveFile == null)
                 return false;
 
-            bool cleared =
-                saveFile.ClearQuickSlotItem(slotNumber);
-
-            if (cleared)
-                RefreshFromSave();
-
-            return cleared;
+            return saveFile.ClearQuickSlotItem(slotNumber);
         }
 
         /// <summary>
@@ -225,10 +217,24 @@ namespace Dungeon.UI
             ApplyVisual(itemKey, icon);
         }
 
+        /// <summary>
+        /// 아이템창에서 선택된 슬롯의 FrameImage 색만 변경합니다.
+        /// FrameImage 오브젝트는 계속 활성화되어 있으며,
+        /// 선택되지 않은 슬롯은 검정, 선택된 슬롯은 빨강으로 표시됩니다.
+        ///
+        /// 주의: Image.color 틴트가 보이려면 FrameImage의 원본 스프라이트가
+        /// 검정색이 아니라 흰색으로 제작되어 있어야 합니다.
+        /// </summary>
         public void SetSelected(bool selected)
         {
-            if (selectedFrame != null)
-                selectedFrame.SetActive(selected);
+            AutoBindReferences();
+
+            if (frameImage == null)
+                return;
+
+            frameImage.color = selected
+                ? selectedFrameColor
+                : normalFrameColor;
         }
 
         private void ApplyVisual(string itemKey, Sprite icon)
@@ -240,29 +246,16 @@ namespace Dungeon.UI
             bool hasItem =
                 CurrentItemKey != GameDatabase.NoneKey;
 
-            bool hasIcon =
-                hasItem && icon != null;
-
-            if (hasItem && icon == null && logMissingIcons)
-            {
-                Debug.LogWarning(
-                    $"[QuickSlotUI] 등록된 아이템의 아이콘을 찾지 못했습니다. " +
-                    $"slot={slotNumber}, key={CurrentItemKey}",
-                    this
-                );
-            }
-
             if (itemIcon != null)
             {
                 itemIcon.sprite = icon;
-                itemIcon.enabled = hasIcon;
-                itemIcon.gameObject.SetActive(hasIcon);
+                itemIcon.enabled = hasItem && icon != null;
+                itemIcon.gameObject.SetActive(hasItem && icon != null);
                 itemIcon.preserveAspect = true;
                 itemIcon.raycastTarget = false;
             }
 
             // HUD 슬롯에서는 emptyPlusImage를 연결하지 않아도 됩니다.
-            // 아이템은 등록됐지만 아이콘만 없는 경우에는 빈 슬롯으로 오인하지 않도록 +를 숨깁니다.
             if (emptyPlusImage != null)
                 emptyPlusImage.SetActive(!hasItem);
         }
@@ -270,6 +263,11 @@ namespace Dungeon.UI
         private void HandleClicked()
         {
             Clicked?.Invoke(this);
+        }
+
+        private void HandleRightClicked()
+        {
+            RightClicked?.Invoke(this);
         }
 
         private void HandleSaveDataChanged(StatusSaveData _)
@@ -288,6 +286,20 @@ namespace Dungeon.UI
 
             slotButton.onClick.RemoveListener(HandleClicked);
             slotButton.onClick.AddListener(HandleClicked);
+
+            pointerClickRelay =
+                slotButton.GetComponent<SlotPointerClickRelay>();
+
+            if (pointerClickRelay == null)
+            {
+                pointerClickRelay =
+                    slotButton.gameObject.AddComponent<
+                        SlotPointerClickRelay
+                    >();
+            }
+
+            pointerClickRelay.RightClicked -= HandleRightClicked;
+            pointerClickRelay.RightClicked += HandleRightClicked;
         }
 
         private void SubscribeToSaveFile()
@@ -382,31 +394,32 @@ namespace Dungeon.UI
                     emptyPlusImage = target.gameObject;
             }
 
-            if (selectedFrame == null)
+            if (frameImage == null)
             {
-                Transform target =
-                    FindChildRecursive(
-                        transform,
-                        "SelectedFrame"
-                    );
-
-                if (target != null)
-                    selectedFrame = target.gameObject;
+                frameImage = FindChildImage(
+                    "frameImage",
+                    "FrameImage"
+                );
             }
+
+            BindButton();
         }
 
-        private Image FindChildImage(string targetName)
+        private Image FindChildImage(params string[] targetNames)
         {
             Image[] images =
                 GetComponentsInChildren<Image>(true);
 
-            foreach (Image image in images)
+            foreach (string targetName in targetNames)
             {
-                if (image != null &&
-                    image.transform != transform &&
-                    image.name == targetName)
+                foreach (Image image in images)
                 {
-                    return image;
+                    if (image != null &&
+                        image.transform != transform &&
+                        image.name == targetName)
+                    {
+                        return image;
+                    }
                 }
             }
 

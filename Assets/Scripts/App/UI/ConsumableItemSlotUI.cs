@@ -21,6 +21,12 @@ namespace Dungeon.UI
         [SerializeField] private TMP_Text countText;
         [SerializeField] private TMP_Text typeText;
 
+        [Tooltip("이 아이템이 하나 이상의 퀵슬롯에 등록되어 있을 때 E를 표시합니다.")]
+        [SerializeField] private TMP_Text equippedMarkText;
+
+        [Header("Debug")]
+        [SerializeField] private bool logClick = true;
+
         public string CurrentKey { get; private set; }
             = GameDatabase.NoneKey;
 
@@ -29,7 +35,7 @@ namespace Dungeon.UI
         private void Awake()
         {
             AutoBindReferences();
-            EnsureTransparentButtonGraphic();
+            EnsureButtonGraphic();
         }
 
         /// <summary>
@@ -39,10 +45,11 @@ namespace Dungeon.UI
             ItemDefinition definition,
             int count,
             Sprite icon,
+            bool isEquipped,
             UnityAction onClick)
         {
             AutoBindReferences();
-            EnsureTransparentButtonGraphic();
+            EnsureButtonGraphic();
 
             CurrentItem = definition;
             CurrentKey = definition != null
@@ -55,7 +62,15 @@ namespace Dungeon.UI
                 itemIcon.enabled = icon != null;
                 itemIcon.gameObject.SetActive(icon != null);
                 itemIcon.preserveAspect = true;
-                itemIcon.raycastTarget = false;
+
+                // ItemIcon 자체가 Button의 Target Graphic인 구조라면
+                // raycastTarget을 꺼 버리면 버튼 클릭도 함께 막힙니다.
+                // 별도의 버튼 Graphic을 사용하는 경우에만 아이콘의 Raycast를 끕니다.
+                bool iconIsButtonGraphic =
+                    button != null &&
+                    button.targetGraphic == itemIcon;
+
+                itemIcon.raycastTarget = iconIsButtonGraphic;
             }
 
             if (nameText != null)
@@ -63,6 +78,7 @@ namespace Dungeon.UI
                 nameText.text = definition != null
                     ? definition.name
                     : string.Empty;
+                nameText.raycastTarget = false;
             }
 
             if (typeText != null)
@@ -70,22 +86,70 @@ namespace Dungeon.UI
                 typeText.text = definition != null
                     ? definition.type
                     : string.Empty;
+                typeText.raycastTarget = false;
             }
 
             if (countText != null)
             {
-                // 소비 아이템은 1개여도 수량을 보여주는 쪽이 알아보기 쉽습니다.
                 countText.text = Mathf.Max(0, count).ToString();
                 countText.gameObject.SetActive(count > 0);
+                countText.raycastTarget = false;
             }
 
-            if (button != null)
+            SetEquippedMark(isEquipped);
+
+            if (button == null)
             {
-                button.onClick.RemoveAllListeners();
-
-                if (onClick != null)
-                    button.onClick.AddListener(onClick);
+                Debug.LogWarning(
+                    $"[ConsumableItemSlotUI] Button reference is missing: " +
+                    $"{gameObject.name}"
+                );
+                return;
             }
+
+            // E가 표시되는 아이템은 이미 어느 퀵슬롯엔가 등록된 상태입니다.
+            // 기존 슬롯을 우클릭해 해제하기 전에는 다른 슬롯에 중복 등록할 수 없습니다.
+            button.interactable = !isEquipped;
+
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() =>
+            {
+                if (logClick)
+                {
+                    Debug.Log(
+                        $"[ConsumableItemSlotUI] Inventory slot clicked. " +
+                        $"key={CurrentKey}, " +
+                        $"name={(CurrentItem != null ? CurrentItem.name : "null")}, " +
+                        $"buttonObject={button.gameObject.name}"
+                    );
+                }
+
+                onClick?.Invoke();
+            });
+
+            if (!button.interactable)
+            {
+                Debug.LogWarning(
+                    $"[ConsumableItemSlotUI] Button is not interactable: " +
+                    $"{button.gameObject.name}"
+                );
+            }
+        }
+
+        // 기존 호출부 호환용입니다.
+        public void SetupConsumable(
+            ItemDefinition definition,
+            int count,
+            Sprite icon,
+            UnityAction onClick)
+        {
+            SetupConsumable(
+                definition,
+                count,
+                icon,
+                false,
+                onClick
+            );
         }
 
         // Setup이라는 이름으로도 호출할 수 있게 한 호환용 메서드입니다.
@@ -98,26 +162,40 @@ namespace Dungeon.UI
             SetupConsumable(definition, count, icon, onClick);
         }
 
-        private void EnsureTransparentButtonGraphic()
+        public void SetEquippedMark(bool isEquipped)
+        {
+            if (equippedMarkText == null)
+                return;
+
+            equippedMarkText.text = "E";
+            equippedMarkText.raycastTarget = false;
+            equippedMarkText.gameObject.SetActive(isEquipped);
+        }
+
+        /// <summary>
+        /// Button 오브젝트 자신의 Image를 클릭 판정용 Graphic으로 사용합니다.
+        ///
+        /// 이전 코드처럼 ConsumableItemSlotUI가 붙은 오브젝트의 Image를 사용하면,
+        /// Button이 자식 오브젝트에 있는 프리팹 구조에서는 클릭 이벤트가
+        /// Button까지 전달되지 않을 수 있습니다.
+        /// </summary>
+        private void EnsureButtonGraphic()
         {
             if (button == null)
                 return;
 
-            if (button.targetGraphic != null)
-                return;
+            Image buttonImage = button.GetComponent<Image>();
 
-            Image rootImage = GetComponent<Image>();
+            if (buttonImage == null)
+            {
+                buttonImage = button.gameObject.AddComponent<Image>();
+                buttonImage.color = new Color(1f, 1f, 1f, 0f);
+            }
 
-            if (rootImage == null)
-                rootImage = gameObject.AddComponent<Image>();
+            buttonImage.enabled = true;
+            buttonImage.raycastTarget = true;
 
-            Color color = rootImage.color;
-            color.a = 0f;
-
-            rootImage.color = color;
-            rootImage.raycastTarget = true;
-
-            button.targetGraphic = rootImage;
+            button.targetGraphic = buttonImage;
             button.transition = Selectable.Transition.None;
         }
 
@@ -125,6 +203,11 @@ namespace Dungeon.UI
         {
             if (button == null)
                 button = GetComponent<Button>();
+
+            // ConsumableItemSlotUI와 Button이 서로 다른 오브젝트에
+            // 붙어 있는 프리팹 구조도 지원합니다.
+            if (button == null)
+                button = GetComponentInChildren<Button>(true);
 
             if (itemIcon == null)
             {
@@ -156,6 +239,16 @@ namespace Dungeon.UI
                 typeText = FindTextByName(
                     "TypeText",
                     "ItemTypeText"
+                );
+            }
+
+            if (equippedMarkText == null)
+            {
+                equippedMarkText = FindTextByName(
+                    "EquippedMarkText",
+                    "EquippedMark",
+                    "EquippedText",
+                    "EText"
                 );
             }
         }
