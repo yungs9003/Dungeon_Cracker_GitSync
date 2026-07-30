@@ -3,7 +3,8 @@
     "rootNamespace": "Dungeon.System",
     "references": [
         "GUID:0388092e6defa814e83caa9fb0ab8ce0",
-        "GUID:37712eb6af69c4149b63e2085b337ed7"
+        "GUID:37712eb6af69c4149b63e2085b337ed7",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
