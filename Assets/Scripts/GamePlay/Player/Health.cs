@@ -115,14 +115,29 @@ namespace Dungeon.Player
             if (data.main_stats == null)
                 return;
 
+            int previousMaxHp = maxHP;
             int savedMaxHp = Mathf.Max(1, data.main_stats.max_HP);
 
             maxHP = savedMaxHp;
 
             if (fillCurrentHp)
+            {
                 currentHP = maxHP;
+            }
             else
-                currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+            {
+                int currentBeforeAdjustment = currentHP;
+
+                if (maxHP > previousMaxHp)
+                {
+                    int hpIncrease = maxHP - previousMaxHp;
+                    currentHP = Mathf.Min(maxHP, currentBeforeAdjustment + hpIncrease);
+                }
+                else
+                {
+                    currentHP = Mathf.Clamp(currentBeforeAdjustment, 0, maxHP);
+                }
+            }
 
             initializedFromSaveFile = true;
             onHealthChanged?.Invoke(currentHP, maxHP);

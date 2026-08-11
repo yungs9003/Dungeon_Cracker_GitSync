@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -40,6 +41,7 @@ namespace Dungeon.Player
         [SerializeField] private bool logActions = true;
 
         private float nextUsableTime;
+        private Coroutine activeEffectRoutine;
 
         public bool InputEnabled => inputEnabled;
         public float RemainingCooldown =>
@@ -221,6 +223,12 @@ namespace Dungeon.Player
             return true;
         }
 
+        private bool TryGetPlayerHealth(out Health health)
+        {
+            health = FindFirstObjectByType<Health>();
+            return health != null;
+        }
+
         /// <summary>
         /// 아이템별 실제 효과를 정의하는 지점입니다.
         /// 현재는 효과가 없더라도 사용 성공으로 처리할 수 있습니다.
@@ -237,9 +245,19 @@ namespace Dungeon.Player
             switch (GameDatabase.NormalizeId(definition.id))
             {
                 // 아직 아이템별 효과는 구현하지 않습니다.
-                // case "000":
-                //     health.Heal(10);
-                //     return true;
+                case "000":
+                    if (!TryGetPlayerHealth(out Health health))
+                        return false;
+                    
+                    health.Heal(10);
+                    return true;
+
+                case "001":
+                    if (!TryGetPlayerHealth(out Health hotHealth))
+                        return false;
+
+                    StartHealingOverTime(hotHealth, 5, 10f, 1f);
+                    return true;
 
                 default:
                     if (logActions)
@@ -253,6 +271,30 @@ namespace Dungeon.Player
 
                     return consumeItemsWithoutImplementedEffect;
             }
+        }
+
+        private void StartHealingOverTime(Health health, int amountPerTick, float duration, float tickInterval)
+        {
+            if (activeEffectRoutine != null)
+                StopCoroutine(activeEffectRoutine);
+
+            activeEffectRoutine = StartCoroutine(HealOverTimeRoutine(health, amountPerTick, duration, tickInterval));
+        }
+
+        private IEnumerator HealOverTimeRoutine(Health health, int amountPerTick, float duration, float tickInterval)
+        {
+            if (health == null)
+                yield break;
+
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                health.Heal(amountPerTick);
+                yield return new WaitForSeconds(tickInterval);
+                elapsed += tickInterval;
+            }
+
+            activeEffectRoutine = null;
         }
 
         private int GetPressedSlotNumber(Keyboard keyboard)

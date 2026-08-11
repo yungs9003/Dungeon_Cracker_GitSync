@@ -17,7 +17,7 @@ namespace Dungeon.Core
         [SerializeField] private string sourceFileName = "savefile.json";
 
         [Header("Development Runtime Save")]
-        [SerializeField] private bool useDevelopmentRuntimeCopy = true;
+        [SerializeField] private bool useDevelopmentRuntimeCopy = false;
         [SerializeField] private string runtimeCopyFileName = "savefile_dev_runtime.json";
         [SerializeField] private bool deleteRuntimeCopyOnQuit = true;
 
@@ -211,6 +211,11 @@ namespace Dungeon.Core
 
                 EnsureNotNull();
 
+                if (GameDatabase.Instance != null)
+                {
+                    EquipmentStatCalculator.Recalculate(data, GameDatabase.Instance);
+                }
+
                 if (logSavePath && logLoadSummary)
                     Debug.Log(BuildSaveSummary("Loaded"));
 
@@ -231,6 +236,11 @@ namespace Dungeon.Core
             try
             {
                 EnsureNotNull();
+
+                if (GameDatabase.Instance != null)
+                {
+                    EquipmentStatCalculator.Recalculate(data, GameDatabase.Instance);
+                }
 
                 string json = JsonConvert.SerializeObject(data, Formatting.Indented);
                 File.WriteAllText(ActiveSavePath, json);

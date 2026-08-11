@@ -6850,6 +6850,11 @@ MonoBehaviour:
   runtimeCopyFileName: savefile_dev_runtime.json
   deleteRuntimeCopyOnQuit: 1
   logSavePath: 1
+  logLoadSummary: 1
+  logSaveSummary: 1
+  logInventorySummary: 1
+  saveSummaryLogInterval: 3
+  saveSummaryLogEveryNthSave: 10
 --- !u!224 &1182390668
 RectTransform:
   m_ObjectHideFlags: 0
