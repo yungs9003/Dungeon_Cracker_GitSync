@@ -62,6 +62,11 @@ namespace Dungeon.Map
     {
         public string size;       // 맵 크기. 예: "0a07"
         public CellData2D[] grid;
+
+        // JSON 원본 키는 "3F"입니다.
+        // C# 식별자는 숫자로 시작할 수 없으므로, JSON 로딩 직전에 "3F" -> "floor3"로 키를 바꿔서 파싱합니다.
+        public CellData2D[] floor3;
+
         public RelationData2D[] relation;
         public PlayerData2D player;
         public FieldEffectData2D field_effect;
@@ -87,6 +92,16 @@ namespace Dungeon.Map
         [Header("그리드 설정")]
         public float cellSize = 1f;
         public float baseZ = 0f;
+
+        [Header("타일 렌더 순서")]
+        [Tooltip("기본 grid 타일 SpriteRenderer들의 기준 sortingOrder입니다.")]
+        public int gridSortingOrderBase = 0;
+
+        [Tooltip("3F 타일 SpriteRenderer들의 기준 sortingOrder입니다. grid보다 크게 설정하세요.")]
+        public int floor3SortingOrderBase = 100;
+
+        [Tooltip("hidden overlay SpriteRenderer들의 기준 sortingOrder입니다. 3F보다 크게 설정하세요.")]
+        public int hiddenSortingOrderBase = 200;
 
         [Header("생성 제외 코드")]
         public List<string> skipCodes = new List<string>();
@@ -168,7 +183,11 @@ namespace Dungeon.Map
             if (json == null)
                 return;
 
-            LoadedMapData = JsonUtility.FromJson<MapData2D>(json.text);
+            // JSON에는 "3F"라는 키가 있지만 C# 필드명은 숫자로 시작할 수 없습니다.
+            // JsonUtility가 읽을 수 있도록 루트 키 이름을 floor3로 바꾼 뒤 역직렬화합니다.
+            string normalizedJson = NormalizeSpecialJsonKeys(json.text);
+
+            LoadedMapData = JsonUtility.FromJson<MapData2D>(normalizedJson);
             if (LoadedMapData == null || LoadedMapData.grid == null)
             {
                 Debug.LogError("JSON 파싱 실패 또는 grid 없음");
@@ -176,7 +195,12 @@ namespace Dungeon.Map
             }
 
             CacheRelations(LoadedMapData.relation);
+
+            // 렌더 순서:
+            // grid < 3F < hidden overlay
             BuildGridTiles(LoadedMapData.grid);
+            Build3FTiles(LoadedMapData.floor3);
+
             PositionPlayerAndSetRespawn(LoadedMapData);
             ApplyLoadedFieldEffect(LoadedMapData.field_effect);
 
@@ -273,8 +297,54 @@ namespace Dungeon.Map
                 GameObject block = CreateTileInstance(prefab, code, cell, x, y);
                 ApplyBlockCoordAndRegistry(block, x, y);
                 ApplyAssetVariant(block, cell.assetNo);
+
+                // 기본 grid는 가장 아래 렌더 밴드에 둡니다.
+                ApplySortingBand(block, gridSortingOrderBase);
+
                 SetupHiddenVisualIfNeeded(block, code, cell);
                 SendRelationsIfNeeded(block, x, y);
+            }
+        }
+
+        /// <summary>
+        /// JSON의 3F 배열을 순회하면서 grid와 같은 좌표 위에 추가 타일을 생성합니다.
+        ///
+        /// 3F는 실제 GameObject/프리팹으로 생성되므로 해당 프리팹의 트랩 스크립트나 콜라이더도 그대로 동작합니다.
+        /// 단, 같은 좌표의 기본 grid 타일을 BlockRegistry에서 덮어쓰지 않도록 Registry에는 등록하지 않습니다.
+        /// 렌더 순서는 grid보다 높고 hidden overlay보다 낮게 둡니다.
+        /// </summary>
+        private void Build3FTiles(CellData2D[] cells)
+        {
+            if (cells == null || cells.Length == 0)
+                return;
+
+            foreach (var cell in cells)
+            {
+                if (!TryValidateCell(cell, out int x, out int y, out string code))
+                    continue;
+
+                if (skipCodes.Contains(code))
+                    continue;
+
+                GameObject prefab = LoadPrefab(code);
+                if (prefab == null)
+                {
+                    Debug.LogWarning($"3F 프리팹 없음: {prefabFolder}{code}");
+                    continue;
+                }
+
+                GameObject block = CreateTileInstance(prefab, code, cell, x, y);
+                block.name = $"3F_{code}_{x:X2}{y:X2}";
+
+                // 좌표 정보는 필요할 수 있으므로 BlockCoord는 붙이되,
+                // 같은 coord의 기본 grid 타일을 덮어쓰지 않도록 BlockRegistry에는 등록하지 않습니다.
+                ApplyBlockCoordAndRegistry(block, x, y, registerToRegistry: false);
+
+                ApplyAssetVariant(block, cell.assetNo);
+                ApplySortingBand(block, floor3SortingOrderBase);
+
+                // 3F에는 현재 hidden/relation 처리를 적용하지 않습니다.
+                // hidden은 같은 좌표의 grid 타일이 가진 overlay가 최상단에서 3F까지 함께 가립니다.
             }
         }
 
@@ -318,7 +388,11 @@ namespace Dungeon.Map
         /// BlockCoord와 BlockRegistry에 좌표 정보를 등록합니다.
         /// 다른 타일/함정 스크립트가 좌표 기반으로 이 오브젝트를 찾을 수 있게 하기 위한 단계입니다.
         /// </summary>
-        private void ApplyBlockCoordAndRegistry(GameObject block, int x, int y)
+        private void ApplyBlockCoordAndRegistry(
+            GameObject block,
+            int x,
+            int y,
+            bool registerToRegistry = true)
         {
             string coordStr = $"{x:X2}{y:X2}".ToLowerInvariant();
 
@@ -328,7 +402,7 @@ namespace Dungeon.Map
 
             bc.SetCoord(coordStr);
 
-            if (BlockRegistry.Instance != null)
+            if (registerToRegistry && BlockRegistry.Instance != null)
                 BlockRegistry.Instance.Register(coordStr, block);
         }
 
@@ -396,8 +470,68 @@ namespace Dungeon.Map
             // hiddenZRot은 숨김용 자식 SpriteRenderer에만 적용되어 콜라이더/함정 방향을 건드리지 않습니다.
             hiddenVisual.Configure(hiddenSprite, actualZRot, hiddenZRot, hiddenTilesStayRevealed);
 
+            // hidden overlay는 grid와 3F 모두를 덮어야 하므로 최상단 렌더 밴드로 올립니다.
+            ApplyHiddenOverlaySortingBand(block);
+
             if (visionSystem != null)
                 visionSystem.RegisterTrap(hiddenVisual);
+        }
+
+        /// <summary>
+        /// 프리팹 내부 SpriteRenderer들의 기존 상대 sortingOrder 차이는 유지하면서
+        /// 전체를 지정된 기준 sortingOrder 밴드로 이동시킵니다.
+        ///
+        /// 예:
+        /// 프리팹 내부 order가 3, 5라면 baseOrder=100 적용 후 100, 102가 됩니다.
+        /// </summary>
+        private static void ApplySortingBand(GameObject root, int baseOrder)
+        {
+            if (root == null)
+                return;
+
+            SpriteRenderer[] renderers = root.GetComponentsInChildren<SpriteRenderer>(true);
+            if (renderers == null || renderers.Length == 0)
+                return;
+
+            int minOrder = int.MaxValue;
+            foreach (var sr in renderers)
+            {
+                if (sr != null && sr.sortingOrder < minOrder)
+                    minOrder = sr.sortingOrder;
+            }
+
+            if (minOrder == int.MaxValue)
+                return;
+
+            foreach (var sr in renderers)
+            {
+                if (sr == null)
+                    continue;
+
+                sr.sortingOrder = baseOrder + (sr.sortingOrder - minOrder);
+            }
+        }
+
+        /// <summary>
+        /// HiddenTrapVisual2D가 생성한 __HiddenVisualOverlay 자식만 찾아
+        /// hidden 전용 최상단 sortingOrder 밴드로 이동시킵니다.
+        /// </summary>
+        private void ApplyHiddenOverlaySortingBand(GameObject block)
+        {
+            if (block == null || string.IsNullOrWhiteSpace(hiddenOverlayChildName))
+                return;
+
+            Transform[] children = block.GetComponentsInChildren<Transform>(true);
+            foreach (var t in children)
+            {
+                if (t == null || t == block.transform)
+                    continue;
+
+                if (t.name != hiddenOverlayChildName)
+                    continue;
+
+                ApplySortingBand(t.gameObject, hiddenSortingOrderBase);
+            }
         }
 
         /// <summary>
@@ -711,6 +845,18 @@ namespace Dungeon.Map
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// C# 식별자로 직접 선언할 수 없는 JSON 키를 JsonUtility용 내부 키로 바꿉니다.
+        /// 현재는 루트의 "3F" 키를 "floor3"로 변환합니다.
+        /// </summary>
+        private static string NormalizeSpecialJsonKeys(string jsonText)
+        {
+            if (string.IsNullOrEmpty(jsonText))
+                return jsonText;
+
+            return jsonText.Replace("\"3F\"", "\"floor3\"");
         }
 
         private static string NormalizeCoord(string coord)

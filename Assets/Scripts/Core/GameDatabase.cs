@@ -17,10 +17,12 @@ namespace Dungeon.Core
     /// - db.json -> Assets/Resources/Data/db.json
     /// - catalogResourcePath -> "Data/db"
     /// </summary>
+    [DefaultExecutionOrder(-1000)]
     public class GameDatabase : MonoBehaviour
     {
         public const string CategoryItem = "item";
         public const string CategoryEquip = "equip";
+        public const string CategoryModule = "module";
         public const string NoneKey = "none";
 
         public static GameDatabase Instance { get; private set; }
@@ -38,6 +40,9 @@ namespace Dungeon.Core
 
         [Tooltip("장비 아이콘 Resources 폴더입니다. 예: UI/EquipIcons/000")]
         [SerializeField] private string equipmentIconResourceRoot = "UI/EquipIcons";
+
+        [Tooltip("Module icon folder under Resources. Example: UI/ModuleIcons/000")]
+        [SerializeField] private string moduleIconResourceRoot = "UI/ModuleIcons";
 
         [Header("Icon Overrides")]
         [Tooltip("fullKey에는 item:000 또는 equip:000 형식으로 넣는 것을 추천합니다. fullKey가 비어 있으면 category + id로 key를 만듭니다.")]
@@ -285,6 +290,9 @@ namespace Dungeon.Core
                     return GetEquipmentFallbackIcon(equip.slot);
             }
 
+            if (category == CategoryModule)
+                return LoadResourceIcon(moduleIconResourceRoot, id);
+
             return unknownFallbackIcon;
         }
 
@@ -296,6 +304,11 @@ namespace Dungeon.Core
         public Sprite GetEquipmentIcon(string rawId)
         {
             return GetIconByKey(MakeKey(CategoryEquip, rawId));
+        }
+
+        public Sprite GetModuleIcon(string rawId)
+        {
+            return GetIconByKey(MakeKey(CategoryModule, rawId));
         }
 
         private Sprite LoadResourceIcon(string root, string id)
@@ -387,6 +400,8 @@ namespace Dungeon.Core
                 "equip" => CategoryEquip,
                 "equipment" => CategoryEquip,
                 "equipement" => CategoryEquip,
+                "modules" => CategoryModule,
+                "module" => CategoryModule,
                 _ => category
             };
         }
