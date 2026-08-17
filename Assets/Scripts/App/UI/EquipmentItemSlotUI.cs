@@ -25,6 +25,10 @@ namespace Dungeon.UI
         [Header("Debug")]
         [SerializeField] private bool logClick;
 
+        private SlotPointerClickRelay pointerClickRelay;
+        private UnityAction doubleLeftClickAction;
+        private UnityAction rightClickAction;
+
         public string CurrentKey { get; private set; }
         public EquipmentDefinition CurrentEquipment { get; private set; }
 
@@ -32,6 +36,7 @@ namespace Dungeon.UI
         {
             AutoBindReferences();
             EnsureTransparentButtonGraphic();
+            BindPointerClickRelay();
         }
 
         public void SetupEquipment(
@@ -39,10 +44,15 @@ namespace Dungeon.UI
             int count,
             Sprite icon,
             bool isEquipped,
-            UnityAction onClick)
+            UnityAction onDoubleLeftClick,
+            UnityAction onRightClick)
         {
             AutoBindReferences();
             EnsureTransparentButtonGraphic();
+            BindPointerClickRelay();
+
+            doubleLeftClickAction = onDoubleLeftClick;
+            rightClickAction = onRightClick;
 
             CurrentEquipment = definition;
             CurrentKey = definition != null ? definition.Key : GameDatabase.NoneKey;
@@ -78,23 +88,29 @@ namespace Dungeon.UI
             if (button != null)
             {
                 button.onClick.RemoveAllListeners();
-                button.onClick.AddListener(() =>
-                {
-                    if (logClick)
-                    {
-                        Debug.Log(
-                            $"[EquipmentItemSlotUI] Clicked. " +
-                            $"key={CurrentKey}, id={CurrentEquipment.id}, slot={CurrentEquipment.slot}, name={CurrentEquipment.name}"
-                        );
-                    }
-
-                    onClick?.Invoke();
-                });
+                button.interactable = true;
             }
             else
             {
                 Debug.LogWarning($"[EquipmentItemSlotUI] Button reference is missing: {gameObject.name}");
             }
+        }
+
+        public void SetupEquipment(
+            EquipmentDefinition definition,
+            int count,
+            Sprite icon,
+            bool isEquipped,
+            UnityAction onDoubleLeftClick)
+        {
+            SetupEquipment(
+                definition,
+                count,
+                icon,
+                isEquipped,
+                onDoubleLeftClick,
+                null
+            );
         }
 
         // 기존 호출부 호환용입니다.
@@ -109,7 +125,8 @@ namespace Dungeon.UI
                 count,
                 icon,
                 false,
-                onClick
+                onClick,
+                null
             );
         }
 
@@ -127,6 +144,65 @@ namespace Dungeon.UI
             equippedMarkText.text = "E";
             equippedMarkText.raycastTarget = false;
             equippedMarkText.gameObject.SetActive(isEquipped);
+        }
+
+        private void BindPointerClickRelay()
+        {
+            if (button == null)
+                return;
+
+            if (pointerClickRelay == null)
+                pointerClickRelay = button.GetComponent<SlotPointerClickRelay>();
+
+            if (pointerClickRelay == null)
+                pointerClickRelay = button.gameObject.AddComponent<SlotPointerClickRelay>();
+
+            pointerClickRelay.LeftClicked -= HandleSingleLeftClick;
+            pointerClickRelay.DoubleLeftClicked -= HandleDoubleLeftClick;
+            pointerClickRelay.RightClicked -= HandleRightClick;
+
+            pointerClickRelay.LeftClicked += HandleSingleLeftClick;
+            pointerClickRelay.DoubleLeftClicked += HandleDoubleLeftClick;
+            pointerClickRelay.RightClicked += HandleRightClick;
+        }
+
+        private void OnDestroy()
+        {
+            if (pointerClickRelay == null)
+                return;
+
+            pointerClickRelay.LeftClicked -= HandleSingleLeftClick;
+            pointerClickRelay.DoubleLeftClicked -= HandleDoubleLeftClick;
+            pointerClickRelay.RightClicked -= HandleRightClick;
+        }
+
+        private void HandleSingleLeftClick()
+        {
+            if (logClick)
+            {
+                Debug.Log(
+                    $"[EquipmentItemSlotUI] Single click: {CurrentKey}"
+                );
+            }
+
+            ItemEquipmentInfoPopupUI.TryShow(CurrentKey);
+        }
+
+        private void HandleDoubleLeftClick()
+        {
+            if (logClick)
+            {
+                Debug.Log(
+                    $"[EquipmentItemSlotUI] Double click: {CurrentKey}"
+                );
+            }
+
+            doubleLeftClickAction?.Invoke();
+        }
+
+        private void HandleRightClick()
+        {
+            rightClickAction?.Invoke();
         }
 
         private void EnsureTransparentButtonGraphic()

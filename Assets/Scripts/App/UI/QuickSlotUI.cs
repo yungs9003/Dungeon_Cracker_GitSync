@@ -103,11 +103,11 @@ namespace Dungeon.UI
         {
             UnsubscribeFromSaveFile();
 
-            if (slotButton != null)
-                slotButton.onClick.RemoveListener(HandleClicked);
-
             if (pointerClickRelay != null)
+            {
+                pointerClickRelay.LeftClicked -= HandleClicked;
                 pointerClickRelay.RightClicked -= HandleRightClicked;
+            }
         }
 
         /// <summary>
@@ -369,6 +369,9 @@ namespace Dungeon.UI
 
         private void HandleClicked()
         {
+            if (HasItem)
+                ItemEquipmentInfoPopupUI.TryShow(CurrentItemKey);
+
             Clicked?.Invoke(this);
         }
 
@@ -391,8 +394,8 @@ namespace Dungeon.UI
 
             EnsureButtonGraphic();
 
-            slotButton.onClick.RemoveListener(HandleClicked);
-            slotButton.onClick.AddListener(HandleClicked);
+            slotButton.onClick.RemoveAllListeners();
+            slotButton.interactable = true;
 
             pointerClickRelay =
                 slotButton.GetComponent<SlotPointerClickRelay>();
@@ -405,7 +408,9 @@ namespace Dungeon.UI
                     >();
             }
 
+            pointerClickRelay.LeftClicked -= HandleClicked;
             pointerClickRelay.RightClicked -= HandleRightClicked;
+            pointerClickRelay.LeftClicked += HandleClicked;
             pointerClickRelay.RightClicked += HandleRightClicked;
         }
 

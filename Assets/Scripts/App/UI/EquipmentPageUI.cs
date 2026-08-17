@@ -210,20 +210,41 @@ namespace Dungeon.UI
 
             string key = GameDatabase.NormalizeSlot(slot.slotKey);
 
-            slot.slotButton.onClick.AddListener(
-                () => OnPartSlotClicked(key)
-            );
+            slot.slotButton.onClick.RemoveAllListeners();
+            slot.slotButton.interactable = true;
 
             SlotPointerClickRelay relay =
                 slot.GetOrCreatePointerClickRelay();
 
             if (relay != null)
             {
+                relay.LeftClicked +=
+                    () => OnPartSlotLeftClicked(key);
                 relay.RightClicked +=
                     () => OnPartSlotRightClicked(key);
             }
 
             return true;
+        }
+
+        private void OnPartSlotLeftClicked(string slotKey)
+        {
+            string normalizedSlotKey = GameDatabase.NormalizeSlot(slotKey);
+
+            if (saveRepository.Load(saveFileName, saveFilePathOverride))
+            {
+                string equippedKey = saveRepository.GetEquippedKey(normalizedSlotKey);
+
+                if (!string.IsNullOrWhiteSpace(equippedKey) &&
+                    equippedKey != GameDatabase.NoneKey)
+                {
+                    ItemEquipmentInfoPopupUI.TryShow(equippedKey);
+                    return;
+                }
+            }
+
+            // Empty part slots preserve the existing inventory filter behavior.
+            OnPartSlotClicked(normalizedSlotKey);
         }
 
         private void OnPartSlotClicked(string slotKey)
@@ -443,7 +464,8 @@ namespace Dungeon.UI
                     capturedStack.count,
                     icon,
                     isEquipped,
-                    () => OnInventoryEquipmentClicked(capturedDefinition)
+                    () => OnInventoryEquipmentClicked(capturedDefinition),
+                    () => OnInventoryEquipmentRightClicked(capturedDefinition)
                 );
 
                 spawnedItemSlots.Add(slotView.gameObject);
@@ -507,6 +529,26 @@ namespace Dungeon.UI
             saveRepository.Load(saveFileName, saveFilePathOverride);
             RefreshEquippedSlotsOnly();
             PopulateInventoryList(selectedSlotKey);
+        }
+
+        private void OnInventoryEquipmentRightClicked(
+            EquipmentDefinition definition)
+        {
+            if (definition == null ||
+                !saveRepository.Load(saveFileName, saveFilePathOverride))
+            {
+                return;
+            }
+
+            string slotKey = GameDatabase.NormalizeSlot(definition.slot);
+            string equippedKey = GameDatabase.NormalizeKey(
+                saveRepository.GetEquippedKey(slotKey)
+            );
+
+            if (equippedKey != GameDatabase.NormalizeKey(definition.Key))
+                return;
+
+            OnPartSlotRightClicked(slotKey);
         }
 
         private void RefreshEquippedSlotsOnly()

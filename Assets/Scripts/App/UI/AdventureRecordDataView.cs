@@ -27,7 +27,10 @@ namespace Dungeon.UI
         [Header("Rank")]
         [SerializeField] private Image rankImage;
         [SerializeField] private TMP_Text rankFallbackText;
-        [SerializeField] private string imageRankKey = "S";
+        [SerializeField] private Sprite sRankSprite;
+        [SerializeField] private Sprite aRankSprite;
+        [SerializeField] private Sprite bRankSprite;
+        [SerializeField] private Sprite cRankSprite;
 
         private StatusSaveFile subscribedSaveFile;
 
@@ -49,7 +52,10 @@ namespace Dungeon.UI
             TMP_Text targetGuildAchievementText,
             Image targetRankImage,
             TMP_Text targetRankFallbackText,
-            string targetImageRankKey = "S")
+            Sprite targetSRankSprite,
+            Sprite targetARankSprite,
+            Sprite targetBRankSprite,
+            Sprite targetCRankSprite)
         {
             playTimeText = targetPlayTimeText;
             clearedDungeonText = targetClearedDungeonText;
@@ -57,9 +63,10 @@ namespace Dungeon.UI
             guildAchievementText = targetGuildAchievementText;
             rankImage = targetRankImage;
             rankFallbackText = targetRankFallbackText;
-            imageRankKey = string.IsNullOrWhiteSpace(targetImageRankKey)
-                ? "S"
-                : targetImageRankKey.Trim().ToUpperInvariant();
+            sRankSprite = targetSRankSprite;
+            aRankSprite = targetARankSprite;
+            bRankSprite = targetBRankSprite;
+            cRankSprite = targetCRankSprite;
         }
 
         public void Refresh()
@@ -124,17 +131,34 @@ namespace Dungeon.UI
             string rank = string.IsNullOrWhiteSpace(rawRank)
                 ? string.Empty
                 : rawRank.Trim().ToUpperInvariant();
-            bool useImage =
-                rankImage != null && rankImage.sprite != null && rank == imageRankKey;
+            Sprite rankSprite = GetRankSprite(rank);
+            bool useImage = rankImage != null && rankSprite != null;
 
             if (rankImage != null)
+            {
+                if (useImage)
+                    rankImage.sprite = rankSprite;
+
                 rankImage.gameObject.SetActive(useImage);
+            }
 
             if (rankFallbackText != null)
             {
                 rankFallbackText.gameObject.SetActive(!useImage);
                 rankFallbackText.text = rank;
             }
+        }
+
+        private Sprite GetRankSprite(string rank)
+        {
+            return rank switch
+            {
+                "S" => sRankSprite,
+                "A" => aRankSprite,
+                "B" => bRankSprite,
+                "C" => cRankSprite,
+                _ => null
+            };
         }
 
         private static string FormatClearedDungeon(string rawValue)

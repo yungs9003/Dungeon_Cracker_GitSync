@@ -14,7 +14,10 @@ public static class StatusAdventureRecordSceneBuilder
 {
     private const string ScenePath = "Assets/Scenes/DUNGEON_001.unity";
     private const string FrameSpritePath = "Assets/Sprites/UI/Window/Frame 3 (2).png";
-    private const string RankSpritePath = "Assets/Sprites/UI/Window/AdventureRecordRankS.png";
+    private const string SRankSpritePath = "Assets/Sprites/UI/Window/AdventureRecordRankS.png";
+    private const string ARankSpritePath = "Assets/Sprites/UI/Window/A_RANK_0.png";
+    private const string BRankSpritePath = "Assets/Sprites/UI/Window/B_RANK_0.png";
+    private const string CRankSpritePath = "Assets/Sprites/UI/Window/C_RANK_0.png";
     private const string FontPath = "Assets/Fonts/Koulen-Regular SDF.asset";
 
     private const int ReferenceWidth = 1920;
@@ -58,19 +61,35 @@ public static class StatusAdventureRecordSceneBuilder
     private static void Build(bool renderPreviews)
     {
         ConfigureSpriteImporter(FrameSpritePath);
-        ConfigureSpriteImporter(RankSpritePath);
+        ConfigureSpriteImporter(SRankSpritePath);
+        ConfigureSpriteImporter(ARankSpritePath);
+        ConfigureSpriteImporter(BRankSpritePath);
+        ConfigureSpriteImporter(CRankSpritePath);
         AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
         Sprite frameSprite = LoadSprite(FrameSpritePath);
-        Sprite rankSprite = LoadSprite(RankSpritePath);
+        Sprite sRankSprite = LoadSprite(SRankSpritePath);
+        Sprite aRankSprite = LoadSprite(ARankSpritePath);
+        Sprite bRankSprite = LoadSprite(BRankSpritePath);
+        Sprite cRankSprite = LoadSprite(CRankSpritePath);
         TMP_FontAsset font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(FontPath);
         EnsureAsset(frameSprite, FrameSpritePath);
-        EnsureAsset(rankSprite, RankSpritePath);
+        EnsureAsset(sRankSprite, SRankSpritePath);
+        EnsureAsset(aRankSprite, ARankSpritePath);
+        EnsureAsset(bRankSprite, BRankSpritePath);
+        EnsureAsset(cRankSprite, CRankSpritePath);
         EnsureAsset(font, FontPath);
 
         Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
         SceneObjects objects = ResolveSceneObjects(scene);
-        BuildRecordPage(objects, frameSprite, rankSprite, font);
+        BuildRecordPage(
+            objects,
+            frameSprite,
+            sRankSprite,
+            aRankSprite,
+            bRankSprite,
+            cRankSprite,
+            font);
         RebuildOverlayControls(objects);
         ConfigureController(objects);
         Validate(objects);
@@ -152,7 +171,10 @@ public static class StatusAdventureRecordSceneBuilder
     private static void BuildRecordPage(
         SceneObjects objects,
         Sprite frameSprite,
-        Sprite rankSprite,
+        Sprite sRankSprite,
+        Sprite aRankSprite,
+        Sprite bRankSprite,
+        Sprite cRankSprite,
         TMP_FontAsset font)
     {
         Transform oldPage = objects.ClipMask.Find("AdventureRecordPage");
@@ -227,7 +249,7 @@ public static class StatusAdventureRecordSceneBuilder
             new Vector2(453f, 453f),
             new Vector2(873f, 339f));
         Image rankImage = rankImageObject.GetComponent<Image>();
-        rankImage.sprite = rankSprite;
+        rankImage.sprite = sRankSprite;
         rankImage.type = Image.Type.Simple;
         rankImage.preserveAspect = true;
         rankImage.raycastTarget = false;
@@ -251,7 +273,20 @@ public static class StatusAdventureRecordSceneBuilder
             achievement,
             rankImage,
             rankFallback,
-            "S");
+            sRankSprite,
+            aRankSprite,
+            bRankSprite,
+            cRankSprite);
+        ValidateRankMapping(dataView, rankImage, rankFallback, "S", sRankSprite);
+        ValidateRankMapping(dataView, rankImage, rankFallback, "A", aRankSprite);
+        ValidateRankMapping(dataView, rankImage, rankFallback, "B", bRankSprite);
+        ValidateRankMapping(dataView, rankImage, rankFallback, "C", cRankSprite);
+
+        dataView.ApplyData(new StatusSaveData { player_rank = "D" });
+
+        if (rankImage.gameObject.activeSelf || !rankFallback.gameObject.activeSelf)
+            throw new InvalidOperationException("Unknown rank fallback validation failed.");
+
         dataView.ApplyData(new StatusSaveData
         {
             play_time = "135:26",
@@ -264,6 +299,25 @@ public static class StatusAdventureRecordSceneBuilder
         page.SetActive(false);
         objects.RecordPage = page;
         objects.DataView = dataView;
+    }
+
+    private static void ValidateRankMapping(
+        AdventureRecordDataView dataView,
+        Image rankImage,
+        TMP_Text rankFallback,
+        string rankKey,
+        Sprite expectedSprite)
+    {
+        dataView.ApplyData(new StatusSaveData { player_rank = rankKey });
+
+        if (!rankImage.gameObject.activeSelf || rankImage.sprite != expectedSprite)
+        {
+            throw new InvalidOperationException(
+                $"{rankKey} rank sprite mapping validation failed.");
+        }
+
+        if (rankFallback.gameObject.activeSelf)
+            throw new InvalidOperationException($"{rankKey} rank fallback must be hidden.");
     }
 
     private static void RebuildOverlayControls(SceneObjects objects)

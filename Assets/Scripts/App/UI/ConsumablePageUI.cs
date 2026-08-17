@@ -251,6 +251,9 @@ namespace Dungeon.UI
                     isEquipped,
                     () => OnInventoryItemClicked(
                         capturedDefinition
+                    ),
+                    () => OnInventoryItemRightClicked(
+                        capturedDefinition
                     )
                 );
 
@@ -482,6 +485,37 @@ namespace Dungeon.UI
             // 아이템창과 HUD의 슬롯 및 목록의 E 표시를 모두 갱신합니다.
             RefreshAllQuickSlots();
             PopulateInventoryList();
+        }
+
+        private void OnInventoryItemRightClicked(
+            ItemDefinition definition)
+        {
+            if (definition == null)
+                return;
+
+            QuickSlotUI occupiedSlot =
+                FindQuickSlotContainingItem(definition.Key);
+
+            if (occupiedSlot == null)
+                return;
+
+            selectedQuickSlot = occupiedSlot;
+            RefreshQuickSlotSelectionVisuals();
+
+            if (!occupiedSlot.ClearItem())
+                return;
+
+            RefreshAllQuickSlots();
+            RefreshQuickSlotSelectionVisuals();
+            PopulateInventoryList();
+
+            if (logActions)
+            {
+                Debug.Log(
+                    $"[ConsumablePageUI] Inventory right click cleared quick slot. " +
+                    $"slot={occupiedSlot.SlotNumber}, item={definition.Key}"
+                );
+            }
         }
 
         private void RefreshAllQuickSlots()
