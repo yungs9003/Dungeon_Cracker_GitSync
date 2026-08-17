@@ -5,8 +5,8 @@ using UnityEngine.UI;
 namespace Dungeon.UI
 {
     /// <summary>
-    /// Module 씬의 상세 정보 영역을 관리합니다.
-    /// 슬롯은 표시할 데이터를 이 컴포넌트에 전달하고, 상세 UI의 실제 갱신은 여기서만 처리합니다.
+    /// 모듈 페이지의 선택 상태와 상세 정보 표시를 관리합니다.
+    /// 저장 데이터나 장착 규칙은 다루지 않으며, 슬롯 선택 결과만 화면에 반영합니다.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class ModulePageUI : MonoBehaviour
@@ -21,6 +21,10 @@ namespace Dungeon.UI
         [SerializeField] private bool showDefaultSelection = true;
         [SerializeField] private ModuleSlotUI defaultSelection;
 
+        private ModuleSlotUI selectedSlot;
+
+        public ModuleSlotUI SelectedSlot => selectedSlot;
+
         private void Start()
         {
             if (showDefaultSelection && defaultSelection != null)
@@ -29,26 +33,51 @@ namespace Dungeon.UI
                 HideDetails();
         }
 
-        public void ShowDetails(Sprite icon, string moduleName, string description)
+        /// <summary>
+        /// 슬롯에서 전달된 모듈을 현재 선택으로 만들고 상세 정보를 갱신합니다.
+        /// </summary>
+        public void ShowDetails(
+            ModuleSlotUI sourceSlot,
+            Sprite icon,
+            string moduleName,
+            string description)
         {
-            if (infoContent != null)
-                infoContent.SetActive(true);
-
-            if (moduleIcon != null)
+            if (selectedSlot != sourceSlot)
             {
-                moduleIcon.sprite = icon;
-                moduleIcon.enabled = icon != null;
+                if (selectedSlot != null)
+                    selectedSlot.SetSelected(false);
+
+                selectedSlot = sourceSlot;
+
+                if (selectedSlot != null)
+                    selectedSlot.SetSelected(true);
             }
 
-            if (moduleNameText != null)
-                moduleNameText.text = moduleName ?? string.Empty;
+            ApplyDetails(icon, moduleName, description);
+        }
 
-            if (descriptionText != null)
-                descriptionText.text = description ?? string.Empty;
+        /// <summary>
+        /// 이전 씬/프리팹과의 호환을 위한 상세 표시 API입니다.
+        /// </summary>
+        public void ShowDetails(Sprite icon, string moduleName, string description)
+        {
+            if (selectedSlot != null)
+            {
+                selectedSlot.SetSelected(false);
+                selectedSlot = null;
+            }
+
+            ApplyDetails(icon, moduleName, description);
         }
 
         public void HideDetails()
         {
+            if (selectedSlot != null)
+            {
+                selectedSlot.SetSelected(false);
+                selectedSlot = null;
+            }
+
             if (infoContent != null)
                 infoContent.SetActive(false);
         }
@@ -67,6 +96,24 @@ namespace Dungeon.UI
             descriptionText = bodyText;
             defaultSelection = initialSelection;
             showDefaultSelection = showInitialSelection;
+        }
+
+        private void ApplyDetails(Sprite icon, string moduleName, string description)
+        {
+            if (infoContent != null)
+                infoContent.SetActive(true);
+
+            if (moduleIcon != null)
+            {
+                moduleIcon.sprite = icon;
+                moduleIcon.enabled = icon != null;
+            }
+
+            if (moduleNameText != null)
+                moduleNameText.text = moduleName ?? string.Empty;
+
+            if (descriptionText != null)
+                descriptionText.text = description ?? string.Empty;
         }
     }
 }

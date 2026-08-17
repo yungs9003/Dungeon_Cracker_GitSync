@@ -14,39 +14,63 @@ namespace Dungeon.System
         [Header("Button")]
         [SerializeField] private Button button;
 
+        public string SceneName => sceneName;
+        public bool IsCurrentScene => IsTargetScene(SceneManager.GetActiveScene().name);
+
         private void Awake()
         {
-            // Inspector에서 직접 넣지 않았으면
-            // 같은 오브젝트에 붙어있는 Button을 자동으로 가져옴
-            if (button == null)
-                button = GetComponent<Button>();
+            ResolveButton();
         }
 
         private void Start()
         {
-            UpdateButtonState();
+            RefreshState();
         }
 
         /// <summary>
         /// 현재 Scene에 해당하는 버튼은 비활성화한다.
         /// </summary>
-        private void UpdateButtonState()
+        public void RefreshState()
         {
-            string currentSceneName = SceneManager.GetActiveScene().name;
+            RefreshStateForScene(SceneManager.GetActiveScene().name);
+        }
 
-            bool isCurrentScene = currentSceneName == sceneName;
+        public void RefreshStateForScene(string currentSceneName)
+        {
+            ResolveButton();
 
-            button.interactable = !isCurrentScene;
+            if (button != null)
+                button.interactable = !IsTargetScene(currentSceneName);
+        }
+
+        public bool IsTargetScene(string candidateSceneName)
+        {
+            return string.Equals(candidateSceneName, sceneName, global::System.StringComparison.Ordinal);
+        }
+
+        public void Configure(SceneButtonLoader sceneLoader, string targetSceneName, Button targetButton)
+        {
+            loader = sceneLoader;
+            sceneName = targetSceneName;
+            button = targetButton != null ? targetButton : GetComponent<Button>();
+            RefreshState();
         }
 
         public void Go()
         {
-            // 현재 Scene 버튼은 interactable = false라
-            // 일반적으로 호출될 일이 없지만 한 번 더 방지
-            if (SceneManager.GetActiveScene().name == sceneName)
+            if (IsCurrentScene)
                 return;
 
-            loader.LoadScene(sceneName);
+            if (loader != null)
+                loader.LoadScene(sceneName);
+            else
+                SceneManager.LoadScene(sceneName);
+        }
+
+        private void ResolveButton()
+        {
+            if (button == null)
+                button = GetComponent<Button>();
         }
     }
 }

@@ -14,33 +14,69 @@ public static class ModuleSceneBuilder
     private const string ScenePath = "Assets/Scenes/Module.unity";
     private const string SlotPrefabPath = "Assets/Prefabs/UI/ModuleSlot.prefab";
     private const string EmptySlotSpritePath = "Assets/Sprites/UI/Module/Group 80.png";
-    private const string ArmorSpritePath = "Assets/Sprites/UI/Module/IMG_4899 1.png";
     private const string PhysicalDefenseSpritePath = "Assets/Sprites/UI/Module/Module-DEF.png";
     private const string MagicDefenseSpritePath = "Assets/Sprites/UI/Module/Module-M.DEF.png";
-    private const string VitalitySpritePath = "Assets/Sprites/UI/Module/Module-DEF (1).png";
+    private const string BackgroundSpritePath = "Assets/Sprites/UI/Module/ModuleMaintenance_Background.png";
     private const string HeadingFontPath = "Assets/Fonts/Cafe24Dangdanghae-v2.0 SDF.asset";
     private const string BodyFontPath = "Assets/Fonts/Cafe24Danjunghae-v2.0 SDF.asset";
-    private const string PreviewPath = "Module_scene_preview.png";
+    private const string DefaultPreviewPath = "Module_scene_preview.png";
+    private const string MagicPreviewPath = "Module_scene_preview_mdef.png";
 
-    private static readonly Color TextColor = new(0.08f, 0.09f, 0.11f, 1f);
-    private static readonly Color MutedTextColor = new(0.28f, 0.31f, 0.36f, 1f);
-    private static readonly Color DividerColor = new(0.12f, 0.13f, 0.15f, 0.9f);
-    private static readonly Color CardColor = new(0.97f, 0.975f, 0.985f, 0.78f);
-    private static readonly Color AreaDividerColor = new(0.15f, 0.17f, 0.2f, 0.14f);
+    private static readonly Vector2 SlotSize = new(176f, 176f);
+    private static readonly Color DetailTextColor = new(0.015f, 0.02f, 0.012f, 1f);
+    private static readonly Color SelectionColor = new(0.25f, 0.88f, 1f, 0.95f);
+
+    private static readonly Vector2[] EquippedSlotCenters =
+    {
+        new(210.39f, 261.45f),
+        new(702.39f, 273.48f),
+        new(210.39f, 508.01f),
+        new(702.39f, 520.04f),
+        new(210.39f, 742.54f),
+        new(702.39f, 754.57f)
+    };
+
+    private static readonly string[] EquippedSlotNames =
+    {
+        "EquipSlot_LT", "EquipSlot_RT", "EquipSlot_LM",
+        "EquipSlot_RM", "EquipSlot_LB", "EquipSlot_RB"
+    };
+
+    private static readonly Vector2[] InventorySlotCenters =
+    {
+        new(1119.27f, 557.27f), new(1287.27f, 555.60f), new(1455.27f, 555.60f),
+        new(1623.27f, 557.27f), new(1791.27f, 557.27f),
+        new(1203.27f, 702.17f), new(1371.27f, 702.17f), new(1541.96f, 702.17f),
+        new(1712.22f, 702.17f),
+        new(1121.96f, 848.97f), new(1287.27f, 848.97f), new(1455.27f, 848.97f),
+        new(1625.96f, 848.97f), new(1796.22f, 848.97f)
+    };
 
     [MenuItem("Tools/Dungeon/Rebuild Module Scene UI")]
     public static void BuildFromMenu()
     {
-        BuildScene(renderPreview: false);
-        Debug.Log("[ModuleSceneBuilder] Module scene UI rebuilt.");
+        if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            return;
+
+        SceneSetup[] previousSetup = EditorSceneManager.GetSceneManagerSetup();
+
+        try
+        {
+            BuildScene(renderPreviews: false);
+            Debug.Log("[ModuleSceneBuilder] SVG-based Module scene UI rebuilt.");
+        }
+        finally
+        {
+            EditorSceneManager.RestoreSceneManagerSetup(previousSetup);
+        }
     }
 
     public static void BuildFromCommandLine()
     {
         try
         {
-            BuildScene(renderPreview: true);
-            Debug.Log("[ModuleSceneBuilder] Module scene UI rebuilt and preview rendered.");
+            BuildScene(renderPreviews: true);
+            Debug.Log("[ModuleSceneBuilder] SVG-based Module scene UI rebuilt and validated.");
         }
         catch (Exception exception)
         {
@@ -49,214 +85,120 @@ public static class ModuleSceneBuilder
         }
     }
 
-    private static void BuildScene(bool renderPreview)
+    private static void BuildScene(bool renderPreviews)
     {
+        AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+
         Sprite emptySlot = LoadSprite(EmptySlotSpritePath);
-        Sprite armor = LoadSprite(ArmorSpritePath);
         Sprite physicalDefense = LoadSprite(PhysicalDefenseSpritePath);
         Sprite magicDefense = LoadSprite(MagicDefenseSpritePath);
-        Sprite vitality = LoadSprite(VitalitySpritePath);
+        Sprite background = LoadSprite(BackgroundSpritePath);
         TMP_FontAsset headingFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(HeadingFontPath);
         TMP_FontAsset bodyFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(BodyFontPath);
 
         EnsureRequiredAsset(emptySlot, EmptySlotSpritePath);
-        EnsureRequiredAsset(armor, ArmorSpritePath);
         EnsureRequiredAsset(physicalDefense, PhysicalDefenseSpritePath);
         EnsureRequiredAsset(magicDefense, MagicDefenseSpritePath);
-        EnsureRequiredAsset(vitality, VitalitySpritePath);
+        EnsureRequiredAsset(background, BackgroundSpritePath);
         EnsureRequiredAsset(headingFont, HeadingFontPath);
         EnsureRequiredAsset(bodyFont, BodyFontPath);
 
         GameObject slotPrefab = BuildSlotPrefab(emptySlot);
+        GameObject navigationPrefab = CommonBottomNavigationBuilder.BuildPrefab();
         Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+        Canvas canvas = FindSceneCanvas(scene);
 
-        Canvas canvas = UnityEngine.Object.FindFirstObjectByType<Canvas>();
         if (canvas == null)
-            throw new InvalidOperationException("Module scene does not contain a Canvas.");
+            throw new InvalidOperationException("Module scene does not contain the expected Canvas.");
 
-        Transform existingRoot = canvas.transform.Find("ModulePageRoot");
-        GameObject pageRoot = existingRoot != null
-            ? existingRoot.gameObject
-            : CreateUIObject("ModulePageRoot", canvas.transform, typeof(Image));
-
-        RectTransform pageRect = pageRoot.GetComponent<RectTransform>();
-        Stretch(pageRect, Vector2.zero, Vector2.one, Vector2.zero, new Vector2(0f, 80f));
-        pageRect.SetSiblingIndex(0);
-
-        Image pageBackground = GetOrAdd<Image>(pageRoot);
-        pageBackground.sprite = null;
-        pageBackground.color = Color.white;
-        pageBackground.raycastTarget = false;
-
+        GameObject pageRoot = GetOrCreateRoot(canvas.transform, "ModulePageRoot", typeof(Image));
+        ConfigurePageRoot(pageRoot, background);
         ModulePageUI modulePage = GetOrAdd<ModulePageUI>(pageRoot);
         DestroyChildren(pageRoot.transform);
 
-        GameObject leftArea = CreateUIObject("LeftEquipArea", pageRoot.transform);
-        RectTransform leftRect = leftArea.GetComponent<RectTransform>();
-        Stretch(leftRect, Vector2.zero, new Vector2(0.43f, 1f), Vector2.zero, Vector2.zero);
-
-        GameObject armorObject = CreateImage("ArmorImage", leftArea.transform, armor, false);
-        SetCenteredRect(armorObject.GetComponent<RectTransform>(), new Vector2(1290f, 860f), new Vector2(280f, 0f));
-
-        GameObject equippedSlots = CreateUIObject("EquippedSlots", leftArea.transform);
+        GameObject equippedSlots = CreateUIObject("EquippedSlots", pageRoot.transform);
         Stretch(equippedSlots.GetComponent<RectTransform>(), Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
 
-        Vector2[] equippedPositions =
+        for (int index = 0; index < EquippedSlotCenters.Length; index++)
         {
-            new(-245f, 270f), new(245f, 270f),
-            new(-245f, 0f), new(245f, 0f),
-            new(-245f, -270f), new(245f, -270f)
-        };
-        string[] equippedNames =
-        {
-            "EquipSlot_LT", "EquipSlot_RT", "EquipSlot_LM",
-            "EquipSlot_RM", "EquipSlot_LB", "EquipSlot_RB"
-        };
-
-        for (int i = 0; i < equippedPositions.Length; i++)
-        {
-            GameObject slot = InstantiateSlot(slotPrefab, equippedSlots.transform, equippedNames[i]);
-            SetCenteredRect(slot.GetComponent<RectTransform>(), new Vector2(170f, 170f), equippedPositions[i]);
+            GameObject slot = InstantiateSlot(slotPrefab, equippedSlots.transform, EquippedSlotNames[index]);
+            SetTopLeftRect(slot.GetComponent<RectTransform>(), SlotSize, EquippedSlotCenters[index]);
             ConfigureSlot(slot, modulePage, null, string.Empty, string.Empty, false);
         }
 
-        GameObject verticalDivider = CreateImage("VerticalDivider", pageRoot.transform, null, false);
-        RectTransform verticalDividerRect = verticalDivider.GetComponent<RectTransform>();
-        verticalDividerRect.anchorMin = new Vector2(0.43f, 0.05f);
-        verticalDividerRect.anchorMax = new Vector2(0.43f, 0.95f);
-        verticalDividerRect.pivot = new Vector2(0.5f, 0.5f);
-        verticalDividerRect.anchoredPosition = Vector2.zero;
-        verticalDividerRect.sizeDelta = new Vector2(2f, 0f);
-        verticalDivider.GetComponent<Image>().color = AreaDividerColor;
-
-        GameObject rightArea = CreateUIObject("RightArea", pageRoot.transform);
-        Stretch(rightArea.GetComponent<RectTransform>(), new Vector2(0.43f, 0f), Vector2.one, Vector2.zero, Vector2.zero);
-
-        GameObject infoArea = CreatePanel("ModuleInfoArea", rightArea.transform, CardColor);
-        Stretch(infoArea.GetComponent<RectTransform>(), new Vector2(0.04f, 0.56f), new Vector2(0.96f, 0.96f), Vector2.zero, Vector2.zero);
-
-        GameObject infoContent = CreateUIObject("InfoContent", infoArea.transform);
+        GameObject infoContent = CreateUIObject("ModuleInfoArea", pageRoot.transform);
         Stretch(infoContent.GetComponent<RectTransform>(), Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
 
-        GameObject largeIconObject = CreateImage("LargeModuleIcon", infoContent.transform, physicalDefense, false);
-        RectTransform largeIconRect = largeIconObject.GetComponent<RectTransform>();
-        largeIconRect.anchorMin = largeIconRect.anchorMax = new Vector2(0f, 0.5f);
-        largeIconRect.pivot = new Vector2(0.5f, 0.5f);
-        largeIconRect.anchoredPosition = new Vector2(175f, 0f);
-        largeIconRect.sizeDelta = new Vector2(250f, 250f);
-
-        GameObject textArea = CreateUIObject("TextArea", infoContent.transform);
-        Stretch(textArea.GetComponent<RectTransform>(), Vector2.zero, Vector2.one, new Vector2(335f, 50f), new Vector2(48f, 50f));
+        GameObject largeIconObject = CreateImage("SelectedModuleIcon", infoContent.transform, physicalDefense, false);
+        SetTopLeftRect(largeIconObject.GetComponent<RectTransform>(), new Vector2(264f, 264f), new Vector2(1153.31f, 183.18f));
 
         TextMeshProUGUI nameText = CreateText(
             "ModuleNameText",
-            textArea.transform,
-            "물리 내성 증강",
+            infoContent.transform,
+            "물리 내성 증가",
             headingFont,
-            56f,
-            TextColor,
+            72f,
+            DetailTextColor,
             TextAlignmentOptions.Left);
-        RectTransform nameRect = nameText.rectTransform;
-        nameRect.anchorMin = new Vector2(0f, 1f);
-        nameRect.anchorMax = new Vector2(1f, 1f);
-        nameRect.pivot = new Vector2(0.5f, 1f);
-        nameRect.anchoredPosition = Vector2.zero;
-        nameRect.sizeDelta = new Vector2(0f, 82f);
+        SetTopLeftRect(nameText.rectTransform, new Vector2(555f, 92f), new Vector2(1604f, 140f));
         nameText.fontStyle = FontStyles.Bold;
+        nameText.overflowMode = TextOverflowModes.Overflow;
 
-        GameObject divider = CreateImage("Divider", textArea.transform, null, false);
-        RectTransform dividerRect = divider.GetComponent<RectTransform>();
-        dividerRect.anchorMin = new Vector2(0f, 1f);
-        dividerRect.anchorMax = new Vector2(1f, 1f);
-        dividerRect.pivot = new Vector2(0.5f, 1f);
-        dividerRect.anchoredPosition = new Vector2(0f, -96f);
-        dividerRect.sizeDelta = new Vector2(0f, 4f);
-        divider.GetComponent<Image>().color = DividerColor;
+        GameObject divider = CreateImage("DescriptionDivider", infoContent.transform, null, false);
+        divider.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.92f);
+        SetTopLeftRect(divider.GetComponent<RectTransform>(), new Vector2(545f, 4f), new Vector2(1601.6f, 193.1f));
 
         TextMeshProUGUI descriptionText = CreateText(
             "DescriptionText",
-            textArea.transform,
-            "장착 시, 플레이어의 물리 내성을 10 증가",
+            infoContent.transform,
+            "장착 시, 플레이어의 물리 내성을\n10 증가",
             bodyFont,
-            34f,
-            MutedTextColor,
+            42f,
+            DetailTextColor,
             TextAlignmentOptions.TopLeft);
-        RectTransform descriptionRect = descriptionText.rectTransform;
-        descriptionRect.anchorMin = Vector2.zero;
-        descriptionRect.anchorMax = Vector2.one;
-        descriptionRect.offsetMin = new Vector2(0f, 0f);
-        descriptionRect.offsetMax = new Vector2(0f, -118f);
+        SetTopLeftRect(descriptionText.rectTransform, new Vector2(545f, 125f), new Vector2(1602f, 276f));
         descriptionText.textWrappingMode = TextWrappingModes.Normal;
+        descriptionText.lineSpacing = -8f;
+        descriptionText.overflowMode = TextOverflowModes.Overflow;
 
-        GameObject inventoryArea = CreatePanel("ModuleInventoryArea", rightArea.transform, new Color(1f, 1f, 1f, 0.32f));
-        Stretch(inventoryArea.GetComponent<RectTransform>(), new Vector2(0.04f, 0.04f), new Vector2(0.96f, 0.53f), Vector2.zero, Vector2.zero);
+        GameObject inventoryArea = CreateUIObject("ModuleInventoryArea", pageRoot.transform);
+        Stretch(inventoryArea.GetComponent<RectTransform>(), Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
 
-        TextMeshProUGUI inventoryLabel = CreateText(
-            "InventoryLabel",
-            inventoryArea.transform,
-            "보유 모듈",
-            headingFont,
-            28f,
-            MutedTextColor,
-            TextAlignmentOptions.Left);
-        RectTransform labelRect = inventoryLabel.rectTransform;
-        labelRect.anchorMin = new Vector2(0f, 1f);
-        labelRect.anchorMax = new Vector2(1f, 1f);
-        labelRect.pivot = new Vector2(0.5f, 1f);
-        labelRect.anchoredPosition = new Vector2(28f, -12f);
-        labelRect.sizeDelta = new Vector2(-56f, 46f);
-
-        Transform[] rows = new Transform[3];
-        int[] rowCounts = { 5, 4, 5 };
-        float[] rowY = { 130f, 0f, -130f };
-        int slotNumber = 1;
+        ModuleSlotUI magicSelection = null;
         ModuleSlotUI defaultSelection = null;
 
-        for (int rowIndex = 0; rowIndex < rows.Length; rowIndex++)
+        for (int index = 0; index < InventorySlotCenters.Length; index++)
         {
-            GameObject row = CreateUIObject($"Row{rowIndex + 1}", inventoryArea.transform, typeof(HorizontalLayoutGroup));
-            rows[rowIndex] = row.transform;
-            SetCenteredRect(row.GetComponent<RectTransform>(), new Vector2(850f, 155f), new Vector2(0f, rowY[rowIndex]));
+            int slotNumber = index + 1;
+            GameObject slot = InstantiateSlot(slotPrefab, inventoryArea.transform, $"Slot{slotNumber:00}");
+            SetTopLeftRect(slot.GetComponent<RectTransform>(), SlotSize, InventorySlotCenters[index]);
 
-            HorizontalLayoutGroup layout = row.GetComponent<HorizontalLayoutGroup>();
-            layout.childAlignment = TextAnchor.MiddleCenter;
-            layout.spacing = -10f;
-            layout.childControlWidth = false;
-            layout.childControlHeight = false;
-            layout.childForceExpandWidth = false;
-            layout.childForceExpandHeight = false;
+            Sprite icon = null;
+            string title = string.Empty;
+            string body = string.Empty;
+            bool selectable = false;
 
-            for (int column = 0; column < rowCounts[rowIndex]; column++)
+            if (slotNumber == 1)
             {
-                GameObject slot = InstantiateSlot(slotPrefab, row.transform, $"Slot{slotNumber:00}");
-                slot.GetComponent<RectTransform>().sizeDelta = new Vector2(155f, 155f);
-
-                Sprite icon = null;
-                string title = string.Empty;
-                string body = string.Empty;
-                bool selectable = false;
-
-                if (slotNumber == 1)
-                {
-                    icon = magicDefense;
-                    title = "마법 내성 증강";
-                    body = "장착 시, 플레이어의 마법 내성을 10 증가";
-                    selectable = true;
-                }
-                else if (slotNumber == 2)
-                {
-                    icon = physicalDefense;
-                    title = "물리 내성 증강";
-                    body = "장착 시, 플레이어의 물리 내성을 10 증가";
-                    selectable = true;
-                }
-
-                ModuleSlotUI slotUI = ConfigureSlot(slot, modulePage, icon, title, body, selectable);
-                if (slotNumber == 2)
-                    defaultSelection = slotUI;
-
-                slotNumber++;
+                icon = magicDefense;
+                title = "마법 내성 증가";
+                body = "장착 시, 플레이어의 마법 내성을\n10 증가";
+                selectable = true;
             }
+            else if (slotNumber == 2)
+            {
+                icon = physicalDefense;
+                title = "물리 내성 증가";
+                body = "장착 시, 플레이어의 물리 내성을\n10 증가";
+                selectable = true;
+            }
+
+            ModuleSlotUI slotUI = ConfigureSlot(slot, modulePage, icon, title, body, selectable);
+
+            if (slotNumber == 1)
+                magicSelection = slotUI;
+            else if (slotNumber == 2)
+                defaultSelection = slotUI;
         }
 
         modulePage.Configure(
@@ -267,13 +209,51 @@ public static class ModuleSceneBuilder
             defaultSelection,
             showInitialSelection: true);
 
+        if (defaultSelection == null || magicSelection == null)
+            throw new InvalidOperationException("The two SVG module selections were not created.");
+
+        defaultSelection.Select();
+
+        GameObject bottomNavigation = CommonBottomNavigationBuilder.ReplaceInScene(
+            scene,
+            navigationPrefab,
+            scene.name);
+        ValidateBuiltUI(pageRoot, bottomNavigation, modulePage);
+
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        if (renderPreview)
-            RenderCanvasPreview(canvas, PreviewPath);
+        if (renderPreviews)
+        {
+            RenderCanvasPreview(canvas, DefaultPreviewPath);
+            magicSelection.Select();
+            Canvas.ForceUpdateCanvases();
+            RenderCanvasPreview(canvas, MagicPreviewPath);
+
+            defaultSelection.Select();
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+            AssetDatabase.SaveAssets();
+        }
+    }
+
+    private static void ConfigurePageRoot(GameObject pageRoot, Sprite background)
+    {
+        RectTransform pageRect = pageRoot.GetComponent<RectTransform>();
+        Stretch(pageRect, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+        pageRect.SetSiblingIndex(0);
+
+        foreach (LayoutGroup layout in pageRoot.GetComponents<LayoutGroup>())
+            UnityEngine.Object.DestroyImmediate(layout);
+
+        Image pageBackground = GetOrAdd<Image>(pageRoot);
+        pageBackground.sprite = background;
+        pageBackground.type = Image.Type.Simple;
+        pageBackground.preserveAspect = false;
+        pageBackground.color = Color.white;
+        pageBackground.raycastTarget = false;
     }
 
     private static GameObject BuildSlotPrefab(Sprite emptySlot)
@@ -281,30 +261,43 @@ public static class ModuleSceneBuilder
         EnsureFolder("Assets/Prefabs");
         EnsureFolder("Assets/Prefabs/UI");
 
-        GameObject root = CreateUIObject("ModuleSlot", null, typeof(Image), typeof(Button), typeof(ModuleSlotUI));
-        RectTransform rootRect = root.GetComponent<RectTransform>();
-        rootRect.sizeDelta = new Vector2(170f, 170f);
+        GameObject root = CreateUIObject(
+            "ModuleSlot",
+            null,
+            typeof(Image),
+            typeof(Button),
+            typeof(Outline),
+            typeof(ModuleSlotUI));
+
+        root.GetComponent<RectTransform>().sizeDelta = SlotSize;
 
         Image frame = root.GetComponent<Image>();
         frame.sprite = emptySlot;
+        frame.type = Image.Type.Simple;
         frame.preserveAspect = true;
         frame.raycastTarget = true;
 
+        Outline outline = root.GetComponent<Outline>();
+        outline.effectColor = SelectionColor;
+        outline.effectDistance = new Vector2(4f, -4f);
+        outline.useGraphicAlpha = false;
+        outline.enabled = false;
+
         Button button = root.GetComponent<Button>();
         button.targetGraphic = frame;
+        button.transition = Selectable.Transition.ColorTint;
         ColorBlock colors = button.colors;
         colors.normalColor = Color.white;
-        colors.highlightedColor = new Color(1f, 1f, 1f, 0.82f);
-        colors.pressedColor = new Color(0.78f, 0.86f, 1f, 1f);
+        colors.highlightedColor = new Color(0.82f, 0.96f, 1f, 1f);
+        colors.pressedColor = new Color(0.62f, 0.84f, 1f, 1f);
         colors.selectedColor = Color.white;
         colors.disabledColor = Color.white;
         colors.colorMultiplier = 1f;
-        colors.fadeDuration = 0.08f;
+        colors.fadeDuration = 0.06f;
         button.colors = colors;
 
         GameObject iconObject = CreateImage("ModuleIcon", root.transform, null, false);
-        RectTransform iconRect = iconObject.GetComponent<RectTransform>();
-        Stretch(iconRect, Vector2.zero, Vector2.one, new Vector2(3f, 3f), new Vector2(3f, 3f));
+        Stretch(iconObject.GetComponent<RectTransform>(), Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
         iconObject.SetActive(false);
 
         GameObject prefab = PrefabUtility.SaveAsPrefabAsset(root, SlotPrefabPath);
@@ -322,21 +315,66 @@ public static class ModuleSceneBuilder
     {
         ModuleSlotUI slotUI = slot.GetComponent<ModuleSlotUI>();
         Image iconImage = slot.transform.Find("ModuleIcon").GetComponent<Image>();
-        slotUI.Configure(page, iconImage, icon, title, body, selectable);
+        Outline outline = slot.GetComponent<Outline>();
+        slotUI.Configure(page, iconImage, icon, title, body, selectable, outline);
         EditorUtility.SetDirty(slotUI);
         return slotUI;
     }
 
-    private static GameObject InstantiateSlot(GameObject prefab, Transform parent, string name)
+    private static void ValidateBuiltUI(GameObject pageRoot, GameObject bottomNavigation, ModulePageUI modulePage)
+    {
+        ModuleSlotUI[] slots = pageRoot.GetComponentsInChildren<ModuleSlotUI>(true);
+        int selectableSlots = slots.Count(slot => slot.IsSelectable);
+        BottomNavigationButtonUI[] navigationButtons =
+            bottomNavigation.GetComponentsInChildren<BottomNavigationButtonUI>(true);
+        int pageButtonCount = pageRoot.GetComponentsInChildren<Button>(true).Length;
+        int bottomButtonCount = bottomNavigation.GetComponentsInChildren<Button>(true).Length;
+
+        if (slots.Length != 20)
+            throw new InvalidOperationException($"Expected 20 module slots, but found {slots.Length}.");
+        if (selectableSlots != 2)
+            throw new InvalidOperationException($"Expected 2 selectable inventory modules, but found {selectableSlots}.");
+        if (pageButtonCount != 20 || bottomButtonCount != 4)
+            throw new InvalidOperationException(
+                $"Expected 24 UI buttons (20 module + 4 navigation), but found {pageButtonCount + bottomButtonCount}.");
+        if (navigationButtons.Length != 4)
+            throw new InvalidOperationException($"Expected 4 scene navigation bindings, but found {navigationButtons.Length}.");
+        if (navigationButtons.Any(binding => binding.GetComponent<Button>().onClick.GetPersistentEventCount() != 1))
+            throw new InvalidOperationException("A bottom navigation button does not have exactly one persistent scene-load callback.");
+        if (navigationButtons.Count(binding => binding.IsCurrentScene) != 1 ||
+            !navigationButtons.Any(binding => binding.IsCurrentScene && binding.TargetSceneName == "Module"))
+            throw new InvalidOperationException("The common navigation did not mark Module as the current scene.");
+        if (modulePage.SelectedSlot == null || modulePage.SelectedSlot.ModuleName != "물리 내성 증가")
+            throw new InvalidOperationException("The SVG default DEF selection was not applied.");
+
+        Debug.Log("[ModuleSceneBuilder] Validation passed: 20 module slots, 2 selectable modules, " +
+                  "4 scene navigation buttons, DEF default selection.");
+    }
+
+    private static Canvas FindSceneCanvas(Scene scene)
+    {
+        return scene.GetRootGameObjects()
+            .Where(root => root.name == "Canvas")
+            .Select(root => root.GetComponent<Canvas>())
+            .FirstOrDefault(component => component != null);
+    }
+
+    private static GameObject GetOrCreateRoot(Transform parent, string objectName, params Type[] components)
+    {
+        Transform existing = parent.Find(objectName);
+        return existing != null ? existing.gameObject : CreateUIObject(objectName, parent, components);
+    }
+
+    private static GameObject InstantiateSlot(GameObject prefab, Transform parent, string objectName)
     {
         GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, parent);
-        instance.name = name;
+        instance.name = objectName;
         instance.layer = 5;
         return instance;
     }
 
     private static TextMeshProUGUI CreateText(
-        string name,
+        string objectName,
         Transform parent,
         string text,
         TMP_FontAsset font,
@@ -344,46 +382,38 @@ public static class ModuleSceneBuilder
         Color color,
         TextAlignmentOptions alignment)
     {
-        GameObject textObject = CreateUIObject(name, parent, typeof(TextMeshProUGUI));
+        GameObject textObject = CreateUIObject(objectName, parent, typeof(TextMeshProUGUI));
         TextMeshProUGUI textComponent = textObject.GetComponent<TextMeshProUGUI>();
         textComponent.text = text;
         textComponent.font = font;
         textComponent.fontSize = fontSize;
         textComponent.color = color;
         textComponent.alignment = alignment;
+        textComponent.enableAutoSizing = false;
         textComponent.raycastTarget = false;
-        textComponent.overflowMode = TextOverflowModes.Ellipsis;
         return textComponent;
     }
 
-    private static GameObject CreatePanel(string name, Transform parent, Color color)
+    private static GameObject CreateImage(string objectName, Transform parent, Sprite sprite, bool raycastTarget)
     {
-        GameObject panel = CreateUIObject(name, parent, typeof(Image));
-        Image image = panel.GetComponent<Image>();
-        image.color = color;
-        image.raycastTarget = false;
-        return panel;
-    }
-
-    private static GameObject CreateImage(string name, Transform parent, Sprite sprite, bool raycastTarget)
-    {
-        GameObject imageObject = CreateUIObject(name, parent, typeof(Image));
+        GameObject imageObject = CreateUIObject(objectName, parent, typeof(Image));
         Image image = imageObject.GetComponent<Image>();
         image.sprite = sprite;
+        image.type = Image.Type.Simple;
         image.preserveAspect = sprite != null;
         image.raycastTarget = raycastTarget;
         image.color = Color.white;
         return imageObject;
     }
 
-    private static GameObject CreateUIObject(string name, Transform parent, params Type[] additionalComponents)
+    private static GameObject CreateUIObject(string objectName, Transform parent, params Type[] additionalComponents)
     {
         Type[] components = new[] { typeof(RectTransform) }
             .Concat(additionalComponents.Where(type => type != typeof(RectTransform)))
             .Distinct()
             .ToArray();
 
-        GameObject gameObject = new(name, components);
+        GameObject gameObject = new(objectName, components);
         gameObject.layer = 5;
 
         if (parent != null)
@@ -398,11 +428,11 @@ public static class ModuleSceneBuilder
         return component != null ? component : target.AddComponent<T>();
     }
 
-    private static void SetCenteredRect(RectTransform rect, Vector2 size, Vector2 position)
+    private static void SetTopLeftRect(RectTransform rect, Vector2 size, Vector2 centerFromTopLeft)
     {
-        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
         rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = position;
+        rect.anchoredPosition = new Vector2(centerFromTopLeft.x, -centerFromTopLeft.y);
         rect.sizeDelta = size;
         rect.localScale = Vector3.one;
     }
@@ -446,6 +476,7 @@ public static class ModuleSceneBuilder
 
         string parent = Path.GetDirectoryName(path)?.Replace('\\', '/');
         string folderName = Path.GetFileName(path);
+
         if (!string.IsNullOrEmpty(parent) && !AssetDatabase.IsValidFolder(parent))
             EnsureFolder(parent);
 
@@ -457,14 +488,18 @@ public static class ModuleSceneBuilder
         const int width = 1920;
         const int height = 1080;
 
-        RenderMode originalMode = canvas.renderMode;
-        Camera originalCamera = canvas.worldCamera;
-        float originalPlaneDistance = canvas.planeDistance;
+        Canvas[] sceneCanvases = canvas.gameObject.scene.GetRootGameObjects()
+            .SelectMany(root => root.GetComponentsInChildren<Canvas>(true))
+            .Where(candidate => candidate.isRootCanvas)
+            .ToArray();
+        RenderMode[] originalModes = sceneCanvases.Select(candidate => candidate.renderMode).ToArray();
+        Camera[] originalCameras = sceneCanvases.Select(candidate => candidate.worldCamera).ToArray();
+        float[] originalPlaneDistances = sceneCanvases.Select(candidate => candidate.planeDistance).ToArray();
 
         GameObject cameraObject = new("ModulePreviewCamera", typeof(Camera));
         Camera camera = cameraObject.GetComponent<Camera>();
         camera.clearFlags = CameraClearFlags.SolidColor;
-        camera.backgroundColor = Color.white;
+        camera.backgroundColor = Color.black;
         camera.orthographic = true;
         camera.orthographicSize = height * 0.5f;
         camera.nearClipPlane = 0.1f;
@@ -478,9 +513,14 @@ public static class ModuleSceneBuilder
         try
         {
             camera.targetTexture = target;
-            canvas.renderMode = RenderMode.ScreenSpaceCamera;
-            canvas.worldCamera = camera;
-            canvas.planeDistance = 100f;
+
+            foreach (Canvas sceneCanvas in sceneCanvases)
+            {
+                sceneCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+                sceneCanvas.worldCamera = camera;
+                sceneCanvas.planeDistance = 100f;
+            }
+
             Canvas.ForceUpdateCanvases();
 
             camera.Render();
@@ -496,9 +536,14 @@ public static class ModuleSceneBuilder
         {
             RenderTexture.active = null;
             camera.targetTexture = null;
-            canvas.renderMode = originalMode;
-            canvas.worldCamera = originalCamera;
-            canvas.planeDistance = originalPlaneDistance;
+
+            for (int index = 0; index < sceneCanvases.Length; index++)
+            {
+                sceneCanvases[index].renderMode = originalModes[index];
+                sceneCanvases[index].worldCamera = originalCameras[index];
+                sceneCanvases[index].planeDistance = originalPlaneDistances[index];
+            }
+
             UnityEngine.Object.DestroyImmediate(target);
             UnityEngine.Object.DestroyImmediate(screenshot);
             UnityEngine.Object.DestroyImmediate(cameraObject);
