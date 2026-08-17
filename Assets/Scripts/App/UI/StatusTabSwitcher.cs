@@ -34,6 +34,9 @@ namespace Dungeon.UI
         private readonly List<UnityAction> registeredActions = new();
         private int currentIndex = -1;
 
+        public int CurrentIndex => currentIndex;
+        public event Action<int> TabSelected;
+
         private void Awake()
         {
             BindButtons();
@@ -116,6 +119,8 @@ namespace Dungeon.UI
 
                 RefreshButtonState(tab, selected);
             }
+
+            TabSelected?.Invoke(currentIndex);
 
             Debug.Log($"[StatusTabSwitcher] Selected tab: {tabs[index].tabName}");
         }
