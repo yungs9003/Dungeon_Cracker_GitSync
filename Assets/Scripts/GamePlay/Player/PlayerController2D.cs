@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Dungeon.Core;
 
 namespace Dungeon.Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(SpeedController))]
     public class PlayerController2D : MonoBehaviour
     {
         [Header("Move")]
@@ -14,6 +16,7 @@ namespace Dungeon.Player
         [SerializeField] private bool canControl = true;
 
         private Rigidbody2D rb;
+        private SpeedController speed;
         private KnockbackReceiver2D knockback;
         private PlayerMoveDirectionTracker2D dirTracker;
 
@@ -25,6 +28,8 @@ namespace Dungeon.Player
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+            speed = GetComponent<SpeedController>();
+            speed.SetBaseSpeed(moveSpeed);
             knockback = GetComponent<KnockbackReceiver2D>();
             dirTracker = GetComponent<PlayerMoveDirectionTracker2D>();
         }
@@ -52,7 +57,7 @@ namespace Dungeon.Player
             if (dirTracker != null && input.sqrMagnitude > 0.0001f)
                 dirTracker.SetMoveDir(input);
 
-            Vector2 moveDelta = input * moveSpeed * dt;
+            Vector2 moveDelta = input * speed.CurrentSpeed * dt;
             Vector2 kbDelta = knockback != null ? knockback.ConsumeDisplacement(dt) : Vector2.zero;
 
             rb.MovePosition(rb.position + moveDelta + kbDelta);

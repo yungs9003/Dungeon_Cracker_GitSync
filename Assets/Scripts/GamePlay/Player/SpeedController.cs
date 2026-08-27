@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Dungeon.Core;
 
 namespace Dungeon.Player
 {
@@ -19,8 +20,13 @@ namespace Dungeon.Player
             get
             {
                 float additiveSpeed = Mathf.Max(0f, baseSpeed + bonus);
-                return Mathf.Max(0f, additiveSpeed * GetCombinedMultiplier());
+                return Mathf.Max(0f, additiveSpeed * GetEquipmentSpeedMultiplier() * GetCombinedMultiplier());
             }
+        }
+
+        public void SetBaseSpeed(float speed)
+        {
+            baseSpeed = Mathf.Max(0f, speed);
         }
 
         /// <summary>
@@ -59,6 +65,21 @@ namespace Dungeon.Player
         {
             return !string.IsNullOrWhiteSpace(sourceId) &&
                    multipliers.ContainsKey(sourceId);
+        }
+
+        private static float GetEquipmentSpeedMultiplier()
+        {
+            StatusSaveData data = StatusSaveFile.Instance != null
+                ? StatusSaveFile.Instance.Data
+                : null;
+
+            if (data == null || data.base_sub_stats == null || data.sub_stats == null)
+                return 1f;
+
+            if (data.base_sub_stats.speed <= 0)
+                return 1f;
+
+            return Mathf.Max(0f, (float)data.sub_stats.speed / data.base_sub_stats.speed);
         }
 
         private float GetCombinedMultiplier()

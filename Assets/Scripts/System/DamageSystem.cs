@@ -43,6 +43,7 @@ namespace Dungeon.System
             switch (type)
             {
                 case DamageType.Physical:
+                    finalDamage = ApplyResistance(finalDamage, GetPhysicalResistance());
                     break;
                 case DamageType.Magical:
                     break;
@@ -51,6 +52,24 @@ namespace Dungeon.System
             }
 
             health.ApplyDamageDirect(finalDamage);
+        }
+
+        private static int GetPhysicalResistance()
+        {
+            StatusSaveFile saveFile = StatusSaveFile.Instance;
+            if (saveFile == null || saveFile.Data == null || saveFile.Data.main_stats == null)
+                return 0;
+
+            return Mathf.Max(0, saveFile.Data.main_stats.physical_resist);
+        }
+
+        private static int ApplyResistance(int damage, int resistance)
+        {
+            if (damage <= 0 || resistance <= 0)
+                return Mathf.Max(0, damage);
+
+            float damageMultiplier = 100f / (100f + resistance);
+            return Mathf.Max(1, Mathf.RoundToInt(damage * damageMultiplier));
         }
 
         public void StartBleeding(
