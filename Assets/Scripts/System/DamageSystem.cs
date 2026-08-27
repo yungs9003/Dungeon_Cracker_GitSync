@@ -41,7 +41,14 @@ namespace Dungeon.System
 
             // Example gimmick: bleeding increases incoming damage
             if (isBleedingActive)
-                finalDamage = Mathf.RoundToInt(amount * 1.2f);
+            {
+                int additionalDamage = Mathf.RoundToInt(amount * 0.2f);
+
+                if (IsEquipmentEquipped("004"))
+                    additionalDamage = Mathf.RoundToInt(additionalDamage * 0.5f);
+
+                finalDamage += additionalDamage;
+            }
 
             // Type-based hooks for future extensions
             switch (type)
@@ -147,6 +154,9 @@ namespace Dungeon.System
         /// </summary>
         public void ApplyBurnFieldDamage(int amount)
         {
+            if (IsEquipmentEquipped("008"))
+                amount = Mathf.Max(1, Mathf.CeilToInt(amount * 0.5f));
+
             ApplyFieldEffectDamage(amount);
         }
 
@@ -189,9 +199,40 @@ namespace Dungeon.System
 
             if (isBleedingActive && Time.time >= lastBleedingDamageTime)
             {
-                ApplyFieldEffectDamage(bleedingDamagePerTick);
+                ApplyBleedingDamage(bleedingDamagePerTick);
                 lastBleedingDamageTime = Time.time + bleedingTickInterval;
             }
+        }
+
+        private void ApplyBleedingDamage(int amount)
+        {
+            if (IsEquipmentEquipped("003"))
+                amount = Mathf.Max(1, Mathf.CeilToInt(amount * 0.5f));
+
+            ApplyFieldEffectDamage(amount);
+        }
+
+        private static bool IsEquipmentEquipped(string equipmentId)
+        {
+            StatusSaveFile saveFile = StatusSaveFile.Instance;
+            if (saveFile == null || saveFile.Data == null || saveFile.Data.equips?.equip == null)
+                return false;
+
+            equipmentId = GameDatabase.NormalizeId(equipmentId);
+
+            foreach (var slot in saveFile.Data.equips.equip)
+            {
+                if (slot == null)
+                    continue;
+
+                foreach (string equippedId in slot.Values)
+                {
+                    if (GameDatabase.NormalizeId(equippedId) == equipmentId)
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         public void ClearBleeding()

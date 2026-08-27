@@ -91,7 +91,7 @@
     "start" : "0004"
   },
   "field_effect": {
-    "type"	:"ice",
-	  "damage": 3
+    "type"	:"burn",
+	  "damage": 4
   }
 }
