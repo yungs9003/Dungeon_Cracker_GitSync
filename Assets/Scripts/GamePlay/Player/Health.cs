@@ -215,6 +215,34 @@ namespace Dungeon.Player
             lastBleedingDamageTime = Time.time + bleedingTickInterval;
         }
 
+        public void ClearBleeding()
+        {
+            EnsureDamageSystem();
+
+            if (damageSystem != null)
+                damageSystem.ClearBleeding();
+
+            isBleedingActive = false;
+            bleedingEndTime = 0f;
+            lastBleedingDamageTime = 0f;
+        }
+
+        public void StartPhysicalResistance(int amount, float duration)
+        {
+            EnsureDamageSystem();
+
+            if (damageSystem != null)
+                damageSystem.StartPhysicalResistance(amount, duration);
+        }
+
+        public void StartMagicalResistance(int amount, float duration)
+        {
+            EnsureDamageSystem();
+
+            if (damageSystem != null)
+                damageSystem.StartMagicalResistance(amount, duration);
+        }
+
         public void Heal(int amount)
         {
             if (amount <= 0 || currentHP <= 0) return;

@@ -14,6 +14,10 @@ namespace Dungeon.System
         private int bleedingDamagePerTick = 1;
         private float bleedingTickInterval = 0.5f;
         private float lastBleedingDamageTime = 0f;
+        private int temporaryPhysicalResistance;
+        private float temporaryPhysicalResistanceEndTime;
+        private int temporaryMagicalResistance;
+        private float temporaryMagicalResistanceEndTime;
 
         public void Initialize(IDamageReceiver damageReceiver)
         {
@@ -46,6 +50,7 @@ namespace Dungeon.System
                     finalDamage = ApplyResistance(finalDamage, GetPhysicalResistance());
                     break;
                 case DamageType.Magical:
+                    finalDamage = ApplyResistance(finalDamage, GetMagicalResistance());
                     break;
                 case DamageType.True:
                     break;
@@ -54,13 +59,52 @@ namespace Dungeon.System
             health.ApplyDamageDirect(finalDamage);
         }
 
-        private static int GetPhysicalResistance()
+        private int GetPhysicalResistance()
         {
             StatusSaveFile saveFile = StatusSaveFile.Instance;
-            if (saveFile == null || saveFile.Data == null || saveFile.Data.main_stats == null)
-                return 0;
+            int permanentResistance = 0;
 
-            return Mathf.Max(0, saveFile.Data.main_stats.physical_resist);
+            if (saveFile != null && saveFile.Data != null && saveFile.Data.main_stats != null)
+                permanentResistance = Mathf.Max(0, saveFile.Data.main_stats.physical_resist);
+
+            int activeTemporaryResistance = Time.time < temporaryPhysicalResistanceEndTime
+                ? temporaryPhysicalResistance
+                : 0;
+
+            return permanentResistance + activeTemporaryResistance;
+        }
+
+        private int GetMagicalResistance()
+        {
+            StatusSaveFile saveFile = StatusSaveFile.Instance;
+            int permanentResistance = 0;
+
+            if (saveFile != null && saveFile.Data != null && saveFile.Data.main_stats != null)
+                permanentResistance = Mathf.Max(0, saveFile.Data.main_stats.magical_resist);
+
+            int activeTemporaryResistance = Time.time < temporaryMagicalResistanceEndTime
+                ? temporaryMagicalResistance
+                : 0;
+
+            return permanentResistance + activeTemporaryResistance;
+        }
+
+        public void StartPhysicalResistance(int amount, float duration)
+        {
+            if (amount <= 0 || duration <= 0f)
+                return;
+
+            temporaryPhysicalResistance = amount;
+            temporaryPhysicalResistanceEndTime = Time.time + duration;
+        }
+
+        public void StartMagicalResistance(int amount, float duration)
+        {
+            if (amount <= 0 || duration <= 0f)
+                return;
+
+            temporaryMagicalResistance = amount;
+            temporaryMagicalResistanceEndTime = Time.time + duration;
         }
 
         private static int ApplyResistance(int damage, int resistance)
@@ -138,10 +182,12 @@ namespace Dungeon.System
             if (Time.time >= bleedingEndTime)
             {
                 isBleedingActive = false;
-                return;
             }
 
-            if (Time.time >= lastBleedingDamageTime)
+            if (Time.time >= temporaryPhysicalResistanceEndTime)
+                temporaryPhysicalResistance = 0;
+
+            if (isBleedingActive && Time.time >= lastBleedingDamageTime)
             {
                 ApplyFieldEffectDamage(bleedingDamagePerTick);
                 lastBleedingDamageTime = Time.time + bleedingTickInterval;

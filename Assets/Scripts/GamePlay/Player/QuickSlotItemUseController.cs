@@ -259,6 +259,27 @@ namespace Dungeon.Player
                     StartHealingOverTime(hotHealth, 5, 10f, 1f);
                     return true;
 
+                case "002":
+                    if (!TryGetPlayerHealth(out Health bleedingHealth))
+                        return false;
+
+                    bleedingHealth.ClearBleeding();
+                    return true;
+
+                case "003":
+                    if (!TryGetPlayerHealth(out Health physicalResistanceHealth))
+                        return false;
+
+                    physicalResistanceHealth.StartPhysicalResistance(10, 5f);
+                    return true;
+
+                case "004":
+                    if (!TryGetPlayerHealth(out Health magicalResistanceHealth))
+                        return false;
+
+                    magicalResistanceHealth.StartMagicalResistance(10, 5f);
+                    return true;
+
                 default:
                     if (logActions)
                     {
