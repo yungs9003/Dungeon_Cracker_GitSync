@@ -222,7 +222,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   projectileSpeed: 4
-  damage: 1
   maxProjectileDistance: 8
   chargeTime: 1
   cooldown: 1.5

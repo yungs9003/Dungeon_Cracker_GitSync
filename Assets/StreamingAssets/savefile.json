@@ -1,10 +1,16 @@
 {
-  "user_name": "Toluse",
-  "gold": 35600,
+  "save_version": 1,
+  "user_name": "",
+  "gold": 0,
+  "broken_traps": 0,
+  "clear_reward_claimed": false,
+  "last_getting_gold": 0,
+  "clear_time_seconds": 0.0,
+  "hit_count": 0,
   "main_stats": {
-    "max_HP": 150,
-    "physical_resist": 10,
-    "magical_resist": 20
+    "max_HP": 100,
+    "physical_resist": 0,
+    "magical_resist": 0
   },
   "sub_stats": {
     "speed": 10,
@@ -13,70 +19,38 @@
     "amber_resist": 0,
     "freeze_resist": 0
   },
+  "base_main_stats": {
+    "max_HP": 100,
+    "physical_resist": 0,
+    "magical_resist": 0
+  },
+  "base_sub_stats": {
+    "speed": 10,
+    "poison_resist": 0,
+    "electric_resist": 0,
+    "amber_resist": 0,
+    "freeze_resist": 0
+  },
   "inventory": {
-    "item": [
-      {
-        "000": 20
-      },
-      {
-        "002": 5
-      },
-      {
-        "003": 3
-      },
-      {
-        "004": 2
-      },
-      {
-        "005": 1
-      }
-    ],
-    "equipment": [
-      {
-        "000": 1
-      },
-      {
-        "001": 1
-      },
-      {
-        "002": 1
-      },
-      {
-        "003": 1
-      },
-      {
-        "004": 1
-      },
-      {
-        "005": 1
-      },
-      {
-        "006": 1
-      },
-      {
-        "007": 1
-      },
-      {
-        "008": 1
-      }
-    ]
+    "item": [],
+    "equipment": []
   },
   "equips": {
     "item": [
       {
-        "slot1": "000"
+        "slot1": "none"
       },
       {
-        "slot2": "002"
+        "slot2": "none"
       },
       {
-        "slot3": "003"
+        "slot3": "none"
       },
       {
-        "slot4": "004"
+        "slot4": "none"
       },
       {
-        "slot5": "005"
+        "slot5": "none"
       }
     ],
     "equip": [
@@ -84,7 +58,7 @@
         "head": "none"
       },
       {
-        "body": "008"
+        "body": "none"
       },
       {
         "legs": "none"
@@ -94,28 +68,13 @@
   "checkpoint": {
     "sceneName": "",
     "mapIndex": -1,
-    "resumeRequested": false
+    "resumeRequested": false,
+    "broken_traps_snapshot": 0
   },
-  "dungeon_status": [
-    {
-      "001": ""
-    }
-  ],
-  "play_time": "135:26",
-  "clear_num_info": "28:73:96",
-  "adventure_count": 128,
-  "achievement": "87:300",
-  "player_rank": "s",
-  "base_main_stats": {
-    "max_HP": 150,
-    "physical_resist": 10,
-    "magical_resist": 20
-  },
-  "base_sub_stats": {
-    "speed": 10,
-    "poison_resist": 0,
-    "electric_resist": 0,
-    "amber_resist": 0,
-    "freeze_resist": 0
-  }
+  "dungeon_status": [],
+  "play_time": "",
+  "clear_num_info": "",
+  "adventure_count": 0,
+  "achievement": "",
+  "player_rank": ""
 }

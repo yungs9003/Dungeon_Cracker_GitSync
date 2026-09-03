@@ -18,9 +18,6 @@ namespace Dungeon.Traps
         [SerializeField] private float pullDuration = 0.12f;
         [SerializeField] private AnimationCurve pullEase = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-        [Header("Damage")]
-        [SerializeField] private int damage = 1;
-
         [Header("Player Control Lock")]
         [Tooltip("낭떠러지에 빠질 때 잠시 꺼둘 플레이어 조작 스크립트들")]
         [SerializeField] private MonoBehaviour[] controlScriptsToDisable;
@@ -122,9 +119,12 @@ namespace Dungeon.Traps
             if (visual != null)
                 visual.localScale = Vector3.zero;
 
-            // ✅ 데미지 후 마지막 안전 지점으로 복귀
-            // 데미지로 죽으면 Respawn2D 쪽 onDied가 startRespawnPoint로 보냄
-            respawn.ReturnToLastSafePointFromTrap(damage);
+            Health health = respawn.GetComponent<Health>();
+            TrapDamageEvent.Raise(gameObject, health);
+
+            // 피해로 죽으면 Health.onDied가 씬/체크포인트 복귀를 처리합니다.
+            if (health == null || health.currentHP > 0)
+                respawn.ReturnToLastSafePointFromTrap();
 
             yield return null;
 

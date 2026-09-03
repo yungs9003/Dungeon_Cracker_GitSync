@@ -169,7 +169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae44c7af75508f4993b9f8e66e56f79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Traps.Arrow2D
-  damage: 5
   lifeTime: 3
   visual: {fileID: 0}
   visualAngleOffset: -90

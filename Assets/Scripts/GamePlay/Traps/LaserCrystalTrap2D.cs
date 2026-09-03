@@ -26,7 +26,6 @@ namespace Dungeon.Traps
         [Header("Laser")]
         [SerializeField] private float maxLaserDistance = 8f;
         [SerializeField] private LayerMask laserHitLayer;   // Player + Wall/Obstacle
-        [SerializeField] private int damage = 1;
         [SerializeField] private float laserDuration = 0.2f;
 
         [Header("Timing")]
@@ -166,7 +165,7 @@ namespace Dungeon.Traps
         Health health = validHit.collider.GetComponentInParent<Health>();
         if (health != null)
         {
-            health.TakeDamage(damage);
+            TrapDamageEvent.Raise(gameObject, health);
         }
     }
 

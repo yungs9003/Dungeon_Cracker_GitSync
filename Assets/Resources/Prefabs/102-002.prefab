@@ -108,6 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Dungeon.GamePlay::AssetVariantSprite2D
   spriteRenderer: {fileID: 194573114586514065}
   variants:
+  - {fileID: -6213770364130209045, guid: aee0fb63b9309ff428fea1211b61b70f, type: 3}
   - {fileID: 1588305945480240070, guid: 3ddc4a8c86c459944b4446e43eb7d6de, type: 3}
 --- !u!61 &4978567614609075749
 BoxCollider2D:
@@ -167,11 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 437a4f62179f1404eb0faf4854fdee37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Traps.Thorn2D
-  damage: 10
-  bleedingDamage: 2
   hitCooldown: 0.7
-  knockbackDistance: 0.4
-  knockbackDuration: 0.16
   targetMask:
     serializedVersion: 2
     m_Bits: 0
@@ -195,3 +192,4 @@ MonoBehaviour:
   copyDestroyedObjectRotation: 1
   disableTrapsBeforeDestroy: 1
   destroyNextFrame: 1
+  countAsBrokenTrap: 1

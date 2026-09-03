@@ -46,8 +46,8 @@ namespace Dungeon.Map
         [SerializeField] private bool coverOnlyExistingGridCells = true;
 
         [Header("Trap Reveal")]
-        [Tooltip("켜져 있으면 한 번 발견된 숨김 타일은 조명 밖으로 나가도 실제 모습으로 유지됩니다. 현재 조명 방식에서는 false 권장입니다.")]
-        [SerializeField] private bool stayRevealedAfterSeen = false;
+        [Tooltip("켜져 있으면 한 번 발견된 함정은 조명 밖으로 나가도 실제 모습으로 유지됩니다.")]
+        [SerializeField] private bool stayRevealedAfterSeen = true;
 
         [Tooltip("켜져 있으면 함정의 큰 감지 콜라이더가 아니라 타일 중심 위치가 clearRadius 안에 들어왔을 때만 reveal합니다.")]
         [SerializeField] private bool revealByTileCenterOnly = true;
@@ -55,7 +55,7 @@ namespace Dungeon.Map
         [Tooltip("타일 중심 reveal 판정에 더할 여유 반지름입니다. 경계에서 너무 빡빡하면 0.05~0.2 정도로 조정하세요.")]
         [SerializeField] private float revealRadiusPadding = 0.05f;
 
-        private readonly List<HiddenTrapVisual2D> hiddenTraps = new();
+        private readonly List<HiddenTrapVisual2D> revealTraps = new();
 
         private Transform maskRoot;
         private MeshFilter meshFilter;
@@ -103,7 +103,7 @@ namespace Dungeon.Map
         {
             stayRevealedAfterSeen = value;
 
-            foreach (var trap in hiddenTraps)
+            foreach (var trap in revealTraps)
             {
                 if (trap != null)
                     trap.SetStayRevealedAfterSeen(value);
@@ -112,16 +112,16 @@ namespace Dungeon.Map
 
         public void ClearRegisteredTraps()
         {
-            hiddenTraps.Clear();
+            revealTraps.Clear();
         }
 
         public void RegisterTrap(HiddenTrapVisual2D trap)
         {
             if (trap == null) return;
-            if (hiddenTraps.Contains(trap)) return;
+            if (revealTraps.Contains(trap)) return;
 
             trap.SetStayRevealedAfterSeen(stayRevealedAfterSeen);
-            hiddenTraps.Add(trap);
+            revealTraps.Add(trap);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Dungeon.Map
         }
 
         /// <summary>
-        /// hidden trap reveal은 조명의 clearRadius 안쪽에서만 발생시킵니다.
+        /// 함정 발견 전환은 조명의 clearRadius 안쪽에서만 발생시킵니다.
         ///
         /// 주의:
         /// HiddenTrapVisual2D.IsInsideForwardZone(collector)는 내부적으로 trap의 Collider2D를 사용할 수 있습니다.
@@ -194,13 +194,13 @@ namespace Dungeon.Map
             if (collector == null)
                 return;
 
-            for (int i = hiddenTraps.Count - 1; i >= 0; i--)
+            for (int i = revealTraps.Count - 1; i >= 0; i--)
             {
-                var trap = hiddenTraps[i];
+                var trap = revealTraps[i];
 
                 if (trap == null)
                 {
-                    hiddenTraps.RemoveAt(i);
+                    revealTraps.RemoveAt(i);
                     continue;
                 }
 

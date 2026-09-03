@@ -30,7 +30,6 @@ namespace Dungeon.Traps
 
         [Header("Projectile")]
         [SerializeField] private float projectileSpeed = 2.5f;
-        [SerializeField] private int damage = 1;
 
         [Tooltip("투사체가 이 거리만큼 이동하면 자동으로 삭제됩니다.")]
         [SerializeField] private float maxProjectileDistance = 8f;
@@ -177,7 +176,7 @@ namespace Dungeon.Traps
             projectile.Launch(
                 dir,
                 projectileSpeed,
-                damage,
+                TrapDamageEvent.ResolveTrapCode(gameObject),
                 maxProjectileDistance
             );
         }

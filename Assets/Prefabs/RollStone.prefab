@@ -154,7 +154,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RollingBallTrap
   lifeTime: 3
-  damage: 2
   hitCooldownPerTarget: 1
   accel: 25
   stopSpeedThreshold: 0.25
@@ -170,8 +169,6 @@ MonoBehaviour:
   useGravity: 1
   extraTorque: 0
   ignorePlayerPhysicsCollision: 1
-  knockbackDistance: 1.2
-  knockbackDuration: 0.12
 --- !u!135 &6493501003850412395
 SphereCollider:
   m_ObjectHideFlags: 0

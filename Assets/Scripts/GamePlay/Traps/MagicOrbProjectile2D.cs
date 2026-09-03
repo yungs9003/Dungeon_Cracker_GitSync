@@ -13,7 +13,7 @@ namespace Dungeon.Traps
         private Rigidbody2D rb;
         private Collider2D projectileCollider;
 
-        private int damage;
+        private string sourceTrapCode;
         private bool hasHit;
 
         private void Awake()
@@ -38,9 +38,9 @@ namespace Dungeon.Traps
             }
         }
 
-        public void Launch(Vector2 dir, float speed, int damage, float lifeTime)
+        public void Launch(Vector2 dir, float speed, string trapCode, float lifeTime)
         {
-            this.damage = damage;
+            sourceTrapCode = trapCode;
 
             dir.Normalize();
 
@@ -68,7 +68,7 @@ namespace Dungeon.Traps
             if (health != null)
             {
                 hasHit = true;
-                health.TakeDamage(damage);
+                TrapDamageEvent.Raise(sourceTrapCode, gameObject, health);
                 Destroy(gameObject);
                 return;
             }

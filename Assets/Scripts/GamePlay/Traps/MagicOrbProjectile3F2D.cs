@@ -19,7 +19,7 @@ namespace Dungeon.Traps
         private Rigidbody2D rb;
         private Collider2D projectileCollider;
 
-        private int damage;
+        private string sourceTrapCode;
         private float maxTravelDistance;
         private Vector2 launchPosition;
         private bool launched;
@@ -77,7 +77,7 @@ namespace Dungeon.Traps
         public void Launch(
             Vector2 dir,
             float speed,
-            int damage,
+            string trapCode,
             float maxDistance)
         {
             if (dir.sqrMagnitude <= 0.0001f || speed <= 0f)
@@ -86,7 +86,7 @@ namespace Dungeon.Traps
                 return;
             }
 
-            this.damage = damage;
+            sourceTrapCode = trapCode;
             maxTravelDistance = Mathf.Max(0.01f, maxDistance);
 
             dir.Normalize();
@@ -125,7 +125,7 @@ namespace Dungeon.Traps
             hasHit = true;
             rb.linearVelocity = Vector2.zero;
 
-            health.TakeDamage(damage);
+            TrapDamageEvent.Raise(sourceTrapCode, gameObject, health);
             Destroy(gameObject);
         }
     }

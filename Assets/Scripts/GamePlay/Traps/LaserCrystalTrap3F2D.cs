@@ -31,7 +31,6 @@ namespace Dungeon.Traps
 
         [Header("Laser")]
         [SerializeField] private float maxLaserDistance = 8f;
-        [SerializeField] private int damage = 1;
         [SerializeField] private float laserDuration = 0.2f;
 
         [Header("Timing")]
@@ -180,7 +179,7 @@ namespace Dungeon.Traps
                     continue;
 
                 actualDistance = hit.distance;
-                health.TakeDamage(damage);
+                TrapDamageEvent.Raise(gameObject, health);
                 break;
             }
 

@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Dungeon.Core;
 using Dungeon.Player;
 
 namespace Dungeon.UI
@@ -372,13 +373,12 @@ namespace Dungeon.UI
         private static bool TryGetBrokenTrapCountFromJson(out int count)
         {
             count = 0;
+            IStatusSaveStorage storage = StatusSaveStorageFactory.Create();
             string[] candidateFiles =
             {
-                Path.Combine(Application.persistentDataPath, "savefile_dev_runtime.json"),
-                Path.Combine(Application.persistentDataPath, "savefile.json"),
-                Path.Combine(Application.persistentDataPath, "player_save.json"),
-                Path.Combine(Application.streamingAssetsPath, "savefile.json"),
-                Path.Combine(Application.streamingAssetsPath, "savefile_dev_runtime.json")
+                storage.ActivePath,
+                storage.BackupPath,
+                storage.DefaultPath
             };
 
             foreach (string path in candidateFiles)

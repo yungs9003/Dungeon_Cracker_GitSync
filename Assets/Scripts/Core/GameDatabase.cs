@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Dungeon.Core
@@ -23,6 +24,7 @@ namespace Dungeon.Core
         public const string CategoryItem = "item";
         public const string CategoryEquip = "equip";
         public const string CategoryModule = "module";
+        public const string CategoryTrap = "trap";
         public const string NoneKey = "none";
 
         public static GameDatabase Instance { get; private set; }
@@ -56,6 +58,7 @@ namespace Dungeon.Core
 
         private readonly Dictionary<string, ItemDefinition> itemMap = new();
         private readonly Dictionary<string, EquipmentDefinition> equipMap = new();
+        private readonly Dictionary<string, TrapDefinition> trapMap = new();
 
         private readonly Dictionary<string, DbRecordKind> recordKinds = new();
 
@@ -67,6 +70,7 @@ namespace Dungeon.Core
 
         public IReadOnlyList<ItemDefinition> Items => loadedData != null && loadedData.items != null ? loadedData.items : Array.Empty<ItemDefinition>();
         public IReadOnlyList<EquipmentDefinition> Equipment => loadedData != null && loadedData.equips != null ? loadedData.equips : Array.Empty<EquipmentDefinition>();
+        public IReadOnlyList<TrapDefinition> Traps => loadedData != null && loadedData.traps != null ? loadedData.traps : Array.Empty<TrapDefinition>();
 
         private void Awake()
         {
@@ -98,7 +102,7 @@ namespace Dungeon.Core
 
             try
             {
-                loadedData = JsonUtility.FromJson<DbRoot>(jsonAsset.text) ?? new DbRoot();
+                loadedData = JsonConvert.DeserializeObject<DbRoot>(jsonAsset.text) ?? new DbRoot();
             }
             catch (Exception e)
             {
@@ -113,6 +117,7 @@ namespace Dungeon.Core
         {
             itemMap.Clear();
             equipMap.Clear();
+            trapMap.Clear();
             recordKinds.Clear();
             itemsByType.Clear();
             equipsBySlot.Clear();
@@ -121,6 +126,7 @@ namespace Dungeon.Core
             LoadIconOverrides();
             RebuildItemMaps();
             RebuildEquipmentMaps();
+            RebuildTrapMaps();
         }
 
         private void LoadIconOverrides()
@@ -195,6 +201,23 @@ namespace Dungeon.Core
             }
         }
 
+        private void RebuildTrapMaps()
+        {
+            if (loadedData == null || loadedData.traps == null)
+                return;
+
+            foreach (var trap in loadedData.traps)
+            {
+                if (trap == null || string.IsNullOrWhiteSpace(trap.code))
+                    continue;
+
+                trap.code = NormalizeTrapCode(trap.code);
+                trap.damage_type = NormalizeCategoryLikeValue(trap.damage_type);
+                trapMap[trap.code] = trap;
+                recordKinds[MakeKey(CategoryTrap, trap.code)] = DbRecordKind.Trap;
+            }
+        }
+
         public bool TryGetItem(string rawId, out ItemDefinition definition)
         {
             return TryGetItemByKey(MakeKey(CategoryItem, rawId), out definition);
@@ -217,6 +240,12 @@ namespace Dungeon.Core
             return equipMap.TryGetValue(key, out definition);
         }
 
+        public bool TryGetTrap(string prefabCode, out TrapDefinition definition)
+        {
+            prefabCode = NormalizeTrapCode(prefabCode);
+            return trapMap.TryGetValue(prefabCode, out definition);
+        }
+
         public bool ContainsKey(string key)
         {
             key = NormalizeKey(key);
@@ -237,6 +266,11 @@ namespace Dungeon.Core
         public IReadOnlyList<EquipmentDefinition> GetAllEquipment()
         {
             return Equipment;
+        }
+
+        public IReadOnlyList<TrapDefinition> GetAllTraps()
+        {
+            return Traps;
         }
 
         public IReadOnlyList<ItemDefinition> GetItemsByType(string type)
@@ -402,6 +436,8 @@ namespace Dungeon.Core
                 "equipement" => CategoryEquip,
                 "modules" => CategoryModule,
                 "module" => CategoryModule,
+                "traps" => CategoryTrap,
+                "trap" => CategoryTrap,
                 _ => category
             };
         }
@@ -417,6 +453,11 @@ namespace Dungeon.Core
             if (string.IsNullOrWhiteSpace(id))
                 return NoneKey;
             return id;
+        }
+
+        public static string NormalizeTrapCode(string code)
+        {
+            return code?.Trim().ToUpperInvariant() ?? string.Empty;
         }
 
         public static string NormalizeSlot(string slot)
@@ -444,7 +485,8 @@ namespace Dungeon.Core
     {
         Unknown = 0,
         Item = 1,
-        Equipment = 2
+        Equipment = 2,
+        Trap = 3
     }
 
     [Serializable]
@@ -452,6 +494,7 @@ namespace Dungeon.Core
     {
         public ItemDefinition[] items;
         public EquipmentDefinition[] equips;
+        public TrapDefinition[] traps;
     }
 
     [Serializable]
@@ -485,6 +528,19 @@ namespace Dungeon.Core
         public EquipmentSubStatMultiplier sub_stats_multiplier;
 
         public string Key => GameDatabase.MakeKey(GameDatabase.CategoryEquip, id);
+    }
+
+    [Serializable]
+    public class TrapDefinition
+    {
+        public string code;
+        public string name;
+        public string type;
+        public string desc;
+        public bool? destructible;
+        public string damage_type;
+        public int? damage;
+        public float? knockback_distance;
     }
 
     [Serializable]

@@ -25,7 +25,6 @@ namespace Dungeon.Traps
 
         [Header("Projectile")]
         [SerializeField] private float projectileSpeed = 2.5f;
-        [SerializeField] private int damage = 1;
         [SerializeField] private float projectileLifetime = 5f;
 
         [Header("Timing")]
@@ -160,7 +159,12 @@ namespace Dungeon.Traps
     Collider2D[] ownerColliders = GetComponentsInChildren<Collider2D>(true);
     projectile.IgnoreOwnerColliders(ownerColliders);
 
-    projectile.Launch(dir, projectileSpeed, damage, projectileLifetime);
+    projectile.Launch(
+        dir,
+        projectileSpeed,
+        TrapDamageEvent.ResolveTrapCode(gameObject),
+        projectileLifetime
+    );
 }
 
         private void OnDrawGizmosSelected()

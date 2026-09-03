@@ -58,7 +58,6 @@ MonoBehaviour:
   offDuration: 2
   onDuration: 4
   startOn: 1
-  damage: 4
   damageInterval: 1
   trapEnabled: 1
 --- !u!61 &4647415626260771042
@@ -207,6 +206,7 @@ GameObject:
   m_Component:
   - component: {fileID: 728057648438558035}
   - component: {fileID: 4073460155492874547}
+  - component: {fileID: 2154044597134655319}
   m_Layer: 0
   m_Name: BaseTile
   m_TagString: Untagged
@@ -287,6 +287,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2154044597134655319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5886724626233193763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d4fbca911c06245995b6a4fa973647, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.GamePlay::AssetVariantSprite2D
+  spriteRenderer: {fileID: 4073460155492874547}
+  variants:
+  - {fileID: -6213770364130209045, guid: aee0fb63b9309ff428fea1211b61b70f, type: 3}
+  - {fileID: 5548351482224434536, guid: dfe3d633925846d45ac2af4dfa1c92d6, type: 3}
 --- !u!1 &7857881106710933764
 GameObject:
   m_ObjectHideFlags: 0

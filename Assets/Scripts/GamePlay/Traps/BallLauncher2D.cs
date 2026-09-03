@@ -16,7 +16,6 @@ namespace Dungeon.Traps
 
         [Header("Stats")]
         [SerializeField] private float speed = 6f;
-        [SerializeField] private int damage = 2;
         [SerializeField] private float spawnCooldown = 2f;
         [SerializeField] private bool autoSpawn = true;
 
@@ -65,7 +64,7 @@ namespace Dungeon.Traps
             }
 
             RollingBallTrap2D ball = Instantiate(ballPrefab, spawnPos, Quaternion.identity);
-            ball.Launch(dir, speed, damage, ownerCol);
+            ball.Launch(dir, speed, TrapDamageEvent.ResolveTrapCode(gameObject), ownerCol);
         }
     }
 }

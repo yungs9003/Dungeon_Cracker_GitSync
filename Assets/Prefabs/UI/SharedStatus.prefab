@@ -9065,8 +9065,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   database: {fileID: 0}
-  saveFileName: savefile_dev_runtime.json
-  saveFilePathOverride: 
   headSlot:
     slotKey: head
     slotButtonName: HeadSlotButton

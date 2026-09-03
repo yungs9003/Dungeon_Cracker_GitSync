@@ -1,0 +1,22 @@
+{
+    "name": "Dungeon.Save.EditorTests",
+    "rootNamespace": "Dungeon.Tests",
+    "references": [
+        "GUID:0388092e6defa814e83caa9fb0ab8ce0",
+        "GUID:37712eb6af69c4149b63e2085b337ed7"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false,
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
+}

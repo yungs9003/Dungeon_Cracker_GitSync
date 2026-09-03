@@ -21,8 +21,7 @@ namespace Dungeon.Traps
         [SerializeField] private float onDuration = 1.0f;
         [SerializeField] private bool startOn = false;
 
-        [Header("Damage")]
-        [SerializeField] private int damage = 1;
+        [Header("Hit")]
         [SerializeField] private float damageInterval = 0.5f;
 
         [Header("Trap Toggle")]
@@ -156,7 +155,7 @@ namespace Dungeon.Traps
                 if (nextDamageTime.TryGetValue(health, out float nextTime) && now < nextTime)
                     continue;
 
-                health.TakeDamage(damage);
+                TrapDamageEvent.Raise(gameObject, health);
                 nextDamageTime[health] = now + damageInterval;
             }
         }

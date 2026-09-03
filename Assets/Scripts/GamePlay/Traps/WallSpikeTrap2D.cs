@@ -19,8 +19,7 @@ namespace Dungeon.Traps
         [SerializeField] private float cooldownTime = 0.6f;
         [SerializeField] private AnimationCurve ease = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-        [Header("Damage")]
-        [SerializeField] private int damage = 1;
+        [Header("Hit")]
         [SerializeField] private float hitCooldownPerTarget = 0.3f;
         [SerializeField] private LayerMask targetMask;
 
@@ -184,7 +183,7 @@ namespace Dungeon.Traps
 
             var health = other.GetComponentInParent<Health>() ?? other.GetComponent<Health>();
             if (health != null)
-                health.TakeDamage(damage);
+                TrapDamageEvent.Raise(gameObject, health);
         }
 
         private void InitRenderersIfNeeded()

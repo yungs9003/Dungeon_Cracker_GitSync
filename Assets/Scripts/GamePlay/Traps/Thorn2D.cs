@@ -8,17 +8,8 @@ namespace Dungeon.Traps
     [RequireComponent(typeof(Collider2D))]
     public class Thorn2D : MonoBehaviour, ITrapToggle
     {
-        [Header("Type")]
-        [SerializeField] private Dungeon.Core.DamageType damageType = Dungeon.Core.DamageType.Physical;
-
-        [Header("Damage")]
-        [SerializeField] private int damage = 2;
-        [SerializeField] private int bleedingDamage = 5;
+        [Header("Hit")]
         [SerializeField] private float hitCooldown = 0.5f;
-
-        [Header("Knockback")]
-        [SerializeField] private float knockbackDistance = 0.6f;
-        [SerializeField] private float knockbackDuration = 0.08f;
 
         [Header("Target Filter (optional)")]
         [SerializeField] private LayerMask targetMask;
@@ -72,21 +63,8 @@ namespace Dungeon.Traps
             if (nextDamageTime.TryGetValue(health, out float allowedTime) && now < allowedTime)
                 return;
 
-            // 즉시 데미지 적용
-            health.TakeDamage(damage, damageType);
-            // 출혈 상태 유발: tick당 bleedingDamage 사용
-            health.TakeBleedingDamage(bleedingDamage, 7f, 1f);
+            TrapDamageEvent.Raise(gameObject, health);
             nextDamageTime[health] = now + hitCooldown;
-
-            var kb = other.GetComponentInParent<KnockbackReceiver2D>();
-            if (kb != null)
-            {
-                Vector2 dir = (other.transform.position - transform.position);
-                if (dir.sqrMagnitude < 1e-6f)
-                    dir = Vector2.up;
-
-                kb.AddKnockback(dir, knockbackDistance, knockbackDuration);
-            }
         }
     }
 }

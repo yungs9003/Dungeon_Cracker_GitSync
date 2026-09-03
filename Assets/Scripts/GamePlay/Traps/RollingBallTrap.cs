@@ -10,8 +10,7 @@ public class RollingBallTrap : MonoBehaviour
     [Header("Lifetime (0이면 안 사라짐)")]
     [SerializeField] private float lifeTime = 4f;
 
-    [Header("Damage")]
-    [SerializeField] private int damage = 2;
+    [Header("Hit")]
     [SerializeField] private float hitCooldownPerTarget = 0.4f;
 
     [Header("Movement (Flat ground support)")]
@@ -32,10 +31,6 @@ public class RollingBallTrap : MonoBehaviour
     [Header("Player collision ignore")]
     [SerializeField] private bool ignorePlayerPhysicsCollision = true;
 
-    [Header("Knockback (Player)")] 
-    [SerializeField] private float knockbackDistance = 1.2f;
-    [SerializeField] private float knockbackDuration = 0.12f;
-
     private Rigidbody rb;
     private Collider myCol;
     private Collider ownerCol;
@@ -45,6 +40,7 @@ public class RollingBallTrap : MonoBehaviour
     private bool launched;
     private bool stopped;
     private float stuckTimer;
+    private string sourceTrapCode;
 
     private readonly Dictionary<Health, float> lastHitTime = new();
 
@@ -59,9 +55,9 @@ public class RollingBallTrap : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
-    public void Launch(Vector3 dir, float speed, int damage, Collider owner = null)
+    public void Launch(Vector3 dir, float speed, string trapCode, Collider owner = null)
     {
-        this.damage = damage;
+        sourceTrapCode = trapCode;
         ownerCol = owner;
 
         // 발사 주체(launcher) 충돌 무시
@@ -218,16 +214,7 @@ public class RollingBallTrap : MonoBehaviour
         return;
 
     lastHitTime[health] = now;
-    health.TakeDamage(damage);
-
-    // ✅ 넉백: 공에서 플레이어로 향하는 방향으로 밀기(=플레이어가 공에서 멀어짐)
-    var kb = other.GetComponentInParent<KnockbackReceiver>();
-    if (kb != null)
-    {
-        Vector3 away = (other.transform.position - transform.position);
-        away.y = 0f;
-        kb.AddKnockback(away, knockbackDistance, knockbackDuration);
-    }
+    TrapDamageEvent.Raise(sourceTrapCode, gameObject, health);
 }
 
     private void Despawn() => Destroy(gameObject);

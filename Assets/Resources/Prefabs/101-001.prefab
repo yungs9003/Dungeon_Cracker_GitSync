@@ -277,6 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Dungeon.GamePlay::AssetVariantSprite2D
   spriteRenderer: {fileID: 2666986669700055699}
   variants:
+  - {fileID: -8667452979921559061, guid: b2db07b4ce74f3549a1b35babff9bb53, type: 3}
   - {fileID: -6686989904214155788, guid: 4d77171a70df31640a6fc910bb6a78db, type: 3}
 --- !u!114 &3799103455409035906
 MonoBehaviour:
@@ -294,7 +295,6 @@ MonoBehaviour:
   muzzlePoint: {fileID: 0}
   muzzleLocalOffset: {x: 0, y: 0}
   speed: 4
-  damage: 5
   fireCooldown: 3
   autoFire: 1
   forwardPadding: 0.15
@@ -318,3 +318,4 @@ MonoBehaviour:
   copyDestroyedObjectRotation: 1
   disableTrapsBeforeDestroy: 1
   destroyNextFrame: 1
+  countAsBrokenTrap: 1

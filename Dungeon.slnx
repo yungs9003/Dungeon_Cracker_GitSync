@@ -4,5 +4,6 @@
   <Project Path="Dungeon.App.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="Dungeon.Save.EditorTests.csproj" />
   <Project Path="Dungeon.System.csproj" />
 </Solution>

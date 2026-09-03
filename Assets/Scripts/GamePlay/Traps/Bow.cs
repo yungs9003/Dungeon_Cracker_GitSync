@@ -13,7 +13,6 @@ public class Bow : MonoBehaviour, ITrapToggle
 
     [Header("Stats")]
     [SerializeField] private float speed = 4f;
-    [SerializeField] private int damage = 2;
     [SerializeField] private float fireCooldown = 3.0f;
     [SerializeField] private bool autoFire = true;
     public void SetTrapEnabled(bool enabled) => autoFire = enabled;
@@ -63,7 +62,7 @@ public class Bow : MonoBehaviour, ITrapToggle
         
     
         Arrow arrow = Instantiate(projectilePrefab, spawnPos, spawnRot);
-        arrow.Launch(dir, speed, damage, spawnRot , ownerCol);
+        arrow.Launch(dir, speed, TrapDamageEvent.ResolveTrapCode(gameObject), spawnRot, ownerCol);
 
     }
 }

@@ -91,8 +91,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05abc366d4f10ce478022c4b37af9e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.PortalNextMap2D
+  sequenceManager: {fileID: 0}
+  fader: {fileID: 0}
   playerTag: Player
-  enterZone: {fileID: 1927736714067708174}
+  reachRadius: 0.25
+  fadeOutSeconds: 0.35
 --- !u!1 &8144866757619157474
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +177,7 @@ SpriteRenderer:
   m_SortingLayerID: -1979886037
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6689756556060055724, guid: 74b309b1466a26d49b97ff01ed83b65c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aed1b7a666a09e8438575855fffe7ff9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -199,4 +202,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Dungeon.GamePlay::AssetVariantSprite2D
   spriteRenderer: {fileID: 1878851909914564450}
   variants:
-  - {fileID: 6689756556060055724, guid: 74b309b1466a26d49b97ff01ed83b65c, type: 3}
+  - {fileID: 21300000, guid: aed1b7a666a09e8438575855fffe7ff9, type: 3}

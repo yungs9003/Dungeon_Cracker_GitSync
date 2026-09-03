@@ -1,26 +1,15 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Dungeon.Player;
 
 namespace Dungeon.Map
 {
     /// <summary>
-    /// JSON의 hidden 필드에 들어가는 데이터입니다.
-    /// 실제 프리팹은 cell.code로 생성하고, hidden은 숨김 상태에서 덧씌울 스프라이트 정보로만 사용합니다.
-    /// </summary>
-    [Serializable]
-    public class HiddenCellData2D
-    {
-        public string code;       // 숨김 상태에서 보여줄 타일 코드. 예: "000-000", "001-001"
-        public int assetNo;       // 숨김 상태에서 사용할 해당 타일 코드의 스프라이트 번호
-        public string direction;  // 숨김용 오버레이 스프라이트 회전에 사용할 방향값
-    }
-
-    /// <summary>
     /// JSON grid 배열의 한 칸 데이터입니다.
     /// code / assetNo / direction은 실제 생성될 타일 정보를 의미합니다.
-    /// hidden은 선택 사항이며, 함정 등을 일반 타일처럼 보이게 할 때만 사용합니다.
+    /// 구버전 JSON에 hidden 필드가 남아 있어도 현재 로더는 읽거나 사용하지 않습니다.
     /// </summary>
     [Serializable]
     public class CellData2D
@@ -29,7 +18,6 @@ namespace Dungeon.Map
         public string code;       // 실제 생성할 프리팹 코드. 예: "000-000", "101-001"
         public int assetNo;       // 실제 타일의 asset 번호
         public string direction;  // 실제 타일의 방향값. "00", "01", "10", "11"
-        public HiddenCellData2D hidden;
     }
 
     [Serializable]
@@ -79,7 +67,7 @@ namespace Dungeon.Map
     /// 1. JSON grid의 code / assetNo / direction을 실제 프리팹에 반영합니다.
     /// 2. relation 정보를 각 타일에 전달합니다.
     /// 3. player.start 위치로 플레이어와 Respawn2D 기준점을 이동합니다.
-    /// 4. hidden 필드가 있는 함정 타일은 HiddenTrapVisual2D와 ForwardZoneVisionMask2D에 등록합니다.
+    /// 4. 발견 대상 함정은 자식 AssetVariant Element를 전환하거나 자식 렌더링을 활성화합니다.
     /// </summary>
     public class JsonBlockBuilder2D : MonoBehaviour
     {
@@ -100,9 +88,6 @@ namespace Dungeon.Map
         [Tooltip("3F 타일 SpriteRenderer들의 기준 sortingOrder입니다. grid보다 크게 설정하세요.")]
         public int floor3SortingOrderBase = 100;
 
-        [Tooltip("hidden overlay SpriteRenderer들의 기준 sortingOrder입니다. 3F보다 크게 설정하세요.")]
-        public int hiddenSortingOrderBase = 200;
-
         [Header("생성 제외 코드")]
         public List<string> skipCodes = new List<string>();
 
@@ -120,24 +105,19 @@ namespace Dungeon.Map
         [Tooltip("맵의 field_effect를 적용할 FieldEffectManager입니다. 비워두면 자동 검색합니다.")]
         public FieldEffectManager fieldEffectManager;
 
-        [Header("Hidden Tile / Forward Zone Vision")]
+        [Header("Trap Reveal / Forward Zone Vision")]
         [Tooltip("ForwardZoneVisionMask2D가 있다면 연결하세요. 비워두면 자동 검색합니다.")]
         public ForwardZoneVisionMask2D visionSystem;
 
-        [Tooltip("한 번 forward zone에 들어와 발견된 hidden 타일을 계속 실제 모습으로 유지할지 여부입니다.")]
-        public bool hiddenTilesStayRevealed = true;
+        [FormerlySerializedAs("hiddenTilesStayRevealed")]
+        [Tooltip("한 번 시야에 들어와 발견된 함정을 계속 발견 상태로 유지할지 여부입니다.")]
+        public bool trapTilesStayRevealed = true;
 
-        [Tooltip("hidden 필드가 없는 예전 맵에도 102-xxx=>000-000, 101-xxx=>001-001 규칙을 자동 적용할지 여부입니다.")]
-        public bool useLegacyTrapDisguiseFallback = false;
+        [Tooltip("Element 전환 또는 자식 렌더러 표시 방식으로 발견 처리할 함정 코드 prefix입니다.")]
+        public List<string> trapRevealCodePrefixes = new List<string> { "101-", "102-", "103-" };
 
-        [Tooltip("이 prefix에 해당하는 실제 코드에만 hidden overlay를 허용합니다. 일반 바닥/벽/구멍에는 hidden이 있어도 무시합니다.")]
-        public List<string> hiddenAllowedActualCodePrefixes = new List<string> { "101-", "102-" };
-
-        [Tooltip("hidden 대상이 아닌 타일에 남아 있는 HiddenTrapVisual2D나 __HiddenVisualOverlay 자식을 자동 제거합니다.")]
-        public bool removeStaleHiddenVisualFromNonHiddenTiles = true;
-
-        [Tooltip("자동 제거할 hidden overlay 자식 오브젝트 이름입니다.")]
-        public string hiddenOverlayChildName = "__HiddenVisualOverlay";
+        [Tooltip("발견 전환에서 제외할 함정 코드입니다.")]
+        public List<string> trapRevealExcludedCodes = new List<string>();
 
         [Header("Direction Rotation Policy")]
         [Tooltip("켜면 아래 prefix에 해당하는 코드만 direction으로 회전합니다. 벽/바닥 assetNo 자체가 이미 방향별 이미지라면 켜는 것을 권장합니다.")]
@@ -196,8 +176,7 @@ namespace Dungeon.Map
 
             CacheRelations(LoadedMapData.relation);
 
-            // 렌더 순서:
-            // grid < 3F < hidden overlay
+            // 렌더 순서: grid < 3F
             BuildGridTiles(LoadedMapData.grid);
             Build3FTiles(LoadedMapData.floor3);
 
@@ -236,7 +215,7 @@ namespace Dungeon.Map
         }
 
         /// <summary>
-        /// ForwardZoneVisionMask2D를 준비하고, 이전 맵에서 등록된 hidden 타일 목록을 초기화합니다.
+        /// ForwardZoneVisionMask2D를 준비하고, 이전 맵에서 등록된 발견 대상 함정 목록을 초기화합니다.
         /// </summary>
         private void PrepareVisionSystem()
         {
@@ -296,12 +275,18 @@ namespace Dungeon.Map
 
                 GameObject block = CreateTileInstance(prefab, code, cell, x, y);
                 ApplyBlockCoordAndRegistry(block, x, y);
-                ApplyAssetVariant(block, cell.assetNo);
+
+                bool isRevealTrap = ShouldConfigureTrapReveal(code);
+                int initialAssetNo = isRevealTrap
+                    ? (visionSystem != null ? 0 : 1)
+                    : cell.assetNo;
+
+                ApplyAssetVariant(block, initialAssetNo);
 
                 // 기본 grid는 가장 아래 렌더 밴드에 둡니다.
                 ApplySortingBand(block, gridSortingOrderBase);
 
-                SetupHiddenVisualIfNeeded(block, code, cell);
+                SetupTrapRevealIfNeeded(block, code);
                 SendRelationsIfNeeded(block, x, y);
             }
         }
@@ -311,7 +296,7 @@ namespace Dungeon.Map
         ///
         /// 3F는 실제 GameObject/프리팹으로 생성되므로 해당 프리팹의 트랩 스크립트나 콜라이더도 그대로 동작합니다.
         /// 단, 같은 좌표의 기본 grid 타일을 BlockRegistry에서 덮어쓰지 않도록 Registry에는 등록하지 않습니다.
-        /// 렌더 순서는 grid보다 높고 hidden overlay보다 낮게 둡니다.
+        /// 렌더 순서는 grid보다 높은 밴드에 둡니다.
         /// </summary>
         private void Build3FTiles(CellData2D[] cells)
         {
@@ -342,9 +327,9 @@ namespace Dungeon.Map
 
                 ApplyAssetVariant(block, cell.assetNo);
                 ApplySortingBand(block, floor3SortingOrderBase);
+                SetupTrapRevealIfNeeded(block, code, visibilityOnly: true);
 
-                // 3F에는 현재 hidden/relation 처리를 적용하지 않습니다.
-                // hidden은 같은 좌표의 grid 타일이 가진 overlay가 최상단에서 3F까지 함께 가립니다.
+                // 3F relation 처리는 현재 적용하지 않습니다.
             }
         }
 
@@ -407,74 +392,84 @@ namespace Dungeon.Map
         }
 
         /// <summary>
-        /// 프리팹에 AssetVariantSprite2D가 있으면 JSON의 assetNo를 적용합니다.
+        /// 프리팹 루트 또는 자식에 AssetVariantSprite2D가 있으면 JSON의 assetNo를 적용합니다.
         /// </summary>
         private static void ApplyAssetVariant(GameObject block, int assetNo)
         {
-            var variant = block.GetComponent<AssetVariantSprite2D>();
+            AssetVariantSprite2D variant = FindAssetVariant(block);
             if (variant != null)
                 variant.SetAssetNo(assetNo);
         }
 
-        /// <summary>
-        /// hidden 정보가 있는 함정 타일을 HiddenTrapVisual2D와 ForwardZoneVisionMask2D에 등록합니다.
-        /// 실제 타일의 콜라이더/함정 기능은 유지하고, 숨김 상태에서만 별도 overlay 스프라이트를 보여주는 방식입니다.
-        /// </summary>
-        private void SetupHiddenVisualIfNeeded(GameObject block, string actualCode, CellData2D cell)
+        private static AssetVariantSprite2D FindAssetVariant(GameObject block)
         {
-            if (block == null || cell == null)
-                return;
+            if (block == null)
+                return null;
 
-            // 일반 바닥/벽/구멍에 실수로 hidden 필드가 들어가도 무시합니다.
-            // hidden은 기본적으로 101-/102- 같은 함정 계열에만 허용합니다.
-            if (!IsHiddenAllowedActualCode(actualCode))
+            AssetVariantSprite2D rootVariant = block.GetComponent<AssetVariantSprite2D>();
+            return rootVariant != null
+                ? rootVariant
+                : block.GetComponentInChildren<AssetVariantSprite2D>(true);
+        }
+
+        /// <summary>
+        /// 기본 grid 함정은 자식 AssetVariantSprite2D Element 0/1로 구성하고,
+        /// 3F 함정은 자식 SpriteRenderer의 visibility-only 방식으로 구성합니다.
+        /// 맵 JSON의 hidden 필드는 조회하지 않습니다.
+        /// </summary>
+        private void SetupTrapRevealIfNeeded(
+            GameObject block,
+            string actualCode,
+            bool visibilityOnly = false)
+        {
+            if (block == null ||
+                visionSystem == null ||
+                !ShouldConfigureTrapReveal(actualCode))
             {
-                if (removeStaleHiddenVisualFromNonHiddenTiles)
-                    CleanupStaleHiddenVisual(block);
-
                 return;
             }
 
-            HiddenCellData2D hidden = cell.hidden;
+            HiddenTrapVisual2D revealVisual = block.GetComponent<HiddenTrapVisual2D>();
+            if (revealVisual == null)
+                revealVisual = block.AddComponent<HiddenTrapVisual2D>();
 
-            // hidden 필드가 없거나 code가 비어 있으면 일반 타일처럼 처리합니다.
-            // JsonUtility 특성상 hidden == null 체크만으로는 부족할 수 있으므로 code 유무를 기준으로 판단합니다.
-            if (!HasUsableHiddenInfo(hidden))
+            bool configured;
+
+            if (visibilityOnly)
             {
-                if (useLegacyTrapDisguiseFallback)
-                    hidden = CreateLegacyHiddenInfo(actualCode, cell.assetNo);
+                SpriteRenderer[] childRenderers =
+                    block.GetComponentsInChildren<SpriteRenderer>(true);
 
-                if (!HasUsableHiddenInfo(hidden))
-                    return;
-            }
-
-            Sprite hiddenSprite = GetSpriteFromPrefab(hidden.code, hidden.assetNo);
-            if (hiddenSprite == null)
-            {
-                Debug.LogWarning(
-                    $"{block.name}: hidden sprite를 찾지 못했습니다. " +
-                    $"coord={NormalizeCoord(cell.coord)}, hidden.code={hidden.code}, assetNo={hidden.assetNo}"
+                configured = revealVisual.ConfigureVisibilityOnly(
+                    childRenderers,
+                    trapTilesStayRevealed
                 );
-                return;
+            }
+            else
+            {
+                AssetVariantSprite2D[] variants =
+                    block.GetComponentsInChildren<AssetVariantSprite2D>(true);
+
+                if (variants.Length != 1 ||
+                    !variants[0].HasVariant(0) ||
+                    !variants[0].HasVariant(1))
+                {
+                    Debug.LogWarning(
+                        $"{block.name}: 함정 발견용 AssetVariantSprite2D가 정확히 하나이고 Element 0/1이 모두 지정되어야 합니다. 현재 개수: {variants.Length}"
+                    );
+                    return;
+                }
+
+                configured = revealVisual.ConfigureFromAssetVariants(
+                    variants[0],
+                    trapTilesStayRevealed
+                );
             }
 
-            var hiddenVisual = block.GetComponent<HiddenTrapVisual2D>();
-            if (hiddenVisual == null)
-                hiddenVisual = block.AddComponent<HiddenTrapVisual2D>();
+            if (!configured)
+                return;
 
-            float actualZRot = GetAppliedZRotation(actualCode, cell.direction);
-            string hiddenDirection = string.IsNullOrWhiteSpace(hidden.direction) ? cell.direction : hidden.direction;
-            float hiddenZRot = GetAppliedZRotation(hidden.code, hiddenDirection);
-
-            // 실제 오브젝트는 actualZRot 그대로 유지합니다.
-            // hiddenZRot은 숨김용 자식 SpriteRenderer에만 적용되어 콜라이더/함정 방향을 건드리지 않습니다.
-            hiddenVisual.Configure(hiddenSprite, actualZRot, hiddenZRot, hiddenTilesStayRevealed);
-
-            // hidden overlay는 grid와 3F 모두를 덮어야 하므로 최상단 렌더 밴드로 올립니다.
-            ApplyHiddenOverlaySortingBand(block);
-
-            if (visionSystem != null)
-                visionSystem.RegisterTrap(hiddenVisual);
+            visionSystem.RegisterTrap(revealVisual);
         }
 
         /// <summary>
@@ -513,28 +508,6 @@ namespace Dungeon.Map
         }
 
         /// <summary>
-        /// HiddenTrapVisual2D가 생성한 __HiddenVisualOverlay 자식만 찾아
-        /// hidden 전용 최상단 sortingOrder 밴드로 이동시킵니다.
-        /// </summary>
-        private void ApplyHiddenOverlaySortingBand(GameObject block)
-        {
-            if (block == null || string.IsNullOrWhiteSpace(hiddenOverlayChildName))
-                return;
-
-            Transform[] children = block.GetComponentsInChildren<Transform>(true);
-            foreach (var t in children)
-            {
-                if (t == null || t == block.transform)
-                    continue;
-
-                if (t.name != hiddenOverlayChildName)
-                    continue;
-
-                ApplySortingBand(t.gameObject, hiddenSortingOrderBase);
-            }
-        }
-
-        /// <summary>
         /// relation이 지정된 타일이면, 해당 타일 스크립트에 relation 대상 목록을 전달합니다.
         /// 받는 쪽이 없을 수도 있으므로 SendMessageOptions.DontRequireReceiver를 사용합니다.
         /// </summary>
@@ -551,26 +524,31 @@ namespace Dungeon.Map
             );
         }
 
-        private static bool HasUsableHiddenInfo(HiddenCellData2D hidden)
-        {
-            return hidden != null && !string.IsNullOrWhiteSpace(hidden.code);
-        }
-
-        /// <summary>
-        /// 현재 actualCode가 hidden 처리 허용 대상인지 검사합니다.
-        /// 예: 101-, 102-만 허용하면 일반 바닥/벽은 hidden overlay를 만들지 않습니다.
-        /// </summary>
-        private bool IsHiddenAllowedActualCode(string actualCode)
+        private bool ShouldConfigureTrapReveal(string actualCode)
         {
             if (string.IsNullOrWhiteSpace(actualCode))
                 return false;
 
             actualCode = actualCode.Trim().ToUpperInvariant();
 
-            if (hiddenAllowedActualCodePrefixes == null || hiddenAllowedActualCodePrefixes.Count == 0)
+            if (trapRevealExcludedCodes != null)
+            {
+                foreach (string rawExcludedCode in trapRevealExcludedCodes)
+                {
+                    if (string.Equals(
+                        actualCode,
+                        rawExcludedCode?.Trim(),
+                        StringComparison.OrdinalIgnoreCase))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (trapRevealCodePrefixes == null || trapRevealCodePrefixes.Count == 0)
                 return false;
 
-            foreach (string rawPrefix in hiddenAllowedActualCodePrefixes)
+            foreach (string rawPrefix in trapRevealCodePrefixes)
             {
                 if (string.IsNullOrWhiteSpace(rawPrefix))
                     continue;
@@ -581,100 +559,6 @@ namespace Dungeon.Map
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// 일반 타일 프리팹이나 인스턴스에 실수로 남아 있는 hidden 관련 컴포넌트/자식을 제거합니다.
-        /// 이전 테스트 중 잘못 저장된 __HiddenVisualOverlay가 보이는 문제를 방지합니다.
-        /// </summary>
-        private void CleanupStaleHiddenVisual(GameObject block)
-        {
-            if (block == null)
-                return;
-
-            var hiddenVisuals = block.GetComponentsInChildren<HiddenTrapVisual2D>(true);
-            foreach (var hv in hiddenVisuals)
-            {
-                if (hv == null)
-                    continue;
-
-                if (Application.isPlaying)
-                    Destroy(hv);
-                else
-                    DestroyImmediate(hv);
-            }
-
-            if (string.IsNullOrWhiteSpace(hiddenOverlayChildName))
-                return;
-
-            Transform[] children = block.GetComponentsInChildren<Transform>(true);
-            foreach (var t in children)
-            {
-                if (t == null || t == block.transform)
-                    continue;
-
-                if (t.name != hiddenOverlayChildName)
-                    continue;
-
-                if (Application.isPlaying)
-                    Destroy(t.gameObject);
-                else
-                    DestroyImmediate(t.gameObject);
-            }
-        }
-
-        /// <summary>
-        /// hidden 필드가 없는 구버전 맵을 위한 자동 숨김 규칙입니다.
-        /// 102 계열은 바닥처럼, 101 계열은 벽처럼 보이도록 기본 hidden 정보를 생성합니다.
-        /// </summary>
-        private HiddenCellData2D CreateLegacyHiddenInfo(string actualCode, int actualAssetNo)
-        {
-            if (string.IsNullOrWhiteSpace(actualCode))
-                return null;
-
-            actualCode = actualCode.Trim().ToUpperInvariant();
-
-            if (actualCode.StartsWith("102-"))
-            {
-                return new HiddenCellData2D
-                {
-                    code = "000-000",
-                    assetNo = actualAssetNo
-                };
-            }
-
-            if (actualCode.StartsWith("101-"))
-            {
-                return new HiddenCellData2D
-                {
-                    code = "001-001",
-                    assetNo = actualAssetNo
-                };
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// hidden overlay에 사용할 스프라이트를 찾습니다.
-        /// 함정 프리팹이 아니라 hidden.code에 해당하는 프리팹에서 assetNo를 조회합니다.
-        /// </summary>
-        private Sprite GetSpriteFromPrefab(string code, int assetNo)
-        {
-            GameObject prefab = LoadPrefab(code);
-            if (prefab == null)
-                return null;
-
-            var variant = prefab.GetComponent<AssetVariantSprite2D>();
-            if (variant != null)
-            {
-                Sprite sprite = variant.GetSpriteForAssetNo(assetNo, true);
-                if (sprite != null)
-                    return sprite;
-            }
-
-            var sr = prefab.GetComponentInChildren<SpriteRenderer>(true);
-            return sr != null ? sr.sprite : null;
         }
 
         /// <summary>

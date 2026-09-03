@@ -18,13 +18,6 @@ namespace Dungeon.UI
         [Header("Database")]
         [SerializeField] private GameDatabase database;
 
-        [Header("Save File")]
-        [Tooltip("StatusSaveFile이 없을 때 fallback으로 찾을 파일명입니다. 일반 플레이 중에는 StatusSaveFile.Instance가 우선됩니다.")]
-        [SerializeField] private string saveFileName = "savefile_dev_runtime.json";
-
-        [Tooltip("비워두면 StatusSaveFile.Instance 또는 기본 후보 경로를 사용합니다.")]
-        [SerializeField] private string saveFilePathOverride = "";
-
         [Header("Equipped Slots")]
         [SerializeField] private EquipmentPartSlotUI headSlot = new EquipmentPartSlotUI { slotKey = "head", slotButtonName = "HeadSlotButton" };
         [SerializeField] private EquipmentPartSlotUI bodySlot = new EquipmentPartSlotUI { slotKey = "body", slotButtonName = "BodySlotButton" };
@@ -95,7 +88,7 @@ namespace Dungeon.UI
                 return;
             }
 
-            if (!saveRepository.Load(saveFileName, saveFilePathOverride))
+            if (!saveRepository.Load())
             {
                 Debug.LogWarning($"[EquipmentPageUI] savefile 로드 실패: {saveRepository.LastError}");
                 RefreshEquippedSlotsOnly();
@@ -231,7 +224,7 @@ namespace Dungeon.UI
         {
             string normalizedSlotKey = GameDatabase.NormalizeSlot(slotKey);
 
-            if (saveRepository.Load(saveFileName, saveFilePathOverride))
+            if (saveRepository.Load())
             {
                 string equippedKey = saveRepository.GetEquippedKey(normalizedSlotKey);
 
@@ -289,9 +282,7 @@ namespace Dungeon.UI
             string normalizedSlotKey =
                 GameDatabase.NormalizeSlot(slotKey);
 
-            if (!saveRepository.Load(
-                    saveFileName,
-                    saveFilePathOverride))
+            if (!saveRepository.Load())
             {
                 Debug.LogWarning(
                     $"[EquipmentPageUI] 장비 해제용 save 로드 실패: " +
@@ -346,10 +337,7 @@ namespace Dungeon.UI
                 return;
             }
 
-            saveRepository.Load(
-                saveFileName,
-                saveFilePathOverride
-            );
+            saveRepository.Load();
 
             RefreshEquippedSlotsOnly();
             RefreshSlotSelectionVisuals();
@@ -406,7 +394,7 @@ namespace Dungeon.UI
                 return;
             }
 
-            if (!saveRepository.Load(saveFileName, saveFilePathOverride))
+            if (!saveRepository.Load())
             {
                 Debug.LogWarning($"[EquipmentPageUI] 장비 목록 로드 실패: {saveRepository.LastError}");
                 RefreshScrollbar(0);
@@ -526,7 +514,7 @@ namespace Dungeon.UI
             }
 
             // StatusSaveFile.Save()로 저장한 뒤 다시 읽어, 장착 슬롯과 목록을 최신 상태로 맞춥니다.
-            saveRepository.Load(saveFileName, saveFilePathOverride);
+            saveRepository.Load();
             RefreshEquippedSlotsOnly();
             PopulateInventoryList(selectedSlotKey);
         }
@@ -535,7 +523,7 @@ namespace Dungeon.UI
             EquipmentDefinition definition)
         {
             if (definition == null ||
-                !saveRepository.Load(saveFileName, saveFilePathOverride))
+                !saveRepository.Load())
             {
                 return;
             }
@@ -553,7 +541,7 @@ namespace Dungeon.UI
 
         private void RefreshEquippedSlotsOnly()
         {
-            if (!saveRepository.Load(saveFileName, saveFilePathOverride))
+            if (!saveRepository.Load())
             {
                 if (logEquipmentActions)
                     Debug.LogWarning($"[EquipmentPageUI] 장착 슬롯 갱신용 save 로드 실패: {saveRepository.LastError}");

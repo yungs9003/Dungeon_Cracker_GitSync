@@ -7,9 +7,6 @@ namespace Dungeon.Traps
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class Arrow2D : MonoBehaviour, IPlayerDestroyableProjectile
     {
-        [Header("Stats")]
-        [SerializeField] private int damage = 5;
-
         [Header("Lifetime")]
         [SerializeField] private float lifeTime = 3f;
 
@@ -24,6 +21,7 @@ namespace Dungeon.Traps
         private Rigidbody2D rb;
         private Collider2D myCol;
         private Collider2D ownerCol;
+        private string sourceTrapCode;
         private bool hasHit;
         private float hitEnabledAt;
 
@@ -39,9 +37,9 @@ namespace Dungeon.Traps
                 visual = transform;
         }
 
-        public void Launch(Vector2 dir, float speed, int damage, Collider2D owner = null)
+        public void Launch(Vector2 dir, float speed, string trapCode, Collider2D owner = null)
         {
-            this.damage = damage;
+            sourceTrapCode = trapCode;
             ownerCol = owner;
             hasHit = false;
             hitEnabledAt = Time.time + hitEnableDelay;
@@ -83,7 +81,7 @@ namespace Dungeon.Traps
             if (health != null)
             {
                 hasHit = true;
-                health.TakeDamage(damage);
+                TrapDamageEvent.Raise(sourceTrapCode, gameObject, health);
                 Despawn();
                 return;
             }

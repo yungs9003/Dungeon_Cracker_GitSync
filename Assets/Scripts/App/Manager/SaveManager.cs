@@ -142,7 +142,7 @@ namespace Dungeon.Manager
             SaveStatusFile();
 
             Debug.Log(
-                $"[SaveManager] Checkpoint saved to savefile_dev_runtime. " +
+                $"[SaveManager] Checkpoint saved. " +
                 $"CheckpointScene={defaultCheckpointSceneName}, " +
                 $"ReturnScene={data.checkpoint.sceneName}, " +
                 $"NextMapIndex={data.checkpoint.mapIndex}" +
@@ -267,7 +267,7 @@ namespace Dungeon.Manager
 
             SaveStatusFile();
 
-            Debug.Log("[SaveManager] Checkpoint cleared in savefile_dev_runtime.");
+            Debug.Log("[SaveManager] Checkpoint cleared.");
         }
 
         public void RestartDungeonFromFirstMap(string dungeonSceneName)

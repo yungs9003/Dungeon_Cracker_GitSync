@@ -434,6 +434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Dungeon.GamePlay::AssetVariantSprite2D
   spriteRenderer: {fileID: 2494176307530099770}
   variants:
+  - {fileID: -8667452979921559061, guid: b2db07b4ce74f3549a1b35babff9bb53, type: 3}
   - {fileID: -6686989904214155788, guid: 4d77171a70df31640a6fc910bb6a78db, type: 3}
 --- !u!50 &522637920729710238
 Rigidbody2D:
@@ -504,7 +505,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  damage: 15
   hitCooldownPerTarget: 0.3
   targetMask:
     serializedVersion: 2
@@ -534,6 +534,7 @@ MonoBehaviour:
   copyDestroyedObjectRotation: 1
   disableTrapsBeforeDestroy: 1
   destroyNextFrame: 1
+  countAsBrokenTrap: 1
 --- !u!1 &8427032439629914711
 GameObject:
   m_ObjectHideFlags: 0

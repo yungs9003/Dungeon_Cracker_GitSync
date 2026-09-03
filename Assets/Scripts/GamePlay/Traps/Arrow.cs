@@ -21,7 +21,7 @@ public class Arrow : MonoBehaviour, IPlayerDestroyableProjectile // ✅ IPlayerD
 
 
     private Rigidbody rb;
-    private int damage;
+    private string sourceTrapCode;
     private Collider ownerCol;
     private Collider myCol;
 
@@ -38,9 +38,9 @@ public class Arrow : MonoBehaviour, IPlayerDestroyableProjectile // ✅ IPlayerD
         if (visual == null) visual = transform;
     }
 
-    public void Launch(Vector3 dir, float speed, int damage, Quaternion rot, Collider owner = null)
+    public void Launch(Vector3 dir, float speed, string trapCode, Quaternion rot, Collider owner = null)
     {
-        this.damage = damage;
+        sourceTrapCode = trapCode;
         ownerCol = owner;
         hasHit = false;
 
@@ -100,7 +100,7 @@ public class Arrow : MonoBehaviour, IPlayerDestroyableProjectile // ✅ IPlayerD
         {
             hasHit = true;
 
-            health.TakeDamage(damage);
+            TrapDamageEvent.Raise(sourceTrapCode, gameObject, health);
             Despawn();
             return;
         }

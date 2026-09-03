@@ -7,8 +7,11 @@ namespace Dungeon.Core
     [Serializable]
     public class StatusSaveData
     {
+        [JsonProperty("save_version")]
+        public int save_version = 0;
+
         [JsonProperty("user_name")]
-        public string user_name = "Toluse";
+        public string user_name = "";
 
         [JsonProperty("gold")]
         public int gold = 0;
@@ -135,13 +138,13 @@ namespace Dungeon.Core
     public class MainStats
     {
         [JsonProperty("max_HP")]
-        public int max_HP = 650;
+        public int max_HP = 100;
 
         [JsonProperty("physical_resist")]
-        public int physical_resist = 10;
+        public int physical_resist = 0;
 
         [JsonProperty("magical_resist")]
-        public int magical_resist = 20;
+        public int magical_resist = 0;
     }
 
     [Serializable]

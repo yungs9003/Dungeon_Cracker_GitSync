@@ -15,6 +15,7 @@ public class AssetVariantSprite2D : MonoBehaviour
     }
 
     public int CurrentAssetNo { get; private set; } = -1;
+    public int VariantCount => variants != null ? variants.Length : 0;
 
     private void Awake()
     {
@@ -65,5 +66,13 @@ public class AssetVariantSprite2D : MonoBehaviour
         }
 
         return variants[assetNo];
+    }
+
+    public bool HasVariant(int assetNo)
+    {
+        return variants != null &&
+               assetNo >= 0 &&
+               assetNo < variants.Length &&
+               variants[assetNo] != null;
     }
 }

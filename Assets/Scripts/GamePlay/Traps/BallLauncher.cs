@@ -16,7 +16,6 @@ public class BallLauncher : MonoBehaviour, ITrapToggle
 
     [Header("Stats")]
     [SerializeField] private float speed = 6f;
-    [SerializeField] private int damage = 2;
     [SerializeField] private float spawnCooldown = 2.0f;
     [SerializeField] private bool autoSpawn = true;
     public void SetTrapEnabled(bool enabled){
@@ -74,7 +73,7 @@ public class BallLauncher : MonoBehaviour, ITrapToggle
         }
 
         RollingBallTrap ball = Instantiate(ballPrefab, spawnPos, Quaternion.identity);
-        ball.Launch(dir, speed, damage, ownerCol);
+        ball.Launch(dir, speed, TrapDamageEvent.ResolveTrapCode(gameObject), ownerCol);
         Debug.Log($"[{name}] forward={transform.forward}, rotY={transform.eulerAngles.y}");
 
     }

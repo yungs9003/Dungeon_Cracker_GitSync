@@ -10,8 +10,7 @@ namespace Dungeon.Traps
         [Header("Lifetime (0이면 안 사라짐)")]
         [SerializeField] private float lifeTime = 4f;
 
-        [Header("Damage")]
-        [SerializeField] private int damage = 2;
+        [Header("Hit")]
         [SerializeField] private float hitCooldownPerTarget = 0.4f;
 
         [Header("Movement")]
@@ -22,10 +21,6 @@ namespace Dungeon.Traps
         [Header("Player collision ignore")]
         [SerializeField] private bool ignorePlayerPhysicsCollision = false;
 
-        [Header("Knockback (Player)")]
-        [SerializeField] private float knockbackDistance = 1.2f;
-        [SerializeField] private float knockbackDuration = 0.12f;
-
         private Rigidbody2D rb;
         private Collider2D myCol;
         private Collider2D ownerCol;
@@ -34,6 +29,7 @@ namespace Dungeon.Traps
         private float moveSpeed;
         private bool launched;
         private bool stopped;
+        private string sourceTrapCode;
 
         private readonly Dictionary<Health, float> lastHitTime = new();
 
@@ -55,9 +51,9 @@ namespace Dungeon.Traps
             rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         }
 
-        public void Launch(Vector2 dir, float speed, int damage, Collider2D owner = null)
+        public void Launch(Vector2 dir, float speed, string trapCode, Collider2D owner = null)
         {
-            this.damage = damage;
+            sourceTrapCode = trapCode;
             ownerCol = owner;
 
             if (ownerCol != null)
@@ -250,14 +246,7 @@ namespace Dungeon.Traps
                 return;
 
             lastHitTime[health] = now;
-            health.TakeDamage(damage);
-
-            var kb = other.GetComponentInParent<KnockbackReceiver>();
-            if (kb != null)
-            {
-                Vector2 away = ((Vector2)other.transform.position - (Vector2)transform.position).normalized;
-                kb.AddKnockback(new Vector3(away.x, away.y, 0f), knockbackDistance, knockbackDuration);
-            }
+            TrapDamageEvent.Raise(sourceTrapCode, gameObject, health);
         }
 
         private void Despawn()

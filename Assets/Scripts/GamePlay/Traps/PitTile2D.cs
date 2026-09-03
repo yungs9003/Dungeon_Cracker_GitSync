@@ -6,8 +6,6 @@ namespace Dungeon.Traps
     [RequireComponent(typeof(Collider2D))]
     public class PitTile2D : MonoBehaviour
     {
-        [SerializeField] private int damage = 1;
-
         private void Reset()
         {
             var col = GetComponent<Collider2D>();
@@ -19,7 +17,11 @@ namespace Dungeon.Traps
             var respawn = other.GetComponentInParent<Respawn2D>();
             if (respawn == null) return;
 
-            respawn.ReturnToLastSafePointFromTrap(damage);
+            Health health = other.GetComponentInParent<Health>();
+            TrapDamageEvent.Raise(gameObject, health);
+
+            if (health == null || health.currentHP > 0)
+                respawn.ReturnToLastSafePointFromTrap();
         }
     }
 }

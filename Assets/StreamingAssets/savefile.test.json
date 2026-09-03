@@ -1,0 +1,128 @@
+{
+  "save_version": 1,
+  "user_name": "Toluse",
+  "gold": 36550,
+  "broken_traps": 1,
+  "clear_reward_claimed": false,
+  "last_getting_gold": 0,
+  "clear_time_seconds": 11.50329,
+  "hit_count": 3,
+  "main_stats": {
+    "max_HP": 150,
+    "physical_resist": 20,
+    "magical_resist": 20
+  },
+  "sub_stats": {
+    "speed": 10,
+    "poison_resist": 0,
+    "electric_resist": 0,
+    "amber_resist": 0,
+    "freeze_resist": 0
+  },
+  "base_main_stats": {
+    "max_HP": 150,
+    "physical_resist": 10,
+    "magical_resist": 20
+  },
+  "base_sub_stats": {
+    "speed": 10,
+    "poison_resist": 0,
+    "electric_resist": 0,
+    "amber_resist": 0,
+    "freeze_resist": 0
+  },
+  "inventory": {
+    "item": [
+      {
+        "000": 16
+      },
+      {
+        "002": 5
+      },
+      {
+        "003": 3
+      },
+      {
+        "004": 1
+      },
+      {
+        "005": 1
+      }
+    ],
+    "equipment": [
+      {
+        "000": 1
+      },
+      {
+        "001": 1
+      },
+      {
+        "002": 1
+      },
+      {
+        "003": 1
+      },
+      {
+        "004": 1
+      },
+      {
+        "005": 1
+      },
+      {
+        "006": 1
+      },
+      {
+        "007": 1
+      },
+      {
+        "008": 1
+      }
+    ]
+  },
+  "equips": {
+    "item": [
+      {
+        "slot1": "000"
+      },
+      {
+        "slot2": "002"
+      },
+      {
+        "slot3": "003"
+      },
+      {
+        "slot4": "004"
+      },
+      {
+        "slot5": "005"
+      }
+    ],
+    "equip": [
+      {
+        "head": "none"
+      },
+      {
+        "body": "001"
+      },
+      {
+        "legs": "none"
+      }
+    ]
+  },
+  "checkpoint": {
+    "sceneName": "",
+    "mapIndex": -1,
+    "resumeRequested": false,
+    "broken_traps_snapshot": 0
+  },
+  "dungeon_status": [
+    {
+      "001": ""
+    }
+  ],
+  "play_time": "135:26",
+  "clear_num_info": "28:73:96",
+  "adventure_count": 128,
+  "achievement": "87:300",
+  "player_rank": "s"
+}

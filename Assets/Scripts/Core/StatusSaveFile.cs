@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Dungeon.Core
@@ -10,16 +8,6 @@ namespace Dungeon.Core
     public class StatusSaveFile : MonoBehaviour
     {
         public static StatusSaveFile Instance { get; private set; }
-
-        private static bool runtimeCopyPreparedThisPlaySession;
-
-        [Header("Save File")]
-        [SerializeField] private string sourceFileName = "savefile.json";
-
-        [Header("Development Runtime Save")]
-        [SerializeField] private bool useDevelopmentRuntimeCopy = false;
-        [SerializeField] private string runtimeCopyFileName = "savefile_dev_runtime.json";
-        [SerializeField] private bool deleteRuntimeCopyOnQuit = true;
 
         [Header("Debug")]
         [SerializeField] private bool logSavePath = true;
@@ -40,32 +28,21 @@ namespace Dungeon.Core
         [SerializeField] private int saveSummaryLogEveryNthSave = 10;
 
         private StatusSaveData data = new();
-        private bool runtimeCopyDeleted;
         private bool isQuitting;
         private int saveSummaryRequestCount;
         private float lastSaveSummaryLogTime = -9999f;
+        private IStatusSaveStorage storage;
 
         public StatusSaveData Data => data;
 
         public event Action<StatusSaveData> OnSaveDataChanged;
 
-        private string StreamingPath =>
-            Path.Combine(Application.streamingAssetsPath, sourceFileName);
-
-        private string NormalPersistentPath =>
-            Path.Combine(Application.persistentDataPath, sourceFileName);
-
-        private string RuntimePath =>
-            Path.Combine(Application.persistentDataPath, runtimeCopyFileName);
-
-        private string ActiveSavePath =>
-            useDevelopmentRuntimeCopy ? RuntimePath : NormalPersistentPath;
+        private string ActiveSavePath => EnsureStorage().ActivePath;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStaticStateOnPlayStart()
         {
             Instance = null;
-            runtimeCopyPreparedThisPlaySession = false;
         }
 
         private void Awake()
@@ -85,6 +62,7 @@ namespace Dungeon.Core
             }
 
             Instance = this;
+            storage = StatusSaveStorageFactory.Create();
 
             if (transform.parent != null)
                 transform.SetParent(null);
@@ -99,115 +77,32 @@ namespace Dungeon.Core
                 );
             }
 
-            PrepareSaveFile();
             Load();
         }
 
-        private void PrepareSaveFile()
+        private IStatusSaveStorage EnsureStorage()
         {
-            try
-            {
-                Directory.CreateDirectory(Application.persistentDataPath);
-
-                if (useDevelopmentRuntimeCopy)
-                    PrepareDevelopmentRuntimeSave();
-                else
-                    PrepareNormalPersistentSave();
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[StatusSaveFile] PrepareSaveFile failed: {e}");
-            }
-        }
-
-        private void PrepareDevelopmentRuntimeSave()
-        {
-            if (runtimeCopyPreparedThisPlaySession)
-            {
-                if (!File.Exists(RuntimePath))
-                {
-                    if (File.Exists(StreamingPath))
-                    {
-                        File.Copy(StreamingPath, RuntimePath, true);
-
-                        if (logSavePath)
-                        {
-                            Debug.Log("[StatusSaveFile] Runtime save was missing, copied again from StreamingAssets.");
-                            Debug.Log($"[StatusSaveFile] Source: {StreamingPath}");
-                            Debug.Log($"[StatusSaveFile] Runtime: {RuntimePath}");
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"[StatusSaveFile] StreamingAssets savefile missing: {StreamingPath}");
-                        CreateDefaultSave(RuntimePath);
-                    }
-                }
-                else if (logSavePath)
-                {
-                    Debug.Log($"[StatusSaveFile] Runtime save already prepared. Reusing: {RuntimePath}");
-                }
-
-                return;
-            }
-
-            runtimeCopyPreparedThisPlaySession = true;
-            runtimeCopyDeleted = false;
-
-            if (File.Exists(StreamingPath))
-            {
-                File.Copy(StreamingPath, RuntimePath, true);
-
-                if (logSavePath)
-                {
-                    Debug.Log("[StatusSaveFile] Development runtime save copied for this Play session.");
-                    Debug.Log($"[StatusSaveFile] Source: {StreamingPath}");
-                    Debug.Log($"[StatusSaveFile] Runtime: {RuntimePath}");
-                }
-
-                return;
-            }
-
-            Debug.LogWarning($"[StatusSaveFile] StreamingAssets savefile missing: {StreamingPath}");
-            CreateDefaultSave(RuntimePath);
-        }
-
-        private void PrepareNormalPersistentSave()
-        {
-            if (File.Exists(NormalPersistentPath))
-            {
-                if (logSavePath)
-                    Debug.Log($"[StatusSaveFile] Persistent save exists: {NormalPersistentPath}");
-
-                return;
-            }
-
-            if (File.Exists(StreamingPath))
-            {
-                File.Copy(StreamingPath, NormalPersistentPath, false);
-
-                if (logSavePath)
-                {
-                    Debug.Log("[StatusSaveFile] Persistent save created from StreamingAssets.");
-                    Debug.Log($"[StatusSaveFile] Save path: {NormalPersistentPath}");
-                }
-
-                return;
-            }
-
-            Debug.LogWarning($"[StatusSaveFile] StreamingAssets savefile missing: {StreamingPath}");
-            CreateDefaultSave(NormalPersistentPath);
+            storage ??= StatusSaveStorageFactory.Create();
+            return storage;
         }
 
         public void Load()
         {
             try
             {
-                if (!File.Exists(ActiveSavePath))
-                    PrepareSaveFile();
+                IStatusSaveStorage activeStorage = EnsureStorage();
+                string generatedDefaultJson = StatusSaveDefaults.Serialize(StatusSaveDefaults.Create());
 
-                string json = File.ReadAllText(ActiveSavePath);
-                data = JsonConvert.DeserializeObject<StatusSaveData>(json) ?? new StatusSaveData();
+                if (!activeStorage.TryLoadOrCreate(
+                        StatusSaveDefaults.IsValidJson,
+                        generatedDefaultJson,
+                        out string json))
+                {
+                    throw new InvalidOperationException(activeStorage.LastError);
+                }
+
+                if (!StatusSaveDefaults.TryDeserialize(json, out data, out string deserializeError))
+                    throw new InvalidOperationException(deserializeError);
 
                 EnsureNotNull();
 
@@ -219,19 +114,26 @@ namespace Dungeon.Core
                 if (logSavePath && logLoadSummary)
                     Debug.Log(BuildSaveSummary("Loaded"));
 
+                if (!string.IsNullOrWhiteSpace(activeStorage.LastRecoveryAction))
+                {
+                    Debug.LogWarning(
+                        $"[StatusSaveFile] {activeStorage.LastRecoveryAction} " +
+                        $"Path={activeStorage.ActivePath}");
+                }
+
                 OnSaveDataChanged?.Invoke(data);
             }
             catch (Exception e)
             {
                 Debug.LogError($"[StatusSaveFile] Load failed: {e}");
 
-                data = new StatusSaveData();
+                data = StatusSaveDefaults.Create();
                 EnsureNotNull();
                 OnSaveDataChanged?.Invoke(data);
             }
         }
 
-        public void Save()
+        public bool Save()
         {
             try
             {
@@ -242,52 +144,34 @@ namespace Dungeon.Core
                     EquipmentStatCalculator.Recalculate(data, GameDatabase.Instance);
                 }
 
-                string json = JsonConvert.SerializeObject(data, Formatting.Indented);
-                File.WriteAllText(ActiveSavePath, json);
+                string json = StatusSaveDefaults.Serialize(data);
+                IStatusSaveStorage activeStorage = EnsureStorage();
+
+                if (!activeStorage.TryWrite(json, StatusSaveDefaults.IsValidJson))
+                {
+                    Debug.LogError(
+                        $"[StatusSaveFile] Save failed. Path={activeStorage.ActivePath}, " +
+                        $"Error={activeStorage.LastError}");
+                    return false;
+                }
 
                 if (ShouldLogSaveSummary())
                     Debug.Log(BuildSaveSummary("Saved"));
 
                 OnSaveDataChanged?.Invoke(data);
+                return true;
             }
             catch (Exception e)
             {
                 Debug.LogError($"[StatusSaveFile] Save failed: {e}");
+                return false;
             }
-        }
-
-        private void CreateDefaultSave(string path)
-        {
-            data = new StatusSaveData();
-            EnsureNotNull();
-
-            string json = JsonConvert.SerializeObject(data, Formatting.Indented);
-            File.WriteAllText(path, json);
-
-            if (logSavePath)
-                Debug.Log($"[StatusSaveFile] Default save created: {path}");
         }
 
         private void EnsureNotNull()
         {
-            data ??= new StatusSaveData();
-
-            data.main_stats ??= new MainStats();
-            data.sub_stats ??= new SubStats();
-            data.checkpoint ??= new CheckpointData();
-
-            // savefile(1).json 기준 구조를 보존하기 위한 래퍼입니다.
-            // inventory: 실제 보유 중인 소비 아이템/장비 목록
-            // equips: 퀵슬롯과 장착 슬롯 상태
-            data.inventory ??= new InventoryData();
-            data.inventory.item ??= new();
-            data.inventory.equipment ??= new();
-
-            data.equips ??= new EquipsData();
-            data.equips.item ??= new();
-            data.equips.equip ??= new();
-
-            data.dungeon_status ??= new();
+            data ??= StatusSaveDefaults.Create();
+            StatusSaveDefaults.Normalize(data);
         }
 
         private bool ShouldLogSaveSummary()
@@ -397,7 +281,7 @@ namespace Dungeon.Core
         {
             EnsureNotNull();
 
-            data.user_name = string.IsNullOrWhiteSpace(userName) ? "Toluse" : userName;
+            data.user_name = userName?.Trim() ?? string.Empty;
             Save();
         }
 
@@ -421,9 +305,15 @@ namespace Dungeon.Core
         {
             EnsureNotNull();
 
-            data.main_stats.max_HP = Mathf.Max(1, maxHp);
+            int normalizedMaxHp = Mathf.Max(1, maxHp);
+            data.main_stats.max_HP = normalizedMaxHp;
             data.main_stats.physical_resist = physicalResist;
             data.main_stats.magical_resist = magicalResist;
+
+            data.base_main_stats ??= new MainStats();
+            data.base_main_stats.max_HP = normalizedMaxHp;
+            data.base_main_stats.physical_resist = physicalResist;
+            data.base_main_stats.magical_resist = magicalResist;
 
             Save();
         }
@@ -442,6 +332,13 @@ namespace Dungeon.Core
             data.sub_stats.electric_resist = electricResist;
             data.sub_stats.amber_resist = amberResist;
             data.sub_stats.freeze_resist = freezeResist;
+
+            data.base_sub_stats ??= new SubStats();
+            data.base_sub_stats.speed = speed;
+            data.base_sub_stats.poison_resist = poisonResist;
+            data.base_sub_stats.electric_resist = electricResist;
+            data.base_sub_stats.amber_resist = amberResist;
+            data.base_sub_stats.freeze_resist = freezeResist;
 
             Save();
         }
@@ -728,13 +625,19 @@ namespace Dungeon.Core
 
         public string GetSourceSavePath()
         {
-            return StreamingPath;
+            return EnsureStorage().DefaultPath;
         }
 
         private void OnApplicationQuit()
         {
             isQuitting = true;
-            DeleteDevelopmentRuntimeCopy();
+            Save();
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+                Save();
         }
 
         private void OnDestroy()
@@ -745,36 +648,7 @@ namespace Dungeon.Core
             Instance = null;
 
             if (!isQuitting && logSavePath)
-                Debug.Log($"[StatusSaveFile] Destroyed without deleting runtime save. ID={GetInstanceID()}");
-        }
-
-        private void DeleteDevelopmentRuntimeCopy()
-        {
-            if (runtimeCopyDeleted)
-                return;
-
-            if (!useDevelopmentRuntimeCopy)
-                return;
-
-            if (!deleteRuntimeCopyOnQuit)
-                return;
-
-            runtimeCopyDeleted = true;
-
-            try
-            {
-                if (File.Exists(RuntimePath))
-                {
-                    File.Delete(RuntimePath);
-
-                    if (logSavePath)
-                        Debug.Log($"[StatusSaveFile] Deleted development runtime save: {RuntimePath}");
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"[StatusSaveFile] Failed to delete development runtime save: {e}");
-            }
+                Debug.Log($"[StatusSaveFile] Destroyed. ID={GetInstanceID()}");
         }
 
     }

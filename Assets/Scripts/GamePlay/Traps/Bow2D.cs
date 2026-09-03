@@ -14,7 +14,6 @@ namespace Dungeon.Traps
 
         [Header("Stats")]
         [SerializeField] private float speed = 4f;
-        [SerializeField] private int damage = 5;
         [SerializeField] private float fireCooldown = 3f;
         [SerializeField] private bool autoFire = true;
 
@@ -56,7 +55,7 @@ namespace Dungeon.Traps
             spawnPos += dir * forwardPadding;
 
             Arrow2D arrow = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
-            arrow.Launch(dir, speed, damage, ownerCollider);
+            arrow.Launch(dir, speed, TrapDamageEvent.ResolveTrapCode(gameObject), ownerCollider);
         }
     }
 }

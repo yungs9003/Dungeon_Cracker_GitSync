@@ -5,23 +5,30 @@ using Dungeon.Player;
 namespace Dungeon.Map
 {
     /// <summary>
-    /// 숨겨진 함정 타일의 표시 상태를 관리합니다.
+    /// 발견 전/후 함정 타일의 표시 상태를 관리합니다.
     ///
     /// 핵심 동작:
-    /// - 숨김 상태: 메인 SpriteRenderer는 hidden/disguise sprite로 바꾸고,
-    ///              함정의 화살/가시/마스크 같은 자식 SpriteRenderer는 꺼둡니다.
-    /// - 발견 상태: 메인 SpriteRenderer를 실제 sprite로 되돌리고,
-    ///              숨겨두었던 자식 SpriteRenderer를 다시 켭니다.
-    ///
-    /// 기존 버전은 메인 SpriteRenderer 하나만 sprite 교체를 했기 때문에,
-    /// Bow/Spike 프리팹의 자식 SpriteRenderer가 계속 보여서
-    /// clearRadius 밖에서도 화살/가시가 보이는 문제가 생길 수 있었습니다.
+    /// - Variant 모드: 발견 전/후에 AssetVariantSprite2D의 Element 0/1을 전환합니다.
+    /// - Visibility 모드: 발견 전에는 지정된 SpriteRenderer의 렌더링만 차단하고 발견 후 해제합니다.
+    /// - SpriteRenderer.enabled는 건드리지 않아 함정의 레이저/전격 애니메이션 상태를 보존합니다.
     /// </summary>
     public class HiddenTrapVisual2D : MonoBehaviour
     {
+        private enum RevealVisualMode
+        {
+            AssetVariant,
+            RendererVisibility
+        }
+
         [Header("Main Tile Renderer")]
+        [Tooltip("함정 프리팹의 Element 0/1을 가진 AssetVariantSprite2D입니다.")]
+        [SerializeField] private AssetVariantSprite2D assetVariant;
+
         [Tooltip("실제 타일의 대표 SpriteRenderer입니다. 비워두면 AssetVariantSprite2D.Renderer 또는 첫 번째 SpriteRenderer를 자동으로 사용합니다.")]
         [SerializeField] private SpriteRenderer targetRenderer;
+
+        [SerializeField] private int hiddenAssetNo = 0;
+        [SerializeField] private int revealedAssetNo = 1;
 
         [Header("Reveal Position")]
         [Tooltip("켜져 있으면 큰 감지 콜라이더가 아니라 타일 오브젝트 중심(transform.position) 기준으로 reveal 판정합니다.")]
@@ -44,53 +51,86 @@ namespace Dungeon.Map
         [Tooltip("켜져 있으면 한 번 발견된 뒤에는 조명 밖으로 나가도 실제 모습이 유지됩니다.")]
         [SerializeField] private bool stayRevealedAfterSeen = true;
 
-        [Tooltip("이 이름을 가진 overlay 렌더러는 자동 숨김 대상에서 제외합니다. 이전 overlay 방식과의 호환용입니다.")]
-        [SerializeField] private string hiddenOverlayName = "__HiddenVisualOverlay";
-
-        private Sprite actualSprite;
-        private Sprite disguiseSprite;
-
         private bool configured;
         private bool discovered;
         private bool lastInsideForwardZone;
+        private bool hasAppliedVisualState;
+        private bool lastAppliedShowActual;
+        private RevealVisualMode visualMode;
 
         private readonly List<SpriteRenderer> renderersToHide = new();
-        private readonly List<bool> rendererInitialEnabled = new();
 
-        /// <summary>
-        /// 구버전 JsonBlockBuilder2D 호환용 Configure입니다.
-        /// </summary>
-        public void Configure(Sprite disguise, bool stayRevealed)
+        public bool ConfigureFromAssetVariants(
+            AssetVariantSprite2D variant,
+            bool stayRevealed,
+            int hiddenElement = 0,
+            int revealedElement = 1)
         {
-            Configure(disguise, 0f, 0f, stayRevealed);
-        }
-
-        /// <summary>
-        /// 최신 JsonBlockBuilder2D 호환용 Configure입니다.
-        /// actualZRotation/hiddenZRotation은 overlay 방식에서 쓰던 값이므로,
-        /// 현재 direct sprite swap 방식에서는 받기만 하고 사용하지 않습니다.
-        /// </summary>
-        public void Configure(Sprite disguise, float actualZRotation, float hiddenZRotation, bool stayRevealed)
-        {
+            assetVariant = variant != null ? variant : GetComponent<AssetVariantSprite2D>();
             ResolveRenderer();
             ResolveRevealCollider();
 
-            if (targetRenderer == null)
+            if (assetVariant == null ||
+                !assetVariant.HasVariant(hiddenElement) ||
+                !assetVariant.HasVariant(revealedElement))
             {
-                Debug.LogWarning($"{name}: HiddenTrapVisual2D에 사용할 SpriteRenderer가 없습니다.");
-                return;
+                Debug.LogWarning($"{name}: 발견 전/후에 사용할 AssetVariantSprite2D Element {hiddenElement}/{revealedElement}가 없습니다.");
+                configured = false;
+                return false;
             }
 
-            actualSprite = targetRenderer.sprite;
-            disguiseSprite = disguise;
+            hiddenAssetNo = hiddenElement;
+            revealedAssetNo = revealedElement;
             stayRevealedAfterSeen = stayRevealed;
+            visualMode = RevealVisualMode.AssetVariant;
 
             discovered = false;
             lastInsideForwardZone = false;
+            hasAppliedVisualState = false;
             configured = true;
 
             CollectExtraRenderersToHide();
             ApplyForwardZoneState(false);
+            return true;
+        }
+
+        /// <summary>
+        /// 별도의 Element 교체 없이 지정된 렌더러의 렌더링을 발견 전에는 차단하고,
+        /// 발견 후에는 차단을 해제합니다. enabled 값은 변경하지 않습니다.
+        /// 루트의 공격 스크립트와 Collider는 건드리지 않습니다.
+        /// </summary>
+        public bool ConfigureVisibilityOnly(
+            SpriteRenderer[] renderers,
+            bool stayRevealed)
+        {
+            assetVariant = null;
+            targetRenderer = null;
+            renderersToHide.Clear();
+
+            if (renderers != null)
+            {
+                foreach (SpriteRenderer sr in renderers)
+                    AddRendererToHideList(sr);
+            }
+
+            if (renderersToHide.Count == 0)
+            {
+                Debug.LogWarning($"{name}: 발견 전 숨길 자식 SpriteRenderer가 없습니다.");
+                configured = false;
+                return false;
+            }
+
+            stayRevealedAfterSeen = stayRevealed;
+            visualMode = RevealVisualMode.RendererVisibility;
+
+            discovered = false;
+            lastInsideForwardZone = false;
+            hasAppliedVisualState = false;
+            configured = true;
+
+            ResolveRevealCollider();
+            ApplyForwardZoneState(false);
+            return true;
         }
 
         public void SetStayRevealedAfterSeen(bool value)
@@ -128,13 +168,13 @@ namespace Dungeon.Map
                 discovered = true;
 
             bool showActual = isInside || (stayRevealedAfterSeen && discovered);
-            ApplyVisual(showActual);
+            ApplyVisualState(showActual);
         }
 
         public void ForceReveal()
         {
             discovered = true;
-            ApplyVisual(true);
+            ApplyVisualState(true);
         }
 
         public void ForceHideAgain()
@@ -143,39 +183,41 @@ namespace Dungeon.Map
             ApplyForwardZoneState(false);
         }
 
-        public void SetActualSprite(Sprite sprite)
-        {
-            if (sprite == null)
-                return;
-
-            actualSprite = sprite;
-            ApplyForwardZoneState(lastInsideForwardZone);
-        }
-
-        /// <summary>
-        /// 최신 overlay 방식 JsonBlockBuilder2D와의 컴파일 호환용입니다.
-        /// 현재 방식에서는 hidden sprite만 교체하고 회전값은 사용하지 않습니다.
-        /// </summary>
-        public void SetHiddenSpriteAndRotation(Sprite sprite, float actualZRotation, float hiddenZRotation)
-        {
-            disguiseSprite = sprite;
-            ApplyForwardZoneState(lastInsideForwardZone);
-        }
-
         private void ApplyVisual(bool showActual)
         {
             ResolveRenderer();
 
-            if (targetRenderer != null)
+            if (visualMode == RevealVisualMode.AssetVariant &&
+                assetVariant != null &&
+                configured)
             {
-                if (showActual && actualSprite != null)
-                    targetRenderer.sprite = actualSprite;
-                else if (!showActual && disguiseSprite != null)
-                    targetRenderer.sprite = disguiseSprite;
+                assetVariant.SetAssetNo(showActual ? revealedAssetNo : hiddenAssetNo);
             }
 
             ApplyExtraRendererVisibility(showActual);
             ApplyExtraObjectVisibility(showActual);
+        }
+
+        /// <summary>
+        /// 숨김 상태는 매 프레임 강제해 아직 발견되지 않은 동적 효과가 켜지는 것을 막습니다.
+        /// 발견 상태는 전환 시 한 번만 복원해 이후 함정 스크립트가 렌더러를 제어하도록 둡니다.
+        /// </summary>
+        private void ApplyVisualState(bool showActual)
+        {
+            if (!configured)
+                return;
+
+            bool shouldApply =
+                !hasAppliedVisualState ||
+                lastAppliedShowActual != showActual ||
+                !showActual;
+
+            if (!shouldApply)
+                return;
+
+            ApplyVisual(showActual);
+            hasAppliedVisualState = true;
+            lastAppliedShowActual = showActual;
         }
 
         private void ResolveRenderer()
@@ -183,10 +225,12 @@ namespace Dungeon.Map
             if (targetRenderer != null)
                 return;
 
-            var variant = GetComponent<AssetVariantSprite2D>();
-            if (variant != null && variant.Renderer != null)
+            if (assetVariant == null)
+                assetVariant = GetComponent<AssetVariantSprite2D>();
+
+            if (assetVariant != null && assetVariant.Renderer != null)
             {
-                targetRenderer = variant.Renderer;
+                targetRenderer = assetVariant.Renderer;
                 return;
             }
 
@@ -201,8 +245,6 @@ namespace Dungeon.Map
             foreach (var sr in renderers)
             {
                 if (sr == null) continue;
-                if (sr.name == hiddenOverlayName) continue;
-
                 targetRenderer = sr;
                 return;
             }
@@ -221,12 +263,11 @@ namespace Dungeon.Map
 
         /// <summary>
         /// 숨김 상태에서 꺼둘 자식 SpriteRenderer들을 수집합니다.
-        /// targetRenderer는 hidden sprite를 보여줘야 하므로 제외합니다.
+        /// targetRenderer는 Element 0/1을 직접 보여줘야 하므로 제외합니다.
         /// </summary>
         private void CollectExtraRenderersToHide()
         {
             renderersToHide.Clear();
-            rendererInitialEnabled.Clear();
 
             if (hideChildSpriteRenderersUntilRevealed)
             {
@@ -250,11 +291,10 @@ namespace Dungeon.Map
         {
             if (sr == null) return;
             if (sr == targetRenderer) return;
-            if (sr.name == hiddenOverlayName) return;
+            if (sr.GetComponent<TrapRevealAlwaysVisible2D>() != null) return;
             if (renderersToHide.Contains(sr)) return;
 
             renderersToHide.Add(sr);
-            rendererInitialEnabled.Add(sr.enabled);
         }
 
         private void ApplyExtraRendererVisibility(bool showActual)
@@ -269,12 +309,10 @@ namespace Dungeon.Map
                 if (sr == null)
                 {
                     renderersToHide.RemoveAt(i);
-                    rendererInitialEnabled.RemoveAt(i);
                     continue;
                 }
 
-                bool initialEnabled = i < rendererInitialEnabled.Count && rendererInitialEnabled[i];
-                sr.enabled = showActual && initialEnabled;
+                sr.forceRenderingOff = !showActual;
             }
         }
 

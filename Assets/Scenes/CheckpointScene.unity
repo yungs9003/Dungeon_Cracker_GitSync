@@ -1073,10 +1073,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760e6ba2ca5ef2b48a04897afe0435db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.StatusSaveFile
-  sourceFileName: savefile.json
-  useDevelopmentRuntimeCopy: 1
-  runtimeCopyFileName: savefile_dev_runtime.json
-  deleteRuntimeCopyOnQuit: 1
   logSavePath: 1
   logLoadSummary: 1
   logSaveSummary: 1
@@ -6619,8 +6615,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   database: {fileID: 1681272506}
-  saveFileName: savefile_dev_runtime.json
-  saveFilePathOverride: 
   headSlot:
     slotKey: head
     slotButtonName: HeadSlotButton
@@ -9876,13 +9870,12 @@ MonoBehaviour:
   autoBuildOnStart: 0
   fieldEffectManager: {fileID: 0}
   visionSystem: {fileID: 0}
-  hiddenTilesStayRevealed: 1
-  useLegacyTrapDisguiseFallback: 0
-  hiddenAllowedActualCodePrefixes:
+  trapTilesStayRevealed: 1
+  trapRevealCodePrefixes:
   - 101-
   - 102-
-  removeStaleHiddenVisualFromNonHiddenTiles: 1
-  hiddenOverlayChildName: __HiddenVisualOverlay
+  - 103-
+  trapRevealExcludedCodes: []
   applyDirectionRotationOnlyToPrefixes: 0
   directionRotationPrefixes:
   - 101-

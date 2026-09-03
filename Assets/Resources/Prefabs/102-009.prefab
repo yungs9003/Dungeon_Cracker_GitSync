@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6340574378746200013}
   - component: {fileID: 3136115349140075502}
+  - component: {fileID: 6129384756102938475}
   m_Layer: 11
   m_Name: LaserBeam
   m_TagString: Untagged
@@ -90,6 +91,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6129384756102938475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320406186987396161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b61d8b38a33c48c1a95a0c67127270d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Map.TrapRevealAlwaysVisible2D
 --- !u!1 &1009959089450712569
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,6 +113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4151841867386825593}
   - component: {fileID: 8883066815131965840}
+  - component: {fileID: 877817809671683073}
   m_Layer: 9
   m_Name: CrystalBase
   m_TagString: Untagged
@@ -180,6 +194,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &877817809671683073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009959089450712569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d4fbca911c06245995b6a4fa973647, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.GamePlay::AssetVariantSprite2D
+  spriteRenderer: {fileID: 8883066815131965840}
+  variants:
+  - {fileID: -6213770364130209045, guid: aee0fb63b9309ff428fea1211b61b70f, type: 3}
+  - {fileID: 8793157785901611469, guid: 774b6a4dc2c262849b14d49f2a39393e, type: 3}
 --- !u!1 &7026180871126489687
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +302,6 @@ MonoBehaviour:
   laserHitLayer:
     serializedVersion: 2
     m_Bits: 3072
-  damage: 10
   laserDuration: 0.2
   chargeTime: 1
   cooldown: 1.5
@@ -297,6 +326,7 @@ MonoBehaviour:
   copyDestroyedObjectRotation: 1
   disableTrapsBeforeDestroy: 1
   destroyNextFrame: 1
+  countAsBrokenTrap: 1
 --- !u!61 &27993683318603343
 BoxCollider2D:
   m_ObjectHideFlags: 0

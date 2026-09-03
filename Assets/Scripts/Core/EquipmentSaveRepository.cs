@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Dungeon.Core
@@ -30,14 +28,14 @@ namespace Dungeon.Core
         private StatusSaveData data;
         private bool usingStatusSaveFile;
 
-        // StatusSaveFile이 없는 특수 테스트 상황에서만 사용하는 fallback 경로입니다.
-        private string fallbackFilePath;
+        // StatusSaveFile이 없는 UI 단독 테스트도 동일한 저장 백엔드를 사용합니다.
+        private IStatusSaveStorage fallbackStorage;
 
-        public bool Load(string preferredFileName, string overridePath = null)
+        public bool Load()
         {
             LastError = string.Empty;
             CurrentPath = string.Empty;
-            fallbackFilePath = string.Empty;
+            fallbackStorage = null;
             statusSaveFile = null;
             data = null;
             usingStatusSaveFile = false;
@@ -55,31 +53,36 @@ namespace Dungeon.Core
                 return true;
             }
 
-            // UI 단독 테스트 등 StatusSaveFile이 없는 경우에만 파일을 직접 읽습니다.
-            foreach (string path in BuildCandidatePaths(preferredFileName, overridePath))
+            // UI 단독 테스트에서도 Editor/Player에 맞는 같은 백엔드만 사용합니다.
+            try
             {
-                try
-                {
-                    if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
-                        continue;
+                fallbackStorage = StatusSaveStorageFactory.Create();
+                string generatedDefaultJson = StatusSaveDefaults.Serialize(StatusSaveDefaults.Create());
 
-                    string json = File.ReadAllText(path);
-                    data = JsonConvert.DeserializeObject<StatusSaveData>(json) ?? new StatusSaveData();
-                    fallbackFilePath = path;
-                    CurrentPath = path;
-
-                    EnsureDataNotNull();
-                    return true;
-                }
-                catch (Exception e)
+                if (!fallbackStorage.TryLoadOrCreate(
+                        StatusSaveDefaults.IsValidJson,
+                        generatedDefaultJson,
+                        out string json))
                 {
-                    LastError = $"Savefile 읽기 실패: {path}\n{e}";
+                    LastError = fallbackStorage.LastError;
                     return false;
                 }
-            }
 
-            LastError = "StatusSaveFile.Instance가 없고, fallback savefile도 찾지 못했습니다.";
-            return false;
+                if (!StatusSaveDefaults.TryDeserialize(json, out data, out string deserializeError))
+                {
+                    LastError = $"Savefile 읽기 실패: {fallbackStorage.ActivePath}\n{deserializeError}";
+                    return false;
+                }
+
+                CurrentPath = fallbackStorage.ActivePath;
+                EnsureDataNotNull();
+                return true;
+            }
+            catch (Exception e)
+            {
+                LastError = $"Savefile 읽기 실패: {fallbackStorage?.ActivePath}\n{e}";
+                return false;
+            }
         }
 
         public bool Save()
@@ -96,20 +99,30 @@ namespace Dungeon.Core
             {
                 if (usingStatusSaveFile && statusSaveFile != null)
                 {
-                    statusSaveFile.Save();
+                    if (!statusSaveFile.Save())
+                    {
+                        LastError = "StatusSaveFile 안전 저장에 실패했습니다.";
+                        return false;
+                    }
+
                     CurrentPath = statusSaveFile.GetActiveSavePath();
                     return true;
                 }
 
-                if (string.IsNullOrWhiteSpace(fallbackFilePath))
+                if (fallbackStorage == null)
                 {
-                    LastError = "fallback 저장 경로가 없습니다.";
+                    LastError = "fallback 저장소가 없습니다.";
                     return false;
                 }
 
-                string json = JsonConvert.SerializeObject(data, Formatting.Indented);
-                File.WriteAllText(fallbackFilePath, json);
-                CurrentPath = fallbackFilePath;
+                string json = StatusSaveDefaults.Serialize(data);
+                if (!fallbackStorage.TryWrite(json, StatusSaveDefaults.IsValidJson))
+                {
+                    LastError = fallbackStorage.LastError;
+                    return false;
+                }
+
+                CurrentPath = fallbackStorage.ActivePath;
                 return true;
             }
             catch (Exception e)
@@ -235,20 +248,8 @@ namespace Dungeon.Core
 
         private void EnsureDataNotNull()
         {
-            data ??= new StatusSaveData();
-
-            data.main_stats ??= new MainStats();
-            data.sub_stats ??= new SubStats();
-            data.checkpoint ??= new CheckpointData();
-            data.dungeon_status ??= new List<Dictionary<string, string>>();
-
-            data.inventory ??= new InventoryData();
-            data.inventory.item ??= new List<Dictionary<string, int>>();
-            data.inventory.equipment ??= new List<Dictionary<string, int>>();
-
-            data.equips ??= new EquipsData();
-            data.equips.item ??= new List<Dictionary<string, string>>();
-            data.equips.equip ??= new List<Dictionary<string, string>>();
+            data ??= StatusSaveDefaults.Create();
+            StatusSaveDefaults.Normalize(data);
         }
 
         private static List<OwnedDbStack> BuildOwnedStacks(List<Dictionary<string, int>> source, string category)
@@ -288,24 +289,6 @@ namespace Dungeon.Core
             return result;
         }
 
-        private static IEnumerable<string> BuildCandidatePaths(string preferredFileName, string overridePath)
-        {
-            if (!string.IsNullOrWhiteSpace(overridePath))
-                yield return overridePath;
-
-            if (!string.IsNullOrWhiteSpace(preferredFileName))
-            {
-                yield return Path.Combine(Application.persistentDataPath, preferredFileName);
-                yield return Path.Combine(Application.streamingAssetsPath, preferredFileName);
-            }
-
-            yield return Path.Combine(Application.persistentDataPath, "savefile_dev_runtime.json");
-            yield return Path.Combine(Application.persistentDataPath, "savefile.json");
-            yield return Path.Combine(Application.persistentDataPath, "player_save.json");
-            yield return Path.Combine(Application.streamingAssetsPath, "savefile_dev_runtime.json");
-            yield return Path.Combine(Application.streamingAssetsPath, "savefile.json");
-            yield return Path.Combine(Application.streamingAssetsPath, "player_save.json");
-        }
     }
 
     public readonly struct OwnedDbStack
