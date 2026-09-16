@@ -138,13 +138,13 @@ public static class ItemEquipmentPopupBuilder
         panelImage.sprite = background;
         panelImage.type = Image.Type.Simple;
         panelImage.preserveAspect = false;
-        panelImage.color = new Color(1f, 1f, 1f, 0.9f);
+        panelImage.color = Color.white;
         panelImage.raycastTarget = true;
 
         TextMeshProUGUI category = CreateText(
             "CategoryText",
             panel.transform,
-            "-Equipment-",
+            "-EQUIPMENT-",
             koulen,
             24f,
             Color.white,

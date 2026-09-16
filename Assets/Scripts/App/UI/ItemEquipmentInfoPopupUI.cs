@@ -44,6 +44,7 @@ namespace Dungeon.UI
         private void Awake()
         {
             Instance = this;
+            ApplyReferencePresentation();
 
             if (dismissButton != null)
                 dismissButton.onClick.AddListener(Hide);
@@ -54,6 +55,7 @@ namespace Dungeon.UI
         private void OnEnable()
         {
             Instance = this;
+            ApplyReferencePresentation();
         }
 
         private void OnDisable()
@@ -100,6 +102,8 @@ namespace Dungeon.UI
 
         public bool ShowByKey(string databaseKey)
         {
+            ApplyReferencePresentation();
+
             if (database == null)
                 database = GameDatabase.Instance;
 
@@ -161,7 +165,7 @@ namespace Dungeon.UI
             }
 
             if (categoryText != null)
-                categoryText.text = isEquipment ? "-Equipment-" : "-ITEM-";
+                categoryText.text = isEquipment ? "-EQUIPMENT-" : "-ITEM-";
 
             if (nameText != null)
                 nameText.text = displayName ?? string.Empty;
@@ -185,6 +189,7 @@ namespace Dungeon.UI
 
             if (popupContent != null)
             {
+                transform.SetAsLastSibling();
                 popupContent.SetActive(true);
                 popupContent.transform.SetAsLastSibling();
             }
@@ -232,6 +237,149 @@ namespace Dungeon.UI
             bodyTag = configuredBodyTag;
             legsTag = configuredLegsTag;
             rankTags = configuredRankTags ?? new Sprite[0];
+            ApplyReferencePresentation();
+        }
+
+        /// <summary>
+        /// Keeps both the standalone popup prefab and the copy embedded in
+        /// SharedStatus aligned to the supplied 120 x 126 SVG (rendered at 3x).
+        /// This intentionally changes presentation only; lookup and click
+        /// behaviour remain owned by the existing inventory/equipment flow.
+        /// </summary>
+        private void ApplyReferencePresentation()
+        {
+            RectTransform panelRect = ResolvePanelRect();
+            if (panelRect == null)
+                return;
+
+            panelRect.anchorMin = panelRect.anchorMax = new Vector2(0.5f, 0.5f);
+            panelRect.pivot = new Vector2(0.5f, 0.5f);
+            panelRect.anchoredPosition = Vector2.zero;
+            panelRect.sizeDelta = new Vector2(360f, 378f);
+            panelRect.localScale = Vector3.one;
+
+            Image panelImage = panelRect.GetComponent<Image>();
+            if (panelImage != null)
+            {
+                panelImage.color = Color.white;
+                panelImage.type = Image.Type.Simple;
+                panelImage.preserveAspect = false;
+                panelImage.raycastTarget = true;
+            }
+
+            ConfigureText(
+                categoryText,
+                new Vector2(360f, 45f),
+                Vector2.zero,
+                24f,
+                Color.white,
+                TextAlignmentOptions.Center,
+                TextWrappingModes.NoWrap,
+                TextOverflowModes.Overflow);
+
+            if (categoryText != null)
+                categoryText.characterSpacing = 8f;
+
+            ConfigureImage(itemIcon, new Vector2(78f, 78f), new Vector2(45f, 78f));
+
+            ConfigureText(
+                nameText,
+                new Vector2(195f, 58f),
+                new Vector2(142f, 53f),
+                39f,
+                new Color32(108, 172, 255, 255),
+                TextAlignmentOptions.Center,
+                TextWrappingModes.NoWrap,
+                TextOverflowModes.Ellipsis);
+
+            ConfigureImage(typeTagImage, new Vector2(63f, 27f), new Vector2(159f, 108f));
+            ConfigureImage(rankTagImage, new Vector2(84f, 27f), new Vector2(159f, 144f));
+
+            RectTransform divider = panelRect.Find("Divider") as RectTransform;
+            if (divider != null)
+            {
+                SetTopLeftRect(divider, new Vector2(294f, 3f), new Vector2(33f, 175.5f));
+                Image dividerImage = divider.GetComponent<Image>();
+                if (dividerImage != null)
+                {
+                    dividerImage.color = new Color32(217, 217, 217, 255);
+                    dividerImage.raycastTarget = false;
+                }
+            }
+
+            ConfigureText(
+                descriptionText,
+                new Vector2(294f, 165f),
+                new Vector2(33f, 195f),
+                24f,
+                Color.black,
+                TextAlignmentOptions.TopLeft,
+                TextWrappingModes.Normal,
+                TextOverflowModes.Ellipsis);
+
+            if (descriptionText != null)
+                descriptionText.lineSpacing = 4f;
+        }
+
+        private RectTransform ResolvePanelRect()
+        {
+            if (nameText != null && nameText.rectTransform.parent is RectTransform parent)
+                return parent;
+
+            return popupContent != null
+                ? popupContent.transform.Find("PopupPanel") as RectTransform
+                : null;
+        }
+
+        private static void ConfigureText(
+            TMP_Text text,
+            Vector2 size,
+            Vector2 topLeft,
+            float fontSize,
+            Color color,
+            TextAlignmentOptions alignment,
+            TextWrappingModes wrapping,
+            TextOverflowModes overflow)
+        {
+            if (text == null)
+                return;
+
+            SetTopLeftRect(text.rectTransform, size, topLeft);
+            text.enableAutoSizing = false;
+            text.fontSize = fontSize;
+            text.fontStyle = FontStyles.Normal;
+            text.color = color;
+            text.alignment = alignment;
+            text.textWrappingMode = wrapping;
+            text.overflowMode = overflow;
+            text.richText = true;
+            text.raycastTarget = false;
+
+            if (text.font != null)
+                text.font.isMultiAtlasTexturesEnabled = true;
+        }
+
+        private static void ConfigureImage(Image image, Vector2 size, Vector2 topLeft)
+        {
+            if (image == null)
+                return;
+
+            SetTopLeftRect(image.rectTransform, size, topLeft);
+            image.type = Image.Type.Simple;
+            image.preserveAspect = true;
+            image.raycastTarget = false;
+        }
+
+        private static void SetTopLeftRect(
+            RectTransform rect,
+            Vector2 size,
+            Vector2 topLeft)
+        {
+            rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
+            rect.pivot = new Vector2(0f, 1f);
+            rect.sizeDelta = size;
+            rect.anchoredPosition = new Vector2(topLeft.x, -topLeft.y);
+            rect.localScale = Vector3.one;
         }
 
         private Sprite GetEquipmentSlotTag(string slot)

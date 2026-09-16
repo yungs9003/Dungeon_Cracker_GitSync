@@ -50,8 +50,9 @@ namespace Dungeon.UI
         private TMP_Text detailDescriptionText;
         private StatusModuleArtwork artwork;
         private bool layoutReady;
-        private bool subscribed;
+        private bool invalidLayoutWarningLogged;
         private int selectedSlotNumber;
+        private StatusSaveFile subscribedSaveFile;
 
         public void Configure(GameObject left, GameObject right)
         {
@@ -59,14 +60,25 @@ namespace Dungeon.UI
             rightPage = right != null ? right : gameObject;
             database ??= GameDatabase.Instance;
             EnsureLayout();
-            Subscribe();
-            Refresh();
+
+            if (isActiveAndEnabled)
+            {
+                Subscribe();
+                Refresh();
+            }
+            else
+            {
+                Unsubscribe();
+            }
         }
 
         private void OnEnable()
         {
-            Subscribe();
+            if (leftPage == null || rightPage == null)
+                return;
+
             EnsureLayout();
+            Subscribe();
             Refresh();
         }
 
@@ -78,15 +90,25 @@ namespace Dungeon.UI
         private void OnDestroy()
         {
             Unsubscribe();
-
-            foreach (StatusModuleSlotBinding slot in slots)
-                slot.Unbind();
+            ClearSlotBindings();
         }
 
         public void Refresh()
         {
-            if (!layoutReady)
+            if (!isActiveAndEnabled || leftPage == null || rightPage == null)
                 return;
+
+            if (!HasValidLayoutReferences())
+            {
+                layoutReady = false;
+                EnsureLayout();
+            }
+
+            if (!HasValidLayoutReferences())
+            {
+                WarnInvalidLayoutOnce();
+                return;
+            }
 
             database ??= GameDatabase.Instance;
             if (database == null || !saveRepository.Load())
@@ -110,7 +132,12 @@ namespace Dungeon.UI
                     firstOccupied = firstOccupied == 0 ? slotNumber : firstOccupied;
                 }
 
-                slots[i].SetContent(definition, icon);
+                if (!slots[i].SetContent(definition, icon))
+                {
+                    layoutReady = false;
+                    WarnInvalidLayoutOnce();
+                    return;
+                }
             }
 
             if (selectedSlotNumber <= 0 ||
@@ -130,7 +157,8 @@ namespace Dungeon.UI
 
         private void OnSaveDataChanged(StatusSaveData data)
         {
-            Refresh();
+            if (isActiveAndEnabled)
+                Refresh();
         }
 
         private void OnSlotClicked(int slotNumber)
@@ -149,14 +177,34 @@ namespace Dungeon.UI
 
         private void EnsureLayout()
         {
-            if (layoutReady || leftPage == null || rightPage == null)
+            if (layoutReady && HasValidLayoutReferences())
                 return;
+
+            if (leftPage == null || rightPage == null)
+                return;
+
+            layoutReady = false;
+            ClearSlotBindings();
+            detailIcon = null;
+            detailNameText = null;
+            detailDescriptionText = null;
 
             Transform detailGroup = FindChildRecursive(rightPage.transform, "ModuleDetailGroup");
             bool hasDesignedDetails = detailGroup != null;
+            bool hasExistingSlotRoots = HasAnyExistingSlotRoot();
 
             if (!TryBindExistingSlots())
+            {
+                // 일부 슬롯만 남아 있는 상태에서 fallback을 만들면 같은 이름의 슬롯과
+                // 클릭 리스너가 중복된다. 완전히 빈 구형 페이지에만 fallback을 만든다.
+                if (hasExistingSlotRoots)
+                {
+                    WarnInvalidLayoutOnce();
+                    return;
+                }
+
                 BuildFallbackSlots();
+            }
 
             if (hasDesignedDetails)
             {
@@ -173,32 +221,30 @@ namespace Dungeon.UI
 
             ApplyModuleTextFont();
 
-            layoutReady = slots.Count == ModuleSaveRepository.SlotCount &&
-                          detailNameText != null &&
-                          detailDescriptionText != null;
+            layoutReady = HasValidLayoutReferences();
+            if (layoutReady)
+                invalidLayoutWarningLogged = false;
+            else
+                WarnInvalidLayoutOnce();
         }
 
         private bool TryBindExistingSlots()
         {
-            slots.Clear();
+            ClearSlotBindings();
 
             for (int i = 0; i < SlotNames.Length; i++)
             {
                 Transform root = FindChildRecursive(leftPage.transform, SlotNames[i]);
                 if (root == null)
                 {
-                    foreach (StatusModuleSlotBinding slot in slots)
-                        slot.Unbind();
-                    slots.Clear();
+                    ClearSlotBindings();
                     return false;
                 }
 
                 Image icon = GetImage(root, "ModuleIcon");
                 if (icon == null)
                 {
-                    foreach (StatusModuleSlotBinding slot in slots)
-                        slot.Unbind();
-                    slots.Clear();
+                    ClearSlotBindings();
                     return false;
                 }
 
@@ -210,7 +256,7 @@ namespace Dungeon.UI
 
         private void BuildFallbackSlots()
         {
-            slots.Clear();
+            ClearSlotBindings();
             RectTransform pageRect = leftPage.GetComponent<RectTransform>();
             Stretch(pageRect);
             StatusModuleArtwork visual = LoadArtwork();
@@ -529,8 +575,11 @@ namespace Dungeon.UI
                 detailIcon.gameObject.SetActive(icon != null);
             }
 
-            detailNameText.text = definition.name ?? string.Empty;
-            detailDescriptionText.text = definition.desc ?? string.Empty;
+            if (detailNameText != null)
+                detailNameText.text = definition.name ?? string.Empty;
+
+            if (detailDescriptionText != null)
+                detailDescriptionText.text = definition.desc ?? string.Empty;
         }
 
         private void ShowEmptyDetails(string message)
@@ -557,22 +606,76 @@ namespace Dungeon.UI
 
         private void Subscribe()
         {
-            if (subscribed || StatusSaveFile.Instance == null)
+            StatusSaveFile nextSaveFile = StatusSaveFile.Instance;
+            if (subscribedSaveFile == nextSaveFile)
                 return;
 
-            StatusSaveFile.Instance.OnSaveDataChanged += OnSaveDataChanged;
-            subscribed = true;
+            Unsubscribe();
+            subscribedSaveFile = nextSaveFile;
+
+            if (subscribedSaveFile != null)
+                subscribedSaveFile.OnSaveDataChanged += OnSaveDataChanged;
         }
 
         private void Unsubscribe()
         {
-            if (!subscribed)
+            if (subscribedSaveFile != null)
+                subscribedSaveFile.OnSaveDataChanged -= OnSaveDataChanged;
+
+            subscribedSaveFile = null;
+        }
+
+        private bool HasValidLayoutReferences()
+        {
+            if (leftPage == null || rightPage == null ||
+                slots.Count != ModuleSaveRepository.SlotCount ||
+                detailIcon == null || detailNameText == null ||
+                detailDescriptionText == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < slots.Count; i++)
+            {
+                if (!slots[i].IsValid)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private bool HasAnyExistingSlotRoot()
+        {
+            if (leftPage == null)
+                return false;
+
+            for (int i = 0; i < SlotNames.Length; i++)
+            {
+                if (FindChildRecursive(leftPage.transform, SlotNames[i]) != null)
+                    return true;
+            }
+
+            return false;
+        }
+
+        private void ClearSlotBindings()
+        {
+            foreach (StatusModuleSlotBinding slot in slots)
+                slot.Unbind();
+
+            slots.Clear();
+        }
+
+        private void WarnInvalidLayoutOnce()
+        {
+            if (invalidLayoutWarningLogged)
                 return;
 
-            if (StatusSaveFile.Instance != null)
-                StatusSaveFile.Instance.OnSaveDataChanged -= OnSaveDataChanged;
-
-            subscribed = false;
+            invalidLayoutWarningLogged = true;
+            Debug.LogWarning(
+                "[StatusModulePageUI] 모듈 UI 참조가 파괴되었거나 완전하지 않아 " +
+                "이번 새로고침을 건너뜁니다.",
+                this);
         }
 
         private StatusModuleArtwork LoadArtwork()
@@ -777,7 +880,8 @@ namespace Dungeon.UI
         {
             public int SlotNumber { get; }
             public ModuleDefinition Definition { get; private set; }
-            public bool HasModule => Definition != null;
+            public bool HasModule => IsValid && Definition != null;
+            public bool IsValid => button != null && icon != null;
 
             private readonly Button button;
             private readonly Image icon;
@@ -799,6 +903,10 @@ namespace Dungeon.UI
             public void Bind(UnityAction action)
             {
                 Unbind();
+
+                if (!IsValid)
+                    return;
+
                 clickAction = action;
                 button.onClick.AddListener(clickAction);
             }
@@ -810,8 +918,14 @@ namespace Dungeon.UI
                 clickAction = null;
             }
 
-            public void SetContent(ModuleDefinition definition, Sprite sprite)
+            public bool SetContent(ModuleDefinition definition, Sprite sprite)
             {
+                if (!IsValid)
+                {
+                    Definition = null;
+                    return false;
+                }
+
                 Definition = definition;
                 bool visible = definition != null && sprite != null;
 
@@ -821,6 +935,7 @@ namespace Dungeon.UI
                 icon.preserveAspect = true;
                 icon.raycastTarget = false;
                 button.interactable = definition != null;
+                return true;
             }
 
             public void SetSelected(bool selected)

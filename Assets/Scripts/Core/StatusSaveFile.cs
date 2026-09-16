@@ -121,7 +121,7 @@ namespace Dungeon.Core
                         $"Path={activeStorage.ActivePath}");
                 }
 
-                OnSaveDataChanged?.Invoke(data);
+                NotifySaveDataChangedSafely("Load");
             }
             catch (Exception e)
             {
@@ -129,7 +129,7 @@ namespace Dungeon.Core
 
                 data = StatusSaveDefaults.Create();
                 EnsureNotNull();
-                OnSaveDataChanged?.Invoke(data);
+                NotifySaveDataChangedSafely("LoadFallback");
             }
         }
 
@@ -158,13 +158,43 @@ namespace Dungeon.Core
                 if (ShouldLogSaveSummary())
                     Debug.Log(BuildSaveSummary("Saved"));
 
-                OnSaveDataChanged?.Invoke(data);
+                // 종료 중에는 UI 오브젝트의 파괴 순서가 보장되지 않는다.
+                // 파일 쓰기는 끝났으므로 화면 갱신 알림은 생략한다.
+                if (!isQuitting)
+                    NotifySaveDataChangedSafely("Save");
+
                 return true;
             }
             catch (Exception e)
             {
                 Debug.LogError($"[StatusSaveFile] Save failed: {e}");
                 return false;
+            }
+        }
+
+        private void NotifySaveDataChangedSafely(string source)
+        {
+            Action<StatusSaveData> listeners = OnSaveDataChanged;
+            if (listeners == null)
+                return;
+
+            foreach (Delegate callback in listeners.GetInvocationList())
+            {
+                if (callback is not Action<StatusSaveData> listener)
+                    continue;
+
+                try
+                {
+                    listener(data);
+                }
+                catch (Exception listenerException)
+                {
+                    string declaringType = listener.Method.DeclaringType?.FullName ?? "<unknown>";
+                    Debug.LogError(
+                        $"[StatusSaveFile] {source} notification failed. " +
+                        $"Listener={declaringType}.{listener.Method.Name}\n" +
+                        listenerException);
+                }
             }
         }
 

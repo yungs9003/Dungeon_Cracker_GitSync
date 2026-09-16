@@ -1,7 +1,11 @@
 using System;
 using System.IO;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using Dungeon.Core;
 using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace Dungeon.Tests
 {
@@ -9,6 +13,41 @@ namespace Dungeon.Tests
     {
         private string testRoot;
         private FileStatusSaveStorage storage;
+
+        [Test]
+        public void SaveDataNotification_ContinuesAfterOneListenerFails()
+        {
+            GameObject go = new GameObject("StatusSaveFile_NotificationTest");
+            go.SetActive(false);
+
+            try
+            {
+                StatusSaveFile saveFile = go.AddComponent<StatusSaveFile>();
+                int successfulListenerCalls = 0;
+
+                saveFile.OnSaveDataChanged += _ =>
+                    throw new InvalidOperationException("expected listener failure");
+                saveFile.OnSaveDataChanged += _ => successfulListenerCalls++;
+
+                MethodInfo notify = typeof(StatusSaveFile).GetMethod(
+                    "NotifySaveDataChangedSafely",
+                    BindingFlags.Instance | BindingFlags.NonPublic);
+                Assert.That(notify, Is.Not.Null);
+
+                LogAssert.Expect(
+                    LogType.Error,
+                    new Regex(
+                        "\\[StatusSaveFile\\] Test notification failed.*expected listener failure",
+                        RegexOptions.Singleline));
+
+                Assert.DoesNotThrow(() => notify.Invoke(saveFile, new object[] { "Test" }));
+                Assert.That(successfulListenerCalls, Is.EqualTo(1));
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(go);
+            }
+        }
 
         [SetUp]
         public void SetUp()

@@ -203,6 +203,88 @@ namespace Dungeon.Tests
             }
         }
 
+        [Test]
+        public void CliffTrapDetection_ExtendsOnlyTowardAdjacentPit()
+        {
+            GameObject left = new GameObject("100-000_Left");
+            GameObject right = new GameObject("100-000_Right");
+            Vector2 origin = new Vector2(1000f, 1000f);
+
+            try
+            {
+                left.transform.position = origin;
+                right.transform.position = origin + Vector2.right;
+
+                CliffTrap2D leftTrap = left.AddComponent<CliffTrap2D>();
+                CliffTrap2D rightTrap = right.AddComponent<CliffTrap2D>();
+                SetPrivateField(leftTrap, "triggerBoxSize", new Vector2(0.6f, 0.6f));
+                SetPrivateField(rightTrap, "triggerBoxSize", new Vector2(0.6f, 0.6f));
+
+                Assert.That(InvokeInsideDetection(leftTrap, origin + new Vector2(-0.31f, 0f)), Is.False,
+                    "외곽 방향은 기존 0.6 판정을 유지해야 합니다.");
+                Assert.That(InvokeInsideDetection(leftTrap, origin + new Vector2(0.49f, 0f)), Is.True,
+                    "인접 구멍 방향은 공유 경계까지 확장되어야 합니다.");
+                Assert.That(InvokeInsideDetection(rightTrap, origin + new Vector2(0.51f, 0f)), Is.True,
+                    "반대편 구멍도 공유 경계까지 확장되어야 합니다.");
+                Assert.That(InvokeInsideDetection(leftTrap, origin + new Vector2(0f, 0.31f)), Is.False,
+                    "구멍이 없는 위쪽 방향은 확장되면 안 됩니다.");
+            }
+            finally
+            {
+                Object.DestroyImmediate(left);
+                Object.DestroyImmediate(right);
+            }
+        }
+
+        [Test]
+        public void CliffTrapFallLock_AllowsOnlyOneTrapPerPlayer()
+        {
+            GameObject first = new GameObject("100-000_First");
+            GameObject second = new GameObject("100-000_Second");
+            GameObject player = new GameObject("Player");
+
+            try
+            {
+                CliffTrap2D firstTrap = first.AddComponent<CliffTrap2D>();
+                CliffTrap2D secondTrap = second.AddComponent<CliffTrap2D>();
+                Rigidbody2D rb = player.AddComponent<Rigidbody2D>();
+
+                Assert.That(InvokeFallLock(firstTrap, rb), Is.True);
+                Assert.That(InvokeFallLock(secondTrap, rb), Is.False,
+                    "같은 플레이어의 중복 추락 처리는 잠겨야 합니다.");
+
+                InvokePrivate(firstTrap, "ReleasePlayerFallLock");
+                Assert.That(InvokeFallLock(secondTrap, rb), Is.True,
+                    "첫 추락 처리가 끝난 뒤에는 다음 추락이 가능해야 합니다.");
+            }
+            finally
+            {
+                Object.DestroyImmediate(first);
+                Object.DestroyImmediate(second);
+                Object.DestroyImmediate(player);
+            }
+        }
+
+        private static bool InvokeInsideDetection(CliffTrap2D target, Vector2 point)
+        {
+            return (bool)InvokePrivate(target, "IsInsideDetectionBounds", point);
+        }
+
+        private static bool InvokeFallLock(CliffTrap2D target, Rigidbody2D rb)
+        {
+            return (bool)InvokePrivate(target, "TryAcquirePlayerFallLock", rb);
+        }
+
+        private static object InvokePrivate(object target, string name, params object[] args)
+        {
+            MethodInfo method = target.GetType().GetMethod(
+                name,
+                BindingFlags.Instance | BindingFlags.NonPublic
+            );
+            Assert.That(method, Is.Not.Null, $"Missing private method: {name}");
+            return method.Invoke(target, args);
+        }
+
         private static void SetPrivateField(object target, string name, object value)
         {
             FieldInfo field = target.GetType().GetField(name, BindingFlags.Instance | BindingFlags.NonPublic);

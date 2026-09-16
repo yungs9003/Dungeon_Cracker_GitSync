@@ -322,7 +322,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4080a718c7951c241a03a81f70250062, type: 3}
+  m_Sprite: {fileID: -535426295818394957, guid: 62c62226622d5b441b7b51fada961cd9, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -397,14 +397,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.9}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3ae8a8aa3e8bcdd4d8eae40a38862f47, type: 3}
+  m_Sprite: {fileID: -5205824276030353576, guid: 6cc6b52a49d6f2b45a1bb7df8472dc92, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -616,7 +616,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2c1f61fa30fc8b2409ffaf07d41ef70f, type: 3}
+  m_Sprite: {fileID: 8905185709128079001, guid: dc49a63101c4cac4480d61b49eb3b94f, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -834,18 +834,18 @@ MonoBehaviour:
   descriptionText: {fileID: 2711605999561272306}
   typeTagImage: {fileID: 2883298820297995963}
   rankTagImage: {fileID: 8798046539528392123}
-  consumableTag: {fileID: 21300000, guid: 4d1095f2735aa2b46bdc49727059e25d, type: 3}
-  materialTag: {fileID: 21300000, guid: b0dd55f9a75353542830b0b6e868bdb4, type: 3}
-  keyTag: {fileID: 21300000, guid: 47d665bd6338d6147816b27bf7b5d354, type: 3}
-  headTag: {fileID: 21300000, guid: 2c1f61fa30fc8b2409ffaf07d41ef70f, type: 3}
-  bodyTag: {fileID: 21300000, guid: 051bd11779e7d05449372b499afa2d25, type: 3}
-  legsTag: {fileID: 21300000, guid: 888a9ab8da2684c4f87c4df4f53ece2b, type: 3}
+  consumableTag: {fileID: 6995153204240291850, guid: 0348101de7d74fe489b4aa20b208dec9, type: 3}
+  materialTag: {fileID: -7181975550040058342, guid: 85bbe33de96f50f44abc6185607c87f9, type: 3}
+  keyTag: {fileID: -2482733190763919270, guid: ed4491958d04ff44e9c149d12c247f93, type: 3}
+  headTag: {fileID: 8905185709128079001, guid: dc49a63101c4cac4480d61b49eb3b94f, type: 3}
+  bodyTag: {fileID: -2459062835155013939, guid: 0eea13210b3cbdf438c56fea7b0f21f4, type: 3}
+  legsTag: {fileID: -773698668953647576, guid: f3ade62c9d1b22b4081886da8acb0b0e, type: 3}
   rankTags:
-  - {fileID: 21300000, guid: 4080a718c7951c241a03a81f70250062, type: 3}
-  - {fileID: 21300000, guid: 3b45d0026b5737243a4ce3887571912f, type: 3}
-  - {fileID: 21300000, guid: 5c2471830e7637f47b5ee8f5bc15c9da, type: 3}
-  - {fileID: 21300000, guid: 74daab29f560c4d44946b5391ff93d0e, type: 3}
-  - {fileID: 21300000, guid: cfdb832279f81fe449fc572ac6295ef6, type: 3}
+  - {fileID: -535426295818394957, guid: 62c62226622d5b441b7b51fada961cd9, type: 3}
+  - {fileID: -8517717890224652862, guid: 5e6201de73b9b794db07e96b8499e91a, type: 3}
+  - {fileID: -1522330138306753369, guid: 2477038a8272418459ad11f8929258b6, type: 3}
+  - {fileID: 1089458524148996224, guid: 8605e6fa3c500894fa703d0455541251, type: 3}
+  - {fileID: -2240299459612893021, guid: fcde97f63d4c74f4595d3320dabc6259, type: 3}
 --- !u!1 &8863244379199992939
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,7 +948,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: -Equipment-
+  m_text: -EQUIPMENT-
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31f7800f2ca557347888d69704d2f9d1, type: 2}
   m_sharedMaterial: {fileID: -5506303582798611297, guid: 31f7800f2ca557347888d69704d2f9d1, type: 2}

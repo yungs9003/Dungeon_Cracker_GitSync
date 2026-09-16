@@ -1,5 +1,6 @@
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Dungeon.Core;
 using Dungeon.UI;
 using NUnit.Framework;
@@ -11,6 +12,58 @@ namespace Dungeon.Tests
 {
     public class ModuleSystemTests
     {
+        [Test]
+        public void StatusModuleSlotBinding_IgnoresDestroyedImageReference()
+        {
+            GameObject root = new GameObject(
+                "StatusModuleSlotBinding_Test",
+                typeof(RectTransform),
+                typeof(Image),
+                typeof(Button),
+                typeof(Outline));
+            GameObject iconObject = new GameObject(
+                "ModuleIcon",
+                typeof(RectTransform),
+                typeof(Image));
+
+            try
+            {
+                iconObject.transform.SetParent(root.transform, false);
+                Button button = root.GetComponent<Button>();
+                Image icon = iconObject.GetComponent<Image>();
+                Outline outline = root.GetComponent<Outline>();
+
+                System.Type bindingType = typeof(StatusModulePageUI).GetNestedType(
+                    "StatusModuleSlotBinding",
+                    BindingFlags.NonPublic);
+                Assert.That(bindingType, Is.Not.Null);
+
+                ConstructorInfo constructor = bindingType.GetConstructor(
+                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+                    binder: null,
+                    new[] { typeof(int), typeof(Button), typeof(Image), typeof(Outline) },
+                    modifiers: null);
+                Assert.That(constructor, Is.Not.Null);
+
+                object binding = constructor.Invoke(new object[] { 1, button, icon, outline });
+                MethodInfo setContent = bindingType.GetMethod(
+                    "SetContent",
+                    BindingFlags.Instance | BindingFlags.Public);
+                Assert.That(setContent, Is.Not.Null);
+
+                Object.DestroyImmediate(iconObject);
+
+                Assert.DoesNotThrow(() =>
+                    setContent.Invoke(binding, new object[] { null, null }));
+                Assert.That((bool)setContent.Invoke(binding, new object[] { null, null }), Is.False);
+            }
+            finally
+            {
+                if (root != null)
+                    Object.DestroyImmediate(root);
+            }
+        }
+
         [Test]
         public void GameDatabase_LoadsModules000Through013()
         {
@@ -180,6 +233,200 @@ namespace Dungeon.Tests
             Assert.That(selectedIcon.GetSiblingIndex(), Is.LessThan(nameText.GetSiblingIndex()));
             Assert.That(nameText.GetSiblingIndex(), Is.LessThan(descriptionText.GetSiblingIndex()));
             Assert.That(descriptionText.GetSiblingIndex(), Is.LessThan(footer.GetSiblingIndex()));
+        }
+
+        [Test]
+        public void ItemEquipmentPopup_MatchesSvgLayoutAndTagSprites()
+        {
+            const string spriteRoot = "Assets/Sprites/UI/Window/ItemEquipmentPopup/";
+            string[] prefabPaths =
+            {
+                "Assets/Prefabs/UI/ItemEquipmentInfoPopup.prefab",
+                "Assets/Prefabs/UI/SharedStatus.prefab"
+            };
+
+            foreach (string prefabPath in prefabPaths)
+            {
+                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+                Assert.That(prefab, Is.Not.Null, prefabPath);
+
+                Transform popupRoot = FindChildRecursive(
+                    prefab.transform,
+                    "ItemEquipmentInfoPopup"
+                );
+                Assert.That(popupRoot, Is.Not.Null, prefabPath);
+
+                Component controller = popupRoot.GetComponent("ItemEquipmentInfoPopupUI");
+                Assert.That(controller, Is.Not.Null, prefabPath);
+                SerializedObject serializedController = new SerializedObject(controller);
+
+                Component categoryText = GetComponentReference(
+                    serializedController,
+                    "categoryText"
+                );
+                Component nameText = GetComponentReference(serializedController, "nameText");
+                Component descriptionText = GetComponentReference(
+                    serializedController,
+                    "descriptionText"
+                );
+                Image itemIcon = GetImageReference(serializedController, "itemIcon");
+                Image typeTag = GetImageReference(serializedController, "typeTagImage");
+                Image rankTag = GetImageReference(serializedController, "rankTagImage");
+
+                Assert.That(categoryText, Is.Not.Null, prefabPath);
+                Assert.That(nameText, Is.Not.Null, prefabPath);
+                Assert.That(descriptionText, Is.Not.Null, prefabPath);
+                Assert.That(itemIcon, Is.Not.Null, prefabPath);
+                Assert.That(typeTag, Is.Not.Null, prefabPath);
+                Assert.That(rankTag, Is.Not.Null, prefabPath);
+
+                RectTransform panelRect = nameText.transform.parent as RectTransform;
+                Assert.That(panelRect, Is.Not.Null, prefabPath);
+                Assert.That(panelRect.sizeDelta, Is.EqualTo(new Vector2(360f, 378f)));
+                Assert.That(panelRect.anchoredPosition, Is.EqualTo(Vector2.zero));
+                Image panelImage = panelRect.GetComponent<Image>();
+                Assert.That(panelImage.color.a, Is.EqualTo(1f));
+                Assert.That(
+                    AssetDatabase.GetAssetPath(panelImage.sprite),
+                    Is.EqualTo(spriteRoot + "ItemEquipmentPopup_Background.png")
+                );
+
+                AssertTopLeftRect(
+                    categoryText.transform as RectTransform,
+                    new Vector2(360f, 45f),
+                    Vector2.zero
+                );
+                AssertTopLeftRect(
+                    itemIcon.rectTransform,
+                    new Vector2(78f, 78f),
+                    new Vector2(45f, 78f)
+                );
+                AssertTopLeftRect(
+                    nameText.transform as RectTransform,
+                    new Vector2(195f, 58f),
+                    new Vector2(142f, 53f)
+                );
+                AssertTopLeftRect(
+                    typeTag.rectTransform,
+                    new Vector2(63f, 27f),
+                    new Vector2(159f, 108f)
+                );
+                AssertTopLeftRect(
+                    rankTag.rectTransform,
+                    new Vector2(84f, 27f),
+                    new Vector2(159f, 144f)
+                );
+                AssertTopLeftRect(
+                    descriptionText.transform as RectTransform,
+                    new Vector2(294f, 165f),
+                    new Vector2(33f, 195f)
+                );
+
+                SerializedObject serializedCategory = new SerializedObject(categoryText);
+                Assert.That(
+                    serializedCategory.FindProperty("m_text").stringValue,
+                    Is.EqualTo("-EQUIPMENT-")
+                );
+
+                SerializedObject serializedName = new SerializedObject(nameText);
+                SerializedObject serializedDescription = new SerializedObject(descriptionText);
+                Assert.That(
+                    AssetDatabase.GetAssetPath(
+                        serializedName.FindProperty("m_fontAsset").objectReferenceValue
+                    ),
+                    Is.EqualTo("Assets/Fonts/Cafe24Dangdanghae-v2.0 SDF.asset")
+                );
+                Assert.That(
+                    AssetDatabase.GetAssetPath(
+                        serializedDescription.FindProperty("m_fontAsset").objectReferenceValue
+                    ),
+                    Is.EqualTo("Assets/Fonts/Cafe24Danjunghae-v2.0 SDF.asset")
+                );
+
+                AssertSpriteReference(
+                    serializedController,
+                    "consumableTag",
+                    spriteRoot + "ItemType_Consumable.png"
+                );
+                AssertSpriteReference(
+                    serializedController,
+                    "materialTag",
+                    spriteRoot + "ItemType_Material.png"
+                );
+                AssertSpriteReference(
+                    serializedController,
+                    "keyTag",
+                    spriteRoot + "ItemType_Key.png"
+                );
+                AssertSpriteReference(
+                    serializedController,
+                    "headTag",
+                    spriteRoot + "EquipmentSlot_Head.png"
+                );
+                AssertSpriteReference(
+                    serializedController,
+                    "bodyTag",
+                    spriteRoot + "EquipmentSlot_Body.png"
+                );
+                AssertSpriteReference(
+                    serializedController,
+                    "legsTag",
+                    spriteRoot + "EquipmentSlot_Legs.png"
+                );
+
+                SerializedProperty rankTags = serializedController.FindProperty("rankTags");
+                Assert.That(rankTags.arraySize, Is.EqualTo(5), prefabPath);
+
+                for (int rank = 0; rank < rankTags.arraySize; rank++)
+                {
+                    Object sprite = rankTags
+                        .GetArrayElementAtIndex(rank)
+                        .objectReferenceValue;
+                    Assert.That(
+                        AssetDatabase.GetAssetPath(sprite),
+                        Is.EqualTo(spriteRoot + $"Rank_{rank}.png")
+                    );
+                }
+            }
+        }
+
+        private static Component GetComponentReference(
+            SerializedObject owner,
+            string propertyName)
+        {
+            return owner.FindProperty(propertyName).objectReferenceValue as Component;
+        }
+
+        private static Image GetImageReference(
+            SerializedObject owner,
+            string propertyName)
+        {
+            return owner.FindProperty(propertyName).objectReferenceValue as Image;
+        }
+
+        private static void AssertSpriteReference(
+            SerializedObject owner,
+            string propertyName,
+            string expectedPath)
+        {
+            Object sprite = owner.FindProperty(propertyName).objectReferenceValue;
+            Assert.That(AssetDatabase.GetAssetPath(sprite), Is.EqualTo(expectedPath));
+        }
+
+        private static void AssertTopLeftRect(
+            RectTransform rect,
+            Vector2 expectedSize,
+            Vector2 expectedTopLeft)
+        {
+            Assert.That(rect, Is.Not.Null);
+            Assert.That(rect.anchorMin, Is.EqualTo(new Vector2(0f, 1f)));
+            Assert.That(rect.anchorMax, Is.EqualTo(new Vector2(0f, 1f)));
+            Assert.That(rect.pivot, Is.EqualTo(new Vector2(0f, 1f)));
+            Assert.That(rect.sizeDelta, Is.EqualTo(expectedSize));
+            Assert.That(
+                rect.anchoredPosition,
+                Is.EqualTo(new Vector2(expectedTopLeft.x, -expectedTopLeft.y))
+            );
         }
 
         private static Transform FindChildRecursive(Transform root, string targetName)
