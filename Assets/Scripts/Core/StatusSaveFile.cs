@@ -216,10 +216,12 @@ namespace Dungeon.Core
             {
                 sb.AppendLine();
                 sb.Append($"  inventory.item={FormatIntMapList(data.inventory?.item)}, ");
-                sb.Append($"inventory.equipment={FormatIntMapList(data.inventory?.equipment)}");
+                sb.Append($"inventory.equipment={FormatIntMapList(data.inventory?.equipment)}, ");
+                sb.Append($"inventory.module={FormatIntMapList(data.inventory?.module)}");
                 sb.AppendLine();
                 sb.Append($"  equips.item={FormatStringMapList(data.equips?.item)}, ");
-                sb.Append($"equips.equip={FormatStringMapList(data.equips?.equip)}");
+                sb.Append($"equips.equip={FormatStringMapList(data.equips?.equip)}, ");
+                sb.Append($"equips.module={FormatStringMapList(data.equips?.module)}");
             }
 
             return sb.ToString();

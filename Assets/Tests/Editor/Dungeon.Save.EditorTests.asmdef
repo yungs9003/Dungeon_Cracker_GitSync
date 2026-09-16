@@ -3,7 +3,8 @@
     "rootNamespace": "Dungeon.Tests",
     "references": [
         "GUID:0388092e6defa814e83caa9fb0ab8ce0",
-        "GUID:37712eb6af69c4149b63e2085b337ed7"
+        "GUID:37712eb6af69c4149b63e2085b337ed7",
+        "GUID:315d35cf867026a479742d65b28595cd"
     ],
     "includePlatforms": [
         "Editor"

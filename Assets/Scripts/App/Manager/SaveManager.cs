@@ -14,6 +14,7 @@ namespace Dungeon.Manager
 
         private int pendingMapIndex = -1;
         private string pendingReturnSceneName = "";
+        private bool checkpointActivatedThisRun;
 
         public bool HasCheckpoint
         {
@@ -28,7 +29,12 @@ namespace Dungeon.Manager
             }
         }
 
-        public bool HasActiveCheckpoint => HasCheckpoint;
+        /// <summary>
+        /// 저장 파일에 남아 있는 체크포인트와 이번 플레이에서 실제로 활성화한
+        /// 체크포인트를 구분합니다. 이전 Play 세션의 값은 첫 맵 사망 복귀에
+        /// 사용하지 않습니다.
+        /// </summary>
+        public bool HasActiveCheckpoint => checkpointActivatedThisRun && HasCheckpoint;
 
         public string CheckpointSceneName => defaultCheckpointSceneName;
 
@@ -135,6 +141,7 @@ namespace Dungeon.Manager
             data.checkpoint.mapIndex = Mathf.Max(0, nextMapIndex);
             data.checkpoint.resumeRequested = true;
             data.checkpoint.broken_traps_snapshot = data.broken_traps;
+            checkpointActivatedThisRun = true;
 
             pendingReturnSceneName = "";
             pendingMapIndex = -1;
@@ -162,20 +169,30 @@ namespace Dungeon.Manager
             Debug.Log(
                 $"[SaveManager] LoadCheckpointSceneIfAvailable called. " +
                 $"HasCheckpoint={HasCheckpoint}, " +
+                $"HasActiveCheckpoint={HasActiveCheckpoint}, " +
                 $"sceneName={data.checkpoint.sceneName}, " +
                 $"mapIndex={data.checkpoint.mapIndex}, " +
                 $"resumeRequested={data.checkpoint.resumeRequested}, " +
                 $"broken_traps={data.broken_traps}, " +
                 $"snapshot={data.checkpoint.broken_traps_snapshot}"
             );
-            if (!HasCheckpoint)
+            if (!HasActiveCheckpoint)
             {
+                bool clearedStaleCheckpoint = HasCheckpoint;
+                if (clearedStaleCheckpoint)
+                    ResetCheckpointData(data.checkpoint);
+                checkpointActivatedThisRun = false;
+
                 data.broken_traps = 0;
                 data.clear_reward_claimed = false;
                 data.last_getting_gold = 0;
 
                 SaveStatusFile();
-                Debug.Log($"[SaveManager] No checkpoint. Reset broken_traps to 0. " + $"Current broken_traps={data.broken_traps}");
+                Debug.Log(
+                    $"[SaveManager] No checkpoint activated for this run. " +
+                    $"ClearedStaleCheckpoint={clearedStaleCheckpoint}, " +
+                    $"Current broken_traps={data.broken_traps}"
+                );
                 return false;
             }
 
@@ -220,6 +237,7 @@ namespace Dungeon.Manager
 
             pendingReturnSceneName = data.checkpoint.sceneName;
             pendingMapIndex = Mathf.Max(0, data.checkpoint.mapIndex);
+            checkpointActivatedThisRun = true;
 
             Debug.Log(
                 $"[SaveManager] Exit checkpoint. " +
@@ -258,9 +276,8 @@ namespace Dungeon.Manager
             if (data == null || data.checkpoint == null)
                 return;
 
-            data.checkpoint.sceneName = "";
-            data.checkpoint.mapIndex = -1;
-            data.checkpoint.resumeRequested = false;
+            ResetCheckpointData(data.checkpoint);
+            checkpointActivatedThisRun = false;
 
             pendingReturnSceneName = "";
             pendingMapIndex = -1;
@@ -268,6 +285,17 @@ namespace Dungeon.Manager
             SaveStatusFile();
 
             Debug.Log("[SaveManager] Checkpoint cleared.");
+        }
+
+        private static void ResetCheckpointData(CheckpointData checkpoint)
+        {
+            if (checkpoint == null)
+                return;
+
+            checkpoint.sceneName = "";
+            checkpoint.mapIndex = -1;
+            checkpoint.resumeRequested = false;
+            checkpoint.broken_traps_snapshot = 0;
         }
 
         public void RestartDungeonFromFirstMap(string dungeonSceneName)

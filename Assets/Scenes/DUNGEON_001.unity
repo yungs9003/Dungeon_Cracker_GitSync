@@ -2844,7 +2844,7 @@ MonoBehaviour:
   resetVelocity: 1
   initializeFromStartPosition: 1
   useCheckpointSceneRespawn: 1
-  restartWholeDungeonWhenNoCheckpoint: 1
+  restartWholeDungeonWhenNoCheckpoint: 0
   trapCooldown: 0.2
 --- !u!114 &1005002792
 MonoBehaviour:

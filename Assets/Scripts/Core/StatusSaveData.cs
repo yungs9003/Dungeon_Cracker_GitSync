@@ -49,12 +49,14 @@ namespace Dungeon.Core
         // savefile(1).json 기준의 보유 인벤토리입니다.
         // item      : 소비 아이템/일반 아이템 보유 수량
         // equipment : 장비 아이템 보유 수량
+        // module    : 모듈 보유 수량
         [JsonProperty("inventory")]
         public InventoryData inventory = new();
 
         // savefile(1).json 기준의 장착/퀵슬롯 정보입니다.
         // item  : 퀵슬롯에 등록된 아이템
-        // equip : head/body/legs 장착 장비
+        // equip  : head/body/legs 장착 장비
+        // module : slot1~slot6 장착 모듈
         [JsonProperty("equips")]
         public EquipsData equips = new();
 
@@ -122,6 +124,9 @@ namespace Dungeon.Core
 
         [JsonProperty("equipment")]
         public List<Dictionary<string, int>> equipment = new();
+
+        [JsonProperty("module")]
+        public List<Dictionary<string, int>> module = new();
     }
 
     [Serializable]
@@ -132,6 +137,9 @@ namespace Dungeon.Core
 
         [JsonProperty("equip")]
         public List<Dictionary<string, string>> equip = new();
+
+        [JsonProperty("module")]
+        public List<Dictionary<string, string>> module = new();
     }
 
     [Serializable]

@@ -11,7 +11,7 @@ namespace Dungeon.Core
     /// </summary>
     public static class StatusSaveDefaults
     {
-        public const int CurrentSaveVersion = 1;
+        public const int CurrentSaveVersion = 2;
 
         public static StatusSaveData Create()
         {
@@ -32,7 +32,8 @@ namespace Dungeon.Core
                 inventory = new InventoryData
                 {
                     item = new List<Dictionary<string, int>>(),
-                    equipment = new List<Dictionary<string, int>>()
+                    equipment = new List<Dictionary<string, int>>(),
+                    module = new List<Dictionary<string, int>>()
                 },
                 equips = new EquipsData
                 {
@@ -49,6 +50,15 @@ namespace Dungeon.Core
                         new() { { "head", GameDatabase.NoneKey } },
                         new() { { "body", GameDatabase.NoneKey } },
                         new() { { "legs", GameDatabase.NoneKey } }
+                    },
+                    module = new List<Dictionary<string, string>>
+                    {
+                        new() { { "slot1", GameDatabase.NoneKey } },
+                        new() { { "slot2", GameDatabase.NoneKey } },
+                        new() { { "slot3", GameDatabase.NoneKey } },
+                        new() { { "slot4", GameDatabase.NoneKey } },
+                        new() { { "slot5", GameDatabase.NoneKey } },
+                        new() { { "slot6", GameDatabase.NoneKey } }
                     }
                 },
                 checkpoint = new CheckpointData
@@ -166,10 +176,12 @@ namespace Dungeon.Core
             data.inventory ??= new InventoryData();
             data.inventory.item ??= new List<Dictionary<string, int>>();
             data.inventory.equipment ??= new List<Dictionary<string, int>>();
+            data.inventory.module ??= new List<Dictionary<string, int>>();
 
             data.equips ??= new EquipsData();
             data.equips.item ??= new List<Dictionary<string, string>>();
             data.equips.equip ??= new List<Dictionary<string, string>>();
+            data.equips.module ??= new List<Dictionary<string, string>>();
 
             EnsureStringSlot(data.equips.item, "slot1");
             EnsureStringSlot(data.equips.item, "slot2");
@@ -180,6 +192,13 @@ namespace Dungeon.Core
             EnsureStringSlot(data.equips.equip, "head");
             EnsureStringSlot(data.equips.equip, "body");
             EnsureStringSlot(data.equips.equip, "legs");
+
+            EnsureStringSlot(data.equips.module, "slot1");
+            EnsureStringSlot(data.equips.module, "slot2");
+            EnsureStringSlot(data.equips.module, "slot3");
+            EnsureStringSlot(data.equips.module, "slot4");
+            EnsureStringSlot(data.equips.module, "slot5");
+            EnsureStringSlot(data.equips.module, "slot6");
 
             data.checkpoint ??= new CheckpointData();
             data.checkpoint.sceneName ??= string.Empty;

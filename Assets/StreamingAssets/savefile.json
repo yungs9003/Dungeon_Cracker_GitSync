@@ -1,5 +1,5 @@
 {
-  "save_version": 1,
+  "save_version": 2,
   "user_name": "",
   "gold": 0,
   "broken_traps": 0,
@@ -33,7 +33,8 @@
   },
   "inventory": {
     "item": [],
-    "equipment": []
+    "equipment": [],
+    "module": []
   },
   "equips": {
     "item": [
@@ -62,6 +63,26 @@
       },
       {
         "legs": "none"
+      }
+    ],
+    "module": [
+      {
+        "slot1": "none"
+      },
+      {
+        "slot2": "none"
+      },
+      {
+        "slot3": "none"
+      },
+      {
+        "slot4": "none"
+      },
+      {
+        "slot5": "none"
+      },
+      {
+        "slot6": "none"
       }
     ]
   },

@@ -1,0 +1,203 @@
+using System.IO;
+using System.Linq;
+using Dungeon.Core;
+using Dungeon.UI;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Dungeon.Tests
+{
+    public class ModuleSystemTests
+    {
+        [Test]
+        public void GameDatabase_LoadsModules000Through013()
+        {
+            GameObject go = new GameObject("GameDatabase_ModuleTest");
+            go.SetActive(false);
+
+            try
+            {
+                GameDatabase database = go.AddComponent<GameDatabase>();
+                database.LoadDatabase();
+
+                Assert.That(database.GetAllModules().Count(), Is.EqualTo(14));
+
+                for (int i = 0; i < 14; i++)
+                {
+                    string id = i.ToString("000");
+                    Assert.That(database.TryGetModule(id, out ModuleDefinition module), Is.True);
+                    Assert.That(module.id, Is.EqualTo(id));
+                    Assert.That(module.name, Is.Not.Empty);
+                    Assert.That(module.desc, Is.Not.Empty);
+                    Assert.That(database.GetModuleIcon(id), Is.Not.Null);
+                }
+            }
+            finally
+            {
+                Object.DestroyImmediate(go);
+            }
+        }
+
+        [Test]
+        public void DefaultSave_HasEmptyModuleInventoryAndSixSlots()
+        {
+            StatusSaveData data = StatusSaveDefaults.Create();
+
+            Assert.That(data.save_version, Is.EqualTo(StatusSaveDefaults.CurrentSaveVersion));
+            Assert.That(data.inventory.module, Is.Empty);
+            Assert.That(data.equips.module, Has.Count.EqualTo(ModuleSaveRepository.SlotCount));
+
+            for (int slot = 1; slot <= ModuleSaveRepository.SlotCount; slot++)
+            {
+                Assert.That(data.equips.module[slot - 1][$"slot{slot}"], Is.EqualTo(GameDatabase.NoneKey));
+            }
+        }
+
+        [Test]
+        public void Normalize_LegacySaveAddsModuleContainersAndSlots()
+        {
+            StatusSaveData data = StatusSaveDefaults.Create();
+            data.inventory.module = null;
+            data.equips.module = null;
+
+            StatusSaveDefaults.Normalize(data);
+
+            Assert.That(data.inventory.module, Is.Not.Null);
+            Assert.That(data.equips.module, Has.Count.EqualTo(ModuleSaveRepository.SlotCount));
+        }
+
+        [Test]
+        public void EditorTestSave_OwnsFourteenModulesAndEquipsSix()
+        {
+            string path = Path.Combine(Application.streamingAssetsPath, "savefile.test.json");
+            string json = File.ReadAllText(path);
+
+            Assert.That(
+                StatusSaveDefaults.TryDeserialize(json, out StatusSaveData data, out string error),
+                Is.True,
+                error
+            );
+            Assert.That(data.inventory.module, Has.Count.EqualTo(14));
+            Assert.That(data.equips.module, Has.Count.EqualTo(ModuleSaveRepository.SlotCount));
+        }
+
+        [Test]
+        public void StatusModuleArtwork_MatchesProvidedSvgAssetLayout()
+        {
+            const string artworkPath = "Assets/Resources/UI/StatusModuleArtwork.asset";
+            const string prefabPath = "Assets/Prefabs/UI/SharedStatus.prefab";
+
+            StatusModuleArtwork artwork =
+                AssetDatabase.LoadAssetAtPath<StatusModuleArtwork>(artworkPath);
+            Assert.That(artwork, Is.Not.Null);
+            Assert.That(
+                AssetDatabase.GetAssetPath(artwork.DeviceFrame),
+                Is.EqualTo("Assets/Sprites/UI/Moudle/IMG_4913 1.png")
+            );
+            Assert.That(
+                AssetDatabase.GetAssetPath(artwork.PatternPanel),
+                Is.EqualTo("Assets/Sprites/UI/Moudle/module_panel@3x 1.png")
+            );
+            Assert.That(
+                AssetDatabase.GetAssetPath(artwork.ScanLines),
+                Is.EqualTo("Assets/Sprites/UI/Moudle/Group 114.png")
+            );
+            var serializedArtwork = new SerializedObject(artwork);
+            Object moduleTextFont = serializedArtwork
+                .FindProperty("moduleTextFont")
+                .objectReferenceValue;
+            Assert.That(
+                AssetDatabase.GetAssetPath(moduleTextFont),
+                Is.EqualTo("Assets/Fonts/Cafe24Danjunghae-v2.0 SDF.asset")
+            );
+
+            string moduleFontYaml = File.ReadAllText(
+                "Assets/Fonts/Cafe24Danjunghae-v2.0 SDF.asset"
+            );
+            StringAssert.Contains(
+                "m_IsMultiAtlasTexturesEnabled: 1",
+                moduleFontYaml
+            );
+
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+            Assert.That(prefab, Is.Not.Null);
+
+            Transform detailGroup = FindChildRecursive(prefab.transform, "ModuleDetailGroup");
+            Transform frame = FindChildRecursive(prefab.transform, "ModuleDeviceFrame");
+            Transform panel = FindChildRecursive(detailGroup, "ModulePatternPanel");
+            Transform scanLines = FindChildRecursive(detailGroup, "ModuleScanLines");
+            Transform selectedIcon = FindChildRecursive(detailGroup, "SelectedModuleIcon");
+            Transform nameText = FindChildRecursive(detailGroup, "ModuleNameText");
+            Transform descriptionText = FindChildRecursive(detailGroup, "ModuleDescriptionText");
+            Transform footer = FindChildRecursive(detailGroup, "ModuleViewerLabel");
+
+            Assert.That(detailGroup, Is.Not.Null);
+            Assert.That(frame, Is.Not.Null);
+            Assert.That(panel, Is.Not.Null);
+            Assert.That(scanLines, Is.Not.Null);
+            Assert.That(selectedIcon, Is.Not.Null);
+            Assert.That(nameText, Is.Not.Null);
+            Assert.That(descriptionText, Is.Not.Null);
+            Assert.That(footer, Is.Not.Null);
+            Assert.That(frame.GetComponent<Image>().sprite, Is.EqualTo(artwork.DeviceFrame));
+            Assert.That(panel.GetComponent<Image>().sprite, Is.EqualTo(artwork.PatternPanel));
+            Assert.That(scanLines.GetComponent<Image>().sprite, Is.EqualTo(artwork.ScanLines));
+
+            RectTransform frameRect = (RectTransform)frame;
+            RectTransform panelRect = (RectTransform)panel;
+            RectTransform scanRect = (RectTransform)scanLines;
+            RectTransform iconRect = (RectTransform)selectedIcon;
+            RectTransform nameRect = (RectTransform)nameText;
+            RectTransform descriptionRect = (RectTransform)descriptionText;
+            RectTransform footerRect = (RectTransform)footer;
+
+            Assert.That(frameRect.anchoredPosition, Is.EqualTo(new Vector2(1.5f, -25f)));
+            Assert.That(frameRect.sizeDelta, Is.EqualTo(new Vector2(960f, 579f)));
+            Assert.That(panelRect.anchoredPosition, Is.EqualTo(new Vector2(39.6f, -82f)));
+            Assert.That(panelRect.sizeDelta, Is.EqualTo(new Vector2(313f, 468f)));
+            Assert.That(scanRect.anchoredPosition, Is.EqualTo(new Vector2(400.5f, -106f)));
+            Assert.That(scanRect.sizeDelta, Is.EqualTo(new Vector2(507f, 381f)));
+            Assert.That(iconRect.anchoredPosition, Is.EqualTo(new Vector2(196.86f, -316.36f)));
+            Assert.That(iconRect.sizeDelta, Is.EqualTo(new Vector2(210.9f, 210.9f)));
+            Assert.That(nameRect.anchoredPosition, Is.EqualTo(new Vector2(400.5f, -120f)));
+            Assert.That(nameRect.sizeDelta, Is.EqualTo(new Vector2(507f, 82f)));
+            Assert.That(descriptionRect.anchoredPosition, Is.EqualTo(new Vector2(439.74f, -235.63f)));
+            Assert.That(descriptionRect.sizeDelta, Is.EqualTo(new Vector2(440f, 225f)));
+            Assert.That(footerRect.anchoredPosition, Is.EqualTo(new Vector2(502.6f, -508f)));
+            Assert.That(footerRect.sizeDelta, Is.EqualTo(new Vector2(323.1f, 34f)));
+            Component footerText = footer.GetComponent("TextMeshProUGUI");
+            Assert.That(footerText, Is.Not.Null);
+            Assert.That(
+                footerText.GetType().GetProperty("text")?.GetValue(footerText),
+                Is.EqualTo("ADVANCED MODULE VIEWER")
+            );
+
+            Assert.That(frame.GetSiblingIndex(), Is.LessThan(detailGroup.GetSiblingIndex()));
+            Assert.That(panel.GetSiblingIndex(), Is.LessThan(scanLines.GetSiblingIndex()));
+            Assert.That(scanLines.GetSiblingIndex(), Is.LessThan(selectedIcon.GetSiblingIndex()));
+            Assert.That(selectedIcon.GetSiblingIndex(), Is.LessThan(nameText.GetSiblingIndex()));
+            Assert.That(nameText.GetSiblingIndex(), Is.LessThan(descriptionText.GetSiblingIndex()));
+            Assert.That(descriptionText.GetSiblingIndex(), Is.LessThan(footer.GetSiblingIndex()));
+        }
+
+        private static Transform FindChildRecursive(Transform root, string targetName)
+        {
+            if (root == null)
+                return null;
+
+            if (root.name == targetName)
+                return root;
+
+            for (int i = 0; i < root.childCount; i++)
+            {
+                Transform found = FindChildRecursive(root.GetChild(i), targetName);
+                if (found != null)
+                    return found;
+            }
+
+            return null;
+        }
+    }
+}

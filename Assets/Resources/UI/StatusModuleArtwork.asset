@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd95f1ef0eb74cf9b8b11338d88cbb1d, type: 3}
+  m_Name: StatusModuleArtwork
+  m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.StatusModuleArtwork
+  deviceFrame: {fileID: 21300000, guid: 6c8f29cb2a544f9e9050af3ab178ed51, type: 3}
+  patternPanel: {fileID: 21300000, guid: baf5891c5c4d4d2683e2a6dd6b29726d, type: 3}
+  scanLines: {fileID: 21300000, guid: b7b05afa03b946f6bdab0012e20dbfdd, type: 3}
+  slotFrame: {fileID: 3135787426978474672, guid: 3a144b72e4382cf4baed3b01b31126fb, type: 3}
+  moduleTextFont: {fileID: 11400000, guid: 43fefb9706a4602489bff3b3c463eedb, type: 2}
+  footerFont: {fileID: 11400000, guid: 31f7800f2ca557347888d69704d2f9d1, type: 2}

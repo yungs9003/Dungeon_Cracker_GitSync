@@ -47,7 +47,7 @@ namespace Dungeon.Core
         [SerializeField] private string moduleIconResourceRoot = "UI/ModuleIcons";
 
         [Header("Icon Overrides")]
-        [Tooltip("fullKey에는 item:000 또는 equip:000 형식으로 넣는 것을 추천합니다. fullKey가 비어 있으면 category + id로 key를 만듭니다.")]
+        [Tooltip("fullKey에는 item:000, equip:000, module:000 형식으로 넣는 것을 추천합니다. fullKey가 비어 있으면 category + id로 key를 만듭니다.")]
         [SerializeField] private DatabaseIconEntry[] iconOverrides;
 
         [Header("Fallback Equipment Icons")]
@@ -58,6 +58,7 @@ namespace Dungeon.Core
 
         private readonly Dictionary<string, ItemDefinition> itemMap = new();
         private readonly Dictionary<string, EquipmentDefinition> equipMap = new();
+        private readonly Dictionary<string, ModuleDefinition> moduleMap = new();
         private readonly Dictionary<string, TrapDefinition> trapMap = new();
 
         private readonly Dictionary<string, DbRecordKind> recordKinds = new();
@@ -70,6 +71,7 @@ namespace Dungeon.Core
 
         public IReadOnlyList<ItemDefinition> Items => loadedData != null && loadedData.items != null ? loadedData.items : Array.Empty<ItemDefinition>();
         public IReadOnlyList<EquipmentDefinition> Equipment => loadedData != null && loadedData.equips != null ? loadedData.equips : Array.Empty<EquipmentDefinition>();
+        public IReadOnlyList<ModuleDefinition> Modules => loadedData != null && loadedData.modules != null ? loadedData.modules : Array.Empty<ModuleDefinition>();
         public IReadOnlyList<TrapDefinition> Traps => loadedData != null && loadedData.traps != null ? loadedData.traps : Array.Empty<TrapDefinition>();
 
         private void Awake()
@@ -117,6 +119,7 @@ namespace Dungeon.Core
         {
             itemMap.Clear();
             equipMap.Clear();
+            moduleMap.Clear();
             trapMap.Clear();
             recordKinds.Clear();
             itemsByType.Clear();
@@ -126,6 +129,7 @@ namespace Dungeon.Core
             LoadIconOverrides();
             RebuildItemMaps();
             RebuildEquipmentMaps();
+            RebuildModuleMaps();
             RebuildTrapMaps();
         }
 
@@ -201,6 +205,23 @@ namespace Dungeon.Core
             }
         }
 
+        private void RebuildModuleMaps()
+        {
+            if (loadedData == null || loadedData.modules == null)
+                return;
+
+            foreach (ModuleDefinition module in loadedData.modules)
+            {
+                if (module == null || string.IsNullOrWhiteSpace(module.id))
+                    continue;
+
+                module.id = NormalizeId(module.id);
+                string key = MakeKey(CategoryModule, module.id);
+                moduleMap[key] = module;
+                recordKinds[key] = DbRecordKind.Module;
+            }
+        }
+
         private void RebuildTrapMaps()
         {
             if (loadedData == null || loadedData.traps == null)
@@ -240,6 +261,17 @@ namespace Dungeon.Core
             return equipMap.TryGetValue(key, out definition);
         }
 
+        public bool TryGetModule(string rawId, out ModuleDefinition definition)
+        {
+            return TryGetModuleByKey(MakeKey(CategoryModule, rawId), out definition);
+        }
+
+        public bool TryGetModuleByKey(string key, out ModuleDefinition definition)
+        {
+            key = NormalizeKey(key);
+            return moduleMap.TryGetValue(key, out definition);
+        }
+
         public bool TryGetTrap(string prefabCode, out TrapDefinition definition)
         {
             prefabCode = NormalizeTrapCode(prefabCode);
@@ -266,6 +298,11 @@ namespace Dungeon.Core
         public IReadOnlyList<EquipmentDefinition> GetAllEquipment()
         {
             return Equipment;
+        }
+
+        public IReadOnlyList<ModuleDefinition> GetAllModules()
+        {
+            return Modules;
         }
 
         public IReadOnlyList<TrapDefinition> GetAllTraps()
@@ -299,6 +336,11 @@ namespace Dungeon.Core
             return MakeKey(CategoryEquip, rawId);
         }
 
+        public string GetModuleKey(string rawId)
+        {
+            return MakeKey(CategoryModule, rawId);
+        }
+
         public Sprite GetIconByKey(string key)
         {
             key = NormalizeKey(key);
@@ -325,7 +367,10 @@ namespace Dungeon.Core
             }
 
             if (category == CategoryModule)
-                return LoadResourceIcon(moduleIconResourceRoot, id);
+            {
+                Sprite loaded = LoadResourceIcon(moduleIconResourceRoot, id);
+                return loaded != null ? loaded : LoadTemporaryModuleIcon(id);
+            }
 
             return unknownFallbackIcon;
         }
@@ -455,6 +500,29 @@ namespace Dungeon.Core
             return id;
         }
 
+        private Sprite LoadTemporaryModuleIcon(string id)
+        {
+            if (string.IsNullOrWhiteSpace(moduleIconResourceRoot))
+                return unknownFallbackIcon;
+
+            // 숫자 아이콘(000~013)이 준비되면 위의 정식 경로가 항상 우선합니다.
+            // 그 전까지는 현재 보유한 세 이미지를 순환해 UI 기능을 테스트합니다.
+            string[] fallbackNames =
+            {
+                "Module-M.DEF",
+                "Module-DEF",
+                "Module-DEF (1)"
+            };
+
+            int index = 0;
+            if (int.TryParse(NormalizeId(id), out int numericId))
+                index = Math.Abs(numericId) % fallbackNames.Length;
+
+            return Resources.Load<Sprite>(
+                $"{moduleIconResourceRoot.TrimEnd('/')}/{fallbackNames[index]}"
+            );
+        }
+
         public static string NormalizeTrapCode(string code)
         {
             return code?.Trim().ToUpperInvariant() ?? string.Empty;
@@ -486,7 +554,8 @@ namespace Dungeon.Core
         Unknown = 0,
         Item = 1,
         Equipment = 2,
-        Trap = 3
+        Trap = 3,
+        Module = 4
     }
 
     [Serializable]
@@ -494,6 +563,7 @@ namespace Dungeon.Core
     {
         public ItemDefinition[] items;
         public EquipmentDefinition[] equips;
+        public ModuleDefinition[] modules;
         public TrapDefinition[] traps;
     }
 
@@ -528,6 +598,16 @@ namespace Dungeon.Core
         public EquipmentSubStatMultiplier sub_stats_multiplier;
 
         public string Key => GameDatabase.MakeKey(GameDatabase.CategoryEquip, id);
+    }
+
+    [Serializable]
+    public class ModuleDefinition
+    {
+        public string id;
+        public string name;
+        public string desc;
+
+        public string Key => GameDatabase.MakeKey(GameDatabase.CategoryModule, id);
     }
 
     [Serializable]
@@ -582,7 +662,7 @@ namespace Dungeon.Core
     [Serializable]
     public class DatabaseIconEntry
     {
-        [Tooltip("권장 형식: item:000 또는 equip:000. 이 값이 있으면 category/id보다 우선합니다.")]
+        [Tooltip("권장 형식: item:000, equip:000, module:000. 이 값이 있으면 category/id보다 우선합니다.")]
         public string fullKey;
 
         [Tooltip("fullKey를 쓰지 않을 때 사용합니다. item 또는 equip.")]

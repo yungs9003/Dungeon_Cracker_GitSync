@@ -1,0 +1,833 @@
+using System;
+using System.Collections.Generic;
+using Dungeon.Core;
+using TMPro;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
+
+namespace Dungeon.UI
+{
+    /// <summary>
+    /// Status 창의 모듈 탭을 장착 세이브와 연결합니다.
+    /// SharedStatus의 SVG 기반 레이아웃을 우선 재사용하고, 구형 빈 페이지에는
+    /// 같은 6슬롯/상세 뷰어 구조를 런타임에 보완합니다.
+    /// </summary>
+    [DisallowMultipleComponent]
+    public sealed class StatusModulePageUI : MonoBehaviour
+    {
+        private const string ArtworkResourcePath = "UI/StatusModuleArtwork";
+
+        private static readonly string[] SlotNames =
+        {
+            "EquippedSlot_LT",
+            "EquippedSlot_LM",
+            "EquippedSlot_LB",
+            "EquippedSlot_RT",
+            "EquippedSlot_RM",
+            "EquippedSlot_RB"
+        };
+
+        private static readonly Vector2[] FallbackSlotPositions =
+        {
+            new(78.303f, -249.705f),
+            new(72.735f, -414.792f),
+            new(78.3f, -569.208f),
+            new(409.842f, -249.705f),
+            new(404.274f, -414.792f),
+            new(409.842f, -569.208f)
+        };
+
+        [SerializeField] private GameObject leftPage;
+        [SerializeField] private GameObject rightPage;
+        [SerializeField] private GameDatabase database;
+
+        private readonly ModuleSaveRepository saveRepository = new();
+        private readonly List<StatusModuleSlotBinding> slots = new();
+
+        private Image detailIcon;
+        private TMP_Text detailNameText;
+        private TMP_Text detailDescriptionText;
+        private StatusModuleArtwork artwork;
+        private bool layoutReady;
+        private bool subscribed;
+        private int selectedSlotNumber;
+
+        public void Configure(GameObject left, GameObject right)
+        {
+            leftPage = left;
+            rightPage = right != null ? right : gameObject;
+            database ??= GameDatabase.Instance;
+            EnsureLayout();
+            Subscribe();
+            Refresh();
+        }
+
+        private void OnEnable()
+        {
+            Subscribe();
+            EnsureLayout();
+            Refresh();
+        }
+
+        private void OnDisable()
+        {
+            Unsubscribe();
+        }
+
+        private void OnDestroy()
+        {
+            Unsubscribe();
+
+            foreach (StatusModuleSlotBinding slot in slots)
+                slot.Unbind();
+        }
+
+        public void Refresh()
+        {
+            if (!layoutReady)
+                return;
+
+            database ??= GameDatabase.Instance;
+            if (database == null || !saveRepository.Load())
+            {
+                ShowEmptyDetails("모듈 정보를 불러올 수 없습니다.");
+                return;
+            }
+
+            int firstOccupied = 0;
+            for (int i = 0; i < slots.Count; i++)
+            {
+                int slotNumber = i + 1;
+                string key = saveRepository.GetEquippedKey(slotNumber);
+                ModuleDefinition definition = null;
+                Sprite icon = null;
+
+                if (key != GameDatabase.NoneKey &&
+                    database.TryGetModuleByKey(key, out definition))
+                {
+                    icon = database.GetModuleIcon(definition.id);
+                    firstOccupied = firstOccupied == 0 ? slotNumber : firstOccupied;
+                }
+
+                slots[i].SetContent(definition, icon);
+            }
+
+            if (selectedSlotNumber <= 0 ||
+                selectedSlotNumber > slots.Count ||
+                !slots[selectedSlotNumber - 1].HasModule)
+            {
+                selectedSlotNumber = firstOccupied;
+            }
+
+            RefreshSelectionVisuals();
+
+            if (selectedSlotNumber > 0)
+                ShowDetails(slots[selectedSlotNumber - 1].Definition);
+            else
+                ShowEmptyDetails("장착된 모듈이 없습니다.");
+        }
+
+        private void OnSaveDataChanged(StatusSaveData data)
+        {
+            Refresh();
+        }
+
+        private void OnSlotClicked(int slotNumber)
+        {
+            if (slotNumber < 1 || slotNumber > slots.Count)
+                return;
+
+            StatusModuleSlotBinding slot = slots[slotNumber - 1];
+            if (!slot.HasModule)
+                return;
+
+            selectedSlotNumber = slotNumber;
+            RefreshSelectionVisuals();
+            ShowDetails(slot.Definition);
+        }
+
+        private void EnsureLayout()
+        {
+            if (layoutReady || leftPage == null || rightPage == null)
+                return;
+
+            Transform detailGroup = FindChildRecursive(rightPage.transform, "ModuleDetailGroup");
+            bool hasDesignedDetails = detailGroup != null;
+
+            if (!TryBindExistingSlots())
+                BuildFallbackSlots();
+
+            if (hasDesignedDetails)
+            {
+                // SharedStatus의 SVG 기반 상세 뷰는 SelectedModuleIcon 이름을 사용합니다.
+                // 구형 런타임 fallback의 ModuleIcon 이름도 계속 지원합니다.
+                detailIcon = GetImage(detailGroup, "SelectedModuleIcon");
+                detailIcon ??= GetImage(detailGroup, "ModuleIcon");
+                detailNameText = GetText(detailGroup, "ModuleNameText");
+                detailDescriptionText = GetText(detailGroup, "ModuleDescriptionText");
+            }
+
+            if (detailIcon == null || detailNameText == null || detailDescriptionText == null)
+                BuildFallbackDetails();
+
+            ApplyModuleTextFont();
+
+            layoutReady = slots.Count == ModuleSaveRepository.SlotCount &&
+                          detailNameText != null &&
+                          detailDescriptionText != null;
+        }
+
+        private bool TryBindExistingSlots()
+        {
+            slots.Clear();
+
+            for (int i = 0; i < SlotNames.Length; i++)
+            {
+                Transform root = FindChildRecursive(leftPage.transform, SlotNames[i]);
+                if (root == null)
+                {
+                    foreach (StatusModuleSlotBinding slot in slots)
+                        slot.Unbind();
+                    slots.Clear();
+                    return false;
+                }
+
+                Image icon = GetImage(root, "ModuleIcon");
+                if (icon == null)
+                {
+                    foreach (StatusModuleSlotBinding slot in slots)
+                        slot.Unbind();
+                    slots.Clear();
+                    return false;
+                }
+
+                slots.Add(CreateBinding(i + 1, root.gameObject, icon));
+            }
+
+            return true;
+        }
+
+        private void BuildFallbackSlots()
+        {
+            slots.Clear();
+            RectTransform pageRect = leftPage.GetComponent<RectTransform>();
+            Stretch(pageRect);
+            StatusModuleArtwork visual = LoadArtwork();
+
+            Transform armor = FindChildRecursive(leftPage.transform, "StatusCharacterImage");
+            if (armor != null && armor is RectTransform armorRect)
+            {
+                armorRect.anchorMin = armorRect.anchorMax = new Vector2(0.5f, 0.5f);
+                armorRect.pivot = new Vector2(0.5f, 0.5f);
+                armorRect.anchoredPosition = Vector2.zero;
+                armorRect.sizeDelta = new Vector2(300f, 690f);
+                armorRect.localScale = Vector3.one;
+            }
+
+            for (int i = 0; i < SlotNames.Length; i++)
+            {
+                GameObject root = CreateImageObject(
+                    SlotNames[i],
+                    leftPage.transform,
+                    new Color(0.16f, 0.22f, 0.31f, 0.92f)
+                );
+                RectTransform rect = root.GetComponent<RectTransform>();
+                rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
+                rect.pivot = new Vector2(0.5f, 0.5f);
+                rect.anchoredPosition = FallbackSlotPositions[i];
+                rect.sizeDelta = new Vector2(112.479f, 112.479f);
+
+                Image slotFrame = root.GetComponent<Image>();
+                if (visual != null && visual.SlotFrame != null)
+                {
+                    slotFrame.sprite = visual.SlotFrame;
+                    slotFrame.color = Color.white;
+                    slotFrame.preserveAspect = true;
+                }
+
+                Button button = root.AddComponent<Button>();
+                button.targetGraphic = root.GetComponent<Image>();
+                button.transition = Selectable.Transition.ColorTint;
+
+                GameObject iconObject = CreateImageObject(
+                    "ModuleIcon",
+                    root.transform,
+                    Color.white
+                );
+                RectTransform iconRect = iconObject.GetComponent<RectTransform>();
+                iconRect.anchorMin = Vector2.zero;
+                iconRect.anchorMax = Vector2.one;
+                iconRect.offsetMin = new Vector2(8f, 8f);
+                iconRect.offsetMax = new Vector2(-8f, -8f);
+                Image icon = iconObject.GetComponent<Image>();
+                icon.preserveAspect = true;
+                icon.raycastTarget = false;
+
+                slots.Add(CreateBinding(i + 1, root, icon));
+            }
+        }
+
+        private void BuildFallbackDetails()
+        {
+            RectTransform pageRect = rightPage.GetComponent<RectTransform>();
+            Stretch(pageRect);
+
+            StatusModuleArtwork visual = LoadArtwork();
+            if (visual == null ||
+                visual.DeviceFrame == null ||
+                visual.PatternPanel == null ||
+                visual.ScanLines == null)
+            {
+                BuildLegacyFallbackDetails();
+                return;
+            }
+
+            var viewer = new GameObject(
+                "StatusModuleRuntimeViewer",
+                typeof(RectTransform)
+            );
+            viewer.layer = rightPage.layer;
+            viewer.transform.SetParent(rightPage.transform, false);
+            Stretch(viewer.GetComponent<RectTransform>());
+
+            Image frame = CreateArtworkImage(
+                "ModuleDeviceFrame",
+                viewer.transform,
+                visual.DeviceFrame
+            );
+            SetTopLeftRect(frame.rectTransform, 1.5f, 25f, 960f, 579f);
+
+            var detailGroup = new GameObject(
+                "ModuleDetailGroup",
+                typeof(RectTransform)
+            );
+            detailGroup.layer = viewer.layer;
+            detailGroup.transform.SetParent(viewer.transform, false);
+            Stretch(detailGroup.GetComponent<RectTransform>());
+
+            Image panel = CreateArtworkImage(
+                "ModulePatternPanel",
+                detailGroup.transform,
+                visual.PatternPanel
+            );
+            SetTopLeftRect(panel.rectTransform, 39.6f, 82f, 313f, 468f);
+
+            Image scanLines = CreateArtworkImage(
+                "ModuleScanLines",
+                detailGroup.transform,
+                visual.ScanLines
+            );
+            SetTopLeftRect(scanLines.rectTransform, 400.5f, 106f, 507f, 381f);
+
+            detailIcon = CreateArtworkImage(
+                "SelectedModuleIcon",
+                detailGroup.transform,
+                null
+            );
+            detailIcon.preserveAspect = true;
+            SetCenteredTopLeftRect(
+                detailIcon.rectTransform,
+                196.86f,
+                316.36f,
+                210.9f,
+                210.9f
+            );
+
+            TMP_FontAsset font = GetModuleTextFont();
+            Color monitorTextColor = new(0f, 50f / 255f, 97f / 255f, 1f);
+
+            detailNameText = CreateText(
+                "ModuleNameText",
+                detailGroup.transform,
+                font,
+                60f,
+                FontStyles.Normal,
+                TextAlignmentOptions.Top,
+                monitorTextColor
+            );
+            SetTopLeftRect(
+                detailNameText.rectTransform,
+                400.5f,
+                120f,
+                507f,
+                82f
+            );
+
+            detailDescriptionText = CreateText(
+                "ModuleDescriptionText",
+                detailGroup.transform,
+                font,
+                34f,
+                FontStyles.Normal,
+                TextAlignmentOptions.TopLeft,
+                monitorTextColor
+            );
+            SetTopLeftRect(
+                detailDescriptionText.rectTransform,
+                439.74f,
+                235.63f,
+                440f,
+                225f
+            );
+            detailDescriptionText.textWrappingMode = TextWrappingModes.Normal;
+
+            TMP_Text footer = CreateText(
+                "ModuleViewerLabel",
+                detailGroup.transform,
+                visual.FooterFont != null ? visual.FooterFont : font,
+                18f,
+                FontStyles.Normal,
+                TextAlignmentOptions.Center,
+                Color.white
+            );
+            SetTopLeftRect(footer.rectTransform, 502.6f, 508f, 323.1f, 34f);
+            footer.text = "ADVANCED MODULE VIEWER";
+            footer.characterSpacing = 10f;
+        }
+
+        private void BuildLegacyFallbackDetails()
+        {
+            RectTransform pageRect = rightPage.GetComponent<RectTransform>();
+            Stretch(pageRect);
+
+            Transform oldGroup = FindChildRecursive(rightPage.transform, "StatusModuleRuntimeViewer");
+            GameObject viewer = oldGroup != null
+                ? oldGroup.gameObject
+                : CreateImageObject(
+                    "StatusModuleRuntimeViewer",
+                    rightPage.transform,
+                    new Color(0.34f, 0.51f, 0.74f, 1f)
+                );
+
+            RectTransform viewerRect = viewer.GetComponent<RectTransform>();
+            viewerRect.anchorMin = new Vector2(0.03f, 0.06f);
+            viewerRect.anchorMax = new Vector2(0.97f, 0.94f);
+            viewerRect.offsetMin = Vector2.zero;
+            viewerRect.offsetMax = Vector2.zero;
+
+            GameObject iconPanel = CreateImageObject(
+                "ModuleIconPanel",
+                viewer.transform,
+                new Color(0.86f, 0.88f, 0.9f, 1f)
+            );
+            RectTransform iconPanelRect = iconPanel.GetComponent<RectTransform>();
+            iconPanelRect.anchorMin = new Vector2(0.025f, 0.06f);
+            iconPanelRect.anchorMax = new Vector2(0.34f, 0.94f);
+            iconPanelRect.offsetMin = Vector2.zero;
+            iconPanelRect.offsetMax = Vector2.zero;
+
+            GameObject iconObject = CreateImageObject(
+                "ModuleIcon",
+                iconPanel.transform,
+                Color.white
+            );
+            RectTransform iconRect = iconObject.GetComponent<RectTransform>();
+            iconRect.anchorMin = new Vector2(0.08f, 0.2f);
+            iconRect.anchorMax = new Vector2(0.92f, 0.8f);
+            iconRect.offsetMin = Vector2.zero;
+            iconRect.offsetMax = Vector2.zero;
+            detailIcon = iconObject.GetComponent<Image>();
+            detailIcon.preserveAspect = true;
+            detailIcon.raycastTarget = false;
+
+            GameObject infoPanel = CreateImageObject(
+                "ModuleInfoMonitor",
+                viewer.transform,
+                new Color(0.08f, 0.12f, 0.14f, 1f)
+            );
+            RectTransform infoRect = infoPanel.GetComponent<RectTransform>();
+            infoRect.anchorMin = new Vector2(0.37f, 0.06f);
+            infoRect.anchorMax = new Vector2(0.975f, 0.94f);
+            infoRect.offsetMin = Vector2.zero;
+            infoRect.offsetMax = Vector2.zero;
+
+            GameObject screen = CreateImageObject(
+                "MonitorScreen",
+                infoPanel.transform,
+                new Color(0.63f, 0.63f, 0.59f, 1f)
+            );
+            RectTransform screenRect = screen.GetComponent<RectTransform>();
+            screenRect.anchorMin = new Vector2(0.035f, 0.14f);
+            screenRect.anchorMax = new Vector2(0.965f, 0.965f);
+            screenRect.offsetMin = Vector2.zero;
+            screenRect.offsetMax = Vector2.zero;
+
+            TMP_FontAsset font = GetModuleTextFont();
+            detailNameText = CreateText(
+                "ModuleNameText",
+                screen.transform,
+                font,
+                52f,
+                FontStyles.Bold,
+                TextAlignmentOptions.Center,
+                new Color(0.01f, 0.16f, 0.3f, 1f)
+            );
+            RectTransform nameRect = detailNameText.rectTransform;
+            nameRect.anchorMin = new Vector2(0.04f, 0.68f);
+            nameRect.anchorMax = new Vector2(0.96f, 0.94f);
+            nameRect.offsetMin = Vector2.zero;
+            nameRect.offsetMax = Vector2.zero;
+
+            detailDescriptionText = CreateText(
+                "ModuleDescriptionText",
+                screen.transform,
+                font,
+                28f,
+                FontStyles.Normal,
+                TextAlignmentOptions.TopLeft,
+                new Color(0.01f, 0.16f, 0.3f, 1f)
+            );
+            RectTransform bodyRect = detailDescriptionText.rectTransform;
+            bodyRect.anchorMin = new Vector2(0.075f, 0.08f);
+            bodyRect.anchorMax = new Vector2(0.925f, 0.66f);
+            bodyRect.offsetMin = Vector2.zero;
+            bodyRect.offsetMax = Vector2.zero;
+            detailDescriptionText.textWrappingMode = TextWrappingModes.Normal;
+        }
+
+        private StatusModuleSlotBinding CreateBinding(
+            int slotNumber,
+            GameObject root,
+            Image icon)
+        {
+            Button button = root.GetComponent<Button>();
+            if (button == null)
+                button = root.AddComponent<Button>();
+
+            Outline outline = root.GetComponent<Outline>();
+            if (outline == null)
+                outline = root.AddComponent<Outline>();
+
+            outline.effectColor = new Color(0.25f, 0.88f, 1f, 0.98f);
+            outline.effectDistance = new Vector2(4f, -4f);
+            outline.enabled = false;
+
+            var binding = new StatusModuleSlotBinding(
+                slotNumber,
+                button,
+                icon,
+                outline
+            );
+            binding.Bind(() => OnSlotClicked(slotNumber));
+            return binding;
+        }
+
+        private void ShowDetails(ModuleDefinition definition)
+        {
+            if (definition == null)
+            {
+                ShowEmptyDetails("장착된 모듈이 없습니다.");
+                return;
+            }
+
+            if (detailIcon != null)
+            {
+                Sprite icon = database != null ? database.GetModuleIcon(definition.id) : null;
+                detailIcon.sprite = icon;
+                detailIcon.enabled = icon != null;
+                detailIcon.gameObject.SetActive(icon != null);
+            }
+
+            detailNameText.text = definition.name ?? string.Empty;
+            detailDescriptionText.text = definition.desc ?? string.Empty;
+        }
+
+        private void ShowEmptyDetails(string message)
+        {
+            if (detailIcon != null)
+            {
+                detailIcon.sprite = null;
+                detailIcon.enabled = false;
+                detailIcon.gameObject.SetActive(false);
+            }
+
+            if (detailNameText != null)
+                detailNameText.text = "MODULE";
+
+            if (detailDescriptionText != null)
+                detailDescriptionText.text = message ?? string.Empty;
+        }
+
+        private void RefreshSelectionVisuals()
+        {
+            for (int i = 0; i < slots.Count; i++)
+                slots[i].SetSelected(i + 1 == selectedSlotNumber);
+        }
+
+        private void Subscribe()
+        {
+            if (subscribed || StatusSaveFile.Instance == null)
+                return;
+
+            StatusSaveFile.Instance.OnSaveDataChanged += OnSaveDataChanged;
+            subscribed = true;
+        }
+
+        private void Unsubscribe()
+        {
+            if (!subscribed)
+                return;
+
+            if (StatusSaveFile.Instance != null)
+                StatusSaveFile.Instance.OnSaveDataChanged -= OnSaveDataChanged;
+
+            subscribed = false;
+        }
+
+        private StatusModuleArtwork LoadArtwork()
+        {
+            artwork ??= Resources.Load<StatusModuleArtwork>(ArtworkResourcePath);
+            return artwork;
+        }
+
+        private TMP_FontAsset GetModuleTextFont()
+        {
+            StatusModuleArtwork visual = LoadArtwork();
+            if (visual != null && visual.ModuleTextFont != null)
+                return visual.ModuleTextFont;
+
+            return FindReferenceFont();
+        }
+
+        private void ApplyModuleTextFont()
+        {
+            TMP_FontAsset font = GetModuleTextFont();
+            if (font == null)
+                return;
+
+            if (detailNameText != null)
+                detailNameText.font = font;
+
+            if (detailDescriptionText != null)
+                detailDescriptionText.font = font;
+        }
+
+        private static Image CreateArtworkImage(
+            string objectName,
+            Transform parent,
+            Sprite sprite)
+        {
+            GameObject imageObject = CreateImageObject(
+                objectName,
+                parent,
+                Color.white
+            );
+            Image result = imageObject.GetComponent<Image>();
+            result.sprite = sprite;
+            result.preserveAspect = false;
+            result.raycastTarget = false;
+            return result;
+        }
+
+        private static void SetTopLeftRect(
+            RectTransform rect,
+            float left,
+            float top,
+            float width,
+            float height)
+        {
+            rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
+            rect.pivot = new Vector2(0f, 1f);
+            rect.anchoredPosition = new Vector2(left, -top);
+            rect.sizeDelta = new Vector2(width, height);
+            rect.localScale = Vector3.one;
+        }
+
+        private static void SetCenteredTopLeftRect(
+            RectTransform rect,
+            float centerX,
+            float centerY,
+            float width,
+            float height)
+        {
+            rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = new Vector2(centerX, -centerY);
+            rect.sizeDelta = new Vector2(width, height);
+            rect.localScale = Vector3.one;
+        }
+
+        private TMP_FontAsset FindReferenceFont()
+        {
+            Canvas canvas = GetComponentInParent<Canvas>();
+            if (canvas != null)
+            {
+                TMP_Text[] texts = canvas.GetComponentsInChildren<TMP_Text>(true);
+                TMP_FontAsset fallback = null;
+                foreach (TMP_Text text in texts)
+                {
+                    if (text == null || text.font == null)
+                        continue;
+
+                    fallback ??= text.font;
+                    if (ContainsHangul(text.text))
+                        return text.font;
+                }
+
+                if (fallback != null)
+                    return fallback;
+            }
+
+            return TMP_Settings.defaultFontAsset;
+        }
+
+        private static bool ContainsHangul(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return false;
+
+            foreach (char character in value)
+            {
+                if (character >= '\uac00' && character <= '\ud7a3')
+                    return true;
+            }
+
+            return false;
+        }
+
+        private static GameObject CreateImageObject(
+            string objectName,
+            Transform parent,
+            Color color)
+        {
+            var go = new GameObject(
+                objectName,
+                typeof(RectTransform),
+                typeof(CanvasRenderer),
+                typeof(Image)
+            );
+            go.layer = parent.gameObject.layer;
+            go.transform.SetParent(parent, false);
+            go.GetComponent<Image>().color = color;
+            return go;
+        }
+
+        private static TMP_Text CreateText(
+            string objectName,
+            Transform parent,
+            TMP_FontAsset font,
+            float fontSize,
+            FontStyles style,
+            TextAlignmentOptions alignment,
+            Color color)
+        {
+            var go = new GameObject(
+                objectName,
+                typeof(RectTransform),
+                typeof(CanvasRenderer),
+                typeof(TextMeshProUGUI)
+            );
+            go.layer = parent.gameObject.layer;
+            go.transform.SetParent(parent, false);
+
+            TextMeshProUGUI text = go.GetComponent<TextMeshProUGUI>();
+            text.font = font;
+            text.fontSize = fontSize;
+            text.fontStyle = style;
+            text.alignment = alignment;
+            text.color = color;
+            text.raycastTarget = false;
+            return text;
+        }
+
+        private static void Stretch(RectTransform rect)
+        {
+            if (rect == null)
+                return;
+
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+            rect.localScale = Vector3.one;
+        }
+
+        private static Image GetImage(Transform root, string targetName)
+        {
+            Transform found = FindChildRecursive(root, targetName);
+            return found != null ? found.GetComponent<Image>() : null;
+        }
+
+        private static TMP_Text GetText(Transform root, string targetName)
+        {
+            Transform found = FindChildRecursive(root, targetName);
+            return found != null ? found.GetComponent<TMP_Text>() : null;
+        }
+
+        private static Transform FindChildRecursive(Transform root, string targetName)
+        {
+            if (root == null || string.IsNullOrWhiteSpace(targetName))
+                return null;
+
+            if (root.name == targetName)
+                return root;
+
+            for (int i = 0; i < root.childCount; i++)
+            {
+                Transform found = FindChildRecursive(root.GetChild(i), targetName);
+                if (found != null)
+                    return found;
+            }
+
+            return null;
+        }
+
+        private sealed class StatusModuleSlotBinding
+        {
+            public int SlotNumber { get; }
+            public ModuleDefinition Definition { get; private set; }
+            public bool HasModule => Definition != null;
+
+            private readonly Button button;
+            private readonly Image icon;
+            private readonly Outline outline;
+            private UnityAction clickAction;
+
+            public StatusModuleSlotBinding(
+                int slotNumber,
+                Button button,
+                Image icon,
+                Outline outline)
+            {
+                SlotNumber = slotNumber;
+                this.button = button;
+                this.icon = icon;
+                this.outline = outline;
+            }
+
+            public void Bind(UnityAction action)
+            {
+                Unbind();
+                clickAction = action;
+                button.onClick.AddListener(clickAction);
+            }
+
+            public void Unbind()
+            {
+                if (clickAction != null && button != null)
+                    button.onClick.RemoveListener(clickAction);
+                clickAction = null;
+            }
+
+            public void SetContent(ModuleDefinition definition, Sprite sprite)
+            {
+                Definition = definition;
+                bool visible = definition != null && sprite != null;
+
+                icon.sprite = sprite;
+                icon.enabled = visible;
+                icon.gameObject.SetActive(visible);
+                icon.preserveAspect = true;
+                icon.raycastTarget = false;
+                button.interactable = definition != null;
+            }
+
+            public void SetSelected(bool selected)
+            {
+                if (outline != null)
+                    outline.enabled = selected && HasModule;
+            }
+        }
+    }
+}

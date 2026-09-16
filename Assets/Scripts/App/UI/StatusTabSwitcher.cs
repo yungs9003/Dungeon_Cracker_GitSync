@@ -40,6 +40,7 @@ namespace Dungeon.UI
         private void Awake()
         {
             BindButtons();
+            EnsureModulePagePresenter();
         }
 
         private void OnEnable()
@@ -90,6 +91,28 @@ namespace Dungeon.UI
 
                 if (button != null && action != null)
                     button.onClick.RemoveListener(action);
+            }
+        }
+
+        private void EnsureModulePagePresenter()
+        {
+            foreach (TabBinding tab in tabs)
+            {
+                if (tab == null ||
+                    !string.Equals(tab.tabName, "Module", StringComparison.OrdinalIgnoreCase) ||
+                    tab.rightContentPage == null)
+                {
+                    continue;
+                }
+
+                StatusModulePageUI presenter =
+                    tab.rightContentPage.GetComponent<StatusModulePageUI>();
+
+                if (presenter == null)
+                    presenter = tab.rightContentPage.AddComponent<StatusModulePageUI>();
+
+                presenter.Configure(tab.leftPage, tab.rightContentPage);
+                break;
             }
         }
 

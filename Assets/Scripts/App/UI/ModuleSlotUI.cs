@@ -1,12 +1,19 @@
+using Dungeon.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Dungeon.UI
 {
+    public enum ModuleSlotRole
+    {
+        Inventory = 0,
+        Equipped = 1
+    }
+
     /// <summary>
-    /// 장착/보유 모듈 슬롯의 공통 표시와 포인터 피드백을 담당합니다.
-    /// 실제 장착·해제 및 저장은 별도 데이터 계층에서 연결하도록 분리되어 있습니다.
+    /// 모듈 슬롯의 공통 표시와 좌/더블/우클릭 입력을 담당합니다.
+    /// 실제 장착 데이터 변경과 저장은 ModulePageUI가 수행합니다.
     /// </summary>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(Button))]
@@ -14,7 +21,8 @@ namespace Dungeon.UI
         IPointerEnterHandler,
         IPointerExitHandler,
         IPointerDownHandler,
-        IPointerUpHandler
+        IPointerUpHandler,
+        IPointerClickHandler
     {
         [SerializeField] private ModulePageUI modulePage;
         [SerializeField] private Image moduleIconImage;
@@ -29,16 +37,29 @@ namespace Dungeon.UI
         private bool selected;
         private bool hovered;
         private bool pressed;
+        private bool baseScaleCaptured;
+        private string moduleId = GameDatabase.NoneKey;
+        private ModuleSlotRole role;
+        private int equippedSlotIndex;
 
         public bool IsSelectable => selectable;
         public bool IsSelected => selected;
+        public bool HasModule => moduleId != GameDatabase.NoneKey;
+        public string ModuleId => moduleId;
+        public string ModuleKey => HasModule
+            ? GameDatabase.MakeKey(GameDatabase.CategoryModule, moduleId)
+            : GameDatabase.NoneKey;
         public string ModuleName => moduleName;
+        public string Description => description;
+        public Sprite ModuleIcon => moduleIcon;
+        public ModuleSlotRole Role => role;
+        public int EquippedSlotIndex => equippedSlotIndex;
 
         private void Awake()
         {
-            baseScale = transform.localScale;
+            CaptureBaseScale();
             button = GetComponent<Button>();
-            button.onClick.AddListener(Select);
+            AutoBindVisuals();
             RefreshVisual();
             RefreshInteractionVisual();
         }
@@ -50,23 +71,41 @@ namespace Dungeon.UI
             RefreshInteractionVisual();
         }
 
-        private void OnDestroy()
-        {
-            if (button != null)
-                button.onClick.RemoveListener(Select);
-        }
-
         public void Select()
         {
-            if (!selectable || moduleIcon == null || modulePage == null)
-                return;
-
-            modulePage.ShowDetails(this, moduleIcon, moduleName, description);
+            if (modulePage != null)
+                modulePage.HandleSingleLeftClick(this);
         }
 
         public void SetSelected(bool value)
         {
             selected = value && selectable;
+            RefreshInteractionVisual();
+        }
+
+        public void ConfigureRuntime(
+            ModulePageUI page,
+            ModuleDefinition definition,
+            Sprite icon,
+            ModuleSlotRole slotRole,
+            int slotIndex)
+        {
+            modulePage = page;
+            role = slotRole;
+            equippedSlotIndex = slotRole == ModuleSlotRole.Equipped ? slotIndex : 0;
+            moduleId = definition != null
+                ? GameDatabase.NormalizeId(definition.id)
+                : GameDatabase.NoneKey;
+            moduleIcon = icon;
+            moduleName = definition?.name ?? string.Empty;
+            description = definition?.desc ?? string.Empty;
+            selectable = slotRole == ModuleSlotRole.Equipped || definition != null;
+
+            selected = false;
+            button = GetComponent<Button>();
+            CaptureBaseScale();
+            AutoBindVisuals();
+            RefreshVisual();
             RefreshInteractionVisual();
         }
 
@@ -84,14 +123,38 @@ namespace Dungeon.UI
             moduleIcon = icon;
             moduleName = title ?? string.Empty;
             description = body ?? string.Empty;
+            moduleId = icon != null ? name : GameDatabase.NoneKey;
             selectable = canSelect && icon != null;
             selectionHighlight = highlight;
+            role = ModuleSlotRole.Inventory;
+            equippedSlotIndex = 0;
 
             button = GetComponent<Button>();
-            baseScale = transform.localScale;
+            CaptureBaseScale();
             selected = false;
+            AutoBindVisuals();
             RefreshVisual();
             RefreshInteractionVisual();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (!selectable || modulePage == null)
+                return;
+
+            if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                modulePage.HandleRightClick(this);
+                return;
+            }
+
+            if (eventData.button != PointerEventData.InputButton.Left)
+                return;
+
+            if (eventData.clickCount >= 2)
+                modulePage.HandleDoubleLeftClick(this);
+            else
+                modulePage.HandleSingleLeftClick(this);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -125,18 +188,51 @@ namespace Dungeon.UI
             RefreshInteractionVisual();
         }
 
+        private void AutoBindVisuals()
+        {
+            if (moduleIconImage == null)
+            {
+                Image[] images = GetComponentsInChildren<Image>(true);
+                foreach (Image image in images)
+                {
+                    if (image.gameObject == gameObject)
+                        continue;
+
+                    if (image.name == "ModuleIcon")
+                    {
+                        moduleIconImage = image;
+                        break;
+                    }
+
+                    moduleIconImage ??= image;
+                }
+            }
+
+            if (selectionHighlight == null)
+                selectionHighlight = GetComponent<Outline>();
+        }
+
+        private void CaptureBaseScale()
+        {
+            if (baseScaleCaptured)
+                return;
+
+            baseScale = transform.localScale;
+            baseScaleCaptured = true;
+        }
+
         private void RefreshVisual()
         {
             if (moduleIconImage != null)
             {
                 moduleIconImage.sprite = moduleIcon;
-                moduleIconImage.enabled = moduleIcon != null;
-                moduleIconImage.gameObject.SetActive(moduleIcon != null);
+                moduleIconImage.enabled = HasModule && moduleIcon != null;
+                moduleIconImage.gameObject.SetActive(HasModule && moduleIcon != null);
+                moduleIconImage.preserveAspect = true;
+                moduleIconImage.raycastTarget = false;
             }
 
-            if (button == null)
-                button = GetComponent<Button>();
-
+            button ??= GetComponent<Button>();
             if (button != null)
                 button.interactable = selectable;
         }

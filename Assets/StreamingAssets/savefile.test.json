@@ -1,12 +1,12 @@
 {
-  "save_version": 1,
+  "save_version": 2,
   "user_name": "Toluse",
   "gold": 36550,
-  "broken_traps": 1,
+  "broken_traps": 0,
   "clear_reward_claimed": false,
   "last_getting_gold": 0,
-  "clear_time_seconds": 11.50329,
-  "hit_count": 3,
+  "clear_time_seconds": 302.984375,
+  "hit_count": 42,
   "main_stats": {
     "max_HP": 150,
     "physical_resist": 20,
@@ -77,6 +77,50 @@
       {
         "008": 1
       }
+    ],
+    "module": [
+      {
+        "000": 1
+      },
+      {
+        "001": 1
+      },
+      {
+        "002": 1
+      },
+      {
+        "003": 1
+      },
+      {
+        "004": 1
+      },
+      {
+        "005": 1
+      },
+      {
+        "006": 1
+      },
+      {
+        "007": 1
+      },
+      {
+        "008": 1
+      },
+      {
+        "009": 1
+      },
+      {
+        "010": 1
+      },
+      {
+        "011": 1
+      },
+      {
+        "012": 1
+      },
+      {
+        "013": 1
+      }
     ]
   },
   "equips": {
@@ -106,6 +150,26 @@
       },
       {
         "legs": "none"
+      }
+    ],
+    "module": [
+      {
+        "slot1": "000"
+      },
+      {
+        "slot2": "001"
+      },
+      {
+        "slot3": "002"
+      },
+      {
+        "slot4": "003"
+      },
+      {
+        "slot5": "004"
+      },
+      {
+        "slot6": "005"
       }
     ]
   },
