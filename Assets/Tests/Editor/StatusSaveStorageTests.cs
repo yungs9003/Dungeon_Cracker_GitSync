@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Dungeon.Core;
 using NUnit.Framework;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -13,6 +15,48 @@ namespace Dungeon.Tests
     {
         private string testRoot;
         private FileStatusSaveStorage storage;
+
+        [Test]
+        public void StatusSaveFile_UnitySerializationPreservesDictionaryProgress()
+        {
+            GameObject go = new GameObject("StatusSaveFile_DomainReloadTest");
+            go.SetActive(false);
+
+            try
+            {
+                StatusSaveFile saveFile = go.AddComponent<StatusSaveFile>();
+                StatusSaveData expected = StatusSaveDefaults.Create();
+                expected.gold = 9876;
+                expected.inventory.item.Add(new Dictionary<string, int> { ["000"] = 15 });
+                expected.inventory.equipment.Add(new Dictionary<string, int> { ["003"] = 1 });
+                expected.inventory.module.Add(new Dictionary<string, int> { ["001"] = 1 });
+                expected.equips.item[0]["slot1"] = "000";
+                expected.equips.equip[0]["head"] = "003";
+                expected.equips.module[0]["slot1"] = "001";
+                expected.dungeon_status.Add(new Dictionary<string, string> { ["001"] = "clear" });
+
+                FieldInfo field = typeof(StatusSaveFile).GetField(
+                    "data", BindingFlags.Instance | BindingFlags.NonPublic);
+                field.SetValue(saveFile, expected);
+                string before = StatusSaveDefaults.Serialize(expected);
+                string unityJson = EditorJsonUtility.ToJson(saveFile);
+                StringAssert.Contains("serializedDataJson", unityJson);
+
+                // Domain Reload가 런타임 필드를 초기화한 뒤 Unity 직렬화 값을 복원하는 흐름입니다.
+                field.SetValue(saveFile, StatusSaveDefaults.Create());
+                EditorJsonUtility.FromJsonOverwrite(unityJson, saveFile);
+                Assert.That(StatusSaveDefaults.Serialize(saveFile.Data), Is.EqualTo(before));
+
+                string secondJson = EditorJsonUtility.ToJson(saveFile);
+                field.SetValue(saveFile, StatusSaveDefaults.Create());
+                EditorJsonUtility.FromJsonOverwrite(secondJson, saveFile);
+                Assert.That(StatusSaveDefaults.Serialize(saveFile.Data), Is.EqualTo(before));
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(go);
+            }
+        }
 
         [Test]
         public void SaveDataNotification_ContinuesAfterOneListenerFails()

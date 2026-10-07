@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Dungeon.Core;
 using Dungeon.UI;
 using TMPro;
 using UnityEditor;
@@ -14,15 +15,16 @@ public static class ModuleSceneBuilder
     private const string ScenePath = "Assets/Scenes/Module.unity";
     private const string SlotPrefabPath = "Assets/Prefabs/UI/ModuleSlot.prefab";
     private const string EmptySlotSpritePath = "Assets/Sprites/UI/Module/Group 80.png";
-    private const string PhysicalDefenseSpritePath = "Assets/Sprites/UI/Module/Module-DEF.png";
-    private const string MagicDefenseSpritePath = "Assets/Sprites/UI/Module/Module-M.DEF.png";
+    private const string DatabasePath = "Assets/Resources/Data/db.json";
+    private const string ModuleIconRoot = "Assets/Resources/UI/ModuleIcons";
     private const string BackgroundSpritePath = "Assets/Sprites/UI/Module/ModuleMaintenance_Background.png";
     private const string HeadingFontPath = "Assets/Fonts/Cafe24Dangdanghae-v2.0 SDF.asset";
     private const string BodyFontPath = "Assets/Fonts/Cafe24Danjunghae-v2.0 SDF.asset";
     private const string DefaultPreviewPath = "Module_scene_preview.png";
-    private const string MagicPreviewPath = "Module_scene_preview_mdef.png";
+    private const string AlternatePreviewPath = "Module_scene_preview_flight.png";
 
     private static readonly Vector2 SlotSize = new(176f, 176f);
+    private static readonly Vector2 InventorySlotSize = SlotSize * 1.3f;
     private static readonly Color DetailTextColor = new(0.015f, 0.02f, 0.012f, 1f);
     private static readonly Color SelectionColor = new(0.25f, 0.88f, 1f, 0.95f);
 
@@ -44,12 +46,9 @@ public static class ModuleSceneBuilder
 
     private static readonly Vector2[] InventorySlotCenters =
     {
-        new(1119.27f, 557.27f), new(1287.27f, 555.60f), new(1455.27f, 555.60f),
-        new(1623.27f, 557.27f), new(1791.27f, 557.27f),
-        new(1203.27f, 702.17f), new(1371.27f, 702.17f), new(1541.96f, 702.17f),
-        new(1712.22f, 702.17f),
-        new(1121.96f, 848.97f), new(1287.27f, 848.97f), new(1455.27f, 848.97f),
-        new(1625.96f, 848.97f), new(1796.22f, 848.97f)
+        new(1127.67f, 600f), new(1346.07f, 600f),
+        new(1564.47f, 600f), new(1782.87f, 600f),
+        new(1236.87f, 788.37f), new(1455.27f, 788.37f), new(1673.67f, 788.37f)
     };
 
     [MenuItem("Tools/Dungeon/Rebuild Module Scene UI")]
@@ -90,15 +89,14 @@ public static class ModuleSceneBuilder
         AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
         Sprite emptySlot = LoadSprite(EmptySlotSpritePath);
-        Sprite physicalDefense = LoadSprite(PhysicalDefenseSpritePath);
-        Sprite magicDefense = LoadSprite(MagicDefenseSpritePath);
+        ModuleDefinition[] inventoryModules = LoadInventoryModules();
+        ModuleDefinition initialModule = inventoryModules[0];
+        Sprite initialIcon = LoadModuleIcon(initialModule.id);
         Sprite background = LoadSprite(BackgroundSpritePath);
         TMP_FontAsset headingFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(HeadingFontPath);
         TMP_FontAsset bodyFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(BodyFontPath);
 
         EnsureRequiredAsset(emptySlot, EmptySlotSpritePath);
-        EnsureRequiredAsset(physicalDefense, PhysicalDefenseSpritePath);
-        EnsureRequiredAsset(magicDefense, MagicDefenseSpritePath);
         EnsureRequiredAsset(background, BackgroundSpritePath);
         EnsureRequiredAsset(headingFont, HeadingFontPath);
         EnsureRequiredAsset(bodyFont, BodyFontPath);
@@ -129,20 +127,23 @@ public static class ModuleSceneBuilder
         GameObject infoContent = CreateUIObject("ModuleInfoArea", pageRoot.transform);
         Stretch(infoContent.GetComponent<RectTransform>(), Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
 
-        GameObject largeIconObject = CreateImage("SelectedModuleIcon", infoContent.transform, physicalDefense, false);
+        GameObject largeIconObject = CreateImage("SelectedModuleIcon", infoContent.transform, initialIcon, false);
         SetTopLeftRect(largeIconObject.GetComponent<RectTransform>(), new Vector2(264f, 264f), new Vector2(1153.31f, 183.18f));
 
         TextMeshProUGUI nameText = CreateText(
             "ModuleNameText",
             infoContent.transform,
-            "물리 내성 증가",
+            initialModule.name,
             headingFont,
             72f,
             DetailTextColor,
             TextAlignmentOptions.Left);
         SetTopLeftRect(nameText.rectTransform, new Vector2(555f, 92f), new Vector2(1604f, 140f));
         nameText.fontStyle = FontStyles.Bold;
-        nameText.overflowMode = TextOverflowModes.Overflow;
+        nameText.enableAutoSizing = true;
+        nameText.fontSizeMin = 36f;
+        nameText.fontSizeMax = 72f;
+        nameText.overflowMode = TextOverflowModes.Truncate;
 
         GameObject divider = CreateImage("DescriptionDivider", infoContent.transform, null, false);
         divider.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.92f);
@@ -151,54 +152,42 @@ public static class ModuleSceneBuilder
         TextMeshProUGUI descriptionText = CreateText(
             "DescriptionText",
             infoContent.transform,
-            "장착 시, 플레이어의 물리 내성을\n10 증가",
+            initialModule.desc,
             bodyFont,
             42f,
             DetailTextColor,
             TextAlignmentOptions.TopLeft);
-        SetTopLeftRect(descriptionText.rectTransform, new Vector2(545f, 125f), new Vector2(1602f, 276f));
+        SetTopLeftRect(descriptionText.rectTransform, new Vector2(545f, 176f), new Vector2(1602f, 292f));
         descriptionText.textWrappingMode = TextWrappingModes.Normal;
+        descriptionText.enableAutoSizing = true;
+        descriptionText.fontSizeMin = 26f;
+        descriptionText.fontSizeMax = 42f;
         descriptionText.lineSpacing = -8f;
-        descriptionText.overflowMode = TextOverflowModes.Overflow;
+        descriptionText.overflowMode = TextOverflowModes.Truncate;
 
         GameObject inventoryArea = CreateUIObject("ModuleInventoryArea", pageRoot.transform);
         Stretch(inventoryArea.GetComponent<RectTransform>(), Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
 
-        ModuleSlotUI magicSelection = null;
+        ModuleSlotUI alternateSelection = null;
         ModuleSlotUI defaultSelection = null;
 
         for (int index = 0; index < InventorySlotCenters.Length; index++)
         {
             int slotNumber = index + 1;
             GameObject slot = InstantiateSlot(slotPrefab, inventoryArea.transform, $"Slot{slotNumber:00}");
-            SetTopLeftRect(slot.GetComponent<RectTransform>(), SlotSize, InventorySlotCenters[index]);
+            SetTopLeftRect(slot.GetComponent<RectTransform>(), InventorySlotSize, InventorySlotCenters[index]);
 
-            Sprite icon = null;
-            string title = string.Empty;
-            string body = string.Empty;
-            bool selectable = false;
-
-            if (slotNumber == 1)
-            {
-                icon = magicDefense;
-                title = "마법 내성 증가";
-                body = "장착 시, 플레이어의 마법 내성을\n10 증가";
-                selectable = true;
-            }
-            else if (slotNumber == 2)
-            {
-                icon = physicalDefense;
-                title = "물리 내성 증가";
-                body = "장착 시, 플레이어의 물리 내성을\n10 증가";
-                selectable = true;
-            }
-
-            ModuleSlotUI slotUI = ConfigureSlot(slot, modulePage, icon, title, body, selectable);
+            ModuleDefinition definition = index < inventoryModules.Length ? inventoryModules[index] : null;
+            Sprite icon = definition != null ? LoadModuleIcon(definition.id) : null;
+            ModuleSlotUI slotUI = ConfigureSlot(
+                slot, modulePage, icon, definition?.name, definition?.desc, definition != null);
+            slotUI.ConfigureRuntime(modulePage, definition, icon, ModuleSlotRole.Inventory, 0);
+            EditorUtility.SetDirty(slotUI);
 
             if (slotNumber == 1)
-                magicSelection = slotUI;
-            else if (slotNumber == 2)
                 defaultSelection = slotUI;
+            else if (slotNumber == 2)
+                alternateSelection = slotUI;
         }
 
         modulePage.Configure(
@@ -209,8 +198,8 @@ public static class ModuleSceneBuilder
             defaultSelection,
             showInitialSelection: true);
 
-        if (defaultSelection == null || magicSelection == null)
-            throw new InvalidOperationException("The two SVG module selections were not created.");
+        if (defaultSelection == null || alternateSelection == null)
+            throw new InvalidOperationException("The database module selections were not created.");
 
         defaultSelection.Select();
 
@@ -228,9 +217,9 @@ public static class ModuleSceneBuilder
         if (renderPreviews)
         {
             RenderCanvasPreview(canvas, DefaultPreviewPath);
-            magicSelection.Select();
+            alternateSelection.Select();
             Canvas.ForceUpdateCanvases();
-            RenderCanvasPreview(canvas, MagicPreviewPath);
+            RenderCanvasPreview(canvas, AlternatePreviewPath);
 
             defaultSelection.Select();
             EditorSceneManager.MarkSceneDirty(scene);
@@ -330,13 +319,13 @@ public static class ModuleSceneBuilder
         int pageButtonCount = pageRoot.GetComponentsInChildren<Button>(true).Length;
         int bottomButtonCount = bottomNavigation.GetComponentsInChildren<Button>(true).Length;
 
-        if (slots.Length != 20)
-            throw new InvalidOperationException($"Expected 20 module slots, but found {slots.Length}.");
-        if (selectableSlots != 2)
-            throw new InvalidOperationException($"Expected 2 selectable inventory modules, but found {selectableSlots}.");
-        if (pageButtonCount != 20 || bottomButtonCount != 4)
+        if (slots.Length != 13)
+            throw new InvalidOperationException($"Expected 13 module slots, but found {slots.Length}.");
+        if (selectableSlots != 5)
+            throw new InvalidOperationException($"Expected 5 selectable inventory modules, but found {selectableSlots}.");
+        if (pageButtonCount != 13 || bottomButtonCount != 4)
             throw new InvalidOperationException(
-                $"Expected 24 UI buttons (20 module + 4 navigation), but found {pageButtonCount + bottomButtonCount}.");
+                $"Expected 17 UI buttons (13 module + 4 navigation), but found {pageButtonCount + bottomButtonCount}.");
         if (navigationButtons.Length != 4)
             throw new InvalidOperationException($"Expected 4 scene navigation bindings, but found {navigationButtons.Length}.");
         if (navigationButtons.Any(binding => binding.GetComponent<Button>().onClick.GetPersistentEventCount() != 1))
@@ -344,11 +333,11 @@ public static class ModuleSceneBuilder
         if (navigationButtons.Count(binding => binding.IsCurrentScene) != 1 ||
             !navigationButtons.Any(binding => binding.IsCurrentScene && binding.TargetSceneName == "Module"))
             throw new InvalidOperationException("The common navigation did not mark Module as the current scene.");
-        if (modulePage.SelectedSlot == null || modulePage.SelectedSlot.ModuleName != "물리 내성 증가")
-            throw new InvalidOperationException("The SVG default DEF selection was not applied.");
+        if (modulePage.SelectedSlot == null || modulePage.SelectedSlot.ModuleId != "000")
+            throw new InvalidOperationException("The database default module selection was not applied.");
 
-        Debug.Log("[ModuleSceneBuilder] Validation passed: 20 module slots, 2 selectable modules, " +
-                  "4 scene navigation buttons, DEF default selection.");
+        Debug.Log("[ModuleSceneBuilder] Validation passed: 6 equipped + 7 inventory slots, " +
+                  "5 modules with resource icons, 4 scene navigation buttons, module 000 selected.");
     }
 
     private static Canvas FindSceneCanvas(Scene scene)
@@ -461,6 +450,27 @@ public static class ModuleSceneBuilder
     private static Sprite LoadSprite(string path)
     {
         return AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().FirstOrDefault();
+    }
+
+    private static Sprite LoadModuleIcon(string id)
+    {
+        return LoadSprite($"{ModuleIconRoot}/{GameDatabase.NormalizeId(id)}.png");
+    }
+
+    private static ModuleDefinition[] LoadInventoryModules()
+    {
+        TextAsset databaseAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(DatabasePath);
+        EnsureRequiredAsset(databaseAsset, DatabasePath);
+        DbRoot data = JsonUtility.FromJson<DbRoot>(databaseAsset.text);
+        ModuleDefinition[] modules = (data.modules ?? Array.Empty<ModuleDefinition>())
+            .Where(module => module != null && LoadModuleIcon(module.id) != null)
+            .OrderBy(module => module.id, StringComparer.Ordinal)
+            .ToArray();
+
+        if (modules.Length != 5)
+            throw new InvalidOperationException($"Expected 5 modules with resource icons, but found {modules.Length}.");
+
+        return modules;
     }
 
     private static void EnsureRequiredAsset(UnityEngine.Object asset, string path)

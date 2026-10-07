@@ -5,7 +5,8 @@ using UnityEngine;
 
 namespace Dungeon.Core
 {
-    public class StatusSaveFile : MonoBehaviour
+    [DefaultExecutionOrder(-900)]
+    public class StatusSaveFile : MonoBehaviour, ISerializationCallbackReceiver
     {
         public static StatusSaveFile Instance { get; private set; }
 
@@ -27,7 +28,9 @@ namespace Dungeon.Core
         [Tooltip("Save 로그를 몇 회 저장마다 출력할지 설정합니다. 1이면 매번, 10이면 10번째 저장마다 출력합니다.")]
         [SerializeField] private int saveSummaryLogEveryNthSave = 10;
 
-        private StatusSaveData data = new();
+        // Unity hot reload는 Dictionary를 직렬화하지 못하므로 전체 데이터를 JSON으로 보존합니다.
+        [NonSerialized] private StatusSaveData data = new();
+        [SerializeField, HideInInspector] private string serializedDataJson;
         private bool isQuitting;
         private int saveSummaryRequestCount;
         private float lastSaveSummaryLogTime = -9999f;
@@ -78,6 +81,32 @@ namespace Dungeon.Core
             }
 
             Load();
+        }
+
+        private void OnEnable()
+        {
+            if (!Application.isPlaying || Instance != null)
+                return;
+
+            // Domain Reload 이후 Awake는 다시 실행되지 않으므로 싱글턴을 재연결합니다.
+            Instance = this;
+            if (string.IsNullOrWhiteSpace(serializedDataJson))
+                Load();
+        }
+
+        public void OnBeforeSerialize()
+        {
+            if (data != null)
+                serializedDataJson = StatusSaveDefaults.Serialize(data);
+        }
+
+        public void OnAfterDeserialize()
+        {
+            // 직렬화 콜백에서는 파일/Unity 오브젝트에 접근하지 않고 순수 데이터만 복구합니다.
+            if (StatusSaveDefaults.TryDeserialize(serializedDataJson, out StatusSaveData restored, out _))
+                data = restored;
+            else
+                serializedDataJson = null;
         }
 
         private IStatusSaveStorage EnsureStorage()

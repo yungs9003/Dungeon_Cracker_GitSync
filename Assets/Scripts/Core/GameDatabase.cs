@@ -87,6 +87,16 @@ namespace Dungeon.Core
             LoadDatabase();
         }
 
+        private void OnEnable()
+        {
+            if (!Application.isPlaying || Instance != null)
+                return;
+
+            // hot reload 후 초기화되지 않은 조회 사전으로 UI가 갱신되지 않게 합니다.
+            Instance = this;
+            LoadDatabase();
+        }
+
         public void LoadDatabase()
         {
             TextAsset jsonAsset = databaseJsonOverride;
@@ -390,12 +400,25 @@ namespace Dungeon.Core
             return GetIconByKey(MakeKey(CategoryModule, rawId));
         }
 
+        // 보유 목록은 임시/대체 이미지 없이 실제 ModuleIcons가 있는 모듈만 표시합니다.
+        public Sprite GetModuleResourceIcon(string rawId)
+        {
+            return LoadResourceIcon(moduleIconResourceRoot, NormalizeId(rawId));
+        }
+
         private Sprite LoadResourceIcon(string root, string id)
         {
             if (string.IsNullOrWhiteSpace(root) || string.IsNullOrWhiteSpace(id))
                 return null;
 
-            return Resources.Load<Sprite>($"{root.TrimEnd('/')}/{NormalizeId(id)}");
+            string resourcePath = $"{root.TrimEnd('/')}/{NormalizeId(id)}";
+            Sprite icon = Resources.Load<Sprite>(resourcePath);
+            if (icon != null)
+                return icon;
+
+            // 다중 스프라이트로 가져온 PNG도 모듈 아이콘으로 사용할 수 있습니다.
+            Sprite[] sprites = Resources.LoadAll<Sprite>(resourcePath);
+            return sprites.Length > 0 ? sprites[0] : null;
         }
 
         private Sprite GetEquipmentFallbackIcon(string slot)

@@ -5,7 +5,7 @@
   "broken_traps": 0,
   "clear_reward_claimed": false,
   "last_getting_gold": 0,
-  "clear_time_seconds": 1550.99658,
+  "clear_time_seconds": 1567.20325,
   "hit_count": 76,
   "main_stats": {
     "max_HP": 150,
@@ -179,11 +179,7 @@
     "resumeRequested": false,
     "broken_traps_snapshot": 0
   },
-  "dungeon_status": [
-    {
-      "001": ""
-    }
-  ],
+  "dungeon_status": [],
   "play_time": "135:26",
   "clear_num_info": "28:73:96",
   "adventure_count": 128,

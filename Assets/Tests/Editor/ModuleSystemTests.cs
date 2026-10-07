@@ -5,6 +5,7 @@ using Dungeon.Core;
 using Dungeon.UI;
 using NUnit.Framework;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,45 @@ namespace Dungeon.Tests
 {
     public class ModuleSystemTests
     {
+        [Test]
+        public void ModuleScene_DescriptionDeserializesKoreanFontAndDbText()
+        {
+            var scene = EditorSceneManager.OpenPreviewScene("Assets/Scenes/Module.unity");
+            GameObject databaseObject = new GameObject("ModuleDescription_Database_Test");
+            databaseObject.SetActive(false);
+
+            try
+            {
+                Transform description = scene.GetRootGameObjects()
+                    .Select(root => FindChildRecursive(root.transform, "DescriptionText"))
+                    .FirstOrDefault(found => found != null);
+                Assert.That(description, Is.Not.Null);
+                Component text = description.GetComponents<Component>()
+                    .FirstOrDefault(component => component != null &&
+                        component.GetType().FullName == "TMPro.TextMeshProUGUI");
+                Assert.That(text, Is.Not.Null);
+
+                var serializedText = new SerializedObject(text);
+                GameDatabase database = databaseObject.AddComponent<GameDatabase>();
+                database.LoadDatabase();
+                Assert.That(database.TryGetModule("000", out ModuleDefinition module), Is.True);
+                Assert.That(serializedText.FindProperty("m_text").stringValue, Is.EqualTo(module.desc));
+                Assert.That(
+                    AssetDatabase.GetAssetPath(serializedText.FindProperty("m_fontAsset").objectReferenceValue),
+                    Is.EqualTo("Assets/Fonts/Cafe24Danjunghae-v2.0 SDF.asset"));
+                Assert.That(
+                    AssetDatabase.GetAssetPath(serializedText.FindProperty("m_sharedMaterial").objectReferenceValue),
+                    Is.EqualTo("Assets/Fonts/Cafe24Danjunghae-v2.0 SDF.asset"));
+                Assert.That(serializedText.FindProperty("m_fontSize").floatValue, Is.EqualTo(42f));
+                Assert.That(serializedText.FindProperty("m_enableAutoSizing").boolValue, Is.True);
+            }
+            finally
+            {
+                Object.DestroyImmediate(databaseObject);
+                EditorSceneManager.ClosePreviewScene(scene);
+            }
+        }
+
         [Test]
         public void StatusModuleSlotBinding_IgnoresDestroyedImageReference()
         {
@@ -84,12 +124,85 @@ namespace Dungeon.Tests
                     Assert.That(module.id, Is.EqualTo(id));
                     Assert.That(module.name, Is.Not.Empty);
                     Assert.That(module.desc, Is.Not.Empty);
-                    Assert.That(database.GetModuleIcon(id), Is.Not.Null);
+                    if (i < 5)
+                        Assert.That(database.GetModuleResourceIcon(id), Is.Not.Null);
+                    else
+                        Assert.That(database.GetModuleResourceIcon(id), Is.Null);
                 }
             }
             finally
             {
                 Object.DestroyImmediate(go);
+            }
+        }
+
+        [Test]
+        public void ModuleInventory_FiltersMissingIconsAndKeepsSevenEmptyFrames()
+        {
+            GameObject pageObject = new GameObject("ModuleInventory_Test");
+            GameObject databaseObject = new GameObject("ModuleInventory_Database_Test");
+            pageObject.SetActive(false);
+            databaseObject.SetActive(false);
+
+            try
+            {
+                GameDatabase database = databaseObject.AddComponent<GameDatabase>();
+                database.LoadDatabase();
+                ModulePageUI page = pageObject.AddComponent<ModulePageUI>();
+                GameObject area = new GameObject("ModuleInventoryArea", typeof(RectTransform));
+                area.transform.SetParent(pageObject.transform, false);
+                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/UI/ModuleSlot.prefab");
+                Assert.That(prefab, Is.Not.Null);
+                for (int i = 0; i < 7; i++)
+                {
+                    GameObject slot = Object.Instantiate(prefab, area.transform);
+                    slot.name = $"Slot{i + 1:00}";
+                }
+
+                const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+                typeof(ModulePageUI).GetField("database", flags).SetValue(page, database);
+                typeof(ModulePageUI).GetField("inventoryArea", flags).SetValue(page, area.transform);
+                typeof(ModulePageUI).GetMethod("CollectSlots", flags).Invoke(page, null);
+                ModuleSaveRepository repository = (ModuleSaveRepository)typeof(ModulePageUI)
+                    .GetField("saveRepository", flags).GetValue(page);
+                StatusSaveData data = StatusSaveDefaults.Create();
+                // 아이콘 없는 ID와 존재하지 않는 DB ID도 함께 보유한 경우를 검증합니다.
+                for (int i = 13; i >= 0; i--)
+                    data.inventory.module.Add(new System.Collections.Generic.Dictionary<string, int> { [i.ToString("000")] = 1 });
+                data.inventory.module.Add(new System.Collections.Generic.Dictionary<string, int> { ["999"] = 1 });
+                typeof(ModuleSaveRepository).GetField("data", flags).SetValue(repository, data);
+
+                MethodInfo refresh = typeof(ModulePageUI).GetMethod("RefreshInventorySlots", flags);
+                refresh.Invoke(page, null);
+                ModuleSlotUI[] slots = area.GetComponentsInChildren<ModuleSlotUI>(true);
+                Assert.That(slots.Length, Is.EqualTo(7));
+                for (int i = 0; i < slots.Length; i++)
+                {
+                    Assert.That(slots[i].gameObject.activeSelf, Is.True);
+                    Assert.That(slots[i].HasModule, Is.EqualTo(i < 5));
+                    if (i < 5)
+                    {
+                        Assert.That(slots[i].ModuleId, Is.EqualTo(i.ToString("000")));
+                        Assert.That(database.TryGetModule(slots[i].ModuleId, out ModuleDefinition definition), Is.True);
+                        Assert.That(slots[i].ModuleName, Is.EqualTo(definition.name));
+                        Assert.That(slots[i].Description, Is.EqualTo(definition.desc));
+                        Assert.That(slots[i].ModuleIcon, Is.Not.Null);
+                    }
+                }
+
+                data.inventory.module.Clear();
+                refresh.Invoke(page, null);
+                foreach (ModuleSlotUI slot in slots)
+                {
+                    Assert.That(slot.gameObject.activeSelf, Is.True);
+                    Assert.That(slot.HasModule, Is.False);
+                    Assert.That(slot.GetComponent<Button>().interactable, Is.False);
+                }
+            }
+            finally
+            {
+                Object.DestroyImmediate(pageObject);
+                Object.DestroyImmediate(databaseObject);
             }
         }
 

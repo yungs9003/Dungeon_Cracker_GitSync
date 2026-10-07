@@ -282,7 +282,7 @@ namespace Dungeon.UI
                 rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
                 rect.pivot = new Vector2(0.5f, 0.5f);
                 rect.anchoredPosition = FallbackSlotPositions[i];
-                rect.sizeDelta = new Vector2(112.479f, 112.479f);
+                rect.sizeDelta = new Vector2(134.9748f, 134.9748f);
 
                 Image slotFrame = root.GetComponent<Image>();
                 if (visual != null && visual.SlotFrame != null)
@@ -304,8 +304,8 @@ namespace Dungeon.UI
                 RectTransform iconRect = iconObject.GetComponent<RectTransform>();
                 iconRect.anchorMin = Vector2.zero;
                 iconRect.anchorMax = Vector2.one;
-                iconRect.offsetMin = new Vector2(8f, 8f);
-                iconRect.offsetMax = new Vector2(-8f, -8f);
+                iconRect.offsetMin = new Vector2(9.6f, 9.6f);
+                iconRect.offsetMax = new Vector2(-9.6f, -9.6f);
                 Image icon = iconObject.GetComponent<Image>();
                 icon.preserveAspect = true;
                 icon.raycastTarget = false;

@@ -328,22 +328,33 @@ namespace Dungeon.UI
         private void RefreshInventorySlots()
         {
             List<OwnedDbStack> owned = saveRepository.GetOwnedModuleStacks();
+            int nextSlot = 0;
 
-            for (int i = 0; i < inventorySlots.Count; i++)
+            foreach (OwnedDbStack stack in owned)
             {
-                ModuleSlotUI view = inventorySlots[i];
-                if (i >= owned.Count ||
-                    !database.TryGetModuleByKey(owned[i].key, out ModuleDefinition definition))
-                {
-                    view.ConfigureRuntime(this, null, null, ModuleSlotRole.Inventory, 0);
-                    view.gameObject.SetActive(false);
+                if (!database.TryGetModuleByKey(stack.key, out ModuleDefinition definition))
                     continue;
-                }
 
-                Sprite icon = database.GetModuleIcon(definition.id);
+                Sprite icon = database.GetModuleResourceIcon(definition.id);
+                if (icon == null)
+                    continue;
+
+                if (nextSlot >= inventorySlots.Count)
+                    break;
+
+                ModuleSlotUI view = inventorySlots[nextSlot++];
                 view.gameObject.SetActive(true);
                 view.enabled = true;
                 view.ConfigureRuntime(this, definition, icon, ModuleSlotRole.Inventory, 0);
+            }
+
+            // 빈 슬롯도 프레임을 유지해 상단 4개/하단 3개 배열이 항상 보이게 합니다.
+            for (int i = nextSlot; i < inventorySlots.Count; i++)
+            {
+                ModuleSlotUI view = inventorySlots[i];
+                view.gameObject.SetActive(true);
+                view.enabled = true;
+                view.ConfigureRuntime(this, null, null, ModuleSlotRole.Inventory, 0);
             }
         }
 
