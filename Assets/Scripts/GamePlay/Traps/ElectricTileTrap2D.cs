@@ -150,7 +150,7 @@ namespace Dungeon.Traps
 
             foreach (Health health in playersInside)
             {
-                if (health == null) continue;
+                if (health == null || PlayerEffectLock2D.IsProtectedTarget(health)) continue;
 
                 if (nextDamageTime.TryGetValue(health, out float nextTime) && now < nextTime)
                     continue;

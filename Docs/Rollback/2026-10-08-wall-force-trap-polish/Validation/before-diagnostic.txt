@@ -1,0 +1,15 @@
+PASS: push acquired 0/wall=False
+OBSERVE: angle=0 wall=False player side drift=0 tip lateral travel=0.2
+PASS: push player remains on activation line 0/wall=False
+PASS: push acquired 90/wall=False
+OBSERVE: angle=90 wall=False player side drift=1.639128E-07 tip lateral travel=0.2000001
+PASS: push player remains on activation line 90/wall=False
+PASS: push acquired -90/wall=False
+OBSERVE: angle=-90 wall=False player side drift=3.129244E-07 tip lateral travel=0.2000003
+PASS: push player remains on activation line -90/wall=False
+PASS: push acquired 180/wall=False
+OBSERVE: angle=180 wall=False player side drift=1.490116E-08 tip lateral travel=0.2
+PASS: push player remains on activation line 180/wall=False
+PASS: normal locomotion runs / transformSpeed=True
+PASS: animation protection acquired
+OBSERVE: protected IsMoving=True state=-827840423

@@ -1,0 +1,324 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.2/staging' branch; Version is '6000.2.14f1 (589824c1fc31) revision 5806116'; Using compiler version '194234433'; Build Type 'Release'
+[Licensing::IpcConnector] Channel LicenseClient-yoong doesn't exist
+OS: 'Windows 11  (10.0.26200) 64bit Professional' Language: 'ko' Physical Memory: 32561 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+Date: 2026-10-08T13:56:34Z
+[Licensing::Module] Successfully launched the LicensingClient (PId: 6276)
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Unity.exe
+-batchmode
+-projectPath
+C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\WallForceTrapReview
+-executeMethod
+WallForceTrapPolishValidation.Run
+-logFile
+C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Docs\Rollback\2026-10-08-wall-force-trap-polish\after-unity.log
+Successfully changed project path to: C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\WallForceTrapReview
+C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/WallForceTrapReview
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [21076]  Target information:
+
+Player connection [21076]  * "[IP] 172.30.1.62 [Port] 55505 [Flags] 2 [Guid] 1225122658 [EditorId] 1225122658 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-ARTM24P) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [21076] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [21076] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-46820" after 0.2 seconds.
+Library Redirect Path: Library/
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-yoong" at "2026-10-08T13:56:34.7840968Z"
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Artifact Garbage Collection - Removed 3 unused hashed content files
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 6000.2.14f1 (589824c1fc31)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/WallForceTrapReview/Assets
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3080 (ID=0x220a)
+    Vendor:   NVIDIA
+    VRAM:     12091 MB
+    Driver:   32.0.15.9186
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56820
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002519 seconds.
+- Loaded All Assemblies, in  0.314 seconds
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.259 seconds
+Domain Reload Profiling: 571ms
+	BeginReloadAssembly (112ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (28ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (43ms)
+	LoadAllAssembliesAndSetupDomain (121ms)
+		LoadAssemblies (108ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (118ms)
+			TypeCache.Refresh (117ms)
+				TypeCache.ScanAssembly (108ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (259ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (231ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (43ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (46ms)
+			ProcessInitializeOnLoadAttributes (94ms)
+			ProcessInitializeOnLoadMethodAttributes (44ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Module] Licensing is not yet initialized.
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.4+4293ba1
+  Session Id:              19faa44db19a40adae65639025ec50e9
+  Correlation Id:          36050dcd6595a0429cbad6d8950eb914
+  External correlation Id: 6816156849914083496
+  Machine Id:              IdReJ6kqVrZ1tLe+2FyeCUUEg9Y=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-yoong" (connect: 0.37s, validation: 0.04s, handshake: 1.03s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-yoong-notifications" at "2026-10-08T13:56:35.8548937Z"
+[Licensing::Module] Connected to LicensingClient (PId: 6276, launch time: 0.01, total connection time: 1.44s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 14569192904864-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.01
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 1.47s
+[Licensing::Module] Licensing is initialized (took 0.24s).
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+Package Manager log level set to [2]
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 9 packages:
+  Built-in packages:
+    com.unity.modules.physics2d@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics2d)
+    com.unity.modules.physics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.jsonserialize)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imageconversion)
+    com.unity.modules.animation@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.animation)
+    com.unity.modules.audio@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.audio)
+    com.unity.modules.ui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.ui)
+    com.unity.modules.imgui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imgui)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.particlesystem)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.01 seconds
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Starting: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/WallForceTrapReview
+DisplayProgressbar: Compiling Scripts
+ExitCode: 0 Duration: 1s653ms
+[154/163    1s] Csc Library/Bee/artifacts/1900b0aE.dag/Dungeon.GamePlay.dll (+2 others)
+Assets\Scripts\GamePlay\Player\ForwardZoneCollector.cs(105,25): warning CS0618: 'Physics2D.OverlapCircleNonAlloc(Vector2, float, Collider2D[], int)' is obsolete: 'OverlapCircleNonAlloc has been deprecated. Please use OverlapCircle.'
+
+Assets\Scripts\GamePlay\Traps\RollingBallTrap.cs(101,26): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Scripts\GamePlay\Map\ForwardZoneVisionMask2D.cs(46,39): warning CS0414: The field 'ForwardZoneVisionMask2D.coverOnlyExistingGridCells' is assigned but its value is never used
+
+Assets\Scripts\GamePlay\Player\PlayerAnimationDriver.cs(15,36): warning CS0414: The field 'PlayerAnimationDriver.runThreshold' is assigned but its value is never used
+[158/163    0s] CopyFiles Library/ScriptAssemblies/Dungeon.GamePlay.pdb
+[159/163    0s] CopyFiles Library/ScriptAssemblies/Dungeon.GamePlay.dll
+[160/163    0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
+*** Tundra build success (1.61 seconds), 4 items updated, 163 evaluated
+Assets\Scripts\GamePlay\Player\ForwardZoneCollector.cs(105,25): warning CS0618: 'Physics2D.OverlapCircleNonAlloc(Vector2, float, Collider2D[], int)' is obsolete: 'OverlapCircleNonAlloc has been deprecated. Please use OverlapCircle.'
+Assets\Scripts\GamePlay\Traps\RollingBallTrap.cs(101,26): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+Assets\Scripts\GamePlay\Map\ForwardZoneVisionMask2D.cs(46,39): warning CS0414: The field 'ForwardZoneVisionMask2D.coverOnlyExistingGridCells' is assigned but its value is never used
+Assets\Scripts\GamePlay\Player\PlayerAnimationDriver.cs(15,36): warning CS0414: The field 'PlayerAnimationDriver.runThreshold' is assigned but its value is never used
+AssetDatabase: script compilation time: 2.010692s
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.583 seconds
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.323 seconds
+Domain Reload Profiling: 903ms
+	BeginReloadAssembly (300ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (52ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (128ms)
+	RebuildCommonClasses (28ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (22ms)
+	LoadAllAssembliesAndSetupDomain (222ms)
+		LoadAssemblies (281ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (28ms)
+			TypeCache.Refresh (23ms)
+				TypeCache.ScanAssembly (16ms)
+			BuildScriptInfoCaches (2ms)
+			ResolveRequiredComponents (2ms)
+	FinalizeReload (324ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (242ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (24ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (76ms)
+			ProcessInitializeOnLoadAttributes (118ms)
+			ProcessInitializeOnLoadMethodAttributes (15ms)
+			AfterProcessingInitializeOnLoad (7ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (9ms)
+Start importing Assets/Resources/Prefabs/101-014.prefab using Guid(13e18a78caa021742ba162acadd75392) (PrefabImporter) -> (artifact id: 'c01e87950e5606a2f5b71f4eec44e848') in 0.0144618 seconds
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=8bf28d149f8a6684fb30c8e861fc7ca1): Total: 3.097 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=2 ms, native=438 ms
+		Asset DB Callback time: managed=41 ms, native=9 ms
+		Scripting: domain reloads=1, domain reload time=583 ms, compile time=2013 ms, other=8 ms
+		Project Asset Count: scripts=63, non-scripts=26
+		Asset File Changes: new=0, changed=4, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 8.230ms
+	ApplyChangesToAssetFolders: 0.266ms
+	Scan: 37.533ms
+	OnSourceAssetsModified: 0.800ms
+	CategorizeAssetsWithTransientArtifact: 1.388ms
+	ProcessAssetsWithTransientArtifactChanges: 5.171ms
+	CategorizeAssets: 0.364ms
+	ImportOutOfDateAssets: 340.256ms (-1688.548ms without children)
+		ImportManagerImport: 16.076ms (1.327ms without children)
+			ImportInProcess: 14.732ms
+			UpdateCategorizedAssets: 0.018ms
+		CompileScripts: 2012.524ms
+		ReloadNativeAssets: 0.000ms
+		UnloadImportedAssets: 0.070ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.011ms
+		InitializingProgressBar: 0.008ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.115ms
+	PostProcessAllAssets: 43.223ms
+	Hotreload: 0.786ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.002ms
+	UnloadStreamsBegin: 0.155ms
+	PersistCurrentRevisions: 0.030ms
+	UnloadStreamsEnd: 0.000ms
+	GenerateScriptTypeHashes: 0.032ms
+	Untracked: 2658.695ms
+
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+Scanning for USB devices : 1.839ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-WallForceTrapReview
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 104 unused Assets / (1.0 MB). Loaded Objects now: 721.
+Memory consumption went from 86.0 MB to 84.9 MB.
+Total: 3.738400 ms (FindLiveObjects: 0.030900 ms CreateObjectMapping: 0.054300 ms MarkObjects: 3.291200 ms  DeleteObjects: 0.361200 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 0 unused Assets / (38.0 KB). Loaded Objects now: 727.
+Memory consumption went from 84.2 MB to 84.2 MB.
+Total: 3.007900 ms (FindLiveObjects: 0.028600 ms CreateObjectMapping: 0.005800 ms MarkObjects: 2.969600 ms  DeleteObjects: 0.002900 ms)
+
+WALL FORCE POLISH PASSED (73 results)
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+WallForceTrapPolishValidation:Execute () (at Assets/Editor/WallForceTrapPolishValidation.cs:43)
+WallForceTrapPolishValidation:Run () (at Assets/Editor/WallForceTrapPolishValidation.cs:19)
+
+(Filename: Assets/Editor/WallForceTrapPolishValidation.cs Line: 43)
+
+Curl error 42: Callback aborted
+Start importing ProjectSettings/Physics2DSettings.asset using Guid(00000000000000005100000000000000) (LibraryAssetImporter) -> (artifact id: 'f33b89e76f5c57e4d90d9605620b7e01') in 0.0031599 seconds
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=7098f73567ecaec41a250b4aeb7064c1): Total: 0.020 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-yoong-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-yoong channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server process was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1791467799677,"processId":46820,"allocatedMemory":9998495,"memoryLabels":[{"Default":28593},{"Permanent":15468},{"NewDelete":65569},{"Thread":4230384},{"Manager":29218},{"VertexData":8},{"Geometry":816},{"VFX":-104},{"Texture":160},{"Shader":78823},{"Material":24},{"GfxDevice":55225},{"Animation":392},{"Audio":4040},{"FontEngine":256},{"Physics":2050},{"Serialization":624},{"Input":14824},{"JobScheduler":33024},{"TextLib":160},{"Mono":32},{"ScriptingNativeRuntime":155060},{"BaseObject":1620240},{"Resource":1304},{"Renderer":2928},{"Transform":4685},{"File":1016},{"WebCam":616},{"Culling":32},{"Terrain":11394},{"Wind":24},{"STL":40},{"String":11497},{"DynamicArray":89604},{"HashMap":64216},{"Utility":2661046},{"Curl":48},{"PoolAlloc":1960},{"AI":40},{"TypeTree":5005},{"ScriptManager":512},{"RuntimeInitializeOnLoadManager":64},{"SpriteAtlas":112},{"GI":7824},{"Director":8240},{"CloudService":7056},{"WebRequest":845},{"VR":46114},{"SceneManager":496},{"Video":64},{"LazyScriptCache":32},{"Camera":17},{"Secure":2113},{"SerializationCache":1576},{"APIUpdating":10320},{"Subsystems":336},{"VirtualTexturing":57888},{"StaticSafetyDebugInfo":278528},{"Analytics":384},{"Hierarchy":272},{"CoreStats":12424},{"Identifiers":12384},{"Gui":80},{"EditorUtility":83246},{"VersionControl":4},{"Undo":947},{"AssetDatabase":235332},{"EditorGi":328},{"UnityConnect":24528},{"Upm":1896},{"DrivenProperties":72},{"LocalIPC":211},{"ProfilerEditor":9746},{"CoreBusinessMetrics":2867},{"Licensing":1232},{"AssetReference":32},{"IPCStream":32}]}

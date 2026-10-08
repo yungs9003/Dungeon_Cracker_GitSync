@@ -1,5 +1,6 @@
 using UnityEngine;
 using Dungeon.Player;
+using Dungeon.Core;
 
 namespace Dungeon.Traps
 {
@@ -14,6 +15,7 @@ namespace Dungeon.Traps
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (PlayerEffectLock2D.IsProtectedTarget(other)) return;
             var respawn = other.GetComponentInParent<Respawn2D>();
             if (respawn == null) return;
 

@@ -1,3 +1,4 @@
+using Dungeon.Core;
 using UnityEngine;
 
 namespace Dungeon.Player
@@ -45,21 +46,24 @@ namespace Dungeon.Player
 
         private void Update()
         {
+            bool isForcedMovement = PlayerEffectLock2D.IsProtectedTarget(this);
+            Vector3 worldPosition = transform.position;
+            Vector3 delta = worldPosition - lastWorldPos;
+            // 보호 중에도 위치를 기록해 해제 직후 지난 강제 이동을 걷기로 오인하지 않습니다.
+            lastWorldPos = worldPosition;
             float speed = 0f;
 
-            if (useTransformDeltaForSpeed)
+            if (!isForcedMovement && useTransformDeltaForSpeed)
             {
-                Vector3 delta = transform.position - lastWorldPos;
                 speed = delta.magnitude / Mathf.Max(Time.deltaTime, 0.0001f);
-                lastWorldPos = transform.position;
             }
-            else if (playerRb != null)
+            else if (!isForcedMovement && playerRb != null)
             {
                 speed = playerRb.linearVelocity.magnitude;
             }
 
             bool isMoving = speed > moveThreshold;
-            bool isKb = knockback != null && knockback.IsKnockbacking;
+            bool isKb = !isForcedMovement && knockback != null && knockback.IsKnockbacking;
 
             anim.SetBool(IsMovingHash, isMoving);
             anim.SetBool(KnockbackHash, isKb);

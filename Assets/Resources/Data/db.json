@@ -328,6 +328,26 @@
       "knockback_distance": null
     },
     {
+      "code": "101-014",
+      "name": "밀치기",
+      "type": "trap",
+      "desc": "벽 전방 2칸에서 감지한 플레이어를 발동 위치에서 벽 반대 방향으로 3칸 이동시킴",
+      "destructible": false,
+      "damage_type": null,
+      "damage": 0,
+      "knockback_distance": 0
+    },
+    {
+      "code": "101-015",
+      "name": "당기기",
+      "type": "trap",
+      "desc": "벽 전방 4칸에서 감지한 플레이어를 해당 벽 바로 앞 1칸의 중심으로 이동시킴",
+      "destructible": false,
+      "damage_type": null,
+      "damage": 0,
+      "knockback_distance": 0
+    },
+    {
       "code": "103-012",
       "name": "3층레이저 포탑",
       "type": "trap",

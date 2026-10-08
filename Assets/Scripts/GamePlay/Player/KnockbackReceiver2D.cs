@@ -1,4 +1,5 @@
 using UnityEngine;
+using Dungeon.Core;
 
 namespace Dungeon.Player
 {
@@ -16,6 +17,7 @@ namespace Dungeon.Player
         /// </summary>
         public void AddKnockback(Vector2 dir, float distance, float duration)
         {
+            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
             if (dir.sqrMagnitude < 1e-6f) return;
             dir.Normalize();
 

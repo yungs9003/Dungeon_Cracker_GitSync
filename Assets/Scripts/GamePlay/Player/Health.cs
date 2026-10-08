@@ -23,7 +23,8 @@ namespace Dungeon.Player
         [SerializeField] private float invincibilityAfterHit = 0.35f;
 
         private float invincibleUntil = 0f;
-        public bool IsInvincible => useInvincibility && Time.time < invincibleUntil;
+        public bool IsInvincible => PlayerEffectLock2D.IsProtectedTarget(this) ||
+            (useInvincibility && Time.time < invincibleUntil);
 
         private IDamageSystem damageSystem;
 
@@ -152,6 +153,7 @@ namespace Dungeon.Player
         // 타입 기반 분기 지원 (물리/마법/True)
         public void TakeDamage(int amount, DamageType type)
         {
+            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
             EnsureDamageSystem();
 
             if (damageSystem != null)
@@ -176,6 +178,7 @@ namespace Dungeon.Player
         // Apply damage already computed (used by DamageSystem)
         public void ApplyDamageDirect(int finalDamage)
         {
+            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
             if (finalDamage <= 0 || currentHP <= 0) return;
 
             currentHP = Mathf.Max(0, currentHP - finalDamage);
@@ -190,6 +193,7 @@ namespace Dungeon.Player
 
         public void TakeBleedingDamage(int amount, float duration = 7f, float tickInterval = 0.5f)
         {
+            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
             EnsureDamageSystem();
             if (damageSystem != null)
             {
@@ -261,6 +265,11 @@ namespace Dungeon.Player
 
                 if (isBleedingActive && Time.time >= lastBleedingDamageTime)
                 {
+                    if (PlayerEffectLock2D.IsProtectedTarget(this))
+                    {
+                        lastBleedingDamageTime = Time.time + bleedingTickInterval;
+                        return;
+                    }
                     currentHP = Mathf.Max(0, currentHP - bleedingDamagePerTick);
                     onHealthChanged?.Invoke(currentHP, maxHP);
 

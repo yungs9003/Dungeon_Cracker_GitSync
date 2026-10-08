@@ -128,6 +128,7 @@ namespace Dungeon.System
             float duration = 7f,
             float tickInterval = 0.5f)
         {
+            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
             ResolveHealth();
 
             if (amount <= 0 || health == null || health.currentHP <= 0)

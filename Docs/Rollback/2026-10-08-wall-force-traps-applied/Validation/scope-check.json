@@ -1,0 +1,32 @@
+{
+  "modified": [
+    "Assets/Resources/Data/db.json",
+    "Assets/Scripts/GamePlay/Map/JsonBlockBuilder2D.cs",
+    "Assets/Scripts/GamePlay/Player/Health.cs",
+    "Assets/Scripts/GamePlay/Player/KnockbackReceiver2D.cs",
+    "Assets/Scripts/GamePlay/Player/PlayerController2D.cs",
+    "Assets/Scripts/GamePlay/Player/PlayerSafePointTracker2D.cs",
+    "Assets/Scripts/GamePlay/Player/Respawn2D.cs",
+    "Assets/Scripts/GamePlay/Traps/CliffTrap2D.cs",
+    "Assets/Scripts/GamePlay/Traps/ElectricTileTrap2D.cs",
+    "Assets/Scripts/GamePlay/Traps/PitTile2D.cs",
+    "Assets/Scripts/GamePlay/Traps/TrapDamageEvent.cs",
+    "Assets/Scripts/System/DamageSystem.cs"
+  ],
+  "added": [
+    "Assets/Resources/Prefabs/102-014.prefab",
+    "Assets/Resources/Prefabs/102-014.prefab.meta",
+    "Assets/Resources/Prefabs/102-015.prefab",
+    "Assets/Resources/Prefabs/102-015.prefab.meta",
+    "Assets/Scripts/Core/PlayerEffectLock2D.cs",
+    "Assets/Scripts/Core/PlayerEffectLock2D.cs.meta",
+    "Assets/Scripts/GamePlay/Player/ForcedMovementReceiver2D.cs",
+    "Assets/Scripts/GamePlay/Player/ForcedMovementReceiver2D.cs.meta",
+    "Assets/Scripts/GamePlay/Traps/WallForceTrap2D.cs",
+    "Assets/Scripts/GamePlay/Traps/WallForceTrap2D.cs.meta",
+    "Assets/Sprites/Traps.meta",
+    "Assets/Sprites/Traps/WallForceClip.png",
+    "Assets/Sprites/Traps/WallForceClip.png.meta"
+  ],
+  "unexpected_changes": []
+}

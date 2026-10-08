@@ -1,0 +1,57 @@
+[
+  {
+    "path": "Assets/Scripts/GamePlay/Player/PlayerController2D.cs",
+    "before_sha256": "dc239af24f5e83c2640d103299bcde66e087ee055b7fb1e511f799c154cc7254",
+    "after_sha256": "d572f09172c96f8c5785dc918f4703fe0208686635f1292dbf64f88e465c920a"
+  },
+  {
+    "path": "Assets/Scripts/GamePlay/Player/KnockbackReceiver2D.cs",
+    "before_sha256": "ab83039f4cf5765a3d6641f2b3d09428f3a4f4c5f1aa88264b2033ac18180cca",
+    "after_sha256": "7b5cf7ea2629cd701a93d9ca6d4b5b6b3709da28673c084599547e3d496c6f02"
+  },
+  {
+    "path": "Assets/Scripts/GamePlay/Player/PlayerSafePointTracker2D.cs",
+    "before_sha256": "7770d63c947360c2decb9164968800b02d8c76f480215acdad8778c169078ac4",
+    "after_sha256": "008d1ea4da219e89281cbba1a278757d0834d8204379f1a5b54f90615718170b"
+  },
+  {
+    "path": "Assets/Scripts/GamePlay/Player/Respawn2D.cs",
+    "before_sha256": "18d146768c63cb47b39c6d3f6dee430813f4f66ddebbaa776eccbde8a22a5c7f",
+    "after_sha256": "d7cd3467702fa594c5cf30e88508f66fce663a6a92182603922780d898514566"
+  },
+  {
+    "path": "Assets/Scripts/GamePlay/Player/Health.cs",
+    "before_sha256": "54508e73a68c02c5ede1cf5617ad47bf8de35299ae276a68c5ba3a9a5a66addf",
+    "after_sha256": "6d6be3e6bdc001bcae92a6bdeef78eac0daff8eeb7acd5a230957accbffe9a2b"
+  },
+  {
+    "path": "Assets/Scripts/GamePlay/Traps/TrapDamageEvent.cs",
+    "before_sha256": "21d7bc1d135f616f53dd722229bd48c8e007463b2a8204e50d63aca3ae5ce9ee",
+    "after_sha256": "dbc5c54c2fb6d8fead36688bec0e0650001b994fd5ebe1529470cb5edd6e00d4"
+  },
+  {
+    "path": "Assets/Scripts/GamePlay/Traps/CliffTrap2D.cs",
+    "before_sha256": "4f3a64ce07e56f4575b794259d932155c28910babea7db37c866289c2ba65e7d",
+    "after_sha256": "7b27d47504e20f6a1ec53c23cb09fa256645f65b224bff8c309ac1a953eb7a49"
+  },
+  {
+    "path": "Assets/Scripts/GamePlay/Traps/PitTile2D.cs",
+    "before_sha256": "957ba82db2cb37f2a83aadd17cdc0cffedefbf831391879d1cf21c608d77e553",
+    "after_sha256": "7f51ecd95bbbdf459ac576252d9cb3406eb9d8b82e7b5539cd969cb031a8ac18"
+  },
+  {
+    "path": "Assets/Scripts/GamePlay/Traps/ElectricTileTrap2D.cs",
+    "before_sha256": "d6305ab9691fd580354653fec0d6f68e7a54ca44ea8c60d5a446770abb9bec76",
+    "after_sha256": "a0e792356da7c5ac0689c5a2099d12aac2d804b870aa8f5d00371dda2a37800a"
+  },
+  {
+    "path": "Assets/Scripts/System/DamageSystem.cs",
+    "before_sha256": "4fc0a3321944909b2c3d4b7357a93b6d61c9561ff1de2901d4ca713958d82b20",
+    "after_sha256": "70f725257426c06380f5f761f1d08c6482fb63b5a3f9abb7a57f5060315947d7"
+  },
+  {
+    "path": "Assets/Scripts/GamePlay/Map/JsonBlockBuilder2D.cs",
+    "before_sha256": "c203ff7b0cd79b9070839fd04b92ef888458fc31068cdc1e8f956bc5273a8f9c",
+    "after_sha256": "ffccd2cd64f5cb920b7887ef1faf72ae1a836c61090ad7e5c1f104901c7a7a99"
+  }
+]

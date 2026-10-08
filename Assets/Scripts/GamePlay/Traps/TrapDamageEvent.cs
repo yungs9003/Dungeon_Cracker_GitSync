@@ -26,6 +26,7 @@ namespace Dungeon.Traps
 
         public static bool Raise(string trapCode, GameObject source, Health target)
         {
+            if (PlayerEffectLock2D.IsProtectedTarget(target)) return false;
             trapCode = GameDatabase.NormalizeTrapCode(trapCode);
 
             var request = new TrapDamageRequest(trapCode, source, target);

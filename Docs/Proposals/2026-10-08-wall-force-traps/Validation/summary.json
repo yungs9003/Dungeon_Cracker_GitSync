@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "original_files_verified": 1349,
+  "original_files_modified": [],
+  "original_files_added": [],
+  "integration_files": 11,
+  "unity_assertions": 86,
+  "prefabs": [
+    "102-014",
+    "102-015"
+  ],
+  "original_project_applied": false,
+  "compile_assemblies": [
+    "Dungeon.Core",
+    "Dungeon.GamePlay",
+    "Dungeon.App",
+    "Dungeon.System"
+  ],
+  "validation_mode": "Isolated Unity Editor; deterministic Tick/reflection and Physics2D.Simulate; original Play Mode not run"
+}

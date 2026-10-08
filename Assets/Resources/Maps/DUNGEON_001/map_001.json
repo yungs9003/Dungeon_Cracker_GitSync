@@ -19,7 +19,7 @@
 
     { "coord": "0200", "code": "001-001","assetNo":0,"direction":"00" },
     { "coord": "0201", "code": "001-001","assetNo":1,"direction":"10" },
-    { "coord": "0202", "code": "001-001","assetNo":3,"direction":"10" },
+    { "coord": "0202", "code": "101-014","assetNo":0,"direction":"01" },
     { "coord": "0203", "code": "100-000","assetNo":4,"direction":"00" },
     { "coord": "0204", "code": "000-000","assetNo":0,"direction":"00" },
     { "coord": "0205", "code": "001-001","assetNo":2,"direction":"11" },
@@ -68,7 +68,7 @@
     { "coord": "0800", "code": "001-001","assetNo":1,"direction":"11" },
     { "coord": "0801", "code": "001-001","assetNo":2,"direction":"10" },
     { "coord": "0802", "code": "001-001","assetNo":2,"direction":"10" },
-    { "coord": "0803", "code": "101-001","assetNo":5,"direction":"10" },
+    { "coord": "0803", "code": "101-015","assetNo":5,"direction":"10" },
     { "coord": "0804", "code": "101-007","assetNo":2,"direction":"11" },
     { "coord": "0805", "code": "001-001","assetNo":2,"direction":"10" },
     { "coord": "0806", "code": "001-001","assetNo":1,"direction":"01" },

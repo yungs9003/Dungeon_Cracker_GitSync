@@ -1,4 +1,5 @@
 using UnityEngine;
+using Dungeon.Core;
 
 namespace Dungeon.Player
 {
@@ -28,6 +29,7 @@ namespace Dungeon.Player
 
         private void FixedUpdate()
         {
+            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
             if (respawn == null || cellSize <= 0f) return;
 
             Vector2Int cell = WorldToCell(transform.position);

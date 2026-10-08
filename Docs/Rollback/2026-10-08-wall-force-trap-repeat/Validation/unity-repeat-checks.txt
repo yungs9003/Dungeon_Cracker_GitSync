@@ -1,0 +1,53 @@
+PASS: 101-014 user cooldown 4 seconds loaded
+PASS: 101-014 first activation protects player
+PASS: cycle completes into cooldown
+PASS: 101-014 player stays in range after first cycle
+PASS: 101-014 wall stop or pull destination reached
+PASS: 101-014 protection restored before repeat 2
+PASS: 101-014 no early activation during cooldown 2
+PASS: 101-014 activates at cooldown deadline without exit 2
+PASS: cycle completes into cooldown
+PASS: 101-014 stationary repeat does not jump or pass wall 2
+PASS: 101-014 protection restored before repeat 3
+PASS: 101-014 no early activation during cooldown 3
+PASS: 101-014 activates at cooldown deadline without exit 3
+PASS: cycle completes into cooldown
+PASS: 101-014 stationary repeat does not jump or pass wall 3
+PASS: 101-014 protection restored before repeat 4
+PASS: 101-014 no early activation during cooldown 4
+PASS: 101-014 activates at cooldown deadline without exit 4
+PASS: cycle completes into cooldown
+PASS: 101-014 stationary repeat does not jump or pass wall 4
+PASS: 101-015 user cooldown 4 seconds loaded
+PASS: 101-015 first activation protects player
+PASS: cycle completes into cooldown
+PASS: 101-015 player stays in range after first cycle
+PASS: 101-015 wall stop or pull destination reached
+PASS: 101-015 protection restored before repeat 2
+PASS: 101-015 no early activation during cooldown 2
+PASS: 101-015 activates at cooldown deadline without exit 2
+PASS: cycle completes into cooldown
+PASS: 101-015 stationary repeat does not jump or pass wall 2
+PASS: 101-015 protection restored before repeat 3
+PASS: 101-015 no early activation during cooldown 3
+PASS: 101-015 activates at cooldown deadline without exit 3
+PASS: cycle completes into cooldown
+PASS: 101-015 stationary repeat does not jump or pass wall 3
+PASS: 101-015 protection restored before repeat 4
+PASS: 101-015 no early activation during cooldown 4
+PASS: 101-015 activates at cooldown deadline without exit 4
+PASS: cycle completes into cooldown
+PASS: 101-015 stationary repeat does not jump or pass wall 4
+PASS: cycle completes into cooldown
+PASS: outside range after cooldown does not activate
+PASS: entry after cooldown activates immediately
+PASS: disable during motion releases protection
+PASS: disabled trap does not progress or activate
+PASS: reenabled trap respects cancellation cooldown
+PASS: reenabled trap reactivates in same range without exit
+PASS: cycle completes into cooldown
+PASS: another force owner can protect during cooldown
+PASS: cooldown completion does not steal another protection owner
+PASS: inside player activates when other protection ends
+PASS: cycle completes into cooldown
+PASS: zero cooldown activates on next physics tick without recursive cycle

@@ -1,0 +1,2 @@
+Assets\Scripts\App\UI\BarHealthUI.cs(501,25): warning CS0108: 'BarHealthUI.ReferenceEqualityComparer.Equals(object, object)' hides inherited member 'object.Equals(object, object)'. Use the new keyword if hiding was intended.
+Assets\Scripts\App\UI\CheckpointMapLoader2D.cs(18,40): warning CS0414: The field 'CheckpointMapLoader2D.fadeInSeconds' is assigned but its value is never used

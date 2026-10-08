@@ -1,0 +1,130 @@
+{
+  "applied_at_kst": "2026-10-08T21:37:03.308653+09:00",
+  "files": [
+    {
+      "path": "Assets/Scripts/GamePlay/Player/PlayerController2D.cs",
+      "action": "modified",
+      "sha256": "d572f09172c96f8c5785dc918f4703fe0208686635f1292dbf64f88e465c920a"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Player/KnockbackReceiver2D.cs",
+      "action": "modified",
+      "sha256": "7b5cf7ea2629cd701a93d9ca6d4b5b6b3709da28673c084599547e3d496c6f02"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Player/PlayerSafePointTracker2D.cs",
+      "action": "modified",
+      "sha256": "008d1ea4da219e89281cbba1a278757d0834d8204379f1a5b54f90615718170b"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Player/Respawn2D.cs",
+      "action": "modified",
+      "sha256": "d7cd3467702fa594c5cf30e88508f66fce663a6a92182603922780d898514566"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Player/Health.cs",
+      "action": "modified",
+      "sha256": "6d6be3e6bdc001bcae92a6bdeef78eac0daff8eeb7acd5a230957accbffe9a2b"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Traps/TrapDamageEvent.cs",
+      "action": "modified",
+      "sha256": "dbc5c54c2fb6d8fead36688bec0e0650001b994fd5ebe1529470cb5edd6e00d4"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Traps/CliffTrap2D.cs",
+      "action": "modified",
+      "sha256": "7b27d47504e20f6a1ec53c23cb09fa256645f65b224bff8c309ac1a953eb7a49"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Traps/PitTile2D.cs",
+      "action": "modified",
+      "sha256": "7f51ecd95bbbdf459ac576252d9cb3406eb9d8b82e7b5539cd969cb031a8ac18"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Traps/ElectricTileTrap2D.cs",
+      "action": "modified",
+      "sha256": "a0e792356da7c5ac0689c5a2099d12aac2d804b870aa8f5d00371dda2a37800a"
+    },
+    {
+      "path": "Assets/Scripts/System/DamageSystem.cs",
+      "action": "modified",
+      "sha256": "70f725257426c06380f5f761f1d08c6482fb63b5a3f9abb7a57f5060315947d7"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Map/JsonBlockBuilder2D.cs",
+      "action": "modified",
+      "sha256": "ffccd2cd64f5cb920b7887ef1faf72ae1a836c61090ad7e5c1f104901c7a7a99"
+    },
+    {
+      "path": "Assets/Resources/Prefabs/102-014.prefab",
+      "action": "added",
+      "sha256": "42869462672f0b0c6d15dec658044ed81506c985edf9a1f0df3451803441ee86"
+    },
+    {
+      "path": "Assets/Resources/Prefabs/102-014.prefab.meta",
+      "action": "added",
+      "sha256": "c090d8d149c5184a3abb703a38f031799246bd81e446d6f4993fabda60d05b57"
+    },
+    {
+      "path": "Assets/Resources/Prefabs/102-015.prefab",
+      "action": "added",
+      "sha256": "55db587cff5a9ebc7fc18499093f194fe3dbe3f6512d7ca50279b97b5f1463d9"
+    },
+    {
+      "path": "Assets/Resources/Prefabs/102-015.prefab.meta",
+      "action": "added",
+      "sha256": "142fa279c2ecd23f867f1b28c53ae72a45f60a59f3a554bced582b074f083f0f"
+    },
+    {
+      "path": "Assets/Scripts/Core/PlayerEffectLock2D.cs",
+      "action": "added",
+      "sha256": "27cf44a6fae341aaed2302734c0c0275ef0566a58e6d0c2a69dde3dad8e0af9a"
+    },
+    {
+      "path": "Assets/Scripts/Core/PlayerEffectLock2D.cs.meta",
+      "action": "added",
+      "sha256": "949302554afe3020e7ecf758e1e64cb77f88224254de9f51c23108a4e8ce8a5d"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Player/ForcedMovementReceiver2D.cs",
+      "action": "added",
+      "sha256": "9c6676fef81cb46fa71f10ff51e5ac724fc2713b2acaba3c94aa7e3154847e86"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Player/ForcedMovementReceiver2D.cs.meta",
+      "action": "added",
+      "sha256": "c71320c42e9ca9622a9e9d5fa82ca07a5cb612b7f6c0f686239919ffc552d87c"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Traps/WallForceTrap2D.cs",
+      "action": "added",
+      "sha256": "27f611b2d9c0c93fd56b380a5dc7cd3899c10b2c2d2bd75598b77ca00572367c"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Traps/WallForceTrap2D.cs.meta",
+      "action": "added",
+      "sha256": "633897f16b577e74fd7cf871bbcf2e861cc358425e978ff58d45b42afa41bad0"
+    },
+    {
+      "path": "Assets/Sprites/Traps/WallForceClip.png",
+      "action": "added",
+      "sha256": "b49dbff71056678fec17cfa04f31eece75c7024fc5c406b5395f89a79e339587"
+    },
+    {
+      "path": "Assets/Sprites/Traps/WallForceClip.png.meta",
+      "action": "added",
+      "sha256": "77ba39c95d919bfe9fd87ffce7d2de873cf561e5e67c4d3812ae791c46261856"
+    },
+    {
+      "path": "Assets/Sprites/Traps.meta",
+      "action": "added",
+      "sha256": "3d2b3012956a9ba78fd0bd598d1c8519fc2c4792284adf5b9a349340b101b375"
+    },
+    {
+      "path": "Assets/Resources/Data/db.json",
+      "action": "modified",
+      "sha256": "0a5fffaec7d7c41481eb33e3aa8d4eac4422643558a461791a80f3bf86d092ae"
+    }
+  ]
+}

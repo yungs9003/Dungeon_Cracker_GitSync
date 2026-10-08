@@ -1,0 +1,190 @@
+--- a/Assets/Scripts/GamePlay/Player/PlayerController2D.cs
++++ b/Assets/Scripts/GamePlay/Player/PlayerController2D.cs
+@@ -47,6 +47,7 @@
+ 
+         private void FixedUpdate()
+         {
++            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
+             float dt = Time.fixedDeltaTime;
+ 
+             Vector2 input = canControl ? moveInput : Vector2.zero;
+--- a/Assets/Scripts/GamePlay/Player/KnockbackReceiver2D.cs
++++ b/Assets/Scripts/GamePlay/Player/KnockbackReceiver2D.cs
+@@ -1,4 +1,5 @@
+ using UnityEngine;
++using Dungeon.Core;
+ 
+ namespace Dungeon.Player
+ {
+@@ -16,6 +17,7 @@
+         /// </summary>
+         public void AddKnockback(Vector2 dir, float distance, float duration)
+         {
++            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
+             if (dir.sqrMagnitude < 1e-6f) return;
+             dir.Normalize();
+ 
+--- a/Assets/Scripts/GamePlay/Player/PlayerSafePointTracker2D.cs
++++ b/Assets/Scripts/GamePlay/Player/PlayerSafePointTracker2D.cs
+@@ -1,4 +1,5 @@
+ using UnityEngine;
++using Dungeon.Core;
+ 
+ namespace Dungeon.Player
+ {
+@@ -28,6 +29,7 @@
+ 
+         private void FixedUpdate()
+         {
++            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
+             if (respawn == null || cellSize <= 0f) return;
+ 
+             Vector2Int cell = WorldToCell(transform.position);
+--- a/Assets/Scripts/GamePlay/Player/Respawn2D.cs
++++ b/Assets/Scripts/GamePlay/Player/Respawn2D.cs
+@@ -90,6 +90,7 @@
+ 
+         public bool ReturnToLastSafePointFromTrap(int damage = 0)
+         {
++            if (PlayerEffectLock2D.IsProtectedTarget(this)) return false;
+             if (Time.time < nextTrapAllowedTime)
+                 return false;
+ 
+--- a/Assets/Scripts/GamePlay/Player/Health.cs
++++ b/Assets/Scripts/GamePlay/Player/Health.cs
+@@ -23,7 +23,8 @@
+         [SerializeField] private float invincibilityAfterHit = 0.35f;
+ 
+         private float invincibleUntil = 0f;
+-        public bool IsInvincible => useInvincibility && Time.time < invincibleUntil;
++        public bool IsInvincible => PlayerEffectLock2D.IsProtectedTarget(this) ||
++            (useInvincibility && Time.time < invincibleUntil);
+ 
+         private IDamageSystem damageSystem;
+ 
+@@ -152,6 +153,7 @@
+         // 타입 기반 분기 지원 (물리/마법/True)
+         public void TakeDamage(int amount, DamageType type)
+         {
++            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
+             EnsureDamageSystem();
+ 
+             if (damageSystem != null)
+@@ -176,6 +178,7 @@
+         // Apply damage already computed (used by DamageSystem)
+         public void ApplyDamageDirect(int finalDamage)
+         {
++            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
+             if (finalDamage <= 0 || currentHP <= 0) return;
+ 
+             currentHP = Mathf.Max(0, currentHP - finalDamage);
+@@ -190,6 +193,7 @@
+ 
+         public void TakeBleedingDamage(int amount, float duration = 7f, float tickInterval = 0.5f)
+         {
++            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
+             EnsureDamageSystem();
+             if (damageSystem != null)
+             {
+@@ -261,6 +265,11 @@
+ 
+                 if (isBleedingActive && Time.time >= lastBleedingDamageTime)
+                 {
++                    if (PlayerEffectLock2D.IsProtectedTarget(this))
++                    {
++                        lastBleedingDamageTime = Time.time + bleedingTickInterval;
++                        return;
++                    }
+                     currentHP = Mathf.Max(0, currentHP - bleedingDamagePerTick);
+                     onHealthChanged?.Invoke(currentHP, maxHP);
+ 
+--- a/Assets/Scripts/GamePlay/Traps/TrapDamageEvent.cs
++++ b/Assets/Scripts/GamePlay/Traps/TrapDamageEvent.cs
+@@ -26,6 +26,7 @@
+ 
+         public static bool Raise(string trapCode, GameObject source, Health target)
+         {
++            if (PlayerEffectLock2D.IsProtectedTarget(target)) return false;
+             trapCode = GameDatabase.NormalizeTrapCode(trapCode);
+ 
+             var request = new TrapDamageRequest(trapCode, source, target);
+--- a/Assets/Scripts/GamePlay/Traps/CliffTrap2D.cs
++++ b/Assets/Scripts/GamePlay/Traps/CliffTrap2D.cs
+@@ -2,6 +2,7 @@
+ using System.Collections.Generic;
+ using UnityEngine;
+ using Dungeon.Player;
++using Dungeon.Core;
+ 
+ namespace Dungeon.Traps
+ {
+@@ -75,6 +76,7 @@
+             if (isBusy) return;
+             if (Time.time < nextAllowedTime) return;
+             if (playerRb == null) return;
++            if (PlayerEffectLock2D.IsProtectedTarget(playerRb)) return;
+ 
+             // 플레이어 레이어 체크
+             if ((playerLayer.value & (1 << playerRb.gameObject.layer)) == 0)
+@@ -244,8 +246,11 @@
+             return true;
+         }
+ 
++        public static bool IsPlayerFalling(Rigidbody2D rb) => rb != null && FallingPlayers.Contains(rb);
++
+         private bool TryAcquirePlayerFallLock(Rigidbody2D rb)
+         {
++            if (PlayerEffectLock2D.IsProtectedTarget(rb)) return false;
+             FallingPlayers.RemoveWhere(candidate => candidate == null);
+ 
+             if (!FallingPlayers.Add(rb))
+--- a/Assets/Scripts/GamePlay/Traps/PitTile2D.cs
++++ b/Assets/Scripts/GamePlay/Traps/PitTile2D.cs
+@@ -1,5 +1,6 @@
+ using UnityEngine;
+ using Dungeon.Player;
++using Dungeon.Core;
+ 
+ namespace Dungeon.Traps
+ {
+@@ -14,6 +15,7 @@
+ 
+         private void OnTriggerEnter2D(Collider2D other)
+         {
++            if (PlayerEffectLock2D.IsProtectedTarget(other)) return;
+             var respawn = other.GetComponentInParent<Respawn2D>();
+             if (respawn == null) return;
+ 
+--- a/Assets/Scripts/GamePlay/Traps/ElectricTileTrap2D.cs
++++ b/Assets/Scripts/GamePlay/Traps/ElectricTileTrap2D.cs
+@@ -150,7 +150,7 @@
+ 
+             foreach (Health health in playersInside)
+             {
+-                if (health == null) continue;
++                if (health == null || PlayerEffectLock2D.IsProtectedTarget(health)) continue;
+ 
+                 if (nextDamageTime.TryGetValue(health, out float nextTime) && now < nextTime)
+                     continue;
+--- a/Assets/Scripts/System/DamageSystem.cs
++++ b/Assets/Scripts/System/DamageSystem.cs
+@@ -128,6 +128,7 @@
+             float duration = 7f,
+             float tickInterval = 0.5f)
+         {
++            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
+             ResolveHealth();
+ 
+             if (amount <= 0 || health == null || health.currentHP <= 0)
+--- a/Assets/Scripts/GamePlay/Map/JsonBlockBuilder2D.cs
++++ b/Assets/Scripts/GamePlay/Map/JsonBlockBuilder2D.cs
+@@ -531,6 +531,9 @@
+ 
+             actualCode = actualCode.Trim().ToUpperInvariant();
+ 
++            // 벽형 이동 함정은 끝부분이 항상 보이며 기존 바닥 함정 Sprite 교체를 사용하지 않습니다.
++            if (actualCode == "102-014" || actualCode == "102-015") return false;
++
+             if (trapRevealExcludedCodes != null)
+             {
+                 foreach (string rawExcludedCode in trapRevealExcludedCodes)

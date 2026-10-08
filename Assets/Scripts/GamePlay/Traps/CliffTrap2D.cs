@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Dungeon.Player;
+using Dungeon.Core;
 
 namespace Dungeon.Traps
 {
@@ -75,6 +76,7 @@ namespace Dungeon.Traps
             if (isBusy) return;
             if (Time.time < nextAllowedTime) return;
             if (playerRb == null) return;
+            if (PlayerEffectLock2D.IsProtectedTarget(playerRb)) return;
 
             // 플레이어 레이어 체크
             if ((playerLayer.value & (1 << playerRb.gameObject.layer)) == 0)
@@ -244,8 +246,11 @@ namespace Dungeon.Traps
             return true;
         }
 
+        public static bool IsPlayerFalling(Rigidbody2D rb) => rb != null && FallingPlayers.Contains(rb);
+
         private bool TryAcquirePlayerFallLock(Rigidbody2D rb)
         {
+            if (PlayerEffectLock2D.IsProtectedTarget(rb)) return false;
             FallingPlayers.RemoveWhere(candidate => candidate == null);
 
             if (!FallingPlayers.Add(rb))

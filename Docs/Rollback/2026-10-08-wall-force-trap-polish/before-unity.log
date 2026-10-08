@@ -1,0 +1,337 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.2/staging' branch; Version is '6000.2.14f1 (589824c1fc31) revision 5806116'; Using compiler version '194234433'; Build Type 'Release'
+[Licensing::IpcConnector] Channel LicenseClient-yoong doesn't exist
+OS: 'Windows 11  (10.0.26200) 64bit Professional' Language: 'ko' Physical Memory: 32561 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+Date: 2026-10-08T13:54:18Z
+[Licensing::Module] Successfully launched the LicensingClient (PId: 26396)
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Unity.exe
+-batchmode
+-projectPath
+C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\WallForceTrapReview
+-executeMethod
+WallForceTrapPolishValidation.Diagnose
+-logFile
+C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Docs\Rollback\2026-10-08-wall-force-trap-polish\before-unity.log
+Successfully changed project path to: C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\WallForceTrapReview
+C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/WallForceTrapReview
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [13020]  Target information:
+
+Player connection [13020]  * "[IP] 172.30.1.62 [Port] 55505 [Flags] 2 [Guid] 4068029865 [EditorId] 4068029865 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-ARTM24P) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [13020] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [13020] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-35524" after 0.2 seconds.
+Library Redirect Path: Library/
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-yoong" at "2026-10-08T13:54:18.9438717Z"
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 6000.2.14f1 (589824c1fc31)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/WallForceTrapReview/Assets
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3080 (ID=0x220a)
+    Vendor:   NVIDIA
+    VRAM:     12091 MB
+    Driver:   32.0.15.9186
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56524
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002727 seconds.
+- Loaded All Assemblies, in  0.319 seconds
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.250 seconds
+Domain Reload Profiling: 565ms
+	BeginReloadAssembly (115ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (27ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (41ms)
+	LoadAllAssembliesAndSetupDomain (124ms)
+		LoadAssemblies (112ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (121ms)
+			TypeCache.Refresh (120ms)
+				TypeCache.ScanAssembly (110ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (251ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (222ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (44ms)
+			SetLoadedEditorAssemblies (4ms)
+			BeforeProcessingInitializeOnLoad (45ms)
+			ProcessInitializeOnLoadAttributes (90ms)
+			ProcessInitializeOnLoadMethodAttributes (40ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Module] Licensing is not yet initialized.
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.4+4293ba1
+  Session Id:              7b6f6e3a10d64027a4eb40e1485d12cf
+  Correlation Id:          ff6b355e3ea35fc0155dab79f91f285f
+  External correlation Id: 3584038405555448730
+  Machine Id:              IdReJ6kqVrZ1tLe+2FyeCUUEg9Y=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-yoong" (connect: 0.37s, validation: 0.04s, handshake: 1.02s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-yoong-notifications" at "2026-10-08T13:54:20.0053752Z"
+[Licensing::Module] Connected to LicensingClient (PId: 26396, launch time: 0.01, total connection time: 1.43s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 14569192904864-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.01
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 1.47s
+[Licensing::Module] Licensing is initialized (took 0.19s).
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+Package Manager log level set to [2]
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 9 packages:
+  Built-in packages:
+    com.unity.modules.physics2d@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics2d)
+    com.unity.modules.physics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.jsonserialize)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imageconversion)
+    com.unity.modules.animation@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.animation)
+    com.unity.modules.audio@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.audio)
+    com.unity.modules.ui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.ui)
+    com.unity.modules.imgui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imgui)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.particlesystem)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.00 seconds
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Starting: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/WallForceTrapReview
+DisplayProgressbar: Compiling Scripts
+ExitCode: 4 Duration: 1s315ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aE-inputdata.json
+[160/163    1s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
+*** Tundra requires additional run (1.28 seconds), 1 items updated, 159 evaluated
+Starting: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Tools\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/WallForceTrapReview
+ExitCode: 0 Duration: 0s208ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/WallForceTrapReview
+ExitCode: 0 Duration: 0s373ms
+Finished compiling graph: 166 nodes, 809 flattened edges (781 ToBuild, 8 ToUse), maximum node priority 31
+[150/163    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.rsp
+[160/163    0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
+[161/163    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+[162/163    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+*** Tundra build success (0.34 seconds), 4 items updated, 163 evaluated
+AssetDatabase: script compilation time: 2.221440s
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.619 seconds
+Start importing Assets/Animation using Guid(570305cef856d79449a4bfcd5de30843) (DefaultImporter) -> (artifact id: '39be35be7d83f5fc6ac39384044ed39c') in 0.0193123 seconds
+Start importing Assets/Animation/Characters using Guid(e376c7f738f4840409aab073ea25ee3b) (DefaultImporter) -> (artifact id: 'cd22e522483fb89369a1962e976d48aa') in 0.0081857 seconds
+Start importing Assets/Animation/Characters/Player using Guid(6a9dfa16cb84e9c4a9c9b8b69a8af89b) (DefaultImporter) -> (artifact id: '2b2fb77080da4d0159e1b391a7b2aedd') in 0.0079991 seconds
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.315 seconds
+Domain Reload Profiling: 931ms
+	BeginReloadAssembly (299ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (52ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (125ms)
+	RebuildCommonClasses (27ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (22ms)
+	LoadAllAssembliesAndSetupDomain (259ms)
+		LoadAssemblies (321ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (26ms)
+			TypeCache.Refresh (21ms)
+				TypeCache.ScanAssembly (16ms)
+			BuildScriptInfoCaches (1ms)
+			ResolveRequiredComponents (2ms)
+	FinalizeReload (315ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (241ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (22ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (78ms)
+			ProcessInitializeOnLoadAttributes (115ms)
+			ProcessInitializeOnLoadMethodAttributes (16ms)
+			AfterProcessingInitializeOnLoad (7ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (8ms)
+Start importing Assets/Sprites/Tiles/001-001-2.png using Guid(b2db07b4ce74f3549a1b35babff9bb53) (TextureImporter) -> (artifact id: 'ee4b579f4a6e38f7ab6c8c5c016ab811') in 0.0081336 seconds
+Start importing Assets/Animation/Characters/Player/player_animation_frame.png using Guid(d2853a31259504349b555f3beabfb7bc) (TextureImporter) -> (artifact id: '9c9602c400d289f5d42de5485b618850') in 0.224879 seconds
+Start importing Assets/Animation/Characters/Player/player_standing2.png using Guid(f3ca15e474dc3284481bc53f4475dc47) (TextureImporter) -> (artifact id: '72c5df7b7d617f5aa7bcdc2f8cfa30a8') in 0.0092639 seconds
+Start importing Assets/Animation/Characters/Player/player_standing.png using Guid(579538beeeedefc46972133fcc1d4e0c) (TextureImporter) -> (artifact id: '940d63de8d12f3333fdd015263a2a50b') in 0.1178344 seconds
+Start importing Assets/Animation/Characters/Player/player_standing.mat using Guid(317cd559812c0d146bedad8b2982973e) (NativeFormatImporter) -> (artifact id: '70d6e0e392adb1210512ebf2d4b69eb9') in 0.0031667 seconds
+Start importing Assets/Animation/Characters/Player/Run.anim using Guid(b16c9dcdf8d40af439e53a816d5d9d22) (NativeFormatImporter) -> (artifact id: 'f2240be0c8f4429a9c9d98399630048a') in 0.002447 seconds
+Start importing Assets/Animation/Characters/Player/Idle.anim using Guid(77924a8e36d5b424c8a83302f6113da8) (NativeFormatImporter) -> (artifact id: 'b7c672eed23d38b099c98c59883f87ce') in 0.0015927 seconds
+Start importing Assets/Animation/Characters/Player/Knockback.anim using Guid(4a2ac6e89f8677940bc604aef5d08523) (NativeFormatImporter) -> (artifact id: 'f24cc30eb41c8c6580ba2cc77ed1dcd1') in 0.0012956 seconds
+Start importing Assets/Animation/Characters/Player/PlayerAnimatorController.controller using Guid(e505a1eb23e889f44adbe38366fea7af) (NativeFormatImporter) -> (artifact id: '309032f8de5d4b22c03c1d4973c9abda') in 0.0022733 seconds
+Start importing Assets/Resources/Data/db.json using Guid(4058b99c9deb7a24d8c7d3bfcead93c0) (TextScriptImporter) -> (artifact id: '9e2b3d90d2b3ac6c416cdba4a4967968') in 0.004487 seconds
+Start importing Assets/Resources/Prefabs/101-014.prefab using Guid(13e18a78caa021742ba162acadd75392) (PrefabImporter) -> (artifact id: '9b6204d0f117373a504b6950ceb665fa') in 0.0057531 seconds
+Start importing Assets/Resources/Prefabs/101-015.prefab using Guid(ad474020bdbf1904bb233405269b8963) (PrefabImporter) -> (artifact id: '0d1d52d6acb6db3239d41e45d2504774') in 0.0025058 seconds
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=bbd470cb7f8097b43b869e4fa86d02a6): Total: 3.772 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=15 (actual=15, local cache=0, cache server=0)
+		Asset DB Process Time: managed=5 ms, native=862 ms
+		Asset DB Callback time: managed=43 ms, native=8 ms
+		Scripting: domain reloads=1, domain reload time=619 ms, compile time=2223 ms, other=9 ms
+		Project Asset Count: scripts=63, non-scripts=26
+		Asset File Changes: new=13, changed=17, moved=2, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 8.048ms
+	ApplyChangesToAssetFolders: 0.257ms
+	Scan: 65.649ms
+	OnSourceAssetsModified: 0.744ms
+	CategorizeAssetsWithTransientArtifact: 1.800ms
+	ProcessAssetsWithTransientArtifactChanges: 5.015ms
+	CategorizeAssets: 0.315ms
+	ImportOutOfDateAssets: 742.415ms (-1906.818ms without children)
+		ImportManagerImport: 425.977ms (4.461ms without children)
+			ImportInProcess: 421.471ms
+			UpdateCategorizedAssets: 0.046ms
+		CompileScripts: 2222.870ms
+		ReloadNativeAssets: 0.000ms
+		UnloadImportedAssets: 0.253ms
+		ReloadImportedAssets: 0.001ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.013ms
+		InitializingProgressBar: 0.005ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.113ms
+	PostProcessAllAssets: 44.166ms
+	Hotreload: 0.852ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.001ms
+	UnloadStreamsBegin: 0.150ms
+	PersistCurrentRevisions: 0.031ms
+	UnloadStreamsEnd: 0.000ms
+	GenerateScriptTypeHashes: 0.026ms
+	Untracked: 2902.927ms
+
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+Scanning for USB devices : 1.680ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-WallForceTrapReview
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 105 unused Assets / (1.0 MB). Loaded Objects now: 721.
+Memory consumption went from 86.4 MB to 85.4 MB.
+Total: 4.260300 ms (FindLiveObjects: 0.032400 ms CreateObjectMapping: 0.010000 ms MarkObjects: 3.728700 ms  DeleteObjects: 0.488300 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 0 unused Assets / (38.0 KB). Loaded Objects now: 727.
+Memory consumption went from 84.6 MB to 84.6 MB.
+Total: 3.291100 ms (FindLiveObjects: 0.025600 ms CreateObjectMapping: 0.006300 ms MarkObjects: 3.255900 ms  DeleteObjects: 0.002700 ms)
+
+WALL FORCE POLISH DIAGNOSTIC (15 results)
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+WallForceTrapPolishValidation:Execute () (at Assets/Editor/WallForceTrapPolishValidation.cs:43)
+WallForceTrapPolishValidation:Diagnose () (at Assets/Editor/WallForceTrapPolishValidation.cs:18)
+
+(Filename: Assets/Editor/WallForceTrapPolishValidation.cs Line: 43)
+
+Curl error 42: Callback aborted
+Start importing ProjectSettings/Physics2DSettings.asset using Guid(00000000000000005100000000000000) (LibraryAssetImporter) -> (artifact id: 'f33b89e76f5c57e4d90d9605620b7e01') in 0.0018516 seconds
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=2bd650fe3eca8864684a01771116c801): Total: 0.014 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-yoong-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-yoong channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server process was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1791467664508,"processId":35524,"allocatedMemory":10019402,"memoryLabels":[{"Default":28593},{"Permanent":15468},{"NewDelete":65625},{"Thread":4230384},{"Manager":29218},{"VertexData":8},{"Geometry":816},{"VFX":-104},{"Texture":160},{"Shader":78823},{"Material":24},{"GfxDevice":55225},{"Animation":392},{"Audio":4040},{"FontEngine":256},{"Physics":2050},{"Serialization":624},{"Input":14824},{"JobScheduler":33024},{"TextLib":160},{"Mono":32},{"ScriptingNativeRuntime":155060},{"BaseObject":1624880},{"Resource":1304},{"Renderer":2928},{"Transform":4685},{"File":1016},{"WebCam":616},{"Culling":32},{"Terrain":11394},{"Wind":24},{"STL":40},{"String":16352},{"DynamicArray":89604},{"HashMap":73692},{"Utility":2661046},{"Curl":48},{"PoolAlloc":1960},{"AI":40},{"TypeTree":5005},{"ScriptManager":512},{"RuntimeInitializeOnLoadManager":64},{"SpriteAtlas":112},{"GI":7824},{"Director":8240},{"CloudService":8496},{"WebRequest":845},{"VR":46114},{"SceneManager":496},{"Video":64},{"LazyScriptCache":32},{"Camera":17},{"Secure":2113},{"SerializationCache":1576},{"APIUpdating":10320},{"Subsystems":336},{"VirtualTexturing":57888},{"StaticSafetyDebugInfo":278528},{"Analytics":384},{"Hierarchy":272},{"CoreStats":12424},{"Identifiers":12384},{"Gui":80},{"EditorUtility":83246},{"VersionControl":4},{"Undo":947},{"AssetDatabase":235772},{"EditorGi":328},{"UnityConnect":24528},{"Upm":1896},{"DrivenProperties":72},{"LocalIPC":211},{"ProfilerEditor":9746},{"CoreBusinessMetrics":2867},{"Licensing":1232},{"AssetReference":32},{"IPCStream":32}]}

@@ -531,6 +531,9 @@ namespace Dungeon.Map
 
             actualCode = actualCode.Trim().ToUpperInvariant();
 
+            // 벽형 이동 함정은 끝부분이 항상 보이며 기존 바닥 함정 Sprite 교체를 사용하지 않습니다.
+            if (actualCode == "101-014" || actualCode == "101-015") return false;
+
             if (trapRevealExcludedCodes != null)
             {
                 foreach (string rawExcludedCode in trapRevealExcludedCodes)

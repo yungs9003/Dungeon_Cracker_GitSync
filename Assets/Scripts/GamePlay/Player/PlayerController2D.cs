@@ -47,6 +47,7 @@ namespace Dungeon.Player
 
         private void FixedUpdate()
         {
+            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
             float dt = Time.fixedDeltaTime;
 
             Vector2 input = canControl ? moveInput : Vector2.zero;

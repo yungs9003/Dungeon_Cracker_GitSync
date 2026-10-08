@@ -90,6 +90,7 @@ namespace Dungeon.Player
 
         public bool ReturnToLastSafePointFromTrap(int damage = 0)
         {
+            if (PlayerEffectLock2D.IsProtectedTarget(this)) return false;
             if (Time.time < nextTrapAllowedTime)
                 return false;
 
