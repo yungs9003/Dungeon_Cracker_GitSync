@@ -366,6 +366,46 @@
       "damage_type": "magic",
       "damage": 7,
       "knockback_distance": null
+    },
+    {
+      "code": "102-016",
+      "name": "용암",
+      "type": "trap",
+      "desc": "떨어지면 피해를 입고 이전 블록으로 돌아옴",
+      "destructible": false,
+      "damage_type": "burn",
+      "damage": 16,
+      "knockback_distance": 0
+    },
+    {
+      "code": "102-017",
+      "name": "분출",
+      "type": "trap",
+      "desc": "일정 시간마다 용암기둥 생성. 해당 타일 위에 있으면 데미지를 입음",
+      "destructible": false,
+      "damage_type": "burn",
+      "damage": 20,
+      "knockback_distance": 0.3
+    },
+    {
+      "code": "102-018",
+      "name": "빙판",
+      "type": "trap",
+      "desc": "감속을 하는데 시간이 더 걸림. 최대 1.5배 가속 가능",
+      "destructible": false,
+      "damage_type": null,
+      "damage": null,
+      "knockback_distance": null
+    },
+    {
+      "code": "102-019",
+      "name": "얼음 결정",
+      "type": "trap",
+      "desc": "얼음 결정이 주기적으로 생성됨. 결정에 충돌시 데미지 입음",
+      "destructible": false,
+      "damage_type": "ice",
+      "damage": 12,
+      "knockback_distance": 0.3
     }
   ]
 }

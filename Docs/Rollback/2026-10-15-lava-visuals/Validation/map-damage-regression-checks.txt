@@ -1,0 +1,45 @@
+PASS: 102-016 DB values and indestructible floor
+PASS: 102-016 Resources root load / name
+PASS: 102-016 floor not destructible
+PASS: 102-016 automatic damage code resolution
+PASS: 102-017 DB values and indestructible floor
+PASS: 102-017 Resources root load / name
+PASS: 102-017 floor not destructible
+PASS: 102-017 automatic damage code resolution
+PASS: 102-018 DB values and indestructible floor
+PASS: 102-018 Resources root load / name
+PASS: 102-018 floor not destructible
+PASS: 102-019 DB values and indestructible floor
+PASS: 102-019 Resources root load / name
+PASS: 102-019 floor not destructible
+PASS: 102-019 automatic damage code resolution
+PASS: moved crystal obstacle load and destructibility
+PASS: real map builder spawns all 70 cells
+PASS: generated map theme counts 2/1/14/1
+PASS: requested old codes fully replaced
+PASS: eruption/crystal placement coordinates
+PASS: player start 0004 preserved
+PASS: four existing map relations preserved
+PASS: 102-016 excluded from legacy sprite reveal
+PASS: 102-016 has no legacy reveal component
+PASS: 102-017 excluded from legacy sprite reveal
+PASS: 102-017 has no legacy reveal component
+PASS: 102-018 excluded from legacy sprite reveal
+PASS: 102-018 has no legacy reveal component
+PASS: 102-019 excluded from legacy sprite reveal
+PASS: 102-019 has no legacy reveal component
+PASS: existing orb reveal behavior preserved
+PASS: eruption 20 routes through burn receiver
+PASS: eruption reverse movement knockback .3
+PASS: moved referenced crystal prefab spawns correctly
+PASS: generated crystal resolves parent code and cold damage 12
+PASS: crystal reverse movement knockback .3
+PASS: lava cumulative burn damage quarter 1
+PASS: lava cumulative burn damage quarter 2
+PASS: lava cumulative burn damage quarter 3
+PASS: lava cumulative burn damage quarter 4
+PASS: lava total raw budget 16 through four burn calls
+PASS: ice floor has no damage or knockback
+PASS: force protection acquired
+PASS: force immunity skips both typed receivers and lava budget
+PASS: typed fallback works without a field receiver

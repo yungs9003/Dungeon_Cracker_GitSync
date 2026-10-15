@@ -8,6 +8,28 @@ namespace Dungeon.Traps
 {
     public class CliffTrap2D : MonoBehaviour
     {
+        public enum FallVisualStyle { ShrinkToCenter, LavaSink }
+        [Header("Theme (default preserves existing pit)")]
+        [SerializeField] private FallVisualStyle fallVisualStyle;
+        [SerializeField, Min(.1f)] private float lavaSinkDuration = 2f;
+        [Tooltip("최소 하강 거리(월드 단위). 0이면 실제 Visual 높이로 정합니다. 수면은 처음 발밑 높이에 고정됩니다.")]
+        [SerializeField, Min(0f)] private float lavaVisualDrop;
+        [SerializeField, Min(.4f)] private float lavaDamageInterval = .5f;
+        [SerializeField] private Sprite lavaClipSprite;
+        private Rigidbody2D lavaBody;
+        private bool lavaPreviousSimulated;
+        private PlayerController2D lavaController;
+        private bool lavaPreviousControl;
+        private Transform lavaVisual, lavaVisualParent;
+        private int lavaVisualSibling;
+        private Vector3 lavaVisualPosition;
+        private GameObject lavaGroup;
+        private SpriteMask lavaMask;
+        private float lavaSurfaceY;
+        private SpriteRenderer[] lavaRenderers;
+        private SpriteMaskInteraction[] lavaMaskModes;
+        private PlayerAnimationDriver2D[] lavaAnimDrivers;
+        private bool[] lavaAnimEnabled;
         private const float TileSpacing = 1f;
         private const float NeighborTolerance = 0.05f;
         private const float InternalBoundaryOverlap = 0.01f;
@@ -68,6 +90,7 @@ namespace Dungeon.Traps
         private void OnDisable()
         {
             ActiveTraps.Remove(this);
+            if (lavaBody != null) { StopAllCoroutines(); RestoreLavaState(); isBusy = false; }
             ReleasePlayerFallLock();
         }
 
@@ -106,6 +129,12 @@ namespace Dungeon.Traps
         {
             isBusy = true;
             nextAllowedTime = Time.time + retriggerCooldown;
+
+            if (fallVisualStyle == FallVisualStyle.LavaSink)
+            {
+                yield return CoLavaSink(respawn, rb);
+                yield break;
+            }
 
             GameObject player = respawn.gameObject;
             Transform playerTr = player.transform;
@@ -174,6 +203,128 @@ namespace Dungeon.Traps
 
             return point.x >= min.x && point.x <= max.x &&
                    point.y >= min.y && point.y <= max.y;
+        }
+
+        private IEnumerator CoLavaSink(Respawn2D respawn, Rigidbody2D rb)
+        {
+            lavaBody = rb; lavaPreviousSimulated = rb.simulated;
+            lavaController = rb.GetComponent<PlayerController2D>();
+            lavaPreviousControl = lavaController != null && lavaController.CanControl;
+            lavaController?.SetControl(false, true);
+            rb.GetComponent<KnockbackReceiver2D>()?.CancelKnockback();
+            rb.GetComponent<PlayerIceMovement2D>()?.ResetMotion();
+            rb.linearVelocity = Vector2.zero; rb.angularVelocity = 0f; rb.simulated = false;
+            lavaVisual = FindVisualTransform(respawn.transform);
+            if (lavaVisual != null)
+            {
+                lavaVisualParent = lavaVisual.parent; lavaVisualSibling = lavaVisual.GetSiblingIndex();
+                lavaVisualPosition = lavaVisual.localPosition;
+                lavaAnimDrivers = lavaVisual.GetComponentsInChildren<PlayerAnimationDriver2D>(true);
+                lavaAnimEnabled = new bool[lavaAnimDrivers.Length];
+                for (int i = 0; i < lavaAnimDrivers.Length; i++) { lavaAnimEnabled[i] = lavaAnimDrivers[i].enabled; lavaAnimDrivers[i].enabled = false; }
+                foreach (Animator animator in lavaVisual.GetComponentsInChildren<Animator>(true))
+                    foreach (var parameter in animator.parameters)
+                        if (parameter.type == AnimatorControllerParameterType.Bool && (parameter.name == "IsMoving" || parameter.name == "Knockback")) animator.SetBool(parameter.nameHash, false);
+                lavaRenderers = lavaVisual.GetComponentsInChildren<SpriteRenderer>(true);
+                if (TryGetLavaVisualBounds(out Bounds initialBounds)) lavaSurfaceY = initialBounds.min.y;
+                if (lavaClipSprite != null && lavaRenderers.Length > 0)
+                {
+                    lavaMaskModes = new SpriteMaskInteraction[lavaRenderers.Length];
+                    for (int i = 0; i < lavaRenderers.Length; i++) { lavaMaskModes[i] = lavaRenderers[i].maskInteraction; lavaRenderers[i].maskInteraction = SpriteMaskInteraction.VisibleInsideMask; }
+                    lavaGroup = new GameObject("LavaSinkVisualGroup");
+                    lavaGroup.transform.SetParent(respawn.transform, false);
+                    var sorting = lavaGroup.AddComponent<UnityEngine.Rendering.SortingGroup>();
+                    sorting.sortingLayerID = lavaRenderers[0].sortingLayerID; sorting.sortingOrder = lavaRenderers[0].sortingOrder;
+                    lavaVisual.SetParent(lavaGroup.transform, true);
+                    lavaMask = new GameObject("RemainingPlayerVisual").AddComponent<SpriteMask>();
+                    lavaMask.transform.SetParent(lavaGroup.transform, false);
+                    lavaMask.sprite = lavaClipSprite;
+                    UpdateLavaMask();
+                }
+            }
+            Vector3 start = lavaVisual != null ? lavaVisual.localPosition : Vector3.zero;
+            // 한 Visual 높이만큼 수면을 통과해야 전신이 잠깁니다. 가림량은 별도 시간 곡선으로 계산하지 않습니다.
+            float dropDistance = TryGetLavaVisualBounds(out Bounds startBounds)
+                ? Mathf.Max(lavaVisualDrop, startBounds.size.y + .02f) : lavaVisualDrop;
+            Vector3 drop = lavaVisual != null && lavaVisual.parent != null
+                ? lavaVisual.parent.InverseTransformVector(Vector3.down * dropDistance) : Vector3.down * dropDistance;
+            Health health = respawn.GetComponent<Health>();
+            ThemeTrapDamage2D damage = GetComponent<ThemeTrapDamage2D>();
+            float duration = Mathf.Max(.1f, lavaSinkDuration), t = 0f, nextDamage = Mathf.Max(.4f, lavaDamageInterval);
+            int requestedDamage = 0;
+            try
+            {
+                while (t < duration && respawn != null && (health == null || health.currentHP > 0))
+                {
+                    t = Mathf.Min(duration, t + Time.fixedDeltaTime);
+                    float progress = t / duration;
+                    if (lavaVisual != null) lavaVisual.localPosition = start + drop * progress;
+                    UpdateLavaMask();
+                    if (t + .0001f >= nextDamage || t >= duration)
+                    {
+                        damage?.ApplyBudgetStep(health, t / duration, ref requestedDamage);
+                        nextDamage += Mathf.Max(.4f, lavaDamageInterval);
+                    }
+                    yield return new WaitForFixedUpdate();
+                }
+                if (respawn != null && (health == null || health.currentHP > 0)) respawn.ReturnToLastSafePointFromTrap();
+            }
+            finally
+            {
+                RestoreLavaState(); isBusy = false; ReleasePlayerFallLock();
+            }
+        }
+
+        private bool TryGetLavaVisualBounds(out Bounds bounds)
+        {
+            bounds = default;
+            if (lavaRenderers == null) return false;
+            bool found = false;
+            foreach (SpriteRenderer renderer in lavaRenderers)
+            {
+                if (renderer == null || renderer.sprite == null || !renderer.enabled) continue;
+                if (!found) { bounds = renderer.bounds; found = true; }
+                else bounds.Encapsulate(renderer.bounds);
+            }
+            return found;
+        }
+
+        private void UpdateLavaMask()
+        {
+            if (lavaMask == null) return;
+            bool found = TryGetLavaVisualBounds(out Bounds bounds);
+            float bottom = Mathf.Max(lavaSurfaceY, bounds.min.y);
+            float height = Mathf.Max(0f, bounds.max.y - bottom);
+            lavaMask.enabled = found && height > .0001f;
+            if (!lavaMask.enabled) return;
+
+            // 고정된 수면 아래로 내려간 부분만 가립니다. Visual이 0.1 내려가면 가림 높이도 0.1 증가합니다.
+            lavaMask.transform.position = new Vector3(bounds.center.x, bottom + height * .5f, bounds.center.z);
+            lavaMask.transform.rotation = Quaternion.identity;
+            Vector3 parentScale = lavaMask.transform.parent.lossyScale;
+            Vector2 spriteSize = lavaMask.sprite.bounds.size;
+            lavaMask.transform.localScale = new Vector3(
+                (bounds.size.x + .02f) / Mathf.Max(.0001f, Mathf.Abs(parentScale.x) * spriteSize.x),
+                height / Mathf.Max(.0001f, Mathf.Abs(parentScale.y) * spriteSize.y), 1f);
+        }
+
+        private void RestoreLavaState()
+        {
+            if (lavaVisual != null)
+            {
+                lavaVisual.SetParent(lavaVisualParent, true);
+                lavaVisual.SetSiblingIndex(lavaVisualSibling);
+                lavaVisual.localPosition = lavaVisualPosition;
+            }
+            if (lavaRenderers != null && lavaMaskModes != null)
+                for (int i = 0; i < lavaRenderers.Length; i++) if (lavaRenderers[i] != null) lavaRenderers[i].maskInteraction = lavaMaskModes[i];
+            if (lavaAnimDrivers != null && lavaAnimEnabled != null)
+                for (int i = 0; i < lavaAnimDrivers.Length; i++) if (lavaAnimDrivers[i] != null) lavaAnimDrivers[i].enabled = lavaAnimEnabled[i];
+            if (lavaGroup != null) { if (Application.isPlaying) Destroy(lavaGroup); else DestroyImmediate(lavaGroup); }
+            if (lavaBody != null) { lavaBody.linearVelocity = Vector2.zero; lavaBody.angularVelocity = 0f; lavaBody.simulated = lavaPreviousSimulated; lavaBody.GetComponent<PlayerIceMovement2D>()?.ResetMotion(); }
+            lavaController?.SetControl(lavaPreviousControl, true);
+            lavaBody = null; lavaController = null; lavaVisual = null; lavaGroup = null; lavaMask = null;
+            lavaRenderers = null; lavaMaskModes = null; lavaAnimDrivers = null; lavaAnimEnabled = null;
         }
 
         private void GetDetectionBounds(out Vector2 min, out Vector2 max)

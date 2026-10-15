@@ -1,0 +1,45 @@
+{
+  "modified": [
+    "Assets/Resources/Data/db.json",
+    "Assets/Resources/Maps/DUNGEON_001/map_002.json",
+    "Assets/Scripts/GamePlay/Map/JsonBlockBuilder2D.cs",
+    "Assets/Scripts/GamePlay/Traps/ThemeTrapDamage2D.cs",
+    "Assets/Scripts/GamePlay/Traps/TrapDamageEvent.cs"
+  ],
+  "added": [
+    "Assets/Resources/Prefabs/102-016.prefab",
+    "Assets/Resources/Prefabs/102-016.prefab.meta",
+    "Assets/Resources/Prefabs/102-017.prefab",
+    "Assets/Resources/Prefabs/102-017.prefab.meta",
+    "Assets/Resources/Prefabs/102-018.prefab",
+    "Assets/Resources/Prefabs/102-018.prefab.meta",
+    "Assets/Resources/Prefabs/102-019.prefab",
+    "Assets/Resources/Prefabs/102-019.prefab.meta",
+    "Assets/Resources/Prefabs/Theme_IceCrystalObstacle_Temp.prefab",
+    "Assets/Resources/Prefabs/Theme_IceCrystalObstacle_Temp.prefab.meta"
+  ],
+  "removed": [
+    "Assets/Resources/Prefabs/ThemeTraps.meta",
+    "Assets/Resources/Prefabs/ThemeTraps/102-016.prefab",
+    "Assets/Resources/Prefabs/ThemeTraps/102-016.prefab.meta",
+    "Assets/Resources/Prefabs/ThemeTraps/102-017.prefab",
+    "Assets/Resources/Prefabs/ThemeTraps/102-017.prefab.meta",
+    "Assets/Resources/Prefabs/ThemeTraps/102-018.prefab",
+    "Assets/Resources/Prefabs/ThemeTraps/102-018.prefab.meta",
+    "Assets/Resources/Prefabs/ThemeTraps/102-019.prefab",
+    "Assets/Resources/Prefabs/ThemeTraps/102-019.prefab.meta",
+    "Assets/Resources/Prefabs/ThemeTraps/Theme_IceCrystalObstacle_Temp.prefab",
+    "Assets/Resources/Prefabs/ThemeTraps/Theme_IceCrystalObstacle_Temp.prefab.meta"
+  ],
+  "map_counts": {
+    "001-001": 46,
+    "102-018": 14,
+    "102-016": 2,
+    "102-017": 1,
+    "101-001": 3,
+    "102-002": 1,
+    "001-002": 1,
+    "102-019": 1,
+    "102-010": 1
+  }
+}

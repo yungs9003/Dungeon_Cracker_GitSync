@@ -1,0 +1,10 @@
+{
+  "modified": [
+    "Assets/Resources/Prefabs/102-016.prefab",
+    "Assets/Resources/Prefabs/102-017.prefab",
+    "Assets/Scripts/GamePlay/Traps/CliffTrap2D.cs",
+    "Assets/Scripts/GamePlay/Traps/LavaEruptionTrap2D.cs"
+  ],
+  "added": [],
+  "deleted": []
+}

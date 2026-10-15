@@ -1,0 +1,33 @@
+PASS: ordinary pit retains default shrink style
+PASS: pool automatically derives full sink depth from player visual height
+PASS: sink keeps fall/control/physics lock
+PASS: quarter sink: hidden height equals actual downward distance
+PASS: quarter sink: clipping surface stays at original feet height
+PASS: half sink: hidden height equals actual downward distance
+PASS: half sink: clipping surface stays at original feet height
+PASS: remaining head descends with body without shrinking or floating in place
+PASS: halfway through sink about half the body remains above fixed surface
+PASS: rendered body below stationary surface is hidden while descending upper body remains visible
+PASS: one full body height of descent completely hides player independently of elapsed time
+PASS: sink damage remains 16 over four ticks
+PASS: sink completes and returns player to safe point
+PASS: sink restores parent, transform, scale and original mask state
+PASS: scaled player sink: hidden height equals actual downward distance
+PASS: scaled player sink: clipping surface stays at original feet height
+PASS: mask follows sideways entry offset
+PASS: disabling during sink restores scaled player's state
+PASS: warning has no horizontal wipe mask
+PASS: entire idle tile fades uniformly to half opacity
+PASS: rendered whole-tile luminance increases through warning
+PASS: eruption starts with fixed three-image pool
+PASS: first emitted image fills one cell with small seam overlap
+PASS: first image rises half a cell and next image fills behind it
+PASS: first image reaches second level while following image fills first level
+PASS: flow remains clipped to two cells
+PASS: 274 time samples cover two-cell column without a gap across repeated image recycling
+PASS: 14 rendered frames have zero empty column pixels including 0.5, 0.75 and 2.25 second wrap boundaries
+PASS: continuous flow reuses renderers without per-frame objects
+PASS: disable restores idle floor and stops flow
+PASS: reactivated eruption starts flow from floor again
+PASS: large variable frame steps preserve full coverage after recycled images move past window
+PASS: eruption damage remains 20 on original tile

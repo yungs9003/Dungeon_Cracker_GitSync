@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Dungeon.Core;
+using Dungeon.Traps;
 
 namespace Dungeon.Player
 {
@@ -19,6 +20,7 @@ namespace Dungeon.Player
         private SpeedController speed;
         private KnockbackReceiver2D knockback;
         private PlayerMoveDirectionTracker2D dirTracker;
+        private PlayerIceMovement2D iceMovement;
 
         private Vector2 moveInput;
 
@@ -32,6 +34,8 @@ namespace Dungeon.Player
             speed.SetBaseSpeed(moveSpeed);
             knockback = GetComponent<KnockbackReceiver2D>();
             dirTracker = GetComponent<PlayerMoveDirectionTracker2D>();
+            iceMovement = GetComponent<PlayerIceMovement2D>();
+            if (iceMovement == null) iceMovement = gameObject.AddComponent<PlayerIceMovement2D>();
         }
 
         private void Reset()
@@ -47,7 +51,11 @@ namespace Dungeon.Player
 
         private void FixedUpdate()
         {
-            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
+            if (PlayerEffectLock2D.IsProtectedTarget(this) || !rb.simulated || CliffTrap2D.IsPlayerFalling(rb))
+            {
+                iceMovement?.ResetMotion();
+                return;
+            }
             float dt = Time.fixedDeltaTime;
 
             Vector2 input = canControl ? moveInput : Vector2.zero;
@@ -58,8 +66,16 @@ namespace Dungeon.Player
             if (dirTracker != null && input.sqrMagnitude > 0.0001f)
                 dirTracker.SetMoveDir(input);
 
-            Vector2 moveDelta = input * speed.CurrentSpeed * dt;
             Vector2 kbDelta = knockback != null ? knockback.ConsumeDisplacement(dt) : Vector2.zero;
+            Vector2 moveVelocity;
+            if (!canControl)
+            {
+                iceMovement?.ResetMotion();
+                moveVelocity = Vector2.zero;
+            }
+            else moveVelocity = iceMovement != null
+                ? iceMovement.CalculateVelocity(input, speed.CurrentSpeed, dt, kbDelta) : input * speed.CurrentSpeed;
+            Vector2 moveDelta = moveVelocity * dt;
 
             rb.MovePosition(rb.position + moveDelta + kbDelta);
         }
@@ -67,6 +83,7 @@ namespace Dungeon.Player
         public void SetControl(bool enabled, bool stopImmediately = false)
         {
             canControl = enabled;
+            if (!enabled || stopImmediately) iceMovement?.ResetMotion();
 
             if (stopImmediately)
             {
@@ -76,6 +93,8 @@ namespace Dungeon.Player
                     rb.linearVelocity = Vector2.zero;
             }
         }
+
+        private void OnDisable() => iceMovement?.ResetMotion();
 
         // PlayerInput - Send Messages 대응
         public void OnMove(InputValue value)

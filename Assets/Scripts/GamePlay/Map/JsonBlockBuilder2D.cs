@@ -533,6 +533,9 @@ namespace Dungeon.Map
 
             // 벽형 이동 함정은 끝부분이 항상 보이며 기존 바닥 함정 Sprite 교체를 사용하지 않습니다.
             if (actualCode == "101-014" || actualCode == "101-015") return false;
+            // 테마 함정은 자체 바닥 Sprite/예고 마스크를 사용합니다.
+            if (actualCode == "102-016" || actualCode == "102-017" ||
+                actualCode == "102-018" || actualCode == "102-019") return false;
 
             if (trapRevealExcludedCodes != null)
             {

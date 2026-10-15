@@ -118,6 +118,7 @@ namespace Dungeon.Player
 
         private IEnumerator CoTeleport(Vector2 worldPos, bool reviveFull)
         {
+            GetComponent<PlayerIceMovement2D>()?.ResetMotion();
             if (resetVelocity && rb != null)
             {
                 rb.linearVelocity = Vector2.zero;

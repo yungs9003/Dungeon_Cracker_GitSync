@@ -2,11 +2,11 @@
   "save_version": 2,
   "user_name": "Toluse",
   "gold": 36550,
-  "broken_traps": 0,
+  "broken_traps": 8,
   "clear_reward_claimed": false,
   "last_getting_gold": 0,
-  "clear_time_seconds": 2302.31543,
-  "hit_count": 171,
+  "clear_time_seconds": 3120.96167,
+  "hit_count": 194,
   "main_stats": {
     "max_HP": 150,
     "physical_resist": 20,
@@ -174,10 +174,10 @@
     ]
   },
   "checkpoint": {
-    "sceneName": "",
-    "mapIndex": -1,
-    "resumeRequested": false,
-    "broken_traps_snapshot": 0
+    "sceneName": "DUNGEON_001",
+    "mapIndex": 1,
+    "resumeRequested": true,
+    "broken_traps_snapshot": 8
   },
   "dungeon_status": [],
   "play_time": "135:26",

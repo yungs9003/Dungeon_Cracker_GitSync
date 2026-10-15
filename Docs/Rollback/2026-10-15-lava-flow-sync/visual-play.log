@@ -1,0 +1,937 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.2/staging' branch; Version is '6000.2.14f1 (589824c1fc31) revision 5806116'; Using compiler version '194234433'; Build Type 'Release'
+[Licensing::IpcConnector] Channel LicenseClient-yoong doesn't exist
+OS: 'Windows 11  (10.0.26200) 64bit Professional' Language: 'ko' Physical Memory: 32561 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+Date: 2026-10-15T13:43:07Z
+[Licensing::Module] Successfully launched the LicensingClient (PId: 15912)
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Unity.exe
+-batchmode
+-projectPath
+C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\ThemeMap002\Unity
+-executeMethod
+LavaFlowValidation.Run
+-logFile
+C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Docs\Rollback\2026-10-15-lava-flow-sync\visual-play.log
+Successfully changed project path to: C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\ThemeMap002\Unity
+C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/ThemeMap002/Unity
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [32220]  Target information:
+
+Player connection [32220]  * "[IP] 172.30.1.62 [Port] 55505 [Flags] 2 [Guid] 3520202720 [EditorId] 3520202720 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-ARTM24P) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [32220] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [32220] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-34840" after 0.2 seconds.
+Library Redirect Path: Library/
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-yoong" at "2026-10-15T13:43:07.6267611Z"
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 6000.2.14f1 (589824c1fc31)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/ThemeMap002/Unity/Assets
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3080 (ID=0x220a)
+    Vendor:   NVIDIA
+    VRAM:     12091 MB
+    Driver:   32.0.16.1088
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56840
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002435 seconds.
+- Loaded All Assemblies, in  0.277 seconds
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.219 seconds
+Domain Reload Profiling: 494ms
+	BeginReloadAssembly (97ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (0ms)
+	RebuildCommonClasses (26ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (35ms)
+	LoadAllAssembliesAndSetupDomain (109ms)
+		LoadAssemblies (94ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (107ms)
+			TypeCache.Refresh (105ms)
+				TypeCache.ScanAssembly (96ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (219ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (195ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (38ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (40ms)
+			ProcessInitializeOnLoadAttributes (79ms)
+			ProcessInitializeOnLoadMethodAttributes (36ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Module] Licensing is not yet initialized.
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.4+4293ba1
+  Session Id:              c88395fd905749cba5957e0a2c2a3a54
+  Correlation Id:          ab9d2e68443e72809bdfacdff6d282af
+  External correlation Id: 7994953637395974652
+  Machine Id:              IdReJ6kqVrZ1tLe+2FyeCUUEg9Y=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-yoong" (connect: 0.37s, validation: 0.03s, handshake: 0.87s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-yoong-notifications" at "2026-10-15T13:43:08.5221484Z"
+[Licensing::Module] Connected to LicensingClient (PId: 15912, launch time: 0.00, total connection time: 1.27s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 14569192904864-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.01
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 1.29s
+[Licensing::Module] Licensing is initialized (took 0.13s).
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+Package Manager log level set to [2]
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 34 packages:
+  Built-in packages:
+    com.unity.modules.accessibility@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.accessibility)
+    com.unity.modules.ai@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics2d)
+    com.unity.modules.screencapture@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vehicles@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.video)
+    com.unity.modules.vr@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.vr)
+    com.unity.modules.wind@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.hierarchycore)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.01 seconds
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+Starting: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/ThemeMap002/Unity
+DisplayProgressbar: Compiling Scripts
+Starting: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Tools\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/ThemeMap002/Unity
+ExitCode: 4 Duration: 1s141ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aE-inputdata.json
+[159/171    1s] Csc Library/Bee/artifacts/1900b0aE.dag/Dungeon.GamePlay.dll (+2 others)
+Assets\Scripts\GamePlay\Player\ForwardZoneCollector.cs(105,25): warning CS0618: 'Physics2D.OverlapCircleNonAlloc(Vector2, float, Collider2D[], int)' is obsolete: 'OverlapCircleNonAlloc has been deprecated. Please use OverlapCircle.'
+
+Assets\Scripts\GamePlay\Traps\RollingBallTrap.cs(101,26): warning CS0618: 'Object.FindObjectsOfType<T>()' is obsolete: 'Object.FindObjectsOfType has been deprecated. Use Object.FindObjectsByType instead which lets you decide whether you need the results sorted or not.  FindObjectsOfType sorts the results by InstanceID but if you do not need this using FindObjectSortMode.None is considerably faster.'
+
+Assets\Scripts\GamePlay\Map\ForwardZoneVisionMask2D.cs(46,39): warning CS0414: The field 'ForwardZoneVisionMask2D.coverOnlyExistingGridCells' is assigned but its value is never used
+
+Assets\Scripts\GamePlay\Player\PlayerAnimationDriver.cs(15,36): warning CS0414: The field 'PlayerAnimationDriver.runThreshold' is assigned but its value is never used
+*** Tundra requires additional run (1.11 seconds), 1 items updated, 158 evaluated
+ExitCode: 0 Duration: 0s176ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/ThemeMap002/Unity
+ExitCode: 0 Duration: 0s573ms
+Finished compiling graph: 174 nodes, 1043 flattened edges (1003 ToBuild, 10 ToUse), maximum node priority 39
+[154/171    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.rsp
+[155/171    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.rsp
+[160/171    0s] CopyFiles Library/ScriptAssemblies/Dungeon.GamePlay.pdb
+[161/171    0s] CopyFiles Library/ScriptAssemblies/Dungeon.GamePlay.dll
+[162/171    0s] Csc Library/Bee/artifacts/1900b0aE.dag/Dungeon.System.dll (+2 others)
+[163/171    0s] CopyFiles Library/ScriptAssemblies/Dungeon.System.pdb
+[164/171    0s] CopyFiles Library/ScriptAssemblies/Dungeon.System.dll
+[165/171    0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll (+2 others)
+[166/171    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb
+[167/171    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll
+[168/171    0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
+[169/171    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+[170/171    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+*** Tundra build success (0.55 seconds), 13 items updated, 171 evaluated
+AssetDatabase: script compilation time: 2.174448s
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.690 seconds
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.279 seconds
+Domain Reload Profiling: 966ms
+	BeginReloadAssembly (301ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (62ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (131ms)
+	RebuildCommonClasses (25ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (333ms)
+		LoadAssemblies (388ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (23ms)
+			TypeCache.Refresh (19ms)
+				TypeCache.ScanAssembly (14ms)
+			BuildScriptInfoCaches (1ms)
+			ResolveRequiredComponents (2ms)
+	FinalizeReload (280ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (208ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (21ms)
+			SetLoadedEditorAssemblies (2ms)
+			BeforeProcessingInitializeOnLoad (66ms)
+			ProcessInitializeOnLoadAttributes (100ms)
+			ProcessInitializeOnLoadMethodAttributes (13ms)
+			AfterProcessingInitializeOnLoad (6ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Start importing Assets/Resources/Prefabs/102-016.prefab using Guid(582fbd965ad9bf342bd7a71320c0ed07) (PrefabImporter) -> (artifact id: 'db33934267a76732a04883ffacd4ad84') in 0.0118729 seconds
+Start importing Assets/Resources/Prefabs/102-017.prefab using Guid(d8bb80cd06cdb8249832e6366919a1d1) (PrefabImporter) -> (artifact id: 'c67e8db6b17e7360ffa4f5fec57800fb') in 0.005793 seconds
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=d1ed451eccea1ae47b3bcb4035a088a2): Total: 3.323 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=2 (actual=2, local cache=0, cache server=0)
+		Asset DB Process Time: managed=2 ms, native=392 ms
+		Asset DB Callback time: managed=36 ms, native=17 ms
+		Scripting: domain reloads=1, domain reload time=689 ms, compile time=2176 ms, other=7 ms
+		Project Asset Count: scripts=125, non-scripts=227
+		Asset File Changes: new=2, changed=6, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 15.269ms
+	ApplyChangesToAssetFolders: 0.272ms
+	Scan: 38.593ms
+	OnSourceAssetsModified: 0.648ms
+	CategorizeAssetsWithTransientArtifact: 1.478ms
+	ProcessAssetsWithTransientArtifactChanges: 5.004ms
+	CategorizeAssets: 1.631ms
+	ImportOutOfDateAssets: 300.086ms (-1895.803ms without children)
+		ImportManagerImport: 19.334ms (1.236ms without children)
+			ImportInProcess: 18.075ms
+			UpdateCategorizedAssets: 0.022ms
+		CompileScripts: 2176.284ms
+		ReloadNativeAssets: 0.000ms
+		UnloadImportedAssets: 0.067ms
+		ReloadImportedAssets: 0.000ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.036ms
+		InitializingProgressBar: 0.006ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 0.162ms
+	PostProcessAllAssets: 38.492ms
+	Hotreload: 0.783ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.001ms
+	UnloadStreamsBegin: 0.150ms
+	PersistCurrentRevisions: 0.045ms
+	UnloadStreamsEnd: 0.001ms
+	GenerateScriptTypeHashes: 0.367ms
+	Untracked: 2920.339ms
+
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+Scanning for USB devices : 1.791ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Unity
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 114 unused Assets / (1.0 MB). Loaded Objects now: 733.
+Memory consumption went from 87.3 MB to 86.3 MB.
+Total: 3.232400 ms (FindLiveObjects: 0.035700 ms CreateObjectMapping: 0.010000 ms MarkObjects: 2.872600 ms  DeleteObjects: 0.313400 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 0 unused Assets / (38.0 KB). Loaded Objects now: 739.
+Memory consumption went from 85.5 MB to 85.5 MB.
+Total: 2.856900 ms (FindLiveObjects: 0.030700 ms CreateObjectMapping: 0.008000 ms MarkObjects: 2.815600 ms  DeleteObjects: 0.002100 ms)
+
+[Project] Loading completed in 5.090 seconds
+	Project init time: 				4.877 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		0.210 seconds
+		Asset Database init time: 		0.170 seconds
+		Global illumination init time: 	0.005 seconds
+		Assemblies load time: 			0.512 seconds
+		Unity extensions init time: 	0.001 seconds
+		Asset Database refresh time: 	3.323 seconds
+	Scene opening time: 			0.084 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1792071792241,"processId":34840,"projectLoad":5.0899063,"projectInit":4.8773684,"templateInit":0.0,"packageManagerInit":0.2101017,"assetDatabaseInit":0.1703876,"globalIlluminationInit":0.0053168,"assembliesLoad":0.5121597,"unityExtensionsInit":0.0006034,"assetDatabaseRefresh":3.3229392,"sceneOpening":0.0843097}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1792071792241,"processId":34840,"editorVersion":"6000.2.14f1 (589824c1fc31)","branch":"6000.2/staging","buildType":"Release","platform":"Windows"}
+Reloading assemblies for play mode.
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.228 seconds
+Refreshing native plugins compatible for Editor in 0.00 ms, found 0 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.333 seconds
+Domain Reload Profiling: 558ms
+	BeginReloadAssembly (151ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (34ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (22ms)
+	RebuildCommonClasses (23ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (23ms)
+		LoadAssemblies (82ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (18ms)
+			TypeCache.Refresh (3ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (11ms)
+			ResolveRequiredComponents (2ms)
+	FinalizeReload (333ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (214ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (21ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (65ms)
+			ProcessInitializeOnLoadAttributes (101ms)
+			ProcessInitializeOnLoadMethodAttributes (18ms)
+			AfterProcessingInitializeOnLoad (6ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (19ms)
+Asset Pipeline Refresh (id=aae4e19e18ae14342b0d7502602fead3): Total: 0.599 seconds - Initiated by StopAssetImportingV2(ForceSynchronousImport | ForceDomainReload)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=352 ms
+		Asset DB Callback time: managed=9 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=235 ms, compile time=1 ms, other=0 ms
+		Project Asset Count: scripts=125, non-scripts=227
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 1.816ms
+	ApplyChangesToAssetFolders: 0.144ms
+	Scan: 0.000ms
+	OnSourceAssetsModified: 0.001ms
+	CategorizeAssetsWithTransientArtifact: 0.002ms
+	ProcessAssetsWithTransientArtifactChanges: 0.043ms
+	CategorizeAssets: 1.269ms
+	ImportOutOfDateAssets: 333.753ms (332.317ms without children)
+		CompileScripts: 1.262ms
+		CollectScriptTypesHashes: 0.001ms
+		ReloadNativeAssets: 0.000ms
+		UnloadImportedAssets: 0.032ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.034ms
+		InitializingProgressBar: 0.000ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 0.105ms
+	PostProcessAllAssets: 9.259ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.017ms
+	UnloadStreamsBegin: 0.031ms
+	PersistCurrentRevisions: 0.009ms
+	UnloadStreamsEnd: 0.001ms
+	GenerateScriptTypeHashes: 0.211ms
+	Untracked: 252.318ms
+
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            0.255 ms
+	Integration:            9.247 ms
+	Integration of assets:  0.001 ms
+	Thread Wait Time:       0.056 ms
+	Total Operation Time:   9.560 ms
+Asset Pipeline Refresh (id=7b60b8116a9fc2942ab8182d1368a2ca): Total: 0.006 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+LAVA CHECK: ordinary pit retains default shrink style
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:40)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: pool automatically derives full sink depth from player visual height
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:48)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+Created GICache directory at C:/Users/yoong/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.011s, timestamps: [5.748 - 5.759]
+LAVA CHECK: sink keeps fall/control/physics lock
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:50)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: quarter sink: hidden height equals actual downward distance
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks:CheckSinkDistance (UnityEngine.Transform,UnityEngine.SpriteRenderer,UnityEngine.SpriteMask,UnityEngine.Vector3,UnityEngine.Bounds,string) (at Assets/Tests/LavaFlowPlayChecks.cs:164)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:52)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: quarter sink: clipping surface stays at original feet height
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks:CheckSinkDistance (UnityEngine.Transform,UnityEngine.SpriteRenderer,UnityEngine.SpriteMask,UnityEngine.Vector3,UnityEngine.Bounds,string) (at Assets/Tests/LavaFlowPlayChecks.cs:165)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:52)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: half sink: hidden height equals actual downward distance
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks:CheckSinkDistance (UnityEngine.Transform,UnityEngine.SpriteRenderer,UnityEngine.SpriteMask,UnityEngine.Vector3,UnityEngine.Bounds,string) (at Assets/Tests/LavaFlowPlayChecks.cs:164)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:59)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: half sink: clipping surface stays at original feet height
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks:CheckSinkDistance (UnityEngine.Transform,UnityEngine.SpriteRenderer,UnityEngine.SpriteMask,UnityEngine.Vector3,UnityEngine.Bounds,string) (at Assets/Tests/LavaFlowPlayChecks.cs:165)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:59)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: remaining head descends with body without shrinking or floating in place
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:60)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: halfway through sink about half the body remains above fixed surface
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:61)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+HALF MASK PIXELS: bottom=0 top=5647
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:66)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 66)
+
+LAVA CHECK: rendered body below stationary surface is hidden while descending upper body remains visible
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:67)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: one full body height of descent completely hides player independently of elapsed time
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:71)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: sink damage remains 16 over four ticks
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:75)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: sink completes and returns player to safe point
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:76)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: sink restores parent, transform, scale and original mask state
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:78)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: scaled player sink: hidden height equals actual downward distance
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks:CheckSinkDistance (UnityEngine.Transform,UnityEngine.SpriteRenderer,UnityEngine.SpriteMask,UnityEngine.Vector3,UnityEngine.Bounds,string) (at Assets/Tests/LavaFlowPlayChecks.cs:164)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:89)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: scaled player sink: clipping surface stays at original feet height
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks:CheckSinkDistance (UnityEngine.Transform,UnityEngine.SpriteRenderer,UnityEngine.SpriteMask,UnityEngine.Vector3,UnityEngine.Bounds,string) (at Assets/Tests/LavaFlowPlayChecks.cs:165)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:89)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: mask follows sideways entry offset
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:90)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: disabling during sink restores scaled player's state
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:93)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: warning has no horizontal wipe mask
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:103)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: entire idle tile fades uniformly to half opacity
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:108)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: rendered whole-tile luminance increases through warning
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:110)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: eruption starts with fixed three-image pool
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:113)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: first emitted image fills one cell with small seam overlap
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:114)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: first image rises half a cell and next image fills behind it
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:118)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: first image reaches second level while following image fills first level
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:121)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: flow remains clipped to two cells
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:124)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: 274 time samples cover two-cell column without a gap across repeated image recycling
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:142)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: 14 rendered frames have zero empty column pixels including 0.5, 0.75 and 2.25 second wrap boundaries
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:143)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: continuous flow reuses renderers without per-frame objects
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:145)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: disable restores idle floor and stops flow
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:147)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: reactivated eruption starts flow from floor again
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:149)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: large variable frame steps preserve full coverage after recycled images move past window
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:151)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA CHECK: eruption damage remains 20 on original tile
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks:Check (bool,string) (at Assets/Tests/LavaFlowPlayChecks.cs:233)
+LavaFlowPlayChecks/<Tests>d__3:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:154)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 233)
+
+LAVA FLOW SYNC: ALL CHECKS PASSED (33 assertions)
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+LavaFlowPlayChecks/<Start>d__2:MoveNext () (at Assets/Tests/LavaFlowPlayChecks.cs:35)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/LavaFlowPlayChecks.cs Line: 35)
+
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-yoong-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-yoong channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server process was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1792071796888,"processId":34840,"allocatedMemory":10439565,"memoryLabels":[{"Default":28593},{"Permanent":15468},{"NewDelete":66049},{"Thread":4230344},{"Manager":29562},{"VertexData":296},{"Geometry":816},{"VFX":-104},{"Texture":296},{"Shader":78823},{"Material":24},{"GfxDevice":55441},{"Animation":392},{"Audio":4040},{"FontEngine":256},{"Physics":2050},{"Serialization":624},{"Input":14824},{"JobScheduler":33024},{"TextLib":160},{"Mono":32},{"ScriptingNativeRuntime":155060},{"BaseObject":1620240},{"Resource":1304},{"Renderer":2928},{"Transform":4685},{"File":1016},{"WebCam":616},{"Culling":32},{"Terrain":11394},{"Wind":24},{"STL":40},{"String":15118},{"DynamicArray":91901},{"HashMap":74065},{"Utility":2661046},{"Curl":48},{"PoolAlloc":1960},{"AI":40},{"TypeTree":5005},{"ScriptManager":512},{"RuntimeInitializeOnLoadManager":64},{"SpriteAtlas":112},{"GI":7824},{"Director":8240},{"CloudService":8496},{"WebRequest":808},{"VR":46114},{"SceneManager":496},{"Video":208},{"LazyScriptCache":32},{"Camera":17},{"Secure":2113},{"SerializationCache":1576},{"APIUpdating":10320},{"Subsystems":336},{"VirtualTexturing":57888},{"StaticSafetyDebugInfo":278528},{"Analytics":384},{"Hierarchy":272},{"CoreStats":12424},{"Identifiers":12384},{"Gui":80},{"EditorUtility":95482},{"VersionControl":4},{"Undo":947},{"AssetDatabase":645404},{"EditorGi":328},{"UnityConnect":24552},{"Upm":1896},{"DrivenProperties":72},{"LocalIPC":211},{"ProfilerEditor":9746},{"CoreBusinessMetrics":2867},{"Licensing":1232},{"AssetReference":32},{"IPCStream":32}]}

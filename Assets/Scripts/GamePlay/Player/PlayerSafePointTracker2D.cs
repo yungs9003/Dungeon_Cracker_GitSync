@@ -1,5 +1,6 @@
 using UnityEngine;
 using Dungeon.Core;
+using Dungeon.Traps;
 
 namespace Dungeon.Player
 {
@@ -29,7 +30,7 @@ namespace Dungeon.Player
 
         private void FixedUpdate()
         {
-            if (PlayerEffectLock2D.IsProtectedTarget(this)) return;
+            if (PlayerEffectLock2D.IsProtectedTarget(this) || CliffTrap2D.IsPlayerFalling(GetComponent<Rigidbody2D>())) return;
             if (respawn == null || cellSize <= 0f) return;
 
             Vector2Int cell = WorldToCell(transform.position);

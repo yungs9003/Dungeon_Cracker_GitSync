@@ -55,12 +55,32 @@ namespace Dungeon.Traps
             }
 
             if (definition.damage.HasValue && definition.damage.Value > 0)
-                target.TakeDamage(definition.damage.Value, ParseDamageType(definition.damage_type));
+                ApplyTypedDamage(target, definition.damage.Value, definition.damage_type);
 
             if (definition.knockback_distance.HasValue && definition.knockback_distance.Value > 0f)
                 ApplyReverseMovementKnockback(target, definition.knockback_distance.Value);
 
             return true;
+        }
+
+        /// <summary>단발 및 용암 분할 피해가 같은 DB 피해 타입 규칙을 사용합니다.</summary>
+        public static void ApplyTypedDamage(Health target, int amount, string rawType)
+        {
+            if (target == null || amount <= 0 || PlayerEffectLock2D.IsProtectedTarget(target)) return;
+            string type = rawType?.Trim().ToLowerInvariant();
+            bool isBurn = type == "burn" || type == "화상";
+            bool isIce = type == "ice" || type == "냉기";
+            if (!isBurn && !isIce)
+            {
+                target.TakeDamage(amount, ParseDamageType(rawType));
+                return;
+            }
+
+            // 기존 필드의 화상/냉기 피해 및 장비 처리 경로를 재사용합니다.
+            var receiver = target.GetComponentInParent(typeof(IFieldEffectDamageReceiver)) as IFieldEffectDamageReceiver;
+            if (receiver == null) target.ApplyDamageDirect(amount);
+            else if (isBurn) receiver.ApplyBurnFieldDamage(amount);
+            else receiver.ApplyIceFieldDamage(amount);
         }
 
         public static string ResolveTrapCode(GameObject source)

@@ -91,6 +91,7 @@ namespace Dungeon.Player
                 string code = TrapDamageEvent.ResolveTrapCode(col.gameObject);
                 if (col.GetComponentInParent<WallForceTrap2D>() == null &&
                     (code.StartsWith("10", global::System.StringComparison.Ordinal) ||
+                     col.GetComponentInParent<IceCrystalObstacle2D>() != null ||
                      col.GetComponentInParent<RollingBallTrap2D>() != null)) continue;
                 allowed = Mathf.Min(allowed, Mathf.Max(0f, castResults[i].distance - WallSkin));
             }

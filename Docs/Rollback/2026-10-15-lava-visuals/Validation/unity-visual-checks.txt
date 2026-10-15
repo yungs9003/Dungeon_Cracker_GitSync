@@ -1,0 +1,24 @@
+PASS: ordinary pit retains default shrink style
+PASS: pool uses small additional visual drop
+PASS: sink keeps fall/control/physics lock
+PASS: half progress clips exactly lower half of actual player bounds
+PASS: visual stays near starting tile without shrinking
+PASS: rendered lower half has zero player pixels while upper half remains visible
+PASS: full progress completely hides player
+PASS: sink damage remains 16 over four ticks
+PASS: sink completes and returns player to safe point
+PASS: sink restores parent, transform, scale and original mask state
+PASS: mask follows player size and sideways entry offset
+PASS: disabling during sink restores scaled player's state
+PASS: warning has no horizontal wipe mask
+PASS: entire idle tile fades uniformly to half opacity
+PASS: rendered whole-tile luminance increases through warning
+PASS: eruption starts with fixed three-image pool
+PASS: first emitted image is one cell high at tile floor
+PASS: first image rises half a cell and next image fills behind it
+PASS: first image reaches second level while following image fills first level
+PASS: flow remains clipped to two cells
+PASS: continuous flow reuses renderers without per-frame objects
+PASS: disable restores idle floor and stops flow
+PASS: reactivated eruption starts flow from floor again
+PASS: eruption damage remains 20 on original tile
