@@ -1,0 +1,15 @@
+{
+  "modified": [
+    "Assets/Scenes/WorldMap.unity",
+    "Assets/Sprites/UI/WorldMap/a52b2a42-eb89-404f-b3b8-ae165dae228b (1).png.meta"
+  ],
+  "added": [
+    "Assets/Editor/WorldMapViewBuilder.cs",
+    "Assets/Editor/WorldMapViewBuilder.cs.meta",
+    "Assets/Scripts/App/UI/WorldMapFocusTargetUI.cs",
+    "Assets/Scripts/App/UI/WorldMapFocusTargetUI.cs.meta",
+    "Assets/Scripts/App/UI/WorldMapPanZoomUI.cs",
+    "Assets/Scripts/App/UI/WorldMapPanZoomUI.cs.meta"
+  ],
+  "deleted": []
+}

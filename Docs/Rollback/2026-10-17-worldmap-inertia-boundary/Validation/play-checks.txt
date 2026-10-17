@@ -1,0 +1,23 @@
+PASS: manual original-size button removed
+PASS: viewport background outside actual map cannot capture drag input
+PASS: original 3172x1984 map remains native-size
+PASS: pointer drag still follows actual pixel delta
+PASS: map keeps moving gently after release
+PASS: inertia progressively slows down
+PASS: new pointer press immediately stops inertia
+PASS: holding still before release does not reuse stale drag velocity
+PASS: extreme drag clamps exactly to image edges without outside background
+PASS: inertia stops at edges without bounce or overshoot
+PASS: marker click starts smooth focus before opening popup
+PASS: popup appears after selected point reaches center at 1.6x
+PASS: focus never exposes background outside map
+PASS: closing actual popup controller starts automatic return
+PASS: closing already hidden popup does not restart return
+PASS: popup exit returns to original scale and exploration position
+PASS: automatic popup return also completes with timeScale zero
+PASS: starting focus clears remaining inertia
+PASS: dragging during focus cancels pending popup callback
+PASS: edge point focus respects image boundary instead of showing outside space
+PASS: map smaller than viewport stays centered and cannot drag from outside image
+PASS: disabling view stops inertia
+PASS: UI-only validation does not access player save service

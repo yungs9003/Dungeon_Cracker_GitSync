@@ -105,8 +105,23 @@ namespace Dungeon.UI.Guild
 
         public void RefreshProgress()
         {
-            if (selectedDungeon == null || progress == null) return;
+            if (progress == null) return;
+            foreach (var view in cases) view.SetCompleted(IsDungeonCompleted(catalog.FindDungeon(view.DungeonId)));
+            if (selectedDungeon == null) return;
             foreach (var row in rows) row.SetState(progress.GetState(selectedDungeon.id, row.AchievementId));
+        }
+
+        private bool IsDungeonCompleted(GuildDungeonDefinition definition)
+        {
+            if (definition == null || definition.achievements == null) return false;
+            bool hasAchievement = false;
+            foreach (var achievement in definition.achievements)
+            {
+                if (achievement == null) continue;
+                hasAchievement = true;
+                if (progress.GetState(definition.id, achievement.id) != GuildAchievementState.Certified) return false;
+            }
+            return hasAchievement;
         }
 
         public void TryVerify(GuildAchievementRowUI row)

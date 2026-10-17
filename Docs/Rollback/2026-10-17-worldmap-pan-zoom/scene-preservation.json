@@ -1,0 +1,33 @@
+{
+  "changed_existing_yaml_blocks": [
+    "1197601838",
+    "1197601839",
+    "1197601840",
+    "38854337",
+    "525278415",
+    "525278417",
+    "695753890"
+  ],
+  "added_yaml_blocks": [
+    "1009327722",
+    "1009327723",
+    "1009327724",
+    "1009327725",
+    "1407039232",
+    "1407039233",
+    "1407039234",
+    "1407039235",
+    "1407039236",
+    "1407039237",
+    "1477838797",
+    "1477838798",
+    "1477838799",
+    "1477838800",
+    "1477838801",
+    "525278421",
+    "932446596"
+  ],
+  "deleted_yaml_blocks": [],
+  "protected_save_component": "1182390667",
+  "excluded_unrelated_editor_cache": "StatusSaveFile serializedDataJson default added by Unity OnBeforeSerialize"
+}

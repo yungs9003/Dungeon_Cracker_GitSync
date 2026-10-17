@@ -93,8 +93,19 @@ public static class GuildSceneBuilder
         number.alignment = TextAlignmentOptions.MidlineLeft;
         var view = root.AddComponent<GuildDungeonCaseUI>();
         view.ConfigureArtwork(image, number, Sprite("CaseNormal"), Sprite("CaseSelected"));
+        ConfigureCompletionStamp(view);
         var saved = PrefabUtility.SaveAsPrefabAsset(root, CasePath); Object.DestroyImmediate(root);
         return saved.GetComponent<GuildDungeonCaseUI>();
+    }
+
+    private static void ConfigureCompletionStamp(GuildDungeonCaseUI view)
+    {
+        var stamp = Image("CompletionStamp", view.transform, Sprite("DungeonCompleted"), 0, 3, 207, 207);
+        stamp.color = new Color(1f, 1f, 1f, .7f);
+        stamp.preserveAspect = true;
+        // 배경 위, No. 글자 아래에 그립니다. 장식은 클릭/드래그 입력을 가로채지 않습니다.
+        stamp.transform.SetAsFirstSibling();
+        view.ConfigureCompletionStamp(stamp.gameObject);
     }
 
     private static GuildAchievementRowUI BuildRowPrefab()

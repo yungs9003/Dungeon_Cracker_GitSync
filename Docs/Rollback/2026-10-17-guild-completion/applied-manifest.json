@@ -1,0 +1,14 @@
+{
+  "modified": [
+    "Assets/Editor/GuildSceneBuilder.cs",
+    "Assets/Prefabs/UI/Guild/GuildDungeonCase.prefab",
+    "Assets/Prefabs/UI/Guild/GuildPage.prefab",
+    "Assets/Scripts/App/UI/Guild/GuildDungeonCaseUI.cs",
+    "Assets/Scripts/App/UI/Guild/GuildPageUI.cs"
+  ],
+  "added": [
+    "Assets/Sprites/UI/Guild/DungeonCompleted.png",
+    "Assets/Sprites/UI/Guild/DungeonCompleted.png.meta"
+  ],
+  "deleted": []
+}

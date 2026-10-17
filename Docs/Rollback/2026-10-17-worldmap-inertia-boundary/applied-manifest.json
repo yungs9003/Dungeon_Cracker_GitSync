@@ -1,0 +1,11 @@
+{
+  "modified": [
+    "Assets/Editor/WorldMapViewBuilder.cs",
+    "Assets/Scenes/WorldMap.unity",
+    "Assets/Scripts/App/UI/DungeonPopupPanelController.cs",
+    "Assets/Scripts/App/UI/WorldMapFocusTargetUI.cs",
+    "Assets/Scripts/App/UI/WorldMapPanZoomUI.cs"
+  ],
+  "added": [],
+  "deleted": []
+}

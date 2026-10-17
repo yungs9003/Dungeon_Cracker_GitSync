@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Dungeon.Core;
 using Dungeon.Manager;
+using UnityEngine.Events;
 
 namespace Dungeon.UI
 {
@@ -12,6 +13,9 @@ public class DungeonPopupPanelController : MonoBehaviour
 {
     [Header("Root")]
     [SerializeField] private GameObject panelRoot;
+    [Header("Events")]
+    [SerializeField] private UnityEvent onClosed = new();
+    public UnityEvent OnClosed => onClosed;
 
     [Header("Preview")]
     [SerializeField] private Image previewImage;
@@ -259,7 +263,9 @@ public class DungeonPopupPanelController : MonoBehaviour
 
     public void Close()
     {
+        bool wasOpen = panelRoot.activeSelf;
         panelRoot.SetActive(false);
+        if (wasOpen) onClosed.Invoke();
     }
 
     public void StartDungeon()

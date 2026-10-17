@@ -150,12 +150,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 525278416}
-  m_Father: {fileID: 695753890}
+  m_Father: {fileID: 1197601839}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1346, y: 716}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &38854338
 MonoBehaviour:
@@ -867,6 +867,7 @@ GameObject:
   - component: {fileID: 525278418}
   - component: {fileID: 525278417}
   - component: {fileID: 525278420}
+  - component: {fileID: 525278421}
   m_Layer: 5
   m_Name: Button1
   m_TagString: Untagged
@@ -937,13 +938,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 525278420}
-        m_TargetAssemblyTypeName: ButtonPopupLink, Assembly-CSharp
-        m_MethodName: OpenPopup
-        m_Mode: 1
+      - m_Target: {fileID: 525278421}
+        m_TargetAssemblyTypeName: Dungeon.UI.WorldMapFocusTargetUI, Dungeon.App
+        m_MethodName: Focus
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1001,6 +1002,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ButtonPopupLink
   popup: {fileID: 957750825}
   dungeonId: DUNGEON_001
+--- !u!114 &525278421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525278415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 146f81b3c3344b2a8c5a263f49ed179b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.WorldMapFocusTargetUI
+  mapView: {fileID: 1407039234}
+  focusZoom: 1.6
+  onFocused:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 525278420}
+        m_TargetAssemblyTypeName: Dungeon.UI.ButtonPopupLink, Dungeon.App
+        m_MethodName: OpenPopup
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &574059144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,8 +1517,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1197601839}
-  - {fileID: 38854337}
+  - {fileID: 1407039233}
   - {fileID: 957750824}
   - {fileID: 1018990852}
   m_Father: {fileID: 0}
@@ -1979,6 +2008,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edf7a34fd4f5e1d408f1d4fcf55b9b79, type: 3}
+--- !u!224 &932446596 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6607945043607457529, guid: edf7a34fd4f5e1d408f1d4fcf55b9b79, type: 3}
+  m_PrefabInstance: {fileID: 932446595}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &949246445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2132,6 +2166,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonPopupPanelController
   panelRoot: {fileID: 957750820}
+  onClosed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1407039234}
+        m_TargetAssemblyTypeName: Dungeon.UI.WorldMapPanZoomUI, Dungeon.App
+        m_MethodName: ReturnFromFocus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   previewImage: {fileID: 214194319}
   dungeonNameText: {fileID: 636853600}
   descriptionText: {fileID: 1115342633}
@@ -2696,7 +2745,7 @@ GameObject:
   - component: {fileID: 1197601841}
   - component: {fileID: 1197601840}
   m_Layer: 5
-  m_Name: BG
+  m_Name: MapContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2713,13 +2762,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 695753890}
+  m_Children:
+  - {fileID: 38854337}
+  m_Father: {fileID: 1407039233}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1042.667, y: 570.333}
+  m_SizeDelta: {x: 3172, y: 1984}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1197601840
 MonoBehaviour:
@@ -2741,7 +2791,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 049a2934dea3b184db4f31093850adb7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a13f29673b3ef97499823a972340d668, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3335,6 +3385,118 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1332529305}
+  m_CullTransparentMesh: 1
+--- !u!1 &1407039232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1407039233}
+  - component: {fileID: 1407039237}
+  - component: {fileID: 1407039236}
+  - component: {fileID: 1407039235}
+  - component: {fileID: 1407039234}
+  m_Layer: 5
+  m_Name: WorldMapViewport
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1407039233
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407039232}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1197601839}
+  m_Father: {fileID: 695753890}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 25.21096}
+  m_SizeDelta: {x: 0, y: -50.42192}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1407039234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407039232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2aa38ac2b4a4ed2a9c0f9c3f9a1df72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.WorldMapPanZoomUI
+  viewport: {fileID: 1407039233}
+  content: {fileID: 1197601839}
+  mapImage: {fileID: 1197601840}
+  bottomBar: {fileID: 932446596}
+  focusDuration: 0.5
+  maxZoom: 3
+  inertiaDamping: 8
+  maxInertiaSpeed: 1500
+--- !u!114 &1407039235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407039232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
+--- !u!114 &1407039236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407039232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.075, g: 0.38, b: 0.51, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1407039237
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407039232}
   m_CullTransparentMesh: 1
 --- !u!1 &1432463121
 GameObject:

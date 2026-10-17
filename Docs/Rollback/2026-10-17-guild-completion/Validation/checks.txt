@@ -1,0 +1,16 @@
+PASS: runtime initialization uses updated case prefab for every dungeon
+PASS: Certified plus Verifiable does not show all-complete stamp
+PASS: locked dungeon does not show completion stamp
+PASS: completion artwork draws above background and below No. text
+PASS: stamp position size and 70 percent opacity match provided SVG
+PASS: supplied artwork preserves aspect ratio and cannot block UI input
+PASS: failed verification does not display completion stamp
+PASS: last successful VERIFY immediately shows stamp when every row is Certified
+PASS: repeat verification does not claim reward again
+PASS: completion stamp remains visible when a different dungeon is selected
+PASS: refresh updates completed dungeons outside selected detail panel
+PASS: visible stamp leaves underlying case button clickable
+PASS: refresh removes stamp if any achievement is no longer Certified
+PASS: replacing progress provider refreshes completion state
+PASS: empty or null-only achievement lists are not treated as completed
+PASS: UI validation does not instantiate or access player save service

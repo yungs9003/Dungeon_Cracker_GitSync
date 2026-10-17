@@ -1,0 +1,20 @@
+PASS: imported texture retains original 3172x1984 pixels
+PASS: initial map uses one source pixel per screen pixel without fit-to-screen scaling
+PASS: point markers move with map inside clipped viewport
+PASS: map viewport ends above common navigation
+PASS: native pointer drag moves map by exact pixel distance
+PASS: marker stays attached to map while dragging
+PASS: releasing drag on marker cannot trigger focus or popup
+PASS: native marker click starts zoom before any popup callback
+PASS: focus smoothly moves selected point toward center while zooming
+PASS: popup callback remains deferred during transition
+PASS: selected point finishes exactly at viewport center at 1.6x zoom
+PASS: completion callback runs once after transition even with timeScale zero
+PASS: repeated click uses absolute zoom instead of multiplying it repeatedly
+PASS: new focus replaces earlier animation and only newest callback fires
+PASS: points near map edges can still be centered exactly
+PASS: manual drag cancels zoom and its pending popup
+PASS: original-size button restores native scale and starting center
+PASS: drag limits prevent moving entire map outside viewport
+PASS: disabling view cancels transition and pending callback
+PASS: UI validation does not create save service or modify player save
