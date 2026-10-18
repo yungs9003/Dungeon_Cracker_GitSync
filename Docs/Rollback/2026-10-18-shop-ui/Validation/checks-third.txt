@@ -1,0 +1,36 @@
+PASS: six items follow db.json item order in 3x2 grid
+PASS: all prices load from DB gold fields
+PASS: each item uses matching ItemsIcons code
+PASS: empty cart shows saved gold and disables checkout
+PASS: single click waits for double click window
+PASS: single click opens existing item information popup with DB name
+PASS: shared info popup resolves same item icon
+PASS: double clicks cancel popup and aggregate quantity with subtotal
+PASS: receipt groups each item into one code name quantity amount block
+PASS: affordable receipt enables blue checkout with correct total
+PASS: right click removes one unit and updates total
+PASS: quantity zero removes complete receipt block
+PASS: right click on absent item does not create negative quantity
+PASS: external saved-gold change disables insufficient checkout and turns it gray
+PASS: insufficient checkout is revalidated without save or cart loss
+PASS: exact gold amount enables payment
+PASS: checkout saves debit and inventory together once and clears receipt on success
+PASS: repeat payment on empty receipt cannot charge twice
+PASS: four rapid left clicks add two units without extra popup
+PASS: failed save rolls back gold inventory and retains cart for retry
+PASS: retry after save failure completes only one purchase
+PASS: clerk comment changes when clicked
+PASS: clerk comments cycle through all configured lines
+PASS: six item types scroll inside receipt without moving fixed total and payment
+PASS: owned gold sits on requested white rectangle below item grid
+PASS: purchase merges existing duplicate inventory stacks with raw IDs
+PASS: transaction emits one saved notification and preserves quick slot assignment
+PASS: empty zero and negative orders are rejected
+PASS: wrong category and unknown DB code are rejected
+PASS: excessive totals cannot overflow gold or modify savedata
+PASS: missing or negative DB price is not treated as a free product
+PASS: owned-count overflow aborts whole transaction
+PASS: save notification reentry cannot charge a second purchase
+PASS: normalized duplicate item keys purchase at DB prices
+PASS: actual isolated file backend persists gold and purchased items after reload
+PASS: purchase checks use isolated injected storage without loading user save service

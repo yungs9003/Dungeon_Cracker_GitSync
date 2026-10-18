@@ -364,7 +364,10 @@ namespace Dungeon.Core
                 return unknownFallbackIcon;
 
             if (category == CategoryItem)
-                return LoadResourceIcon(itemIconResourceRoot, id);
+            {
+                Sprite loaded = LoadResourceIcon(itemIconResourceRoot, id);
+                return loaded != null ? loaded : LoadResourceIcon("UI/ItemsIcons", id);
+            }
 
             if (category == CategoryEquip)
             {
@@ -598,6 +601,8 @@ namespace Dungeon.Core
         public string name;
         public string type;
         public string desc;
+        // 가격이 없는 기존 항목은 무료 판매로 처리하지 않습니다.
+        public int gold = -1;
 
         public string Key => GameDatabase.MakeKey(GameDatabase.CategoryItem, id);
     }

@@ -35,6 +35,7 @@ namespace Dungeon.Core
         private int saveSummaryRequestCount;
         private float lastSaveSummaryLogTime = -9999f;
         private IStatusSaveStorage storage;
+        private bool purchaseInProgress;
 
         public StatusSaveData Data => data;
 
@@ -360,6 +361,74 @@ namespace Dungeon.Core
 
             data.gold = Mathf.Max(0, data.gold + amount);
             Save();
+        }
+
+        /// <summary>DB 가격으로 재검증한 골드 차감과 소비 아이템 지급을 한 번에 저장합니다.</summary>
+        public bool TryPurchaseItems(GameDatabase database, IReadOnlyDictionary<string, int> quantities, out string error)
+        {
+            error = string.Empty;
+            if (purchaseInProgress) { error = "결제 중입니다."; return false; }
+            if (database == null || quantities == null || quantities.Count == 0)
+            { error = "구매할 아이템이 없습니다."; return false; }
+            EnsureNotNull();
+            var normalized = new Dictionary<string, int>();
+            long total = 0;
+            foreach (var pair in quantities)
+            {
+                string id = GameDatabase.NormalizeId(pair.Key);
+                if (GameDatabase.TryParseKey(pair.Key, out string category, out string parsed))
+                {
+                    if (category != GameDatabase.CategoryItem) { error = "구매할 수 없는 아이템입니다."; return false; }
+                    id = parsed;
+                }
+                if (pair.Value <= 0 || !database.TryGetItem(id, out var item) || item.gold < 0)
+                { error = "아이템 또는 가격을 확인해 주세요."; return false; }
+                normalized.TryGetValue(id, out int previous);
+                if (previous > int.MaxValue - pair.Value)
+                { error = "구매 수량이 너무 많습니다."; return false; }
+                normalized[id] = previous + pair.Value;
+                total += (long)item.gold * pair.Value;
+                if (total > int.MaxValue) { error = "구매 금액이 너무 큽니다."; return false; }
+            }
+            if (data.gold < total) { error = "골드가 부족합니다."; return false; }
+
+            // 성공 전에는 기존 인벤토리 사전/목록을 수정하지 않습니다.
+            var originalItems = data.inventory.item;
+            var updatedItems = new List<Dictionary<string, int>>();
+            foreach (var map in originalItems) updatedItems.Add(map == null ? null : new Dictionary<string, int>(map));
+            foreach (var pair in normalized)
+            {
+                long owned = 0;
+                Dictionary<string, int> target = null;
+                foreach (var map in updatedItems)
+                {
+                    if (map == null) continue;
+                    var matchingKeys = new List<string>();
+                    foreach (var entry in map)
+                        if (GameDatabase.NormalizeId(entry.Key) == pair.Key)
+                        { owned += Math.Max(0, entry.Value); matchingKeys.Add(entry.Key); }
+                    if (matchingKeys.Count > 0) target ??= map;
+                    foreach (string key in matchingKeys) map.Remove(key);
+                }
+                if (owned + pair.Value > int.MaxValue)
+                { error = "보유 수량이 너무 많습니다."; return false; }
+                if (target == null) { target = new Dictionary<string, int>(); updatedItems.Add(target); }
+                target[pair.Key] = (int)owned + pair.Value;
+            }
+
+            int originalGold = data.gold;
+            purchaseInProgress = true;
+            try
+            {
+                data.gold -= (int)total;
+                data.inventory.item = updatedItems;
+                if (Save()) return true;
+                data.gold = originalGold;
+                data.inventory.item = originalItems;
+                error = "저장에 실패했습니다. 다시 결제해 주세요.";
+                return false;
+            }
+            finally { purchaseInProgress = false; }
         }
 
         public void SetMainStats(int maxHp, int physicalResist, int magicalResist)

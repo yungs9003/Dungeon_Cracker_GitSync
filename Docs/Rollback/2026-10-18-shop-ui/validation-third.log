@@ -1,0 +1,702 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.2/staging' branch; Version is '6000.2.14f1 (589824c1fc31) revision 5806116'; Using compiler version '194234433'; Build Type 'Release'
+[Licensing::IpcConnector] Channel LicenseClient-yoong doesn't exist
+OS: 'Windows 11  (10.0.26200) 64bit Professional' Language: 'ko' Physical Memory: 32561 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+Date: 2026-10-18T05:45:30Z
+[Licensing::Module] Successfully launched the LicensingClient (PId: 69712)
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Unity.exe
+-batchmode
+-projectPath
+C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\WorldMapPolish\Unity
+-executeMethod
+ShopReview.Run
+-logFile
+C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Docs\Rollback\2026-10-18-shop-ui\validation.log
+Successfully changed project path to: C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\WorldMapPolish\Unity
+C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/WorldMapPolish/Unity
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [66396]  Target information:
+
+Player connection [66396]  * "[IP] 172.30.1.62 [Port] 55505 [Flags] 2 [Guid] 1489443923 [EditorId] 1489443923 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-ARTM24P) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [66396] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [66396] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-64872" after 0.2 seconds.
+Library Redirect Path: Library/
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-yoong" at "2026-10-18T05:45:30.8062112Z"
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Artifact Garbage Collection - Removed 2 unused hashed content files
+Refreshing native plugins compatible for Editor in 0.06 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 6000.2.14f1 (589824c1fc31)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/WorldMapPolish/Unity/Assets
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3080 (ID=0x220a)
+    Vendor:   NVIDIA
+    VRAM:     12091 MB
+    Driver:   32.0.16.1088
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56872
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.2.14f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002580 seconds.
+- Loaded All Assemblies, in  0.282 seconds
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.232 seconds
+Domain Reload Profiling: 512ms
+	BeginReloadAssembly (97ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (25ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (38ms)
+	LoadAllAssembliesAndSetupDomain (112ms)
+		LoadAssemblies (94ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (110ms)
+			TypeCache.Refresh (109ms)
+				TypeCache.ScanAssembly (99ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (233ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (208ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (40ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (42ms)
+			ProcessInitializeOnLoadAttributes (86ms)
+			ProcessInitializeOnLoadMethodAttributes (37ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Module] Licensing is not yet initialized.
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.4+4293ba1
+  Session Id:              865192c17dc24794baaff6b020490dcb
+  Correlation Id:          aa5ed43469e75ee89541331d0772903f
+  External correlation Id: 4354543377723491061
+  Machine Id:              IdReJ6kqVrZ1tLe+2FyeCUUEg9Y=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-yoong" (connect: 0.37s, validation: 0.03s, handshake: 0.92s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-yoong-notifications" at "2026-10-18T05:45:31.7599154Z"
+[Licensing::Module] Connected to LicensingClient (PId: 69712, launch time: 0.01, total connection time: 1.33s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 14569192904864-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.01
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 1.35s
+[Licensing::Module] Licensing is initialized (took 0.18s).
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+Package Manager log level set to [2]
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 37 packages:
+  Built-in packages:
+    com.unity.modules.accessibility@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.accessibility)
+    com.unity.modules.ai@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics2d)
+    com.unity.modules.screencapture@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vehicles@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.video)
+    com.unity.modules.vr@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.vr)
+    com.unity.modules.wind@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.hierarchycore)
+  Local packages:
+    com.unity.ugui@file:C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\PackageCache\com.unity.ugui@dda977a1d52f (location: C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\PackageCache\com.unity.ugui@dda977a1d52f)
+    com.unity.inputsystem@file:C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\PackageCache\com.unity.inputsystem@552acc76aabe (location: C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\PackageCache\com.unity.inputsystem@552acc76aabe)
+    com.unity.nuget.newtonsoft-json@file:C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\PackageCache\com.unity.nuget.newtonsoft-json@4dfd81071c64 (location: C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\PackageCache\com.unity.nuget.newtonsoft-json@4dfd81071c64)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.01 seconds
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+Starting: C:\Program Files\Unity\Hub\Editor\6000.2.14f1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Temp/WorldMapPolish/Unity
+DisplayProgressbar: Compiling Scripts
+ExitCode: 0 Duration: 1s643ms
+[229/238    1s] Csc Library/Bee/artifacts/1900b0aE.dag/Dungeon.App.dll (+2 others)
+Assets\Scripts\App\UI\BarHealthUI.cs(501,25): warning CS0108: 'BarHealthUI.ReferenceEqualityComparer.Equals(object, object)' hides inherited member 'object.Equals(object, object)'. Use the new keyword if hiding was intended.
+
+Assets\Scripts\App\UI\CheckpointMapLoader2D.cs(18,40): warning CS0414: The field 'CheckpointMapLoader2D.fadeInSeconds' is assigned but its value is never used
+[230/238    0s] CopyFiles Library/ScriptAssemblies/Dungeon.App.pdb
+[231/238    0s] CopyFiles Library/ScriptAssemblies/Dungeon.App.dll
+[232/238    0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll (+2 others)
+[233/238    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb
+[234/238    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll
+[235/238    0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
+[236/238    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+[237/238    0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+*** Tundra build success (1.62 seconds), 9 items updated, 238 evaluated
+Assets\Scripts\App\UI\BarHealthUI.cs(501,25): warning CS0108: 'BarHealthUI.ReferenceEqualityComparer.Equals(object, object)' hides inherited member 'object.Equals(object, object)'. Use the new keyword if hiding was intended.
+Assets\Scripts\App\UI\CheckpointMapLoader2D.cs(18,40): warning CS0414: The field 'CheckpointMapLoader2D.fadeInSeconds' is assigned but its value is never used
+AssetDatabase: script compilation time: 1.957031s
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.805 seconds
+Refreshing native plugins compatible for Editor in 0.23 ms, found 0 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.293 seconds
+Domain Reload Profiling: 1096ms
+	BeginReloadAssembly (265ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (32ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (130ms)
+	RebuildCommonClasses (25ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (485ms)
+		LoadAssemblies (530ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (30ms)
+			TypeCache.Refresh (22ms)
+				TypeCache.ScanAssembly (17ms)
+			BuildScriptInfoCaches (4ms)
+			ResolveRequiredComponents (2ms)
+	FinalizeReload (294ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (218ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (20ms)
+			SetLoadedEditorAssemblies (2ms)
+			BeforeProcessingInitializeOnLoad (73ms)
+			ProcessInitializeOnLoadAttributes (102ms)
+			ProcessInitializeOnLoadMethodAttributes (15ms)
+			AfterProcessingInitializeOnLoad (6ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (8ms)
+Start importing Assets/Scenes/Shop.unity using Guid(19e000eb2b6f2904db8247183c71c933) (DefaultImporter) -> (artifact id: 'ab746ab6ba78c4b66595e5402c9e1b30') in 0.0078161 seconds
+Start importing Assets/Prefabs/UI/Shop/ShopPage.prefab using Guid(56f000063052f35499d1a49d14f10c1b) (PrefabImporter)Creating missing CanvasRenderer component for ShopRoundedGraphic in Checkout.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Pin.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Pin.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Pin.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Medallion.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Medallion.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Medallion.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Pin.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Pin.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Medallion.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Pin.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Medallion.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Medallion.
+ -> (artifact id: '9c9ddaaf0d0a8bf4d3bb1fb861196ba7') in 0.0465631 seconds
+Start importing Assets/Prefabs/UI/Shop/ShopItemCard.prefab using Guid(4c2b7a2d49203ef4eb2124f30412d8ad) (PrefabImporter)Creating missing CanvasRenderer component for ShopRoundedGraphic in Pin.
+Creating missing CanvasRenderer component for ShopRoundedGraphic in Medallion.
+ -> (artifact id: '0203a78929b28f5a3ca2e03e46bac4b9') in 0.0034953 seconds
+Refreshing native plugins compatible for Editor in 0.26 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=7960e01815aec664eb5e1b5775fd0cc5): Total: 3.323 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=3 (actual=3, local cache=0, cache server=0)
+		Asset DB Process Time: managed=2 ms, native=472 ms
+		Asset DB Callback time: managed=54 ms, native=16 ms
+		Scripting: domain reloads=1, domain reload time=805 ms, compile time=1959 ms, other=12 ms
+		Project Asset Count: scripts=312, non-scripts=582
+		Asset File Changes: new=0, changed=2, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 17.294ms
+	ApplyChangesToAssetFolders: 0.572ms
+	Scan: 35.983ms
+	OnSourceAssetsModified: 0.744ms
+	CategorizeAssetsWithTransientArtifact: 3.204ms
+	ProcessAssetsWithTransientArtifactChanges: 9.523ms
+	CategorizeAssets: 5.746ms
+	ImportOutOfDateAssets: 356.376ms (-1663.997ms without children)
+		ImportManagerImport: 61.070ms (2.537ms without children)
+			ImportInProcess: 58.501ms
+			UpdateCategorizedAssets: 0.032ms
+		CompileScripts: 1958.935ms
+		ReloadNativeAssets: 0.000ms
+		UnloadImportedAssets: 0.074ms
+		ReloadImportedAssets: 0.000ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.084ms
+		InitializingProgressBar: 0.009ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.201ms
+	PostProcessAllAssets: 55.634ms
+	Hotreload: 0.731ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.002ms
+	UnloadStreamsBegin: 0.229ms
+	PersistCurrentRevisions: 0.068ms
+	UnloadStreamsEnd: 0.001ms
+	GenerateScriptTypeHashes: 1.909ms
+	Untracked: 2837.007ms
+
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+Scanning for USB devices : 1.680ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-Unity
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 947 unused Assets / (1.4 MB). Loaded Objects now: 1472.
+Memory consumption went from 101.2 MB to 99.7 MB.
+Total: 3.973700 ms (FindLiveObjects: 0.076900 ms CreateObjectMapping: 0.024200 ms MarkObjects: 3.228500 ms  DeleteObjects: 0.643300 ms)
+
+Asset Pipeline Refresh (id=bb655208198b78043bb549dd194e7327): Total: 0.023 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Start importing Assets/Prefabs/UI/Shop/ShopItemCard.prefab using Guid(4c2b7a2d49203ef4eb2124f30412d8ad) (PrefabImporter) -> (artifact id: 'ae014a707485660ac20138a31f8021a5') in 0.0034065 seconds
+Refreshing native plugins compatible for Editor in 0.24 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=ecb7afc86a8fa78498d42eccbccee1f8): Total: 0.031 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=e3135a199433ed941bf7ce70f046beec): Total: 0.008 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Prefabs/UI/Shop/ShopPage.prefab using Guid(56f000063052f35499d1a49d14f10c1b) (PrefabImporter) -> (artifact id: '2c5254837a62876dd94e34a7e86fd691') in 0.0153335 seconds
+Refreshing native plugins compatible for Editor in 0.25 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=f8f5b41a9d32424429574f53219e5d84): Total: 0.040 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Opening scene 'Assets/Scenes/Shop.unity'
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/Scenes/Shop.unity'
+	Deserialize:            4.666 ms
+	Integration:            63.581 ms
+	Integration of assets:  0.049 ms
+	Thread Wait Time:       0.036 ms
+	Total Operation Time:   68.332 ms
+Unloading 699 unused Assets / (5.1 MB). Loaded Objects now: 3609.
+Memory consumption went from 150.5 MB to 145.3 MB.
+Total: 4.189500 ms (FindLiveObjects: 0.142400 ms CreateObjectMapping: 0.045400 ms MarkObjects: 3.386500 ms  DeleteObjects: 0.614800 ms)
+
+Start importing Assets/Fonts/Cafe24Dangdanghae-v2.0 SDF.asset using Guid(b0e67e7c413c0c84cb49e25168d4d7cb) (NativeFormatImporter) -> (artifact id: '510c93240b91321a1113bfd1b64c0192') in 0.0045316 seconds
+Start importing Assets/Fonts/Koulen-Regular SDF.asset using Guid(31f7800f2ca557347888d69704d2f9d1) (NativeFormatImporter) -> (artifact id: '0aa5eab331bb3ab27cd398608d3d6c4d') in 0.0039517 seconds
+Start importing Assets/Fonts/Cafe24Danjunghae-v2.0 SDF.asset using Guid(43fefb9706a4602489bff3b3c463eedb) (NativeFormatImporter) -> (artifact id: 'fbeb0c689c9c0c5cb026b2643db00da5') in 0.0038661 seconds
+Refreshing native plugins compatible for Editor in 0.30 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=944813327850db24b8df806b2852d5a4): Total: 0.040 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Scenes/Shop.unity using Guid(19e000eb2b6f2904db8247183c71c933) (DefaultImporter) -> (artifact id: '8d51fb78dadda4f4137acbae2e8aa5e4') in 0.0008395 seconds
+Refreshing native plugins compatible for Editor in 0.29 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=0a2e0716b69de7245b157e1099c5f853): Total: 0.015 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[ShopSceneBuilder] Shop UI, DB items, receipt and savedata checkout configured.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+ShopSceneBuilder:Build () (at Assets/Editor/ShopSceneBuilder.cs:48)
+ShopReview:Run () (at Assets/Editor/ShopReview.cs:27)
+
+(Filename: Assets/Editor/ShopSceneBuilder.cs Line: 48)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 1712 unused Assets / (28.0 MB). Loaded Objects now: 1512.
+Memory consumption went from 143.1 MB to 115.2 MB.
+Total: 5.003700 ms (FindLiveObjects: 0.131100 ms CreateObjectMapping: 0.036200 ms MarkObjects: 3.615500 ms  DeleteObjects: 1.218900 ms)
+
+[Project] Loading completed in 6.201 seconds
+	Project init time: 				5.010 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		0.210 seconds
+		Asset Database init time: 		0.143 seconds
+		Global illumination init time: 	0.006 seconds
+		Assemblies load time: 			0.531 seconds
+		Unity extensions init time: 	0.001 seconds
+		Asset Database refresh time: 	3.323 seconds
+	Scene opening time: 			1.062 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1792302336531,"processId":64872,"projectLoad":6.2006779,"projectInit":5.0096842,"templateInit":0.0,"packageManagerInit":0.2101932,"assetDatabaseInit":0.142748,"globalIlluminationInit":0.0056088,"assembliesLoad":0.5305248,"unityExtensionsInit":0.0009265,"assetDatabaseRefresh":3.3231923,"sceneOpening":1.0620545}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1792302336531,"processId":64872,"editorVersion":"6000.2.14f1 (589824c1fc31)","branch":"6000.2/staging","buildType":"Release","platform":"Windows"}
+Reloading assemblies for play mode.
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.271 seconds
+Refreshing native plugins compatible for Editor in 0.18 ms, found 0 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.388 seconds
+Domain Reload Profiling: 657ms
+	BeginReloadAssembly (189ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (57ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (28ms)
+	RebuildCommonClasses (24ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (29ms)
+		LoadAssemblies (88ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (21ms)
+			TypeCache.Refresh (3ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (15ms)
+			ResolveRequiredComponents (2ms)
+	FinalizeReload (389ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (217ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (21ms)
+			SetLoadedEditorAssemblies (2ms)
+			BeforeProcessingInitializeOnLoad (72ms)
+			ProcessInitializeOnLoadAttributes (98ms)
+			ProcessInitializeOnLoadMethodAttributes (18ms)
+			AfterProcessingInitializeOnLoad (6ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (46ms)
+Asset Pipeline Refresh (id=f0138090970d12641b518384da5087bc): Total: 0.707 seconds - Initiated by StopAssetImportingV2(ForceSynchronousImport | ForceDomainReload)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=415 ms
+		Asset DB Callback time: managed=10 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=279 ms, compile time=1 ms, other=0 ms
+		Project Asset Count: scripts=312, non-scripts=582
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 4.406ms
+	ApplyChangesToAssetFolders: 0.164ms
+	Scan: 0.000ms
+	OnSourceAssetsModified: 0.001ms
+	CategorizeAssetsWithTransientArtifact: 0.004ms
+	ProcessAssetsWithTransientArtifactChanges: 0.315ms
+	CategorizeAssets: 5.372ms
+	ImportOutOfDateAssets: 390.163ms (388.244ms without children)
+		CompileScripts: 1.194ms
+		CollectScriptTypesHashes: 0.230ms
+		ReloadNativeAssets: 0.251ms
+		UnloadImportedAssets: 0.035ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.087ms
+		InitializingProgressBar: 0.000ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 0.121ms
+	PostProcessAllAssets: 10.165ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.037ms
+	UnloadStreamsBegin: 0.333ms
+	PersistCurrentRevisions: 0.024ms
+	UnloadStreamsEnd: 0.001ms
+	GenerateScriptTypeHashes: 2.418ms
+	Untracked: 295.901ms
+
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            4.305 ms
+	Integration:            27.018 ms
+	Integration of assets:  0.006 ms
+	Thread Wait Time:       0.021 ms
+	Total Operation Time:   31.350 ms
+Asset Pipeline Refresh (id=fb0d7464e8d964c4192bda590b498a42): Total: 0.022 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+Created GICache directory at C:/Users/yoong/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.010s, timestamps: [7.072 - 7.082]
+[EquipmentStatCalculator] Recalculated stats. maxHP=100, physical=0, magical=0, speed=10, poison=0, electric=0, amber=0, freeze=0
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Dungeon.Core.EquipmentStatCalculator:Recalculate (Dungeon.Core.StatusSaveData,Dungeon.Core.GameDatabase) (at Assets/Scripts/Core/EquipmentStatCalculator.cs:103)
+Dungeon.Core.StatusSaveFile:Save () (at Assets/Scripts/Core/StatusSaveFile.cs:174)
+Dungeon.Core.StatusSaveFile:SetGold (int) (at Assets/Scripts/Core/StatusSaveFile.cs:355)
+ShopChecks/<Tests>d__9:MoveNext () (at Assets/Tests/ShopChecks.cs:55)
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Scripts/Core/EquipmentStatCalculator.cs Line: 103)
+
+[EquipmentStatCalculator] Recalculated stats. maxHP=100, physical=0, magical=0, speed=10, poison=0, electric=0, amber=0, freeze=0
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Dungeon.Core.EquipmentStatCalculator:Recalculate (Dungeon.Core.StatusSaveData,Dungeon.Core.GameDatabase) (at Assets/Scripts/Core/EquipmentStatCalculator.cs:103)
+Dungeon.Core.StatusSaveFile:Save () (at Assets/Scripts/Core/StatusSaveFile.cs:174)
+Dungeon.Core.StatusSaveFile:SetGold (int) (at Assets/Scripts/Core/StatusSaveFile.cs:355)
+ShopChecks/<Tests>d__9:MoveNext () (at Assets/Tests/ShopChecks.cs:57)
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Scripts/Core/EquipmentStatCalculator.cs Line: 103)
+
+[EquipmentStatCalculator] Recalculated stats. maxHP=100, physical=0, magical=0, speed=10, poison=0, electric=0, amber=0, freeze=0
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Dungeon.Core.EquipmentStatCalculator:Recalculate (Dungeon.Core.StatusSaveData,Dungeon.Core.GameDatabase) (at Assets/Scripts/Core/EquipmentStatCalculator.cs:103)
+Dungeon.Core.StatusSaveFile:Save () (at Assets/Scripts/Core/StatusSaveFile.cs:174)
+Dungeon.Core.StatusSaveFile:TryPurchaseItems (Dungeon.Core.GameDatabase,System.Collections.Generic.IReadOnlyDictionary`2<string, int>,string&) (at Assets/Scripts/Core/StatusSaveFile.cs:425)
+Dungeon.UI.Shop.ShopPageUI:Checkout () (at Assets/Scripts/App/UI/Shop/ShopPageUI.cs:115)
+UnityEngine.Events.InvokableCall:Invoke ()
+UnityEngine.Events.UnityEvent:Invoke ()
+ShopChecks/<Tests>d__9:MoveNext () (at Assets/Tests/ShopChecks.cs:57)
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Scripts/Core/EquipmentStatCalculator.cs Line: 103)
+
+[EquipmentStatCalculator] Recalculated stats. maxHP=100, physical=0, magical=0, speed=10, poison=0, electric=0, amber=0, freeze=0
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Dungeon.Core.EquipmentStatCalculator:Recalculate (Dungeon.Core.StatusSaveData,Dungeon.Core.GameDatabase) (at Assets/Scripts/Core/EquipmentStatCalculator.cs:103)
+Dungeon.Core.StatusSaveFile:Save () (at Assets/Scripts/Core/StatusSaveFile.cs:174)
+Dungeon.Core.StatusSaveFile:TryPurchaseItems (Dungeon.Core.GameDatabase,System.Collections.Generic.IReadOnlyDictionary`2<string, int>,string&) (at Assets/Scripts/Core/StatusSaveFile.cs:425)
+Dungeon.UI.Shop.ShopPageUI:Checkout () (at Assets/Scripts/App/UI/Shop/ShopPageUI.cs:115)
+ShopChecks/<Tests>d__9:MoveNext () (at Assets/Tests/ShopChecks.cs:62)
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Scripts/Core/EquipmentStatCalculator.cs Line: 103)
+
+[StatusSaveFile] Save failed. Path=memory, Error=expected test write failure
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+Dungeon.Core.StatusSaveFile:Save () (at Assets/Scripts/Core/StatusSaveFile.cs:182)
+Dungeon.Core.StatusSaveFile:TryPurchaseItems (Dungeon.Core.GameDatabase,System.Collections.Generic.IReadOnlyDictionary`2<string, int>,string&) (at Assets/Scripts/Core/StatusSaveFile.cs:425)
+Dungeon.UI.Shop.ShopPageUI:Checkout () (at Assets/Scripts/App/UI/Shop/ShopPageUI.cs:115)
+ShopChecks/<Tests>d__9:MoveNext () (at Assets/Tests/ShopChecks.cs:62)
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Scripts/Core/StatusSaveFile.cs Line: 182)
+
+[EquipmentStatCalculator] Recalculated stats. maxHP=100, physical=0, magical=0, speed=10, poison=0, electric=0, amber=0, freeze=0
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Dungeon.Core.EquipmentStatCalculator:Recalculate (Dungeon.Core.StatusSaveData,Dungeon.Core.GameDatabase) (at Assets/Scripts/Core/EquipmentStatCalculator.cs:103)
+Dungeon.Core.StatusSaveFile:Save () (at Assets/Scripts/Core/StatusSaveFile.cs:174)
+Dungeon.Core.StatusSaveFile:TryPurchaseItems (Dungeon.Core.GameDatabase,System.Collections.Generic.IReadOnlyDictionary`2<string, int>,string&) (at Assets/Scripts/Core/StatusSaveFile.cs:425)
+Dungeon.UI.Shop.ShopPageUI:Checkout () (at Assets/Scripts/App/UI/Shop/ShopPageUI.cs:115)
+ShopChecks/<Tests>d__9:MoveNext () (at Assets/Tests/ShopChecks.cs:64)
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Scripts/Core/EquipmentStatCalculator.cs Line: 103)
+
+[EquipmentStatCalculator] Recalculated stats. maxHP=100, physical=0, magical=0, speed=10, poison=0, electric=0, amber=0, freeze=0
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Dungeon.Core.EquipmentStatCalculator:Recalculate (Dungeon.Core.StatusSaveData,Dungeon.Core.GameDatabase) (at Assets/Scripts/Core/EquipmentStatCalculator.cs:103)
+Dungeon.Core.StatusSaveFile:Save () (at Assets/Scripts/Core/StatusSaveFile.cs:174)
+Dungeon.Core.StatusSaveFile:TryPurchaseItems (Dungeon.Core.GameDatabase,System.Collections.Generic.IReadOnlyDictionary`2<string, int>,string&) (at Assets/Scripts/Core/StatusSaveFile.cs:425)
+ShopChecks/<Tests>d__9:MoveNext () (at Assets/Tests/ShopChecks.cs:75)
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Scripts/Core/EquipmentStatCalculator.cs Line: 103)
+
+[EquipmentStatCalculator] Recalculated stats. maxHP=100, physical=0, magical=0, speed=10, poison=0, electric=0, amber=0, freeze=0
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Dungeon.Core.EquipmentStatCalculator:Recalculate (Dungeon.Core.StatusSaveData,Dungeon.Core.GameDatabase) (at Assets/Scripts/Core/EquipmentStatCalculator.cs:103)
+Dungeon.Core.StatusSaveFile:Save () (at Assets/Scripts/Core/StatusSaveFile.cs:174)
+Dungeon.Core.StatusSaveFile:TryPurchaseItems (Dungeon.Core.GameDatabase,System.Collections.Generic.IReadOnlyDictionary`2<string, int>,string&) (at Assets/Scripts/Core/StatusSaveFile.cs:425)
+ShopChecks/<Tests>d__9:MoveNext () (at Assets/Tests/ShopChecks.cs:85)
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Scripts/Core/EquipmentStatCalculator.cs Line: 103)
+
+[EquipmentStatCalculator] Recalculated stats. maxHP=100, physical=0, magical=0, speed=10, poison=0, electric=0, amber=0, freeze=0
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Dungeon.Core.EquipmentStatCalculator:Recalculate (Dungeon.Core.StatusSaveData,Dungeon.Core.GameDatabase) (at Assets/Scripts/Core/EquipmentStatCalculator.cs:103)
+Dungeon.Core.StatusSaveFile:Save () (at Assets/Scripts/Core/StatusSaveFile.cs:174)
+Dungeon.Core.StatusSaveFile:TryPurchaseItems (Dungeon.Core.GameDatabase,System.Collections.Generic.IReadOnlyDictionary`2<string, int>,string&) (at Assets/Scripts/Core/StatusSaveFile.cs:425)
+ShopChecks/<Tests>d__9:MoveNext () (at Assets/Tests/ShopChecks.cs:89)
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:26)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Scripts/Core/EquipmentStatCalculator.cs Line: 103)
+
+SHOP: ALL CHECKS PASSED (36)
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:29)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Tests/ShopChecks.cs Line: 29)
+
+Clearing [Cafe24Dangdanghae-v2.0 SDF] dynamic font asset data.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+TMPro.EditorEventCallbacks/<>c:<InitializeFontAssetResourceChangeCallBacks>b__0_0 () (at C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Library/PackageCache/com.unity.ugui@dda977a1d52f/Editor/TMP/TMP_EditorResourceManager.cs:36)
+UnityEditor.EditorApplication:Internal_EditorApplicationQuit ()
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:29)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Library/PackageCache/com.unity.ugui@dda977a1d52f/Editor/TMP/TMP_EditorResourceManager.cs Line: 36)
+
+Clearing [Cafe24Danjunghae-v2.0 SDF] dynamic font asset data.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+TMPro.EditorEventCallbacks/<>c:<InitializeFontAssetResourceChangeCallBacks>b__0_0 () (at C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Library/PackageCache/com.unity.ugui@dda977a1d52f/Editor/TMP/TMP_EditorResourceManager.cs:36)
+UnityEditor.EditorApplication:Internal_EditorApplicationQuit ()
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:29)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Library/PackageCache/com.unity.ugui@dda977a1d52f/Editor/TMP/TMP_EditorResourceManager.cs Line: 36)
+
+Clearing [Koulen-Regular SDF] dynamic font asset data.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+TMPro.EditorEventCallbacks/<>c:<InitializeFontAssetResourceChangeCallBacks>b__0_0 () (at C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Library/PackageCache/com.unity.ugui@dda977a1d52f/Editor/TMP/TMP_EditorResourceManager.cs:36)
+UnityEditor.EditorApplication:Internal_EditorApplicationQuit ()
+ShopChecks/<Start>d__8:MoveNext () (at Assets/Tests/ShopChecks.cs:29)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Library/PackageCache/com.unity.ugui@dda977a1d52f/Editor/TMP/TMP_EditorResourceManager.cs Line: 36)
+
+Start importing Assets/Fonts/Cafe24Dangdanghae-v2.0 SDF.asset using Guid(b0e67e7c413c0c84cb49e25168d4d7cb) (NativeFormatImporter) -> (artifact id: '55ea62ca723718f615bffc824d4564ae') in 0.0053046 seconds
+Start importing Assets/Fonts/Koulen-Regular SDF.asset using Guid(31f7800f2ca557347888d69704d2f9d1) (NativeFormatImporter) -> (artifact id: '79cd1beffc72ea7feb741bff8e964bdc') in 0.001957 seconds
+Start importing Assets/Fonts/Cafe24Danjunghae-v2.0 SDF.asset using Guid(43fefb9706a4602489bff3b3c463eedb) (NativeFormatImporter) -> (artifact id: '0a347b52b194eb042c4f8208af324131') in 0.0019896 seconds
+Refreshing native plugins compatible for Editor in 0.33 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=970feaf5da51a0e42a73a0206f721b27): Total: 0.045 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-yoong-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-yoong channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server process was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1792302339511,"processId":64872,"allocatedMemory":11010998,"memoryLabels":[{"Default":28593},{"Permanent":15468},{"NewDelete":66049},{"Thread":4230344},{"Manager":29562},{"VertexData":248},{"Geometry":816},{"VFX":-104},{"Texture":296},{"Shader":78823},{"Material":24},{"GfxDevice":55369},{"Animation":392},{"Audio":4040},{"FontEngine":256},{"Physics":2050},{"Serialization":624},{"Input":14824},{"JobScheduler":33024},{"TextLib":160},{"Mono":32},{"ScriptingNativeRuntime":155060},{"BaseObject":1620240},{"Resource":1304},{"Renderer":2928},{"Transform":4685},{"File":3933},{"WebCam":616},{"Culling":32},{"Terrain":11394},{"Wind":24},{"STL":40},{"String":16314},{"DynamicArray":105298},{"HashMap":74589},{"Utility":2661046},{"Curl":48},{"PoolAlloc":1960},{"AI":40},{"TypeTree":5005},{"ScriptManager":512},{"RuntimeInitializeOnLoadManager":64},{"SpriteAtlas":112},{"GI":7824},{"Director":8240},{"CloudService":9216},{"WebRequest":808},{"VR":46114},{"SceneManager":496},{"Video":208},{"LazyScriptCache":32},{"Camera":17},{"Secure":2113},{"SerializationCache":1576},{"APIUpdating":10320},{"Subsystems":336},{"VirtualTexturing":57888},{"StaticSafetyDebugInfo":278528},{"Analytics":384},{"Hierarchy":272},{"CoreStats":12424},{"Identifiers":12384},{"Gui":80},{"EditorUtility":95633},{"VersionControl":4},{"Undo":947},{"AssetDatabase":1198052},{"EditorGi":328},{"UnityConnect":24552},{"Upm":1896},{"DrivenProperties":72},{"LocalIPC":211},{"ProfilerEditor":9746},{"CoreBusinessMetrics":2867},{"Licensing":1232},{"AssetReference":32},{"IPCStream":32}]}

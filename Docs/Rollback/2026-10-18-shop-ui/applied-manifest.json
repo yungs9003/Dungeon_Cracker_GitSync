@@ -1,0 +1,28 @@
+{
+  "modified": [
+    "Assets/Scenes/Shop.unity",
+    "Assets/Scripts/Core/GameDatabase.cs",
+    "Assets/Scripts/Core/StatusSaveFile.cs"
+  ],
+  "added": [
+    "Assets/Editor/ShopSceneBuilder.cs",
+    "Assets/Editor/ShopSceneBuilder.cs.meta",
+    "Assets/Prefabs/UI/Shop.meta",
+    "Assets/Prefabs/UI/Shop/ShopItemCard.prefab",
+    "Assets/Prefabs/UI/Shop/ShopItemCard.prefab.meta",
+    "Assets/Prefabs/UI/Shop/ShopPage.prefab",
+    "Assets/Prefabs/UI/Shop/ShopPage.prefab.meta",
+    "Assets/Prefabs/UI/Shop/ShopReceiptRow.prefab",
+    "Assets/Prefabs/UI/Shop/ShopReceiptRow.prefab.meta",
+    "Assets/Scripts/App/UI/Shop.meta",
+    "Assets/Scripts/App/UI/Shop/ShopItemCardUI.cs",
+    "Assets/Scripts/App/UI/Shop/ShopItemCardUI.cs.meta",
+    "Assets/Scripts/App/UI/Shop/ShopPageUI.cs",
+    "Assets/Scripts/App/UI/Shop/ShopPageUI.cs.meta",
+    "Assets/Scripts/App/UI/Shop/ShopReceiptRowUI.cs",
+    "Assets/Scripts/App/UI/Shop/ShopReceiptRowUI.cs.meta",
+    "Assets/Scripts/App/UI/Shop/ShopRoundedGraphic.cs",
+    "Assets/Scripts/App/UI/Shop/ShopRoundedGraphic.cs.meta"
+  ],
+  "deleted": []
+}

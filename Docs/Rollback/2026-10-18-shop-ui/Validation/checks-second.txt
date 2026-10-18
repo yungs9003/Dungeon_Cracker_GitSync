@@ -1,0 +1,15 @@
+PASS: six items follow db.json item order in 3x2 grid
+PASS: all prices load from DB gold fields
+PASS: each item uses matching ItemsIcons code
+PASS: empty cart shows saved gold and disables checkout
+FAILED: UnityEngine.MissingComponentException: There is no 'CanvasRenderer' attached to the "Checkout" game object, but a script is trying to access it.
+You probably need to add a CanvasRenderer to the game object "Checkout". Or your script needs to check if the component is attached before using it.
+  at UnityEngine.Object+MarshalledUnityObject.TryThrowEditorNullExceptionObject (UnityEngine.Object unityObj, System.String parameterName) [0x000cd] in <f27f375161264267910e5cbe7a0862ec>:0 
+  at UnityEngine.Bindings.ThrowHelper.ThrowNullReferenceException (System.Object obj) [0x00010] in <f27f375161264267910e5cbe7a0862ec>:0 
+  at UnityEngine.CanvasRenderer.get_cull () [0x00006] in <03cca957eecd4843b650841131d0367a>:0 
+  at UnityEngine.UI.GraphicRaycaster.Raycast (UnityEngine.Canvas canvas, UnityEngine.Camera eventCamera, UnityEngine.Vector2 pointerPosition, System.Collections.Generic.IList`1[T] foundGraphics, System.Collections.Generic.List`1[T] results) [0x00013] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\PackageCache\com.unity.ugui@dda977a1d52f\Runtime\UGUI\UI\Core\GraphicRaycaster.cs:323 
+  at UnityEngine.UI.GraphicRaycaster.Raycast (UnityEngine.EventSystems.PointerEventData eventData, System.Collections.Generic.List`1[T] resultAppendList) [0x0023e] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\PackageCache\com.unity.ugui@dda977a1d52f\Runtime\UGUI\UI\Core\GraphicRaycaster.cs:224 
+  at UnityEngine.EventSystems.EventSystem.RaycastAll (UnityEngine.EventSystems.PointerEventData eventData, System.Collections.Generic.List`1[T] raycastResults) [0x00030] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\PackageCache\com.unity.ugui@dda977a1d52f\Runtime\UGUI\EventSystem\EventSystem.cs:276 
+  at ShopChecks.Click (Dungeon.UI.Shop.ShopItemCardUI card, UnityEngine.EventSystems.PointerEventData+InputButton button) [0x00047] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\WorldMapPolish\Unity\Assets\Tests\ShopChecks.cs:104 
+  at ShopChecks+<Tests>d__9.MoveNext () [0x002f3] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\WorldMapPolish\Unity\Assets\Tests\ShopChecks.cs:44 
+  at ShopChecks+<Start>d__8.MoveNext () [0x00054] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\WorldMapPolish\Unity\Assets\Tests\ShopChecks.cs:26 

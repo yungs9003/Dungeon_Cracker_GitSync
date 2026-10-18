@@ -1,7 +1,7 @@
 {
   "save_version": 2,
   "user_name": "Toluse",
-  "gold": 36550,
+  "gold": 39550,
   "broken_traps": 8,
   "clear_reward_claimed": false,
   "last_getting_gold": 0,
@@ -46,7 +46,7 @@
         "004": 1
       },
       {
-        "005": 1
+        "005": 28
       }
     ],
     "equipment": [
