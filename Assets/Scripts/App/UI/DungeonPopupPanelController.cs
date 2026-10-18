@@ -6,6 +6,11 @@ using TMPro;
 using Dungeon.Core;
 using Dungeon.Manager;
 using UnityEngine.Events;
+using System;
+using System.IO;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 namespace Dungeon.UI
 {
@@ -16,6 +21,16 @@ public class DungeonPopupPanelController : MonoBehaviour
     [Header("Events")]
     [SerializeField] private UnityEvent onClosed = new();
     public UnityEvent OnClosed => onClosed;
+
+    [Header("Reference Popup UI")]
+    [SerializeField] private DungeonInfoPopupUI referenceView;
+    [SerializeField] private Button outsideCloseButton;
+    private static DungeonPopupPanelController activePopup;
+    private static int lastClosedFrame = -1;
+    public static bool IsAnyOpen => activePopup != null && activePopup.IsOpen;
+    public static bool BlocksBackgroundInput => IsAnyOpen || lastClosedFrame == Time.frameCount;
+    public bool IsOpen => panelRoot != null && panelRoot.activeInHierarchy;
+    public string TargetSceneName => targetSceneName;
 
     [Header("Preview")]
     [SerializeField] private Image previewImage;
@@ -42,7 +57,38 @@ public class DungeonPopupPanelController : MonoBehaviour
         if (panelRoot == null)
             panelRoot = gameObject;
 
+        BindReferenceButtons();
         panelRoot.SetActive(false);
+    }
+
+    public void ConfigureReferenceView(DungeonInfoPopupUI view, Button outside)
+    {
+        UnbindReferenceButtons(); referenceView = view; outsideCloseButton = outside;
+        if (Application.isPlaying) BindReferenceButtons();
+    }
+    private void BindReferenceButtons()
+    {
+        if (referenceView != null) referenceView.EnterButton.onClick.AddListener(StartDungeon);
+        if (outsideCloseButton != null) outsideCloseButton.onClick.AddListener(Close);
+    }
+    private void UnbindReferenceButtons()
+    {
+        if (referenceView != null) referenceView.EnterButton.onClick.RemoveListener(StartDungeon);
+        if (outsideCloseButton != null) outsideCloseButton.onClick.RemoveListener(Close);
+    }
+    private void OnDestroy()
+    { UnbindReferenceButtons(); if (activePopup == this) activePopup = null; }
+    private void Update()
+    {
+        if (referenceView == null || !IsOpen || Tutorial.TutorialOverlayUI.IsAnyOpen) return;
+#if ENABLE_INPUT_SYSTEM
+        bool escape = Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame;
+#elif ENABLE_LEGACY_INPUT_MANAGER
+        bool escape = Input.GetKeyDown(KeyCode.Escape);
+#else
+        bool escape = false;
+#endif
+        if (escape) Close();
     }
 
     public void OpenDungeon(string dungeonId)
@@ -63,6 +109,19 @@ public class DungeonPopupPanelController : MonoBehaviour
 
         targetSceneName = info.sceneName;
 
+        if (referenceView != null)
+        {
+            bool canEnter = TryResolveBuildScene(info.sceneName, out targetSceneName);
+            referenceView.Present(info.id, info.name, canEnter);
+            RectTransform anchor = null;
+            foreach (var map in FindObjectsByType<WorldMapPanZoomUI>(FindObjectsSortMode.None))
+                if (map.gameObject.scene == gameObject.scene && map.FocusedPoint != null)
+                { anchor = map.FocusedPoint; break; }
+            referenceView.GetComponent<DungeonInfoPopupLayout>()?.SetAnchor(anchor);
+            panelRoot.SetActive(true); panelRoot.transform.SetAsLastSibling(); activePopup = this;
+            return;
+        }
+
         ApplyPreview(info);
         ApplyTexts(info);
         BuildFarmItems(info.farmableItems);
@@ -71,6 +130,18 @@ public class DungeonPopupPanelController : MonoBehaviour
         ApplyClearCircles(achieved);
 
         panelRoot.SetActive(true);
+        activePopup = this;
+    }
+
+    private static bool TryResolveBuildScene(string requested, out string resolved)
+    {
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            string name = Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i));
+            if (!string.IsNullOrWhiteSpace(requested) && string.Equals(name, requested, StringComparison.OrdinalIgnoreCase))
+            { resolved = name; return true; }
+        }
+        resolved = ""; return false;
     }
 
     private void ApplyPreview(DungeonInfo info)
@@ -263,14 +334,15 @@ public class DungeonPopupPanelController : MonoBehaviour
 
     public void Close()
     {
+        if (Tutorial.TutorialOverlayUI.IsAnyOpen) return;
         bool wasOpen = panelRoot.activeSelf;
         panelRoot.SetActive(false);
-        if (wasOpen) onClosed.Invoke();
+        if (wasOpen) { lastClosedFrame = Time.frameCount; onClosed.Invoke(); }
     }
 
     public void StartDungeon()
     {
-        panelRoot.SetActive(false);
+        if (Tutorial.TutorialOverlayUI.IsAnyOpen) return;
 
         if (string.IsNullOrEmpty(targetSceneName))
         {
@@ -278,6 +350,7 @@ public class DungeonPopupPanelController : MonoBehaviour
             return;
         }
 
+        panelRoot.SetActive(false);
         SceneManager.LoadScene(targetSceneName);
     }
 }

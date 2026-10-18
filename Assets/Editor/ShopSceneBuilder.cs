@@ -51,12 +51,17 @@ public static class ShopSceneBuilder
     {
         var root = UI("ShopItemCard", null); Rect(root, 0, 0, 192, 351);
         var hit = root.AddComponent<Image>(); hit.color = Color.clear; hit.raycastTarget = true;
-        Line(root.transform, new Vector2(96, 6), new Vector2(59, 65), 4, new Color(.5f, .5f, .5f));
-        Line(root.transform, new Vector2(96, 6), new Vector2(133, 65), 4, new Color(.5f, .5f, .5f));
+        // SVG의 걸이와 원형판 그림자 전체를 원본 위치에 겹칩니다.
+        Image("ProductShadow", root.transform, Sprite(Art + "ProductShadow.png"), -6, -15, 201, 291);
+        var cordColor = new Color32(150, 147, 147, 255);
+        Line(root.transform, new Vector2(96, 6), new Vector2(59, 65), 4, cordColor);
+        Line(root.transform, new Vector2(96, 6), new Vector2(133, 65), 4, cordColor);
         Round("Medallion", root.transform, 7.5f, 54, 177, 177, new Color(.85f, .85f, .85f));
         Round("Pin", root.transform, 87, -3, 18, 18, new Color(.85f, .85f, .85f));
         var icon = Image("Icon", root.transform, null, 24, 72, 144, 144); icon.preserveAspect = true;
-        Image("PriceCard", root.transform, null, 0, 252, 192, 94.5f).color = new Color(.85f, .85f, .85f);
+        var priceCard = Image("PriceCard", root.transform, null, 0, 252, 192, 96);
+        priceCard.color = new Color(.85f, .85f, .85f);
+        Image("PriceCardBottomEdge", priceCard.transform, null, 0, 90, 192, 6).color = new Color32(105, 105, 105, 255);
         var name = Text("ItemName", root.transform, "아이템", Body, 24, 6, 256, 180, 31);
         name.enableAutoSizing = true; name.fontSizeMin = 18; name.fontSizeMax = 24;
         Image("Divider", root.transform, Sprite(Art + "Group 136.png"), 6, 283, 180, 3);
@@ -86,8 +91,8 @@ public static class ShopSceneBuilder
         root.AddComponent<GuildReferenceLayout>();
         Image("Clerk", root.transform, Sprite(Art + "KakaoTalk_20261017_165017229.png"), 0, 0, 768, 948);
         Image("ShelfBackground", root.transform, Sprite(Art + "Rectangle 189.png"), 768, 0, 699, 948);
-        Image("UpperDisplay", root.transform, Sprite(Art + "display_line_1.png"), 768, 0, 699, 357);
-        Image("LowerDisplay", root.transform, Sprite(Art + "display_line_1.png"), 768, 405, 699, 357);
+        Image("UpperDisplay", root.transform, Sprite(Art + "display_line_1.png"), 768, 36, 699, 357);
+        Image("LowerDisplay", root.transform, Sprite(Art + "display_line_1.png"), 768, 441, 699, 357);
         var products = UI("Products", root.transform); Rect(products, 792, 45, 654, 756);
         var grid = products.AddComponent<GridLayoutGroup>(); grid.cellSize = new Vector2(192, 351); grid.spacing = new Vector2(39, 54);
         grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount; grid.constraintCount = 3;

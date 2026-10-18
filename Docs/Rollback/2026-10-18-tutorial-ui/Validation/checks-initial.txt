@@ -1,0 +1,25 @@
+PASS: four independent slide lists contain requested 5 4 5 3 placeholders
+PASS: all 17 placeholders use exact full-resolution source slide
+PASS: tutorial starts closed
+PASS: question icon switches from white to red on pointer hover
+PASS: question icon stays red while pressed
+PASS: question icon returns to white after release outside button
+PASS: worldmap help opens first page with correct owner and count
+PASS: full-screen tutorial uses 20 percent black blocker above other canvases
+PASS: background fills screen while PNG preserves original aspect ratio
+PASS: first page disables only previous arrow
+PASS: transparent background intercepts pointer instead of underlying map
+PASS: right arrow advances exactly one page
+PASS: last page disables next arrow
+PASS: next cannot advance beyond final page
+PASS: left arrow returns one page and enables forward navigation
+PASS: close hides tutorial and preserves parent panel
+PASS: reopening tutorial starts at first slide
+PASS: dungeon info uses independent four-page list in shared viewer
+PASS: status help selects its five-page list
+PASS: disabling owning panel automatically closes its tutorial
+PASS: module help selects independent three-page list
+FAILED: System.InvalidOperationException: Cannot raycast tutorial control Next top=MapContent
+  at TutorialChecks.Click (UnityEngine.UI.Button button) [0x0007d] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\WorldMapPolish\Unity\Assets\Tests\TutorialChecks.cs:93 
+  at TutorialChecks+<Tests>d__3.MoveNext () [0x007cd] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\WorldMapPolish\Unity\Assets\Tests\TutorialChecks.cs:64 
+  at TutorialChecks+<Start>d__2.MoveNext () [0x00054] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Temp\WorldMapPolish\Unity\Assets\Tests\TutorialChecks.cs:26 

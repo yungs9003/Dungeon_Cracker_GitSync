@@ -25,6 +25,7 @@ namespace Dungeon.UI
 
         private void Update()
         {
+            if (Tutorial.TutorialOverlayUI.IsAnyOpen || DungeonPopupPanelController.BlocksBackgroundInput) return;
             if (Input.GetKeyDown(toggleKey))
                 Toggle();
         }

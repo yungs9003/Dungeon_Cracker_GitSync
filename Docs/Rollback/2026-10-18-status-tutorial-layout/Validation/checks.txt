@@ -1,0 +1,31 @@
+PASS: four independent slide lists contain requested 5 4 5 3 placeholders
+PASS: all 17 placeholders use exact full-resolution source slide
+PASS: tutorial starts closed
+PASS: question icon switches from white to red on pointer hover
+PASS: question icon stays red while pressed
+PASS: question icon returns to white after release outside button
+PASS: worldmap help opens first page with correct owner and count
+PASS: full-screen tutorial uses alpha200 black blocker above other canvases
+PASS: background fills screen while PNG preserves original aspect ratio
+PASS: first page disables only previous arrow
+PASS: transparent background intercepts pointer instead of underlying map
+PASS: right arrow advances exactly one page
+PASS: last page disables next arrow
+PASS: next cannot advance beyond final page
+PASS: left arrow returns one page and enables forward navigation
+PASS: close hides tutorial and preserves parent panel
+PASS: reopening tutorial starts at first slide
+PASS: dungeon info uses independent four-page list in shared viewer
+PASS: status help selects its five-page list
+PASS: disabling owning panel automatically closes its tutorial
+PASS: module help selects independent three-page list
+PASS: tutorial controls work with paused time and do not change time scale
+PASS: replacement sprite arrays display new PNGs skip empty slots and preserve aspect
+PASS: empty slide list does not leave an invisible input blocker
+PASS: tutorial pauses underlying map focus animation and point interaction
+PASS: closing tutorial resumes pending map focus callback exactly once
+PASS: dungeon tutorial preserves popup-close return scale and exploration position
+PASS: tutorial stops map inertia without disabling or resetting map state
+PASS: escape cannot open underlying worldmap pause while tutorial is visible
+PASS: worldmap escape resumes after tutorial closes
+PASS: tutorial UI checks never instantiate or load player save service

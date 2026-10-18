@@ -1,0 +1,16 @@
+PASS: status-WorldMap-1920x1080.png status centered within content=(x:-960.00, y:-409.00, width:1920.00, height:949.00) bounds=(x:-792.00, y:-378.50, width:1584.00, height:888.00)
+PASS: status-WorldMap-1280x720.png status centered within content=(x:-960.00, y:-409.00, width:1920.00, height:949.00) bounds=(x:-792.00, y:-378.50, width:1584.00, height:888.00)
+PASS: status-WorldMap-1704x961.png status centered within content=(x:-958.75, y:-409.70, width:1917.50, height:950.41) bounds=(x:-792.00, y:-378.50, width:1584.00, height:888.00)
+PASS: status-WorldMap-2560x1080.png status centered within content=(x:-1108.51, y:-336.65, width:2217.03, height:804.31) bounds=(x:-717.36, y:-336.65, width:1434.71, height:804.31)
+PASS: status-WorldMap-1280x1024.png status centered within content=(x:-804.98, y:-512.99, width:1609.97, height:1156.98) bounds=(x:-792.00, y:-378.50, width:1584.00, height:888.00)
+PASS: status-Module-1920x1080.png status centered within content=(x:-960.00, y:-409.00, width:1920.00, height:949.00) bounds=(x:-792.00, y:-378.50, width:1584.00, height:888.00)
+PASS: status-Guild-1920x1080.png status centered within content=(x:-960.00, y:-409.00, width:1920.00, height:949.00) bounds=(x:-792.00, y:-378.50, width:1584.00, height:888.00)
+PASS: status-Shop-1920x1080.png status centered within content=(x:-960.00, y:-409.00, width:1920.00, height:949.00) bounds=(x:-792.00, y:-378.50, width:1584.00, height:888.00)
+PASS: status-DUNGEON_001-1920x1080.png status centered within content=(x:-960.00, y:-540.00, width:1920.00, height:1080.00) bounds=(x:-792.00, y:-444.00, width:1584.00, height:888.00)
+PASS: status-CheckpointScene-1920x1080.png status centered within content=(x:-960.00, y:-540.00, width:1920.00, height:1080.00) bounds=(x:-792.00, y:-444.00, width:1584.00, height:888.00)
+PASS: tutorial-reference-1370x819.png tutorial at least status size, inside screen, arrows aligned; width=1165.185 status=1165.185
+PASS: tutorial-1920x1080.png tutorial at least status size, inside screen, arrows aligned; width=1584 status=1584
+PASS: tutorial-2560x1080.png tutorial at least status size, inside screen, arrows aligned; width=1662.84 status=1656.661
+PASS: tutorial-1704x961.png tutorial at least status size, inside screen, arrows aligned; width=1407.632 status=1407.632
+PASS: tutorial-1280x1024.png tutorial at least status size, inside screen, arrows aligned; width=1259.354 status=1259.354
+PASS: status-help-button.png status centered within content=(x:-960.00, y:-409.00, width:1920.00, height:949.00) bounds=(x:-792.00, y:-378.50, width:1584.00, height:888.00)

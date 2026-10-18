@@ -1,0 +1,10 @@
+{
+  "modified": [
+    "Assets/Editor/TutorialSceneBuilder.cs",
+    "Assets/Prefabs/UI/Tutorial/TutorialOverlay.prefab",
+    "Assets/Scripts/App/UI/StatusWindowLayout.cs",
+    "Assets/Scripts/App/UI/Tutorial/TutorialWindowLayout.cs"
+  ],
+  "added": [],
+  "deleted": []
+}

@@ -1,0 +1,30 @@
+PASS: popup starts closed and replaces old side panels
+PASS: worldmap point starts focus before opening popup
+PASS: focus completion opens centered popup without changing focus flow
+PASS: existing catalog provides dungeon number/name for current UI
+PASS: unconnected record values display explicit initial 0 and unknown total
+PASS: mixed-case catalog scene resolves to exact enabled build scene
+PASS: old side preview description and farm-item panels removed
+PASS: popup interior blocks outside-dismiss without closing
+PASS: clicking card whitespace keeps popup open
+PASS: SVG question button changes white question to red on hover
+PASS: upper-right question opens existing four-page dungeon tutorial
+PASS: dungeon help arrow advances slide
+PASS: tutorial blocks entry and underlying popup close
+PASS: closing help restores same popup and zoom
+PASS: display-only progress example 0/?층
+PASS: display-only progress example 2/?층
+PASS: display-only progress example 4/?층
+PASS: display-only progress example 6/6층
+PASS: display-only progress example 0/6층
+PASS: display-only progress example 2/6층
+PASS: display-only progress example 4/6층
+PASS: display clamps invalid counts without writing save data
+PASS: outside click closes once and restores native map zoom
+PASS: closing an already closed popup does not repeat callback
+PASS: escape closes dungeon popup without opening worldmap pause in same frame
+PASS: worldmap pause escape resumes after popup closes
+PASS: entry disabled when dungeon scene is not registered
+PASS: popup and preview checks never create or read player save services
+PASS: entry button loads exact dungeon scene using isolated empty stub
+PASS: entry stub test leaves actual user save service untouched

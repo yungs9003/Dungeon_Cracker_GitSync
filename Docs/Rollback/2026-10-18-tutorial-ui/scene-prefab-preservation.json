@@ -1,0 +1,61 @@
+{
+  "Assets/Prefabs/UI/SharedStatus.prefab": {
+    "modified_existing_blocks": [
+      "3274178981290002937"
+    ],
+    "removed_blocks": [],
+    "added_blocks": [
+      "280869923995559990",
+      "3410032947859637708"
+    ],
+    "preserved_save_components": [],
+    "preserved_default_components": []
+  },
+  "Assets/Scenes/WorldMap.unity": {
+    "modified_existing_blocks": [
+      "695753890",
+      "832709945"
+    ],
+    "removed_blocks": [],
+    "added_blocks": [
+      "1769101128",
+      "1769101129",
+      "412640184",
+      "412640185"
+    ],
+    "preserved_save_components": [
+      "1182390667"
+    ],
+    "preserved_default_components": []
+  },
+  "Assets/Scenes/Module.unity": {
+    "modified_existing_blocks": [
+      "1218334512"
+    ],
+    "removed_blocks": [],
+    "added_blocks": [
+      "1769101128",
+      "1769101129"
+    ],
+    "preserved_save_components": [],
+    "preserved_default_components": []
+  },
+  "Assets/Scenes/CheckpointScene.unity": {
+    "modified_existing_blocks": [
+      "877466184"
+    ],
+    "removed_blocks": [],
+    "added_blocks": [
+      "1769101128",
+      "1769101129"
+    ],
+    "preserved_save_components": [
+      "126213968"
+    ],
+    "preserved_default_components": [
+      "1170548428",
+      "1681272506",
+      "1801833081"
+    ]
+  }
+}

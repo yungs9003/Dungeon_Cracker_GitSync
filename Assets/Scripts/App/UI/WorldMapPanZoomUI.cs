@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Dungeon.UI
 {
-    /// <summary>원본 픽셀 크기의 지도와 자식 지점들을 함께 이동하고, 선택 지점을 중앙으로 확대합니다.</summary>
+    /// <summary>원본 픽셀 크기의 지도를 이동하고, 선택 지점을 화면 왼쪽 아래의 지정 위치로 확대합니다.</summary>
     public sealed class WorldMapPanZoomUI : MonoBehaviour,
         IInitializePotentialDragHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler
     {
@@ -30,13 +30,14 @@ namespace Dungeon.UI
 
         public RectTransform Content => content;
         public RectTransform Viewport => viewport;
+        public RectTransform FocusedPoint { get; private set; }
         public float Zoom => content != null ? content.localScale.x : 1f;
         public bool IsAnimating => animating;
-        public bool CanClickPoint => !dragging && Time.frameCount > suppressClickThroughFrame;
+        public bool CanClickPoint => !Tutorial.TutorialOverlayUI.IsAnyOpen && !DungeonPopupPanelController.BlocksBackgroundInput && !dragging && Time.frameCount > suppressClickThroughFrame;
 
         private void Awake() { ApplyNativeSize(); ApplyPose(Vector2.zero, 1f); RefreshViewport(); }
         private void LateUpdate() => RefreshViewport();
-        private void OnDisable() { CancelFocus(); StopInertia(); dragging = false; returnPending = false; }
+        private void OnDisable() { CancelFocus(); StopInertia(); dragging = false; returnPending = false; FocusedPoint = null; }
 
         public void Configure(RectTransform window, RectTransform map, Image image, RectTransform navigationBar)
         {
@@ -63,6 +64,11 @@ namespace Dungeon.UI
                 if (Mathf.Abs(viewport.offsetMin.y - inset) > .01f)
                     viewport.offsetMin = new Vector2(viewport.offsetMin.x, inset);
             }
+            if (FocusedPoint != null && returnPending)
+            {
+                if (animating) toPosition = ClampPosition(GetFocusPosition(FocusedPoint, toZoom), toZoom);
+                else content.anchoredPosition = GetFocusPosition(FocusedPoint, Zoom);
+            }
             content.anchoredPosition = ClampPosition(content.anchoredPosition, Zoom);
         }
 
@@ -72,14 +78,16 @@ namespace Dungeon.UI
         public void StopInertia() => velocity = Vector2.zero;
         public void OnBeginDrag(PointerEventData data)
         {
+            if (Tutorial.TutorialOverlayUI.IsAnyOpen) return;
             if (data.button != PointerEventData.InputButton.Left || dragging || content == null) return;
             if (!RectTransformUtility.RectangleContainsScreenPoint(content, data.position, data.pressEventCamera)) return;
             if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(viewport, data.position, data.pressEventCamera, out previousPointer)) return;
-            CancelFocus(); StopInertia(); returnPending = false;
+            CancelFocus(); StopInertia(); returnPending = false; FocusedPoint = null;
             dragging = true; dragPointer = data.pointerId; lastDragEventTime = Time.unscaledTime;
         }
         public void OnDrag(PointerEventData data)
         {
+            if (Tutorial.TutorialOverlayUI.IsAnyOpen) return;
             if (!dragging || data.pointerId != dragPointer) return;
             if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(viewport, data.position, data.pressEventCamera, out Vector2 point)) return;
             Vector2 before = content.anchoredPosition;
@@ -110,18 +118,26 @@ namespace Dungeon.UI
                 returnPosition = ClampPosition(content.anchoredPosition / Mathf.Max(.001f, Zoom), 1f);
                 returnPending = true;
             }
-            Vector3 local = content.InverseTransformPoint(point.TransformPoint(point.rect.center));
+            FocusedPoint = point;
             float targetZoom = Mathf.Clamp(zoom, 1f, Mathf.Max(1f, maxZoom));
-            AnimateTo(-(Vector2)local * targetZoom, targetZoom, onCompleted);
+            AnimateTo(GetFocusPosition(point, targetZoom), targetZoom, onCompleted);
         }
 
-        public void ResetView() { returnPending = false; AnimateTo(Vector2.zero, 1f, null); }
+        private Vector2 GetFocusPosition(RectTransform point, float zoom)
+        {
+            Vector2 local = content.InverseTransformPoint(point.TransformPoint(point.rect.center));
+            // 하단 바를 제외한 viewport: 왼쪽에서 1/3, 위에서 3/4 (= 아래에서 1/4).
+            Vector2 target = new Vector2(-viewport.rect.width / 6f, -viewport.rect.height / 4f);
+            return target - local * zoom;
+        }
+
+        public void ResetView() { returnPending = false; FocusedPoint = null; AnimateTo(Vector2.zero, 1f, null); }
 
         public void ReturnFromFocus()
         {
             StopInertia();
             if (!returnPending) return;
-            returnPending = false;
+            returnPending = false; FocusedPoint = null;
             AnimateTo(returnPosition, 1f, null);
         }
 
@@ -135,6 +151,7 @@ namespace Dungeon.UI
         }
         private void Update()
         {
+            if (Tutorial.TutorialOverlayUI.IsAnyOpen) { StopInertia(); return; }
             if (!animating)
             {
                 if (dragging) { if (Time.unscaledTime - lastDragEventTime > .08f) StopInertia(); }

@@ -26,6 +26,7 @@ public class WorldMapPausePopup : MonoBehaviour
 
     private void Update()
     {
+        if (Tutorial.TutorialOverlayUI.IsAnyOpen || DungeonPopupPanelController.BlocksBackgroundInput) return;
         if (EscapePressed())
         {
             if (isOpen) Close();

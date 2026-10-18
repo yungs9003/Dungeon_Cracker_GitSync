@@ -1,0 +1,2 @@
+PASS: cover-WorldMap-1920x1080.png slide pixels identical whether status is visible or hidden behind it
+PASS: transparent-slide-status-visible.png slide pixels identical whether status is visible or hidden behind it

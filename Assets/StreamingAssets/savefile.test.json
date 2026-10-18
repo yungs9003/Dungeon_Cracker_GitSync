@@ -1,12 +1,12 @@
 {
   "save_version": 2,
   "user_name": "Toluse",
-  "gold": 39550,
-  "broken_traps": 8,
+  "gold": 38350,
+  "broken_traps": 10,
   "clear_reward_claimed": false,
   "last_getting_gold": 0,
-  "clear_time_seconds": 3120.96167,
-  "hit_count": 194,
+  "clear_time_seconds": 3444.77368,
+  "hit_count": 228,
   "main_stats": {
     "max_HP": 150,
     "physical_resist": 20,
@@ -34,13 +34,13 @@
   "inventory": {
     "item": [
       {
-        "000": 15
+        "000": 12
       },
       {
-        "002": 5
+        "002": 8
       },
       {
-        "003": 3
+        "003": 2
       },
       {
         "004": 1
@@ -177,7 +177,7 @@
     "sceneName": "DUNGEON_001",
     "mapIndex": 1,
     "resumeRequested": true,
-    "broken_traps_snapshot": 8
+    "broken_traps_snapshot": 4
   },
   "dungeon_status": [],
   "play_time": "135:26",

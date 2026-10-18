@@ -1,0 +1,40 @@
+{
+  "modified": [
+    "Assets/Prefabs/UI/SharedStatus.prefab",
+    "Assets/Scenes/CheckpointScene.unity",
+    "Assets/Scenes/Module.unity",
+    "Assets/Scenes/WorldMap.unity",
+    "Assets/Scripts/App/UI/StatusWindowController.cs",
+    "Assets/Scripts/App/UI/WorldMapPanZoomUI.cs",
+    "Assets/Scripts/App/UI/WorldMapPausePopup.cs"
+  ],
+  "added": [
+    "Assets/Editor/TutorialSceneBuilder.cs",
+    "Assets/Editor/TutorialSceneBuilder.cs.meta",
+    "Assets/Prefabs/UI/Tutorial.meta",
+    "Assets/Prefabs/UI/Tutorial/TutorialHelpButton.prefab",
+    "Assets/Prefabs/UI/Tutorial/TutorialHelpButton.prefab.meta",
+    "Assets/Prefabs/UI/Tutorial/TutorialOverlay.prefab",
+    "Assets/Prefabs/UI/Tutorial/TutorialOverlay.prefab.meta",
+    "Assets/Resources/UI/Tutorial.meta",
+    "Assets/Resources/UI/Tutorial/DungeonInfoTutorial.asset",
+    "Assets/Resources/UI/Tutorial/DungeonInfoTutorial.asset.meta",
+    "Assets/Resources/UI/Tutorial/ModuleTutorial.asset",
+    "Assets/Resources/UI/Tutorial/ModuleTutorial.asset.meta",
+    "Assets/Resources/UI/Tutorial/StatusTutorial.asset",
+    "Assets/Resources/UI/Tutorial/StatusTutorial.asset.meta",
+    "Assets/Resources/UI/Tutorial/WorldMapTutorial.asset",
+    "Assets/Resources/UI/Tutorial/WorldMapTutorial.asset.meta",
+    "Assets/Scripts/App/UI/Tutorial.meta",
+    "Assets/Scripts/App/UI/Tutorial/TutorialLauncherUI.cs",
+    "Assets/Scripts/App/UI/Tutorial/TutorialLauncherUI.cs.meta",
+    "Assets/Scripts/App/UI/Tutorial/TutorialOverlayUI.cs",
+    "Assets/Scripts/App/UI/Tutorial/TutorialOverlayUI.cs.meta",
+    "Assets/Scripts/App/UI/Tutorial/TutorialSlides.cs",
+    "Assets/Scripts/App/UI/Tutorial/TutorialSlides.cs.meta",
+    "Assets/Sprites/UI/Tutorial/Slides.meta",
+    "Assets/Sprites/UI/Tutorial/Slides/info_worldmap_1.png",
+    "Assets/Sprites/UI/Tutorial/Slides/info_worldmap_1.png.meta"
+  ],
+  "deleted": []
+}

@@ -1,0 +1,30 @@
+{
+  "modified": [
+    "Assets/Editor/TutorialSceneBuilder.cs",
+    "Assets/Scenes/WorldMap.unity",
+    "Assets/Scripts/App/UI/DungeonPopupPanelController.cs",
+    "Assets/Scripts/App/UI/StatusWindowController.cs",
+    "Assets/Scripts/App/UI/WorldMapPausePopup.cs"
+  ],
+  "added": [
+    "Assets/Editor/WorldMapDungeonPopupBuilder.cs",
+    "Assets/Editor/WorldMapDungeonPopupBuilder.cs.meta",
+    "Assets/Prefabs/UI/WorldMap.meta",
+    "Assets/Prefabs/UI/WorldMap/DungeonInfoPopup.prefab",
+    "Assets/Prefabs/UI/WorldMap/DungeonInfoPopup.prefab.meta",
+    "Assets/Scripts/App/UI/WorldMap.meta",
+    "Assets/Scripts/App/UI/WorldMap/DungeonInfoPopupLayout.cs",
+    "Assets/Scripts/App/UI/WorldMap/DungeonInfoPopupLayout.cs.meta",
+    "Assets/Scripts/App/UI/WorldMap/DungeonInfoPopupUI.cs",
+    "Assets/Scripts/App/UI/WorldMap/DungeonInfoPopupUI.cs.meta",
+    "Assets/Sprites/UI/WorldMap/DungeonPopup.meta",
+    "Assets/Sprites/UI/WorldMap/DungeonPopup/HelpHover.png",
+    "Assets/Sprites/UI/WorldMap/DungeonPopup/HelpHover.png.meta",
+    "Assets/Sprites/UI/WorldMap/DungeonPopup/HelpNormal.png",
+    "Assets/Sprites/UI/WorldMap/DungeonPopup/HelpNormal.png.meta",
+    "Assets/Sprites/UI/WorldMap/DungeonPopup/PopupFrame.png",
+    "Assets/Sprites/UI/WorldMap/DungeonPopup/PopupFrame.png.meta"
+  ],
+  "deleted": [],
+  "unchanged_existing_files": 1529
+}

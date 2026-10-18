@@ -1,0 +1,15 @@
+{
+  "modified": [
+    "Assets/Editor/TutorialSceneBuilder.cs",
+    "Assets/Prefabs/UI/SharedStatus.prefab",
+    "Assets/Prefabs/UI/Tutorial/TutorialOverlay.prefab",
+    "Assets/Scenes/CheckpointScene.unity"
+  ],
+  "added": [
+    "Assets/Scripts/App/UI/StatusWindowLayout.cs",
+    "Assets/Scripts/App/UI/StatusWindowLayout.cs.meta",
+    "Assets/Scripts/App/UI/Tutorial/TutorialWindowLayout.cs",
+    "Assets/Scripts/App/UI/Tutorial/TutorialWindowLayout.cs.meta"
+  ],
+  "deleted": []
+}

@@ -1,0 +1,9 @@
+PASS: original scene matched baseline before application
+PASS: exactly four existing popup root/controller blocks changed
+PASS: existing popup controller fileID and ReturnFromFocus event preserved
+PASS: 58 old popup child blocks removed; no unchanged block refers to removed local IDs
+PASS: four added blocks are new prefab instance, its RectTransform/view references, outside Button
+PASS: all other existing scene blocks preserved byte for byte
+PASS: isolated validated prefab GUID matches scene reference
+PASS: full Assets/Packages/ProjectSettings: 5 modified, 17 added, 0 deleted
+PASS: DB, save models/managers/storage, dungeon/checkpoint/clear scenes, project settings unchanged

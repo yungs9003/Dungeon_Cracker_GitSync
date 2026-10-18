@@ -1,0 +1,105 @@
+{
+  "save_version": 2,
+  "user_name": "",
+  "gold": 700,
+  "broken_traps": 0,
+  "clear_reward_claimed": false,
+  "last_getting_gold": 0,
+  "clear_time_seconds": 0.0,
+  "hit_count": 0,
+  "main_stats": {
+    "max_HP": 100,
+    "physical_resist": 0,
+    "magical_resist": 0
+  },
+  "sub_stats": {
+    "speed": 10,
+    "poison_resist": 0,
+    "electric_resist": 0,
+    "amber_resist": 0,
+    "freeze_resist": 0
+  },
+  "base_main_stats": {
+    "max_HP": 100,
+    "physical_resist": 0,
+    "magical_resist": 0
+  },
+  "base_sub_stats": {
+    "speed": 10,
+    "poison_resist": 0,
+    "electric_resist": 0,
+    "amber_resist": 0,
+    "freeze_resist": 0
+  },
+  "inventory": {
+    "item": [
+      {
+        "000": 2
+      }
+    ],
+    "equipment": [],
+    "module": []
+  },
+  "equips": {
+    "item": [
+      {
+        "slot1": "none"
+      },
+      {
+        "slot2": "none"
+      },
+      {
+        "slot3": "none"
+      },
+      {
+        "slot4": "none"
+      },
+      {
+        "slot5": "none"
+      }
+    ],
+    "equip": [
+      {
+        "head": "none"
+      },
+      {
+        "body": "none"
+      },
+      {
+        "legs": "none"
+      }
+    ],
+    "module": [
+      {
+        "slot1": "none"
+      },
+      {
+        "slot2": "none"
+      },
+      {
+        "slot3": "none"
+      },
+      {
+        "slot4": "none"
+      },
+      {
+        "slot5": "none"
+      },
+      {
+        "slot6": "none"
+      }
+    ]
+  },
+  "checkpoint": {
+    "sceneName": "",
+    "mapIndex": -1,
+    "resumeRequested": false,
+    "broken_traps_snapshot": 0
+  },
+  "dungeon_status": [],
+  "play_time": "",
+  "clear_num_info": "",
+  "adventure_count": 0,
+  "achievement": "",
+  "player_rank": ""
+}

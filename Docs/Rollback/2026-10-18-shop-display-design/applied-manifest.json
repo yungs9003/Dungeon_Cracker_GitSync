@@ -1,0 +1,12 @@
+{
+  "modified": [
+    "Assets/Editor/ShopSceneBuilder.cs",
+    "Assets/Prefabs/UI/Shop/ShopItemCard.prefab",
+    "Assets/Prefabs/UI/Shop/ShopPage.prefab"
+  ],
+  "added": [
+    "Assets/Sprites/UI/Shop/ProductShadow.png",
+    "Assets/Sprites/UI/Shop/ProductShadow.png.meta"
+  ],
+  "deleted": []
+}

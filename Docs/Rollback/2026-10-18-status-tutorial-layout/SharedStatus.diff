@@ -1,0 +1,29 @@
+--- before
++++ after
+@@ -16798,6 +16798,7 @@
+   - component: {fileID: 3274178981290002937}
+   - component: {fileID: 7642182961221279333}
+   - component: {fileID: 7222916520265441713}
++  - component: {fileID: 2004424793523423275}
+   m_Layer: 5
+   m_Name: StatusPanel
+   m_TagString: Untagged
+@@ -16865,6 +16866,18 @@
+   m_FillOrigin: 0
+   m_UseSpriteMesh: 0
+   m_PixelsPerUnitMultiplier: 1
++--- !u!114 &2004424793523423275
++MonoBehaviour:
++  m_ObjectHideFlags: 0
++  m_CorrespondingSourceObject: {fileID: 0}
++  m_PrefabInstance: {fileID: 0}
++  m_PrefabAsset: {fileID: 0}
++  m_GameObject: {fileID: 7760302156419902609}
++  m_Enabled: 1
++  m_EditorHideFlags: 0
++  m_Script: {fileID: 11500000, guid: 4ef88fe4b39c4f23b99f13d2193ce63f, type: 3}
++  m_Name: 
++  m_EditorClassIdentifier: Dungeon.App::Dungeon.UI.StatusWindowLayout
+ --- !u!1 &7821181739638263913
+ GameObject:
+   m_ObjectHideFlags: 0

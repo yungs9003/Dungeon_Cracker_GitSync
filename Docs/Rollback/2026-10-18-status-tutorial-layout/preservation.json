@@ -1,0 +1,44 @@
+{
+  "Assets/Prefabs/UI/SharedStatus.prefab": {
+    "modified_existing_blocks": [
+      "7760302156419902609"
+    ],
+    "added_blocks": [
+      "2004424793523423275"
+    ],
+    "removed_blocks": [],
+    "preserved_unrelated_blocks": []
+  },
+  "Assets/Prefabs/UI/Tutorial/TutorialOverlay.prefab": {
+    "modified_existing_blocks": [
+      "2269073952525628788",
+      "2454830109150081478",
+      "2968988919960781933",
+      "4433997982527679236",
+      "5433287023551485467",
+      "5700340117981281809",
+      "6901977349762162221"
+    ],
+    "added_blocks": [
+      "5820245578709886039"
+    ],
+    "removed_blocks": [],
+    "preserved_unrelated_blocks": []
+  },
+  "Assets/Scenes/CheckpointScene.unity": {
+    "modified_existing_blocks": [
+      "877466183"
+    ],
+    "added_blocks": [
+      "877466187"
+    ],
+    "removed_blocks": [],
+    "preserved_unrelated_blocks": [
+      "126213968",
+      "1170548428",
+      "1681272506",
+      "1801833081",
+      "877466184"
+    ]
+  }
+}
