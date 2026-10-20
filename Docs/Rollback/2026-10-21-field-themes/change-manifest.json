@@ -1,0 +1,603 @@
+{
+  "status": "implemented_and_verified",
+  "baseline_count": 1579,
+  "final_count": 1670,
+  "modified": [
+    "Assets/Scripts/GamePlay/Map/AssetVariantSprite2D.cs",
+    "Assets/Scripts/GamePlay/Map/FieldEffectManager.cs",
+    "Assets/Scripts/GamePlay/Map/JsonBlockBuilder2D.Retile.cs",
+    "Assets/Scripts/GamePlay/Map/JsonBlockBuilder2D.cs",
+    "Assets/Scripts/GamePlay/Traps/Destructible.cs",
+    "Assets/Scripts/System/ReplaceSelfWithPrefabOnDisable.cs"
+  ],
+  "added": [
+    "Assets/Resources/Data/MapSpriteThemes.asset",
+    "Assets/Resources/Data/MapSpriteThemes.asset.meta",
+    "Assets/Scripts/GamePlay/Map/MapSpriteThemeCatalog.cs",
+    "Assets/Scripts/GamePlay/Map/MapSpriteThemeCatalog.cs.meta",
+    "Assets/Sprites/FieldThemes.meta",
+    "Assets/Sprites/FieldThemes/Fire.meta",
+    "Assets/Sprites/FieldThemes/Fire/000-000-0.png",
+    "Assets/Sprites/FieldThemes/Fire/000-000-0.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-001-0.png",
+    "Assets/Sprites/FieldThemes/Fire/001-001-0.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-001-1.png",
+    "Assets/Sprites/FieldThemes/Fire/001-001-1.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-001-10.png",
+    "Assets/Sprites/FieldThemes/Fire/001-001-10.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-001-11.png",
+    "Assets/Sprites/FieldThemes/Fire/001-001-11.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-001-13_0.png",
+    "Assets/Sprites/FieldThemes/Fire/001-001-13_0.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-001-2.png",
+    "Assets/Sprites/FieldThemes/Fire/001-001-2.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-001-3.png",
+    "Assets/Sprites/FieldThemes/Fire/001-001-3.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-001-4.png",
+    "Assets/Sprites/FieldThemes/Fire/001-001-4.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-001-5.png",
+    "Assets/Sprites/FieldThemes/Fire/001-001-5.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-001-6.png",
+    "Assets/Sprites/FieldThemes/Fire/001-001-6.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-001-7.png",
+    "Assets/Sprites/FieldThemes/Fire/001-001-7.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-002.png",
+    "Assets/Sprites/FieldThemes/Fire/001-002.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/001-005.png",
+    "Assets/Sprites/FieldThemes/Fire/001-005.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/100-000-0.png",
+    "Assets/Sprites/FieldThemes/Fire/100-000-0.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/100-000-1.png",
+    "Assets/Sprites/FieldThemes/Fire/100-000-1.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/100-000-2.png",
+    "Assets/Sprites/FieldThemes/Fire/100-000-2.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/100-000-3.png",
+    "Assets/Sprites/FieldThemes/Fire/100-000-3.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/100-000-4.png",
+    "Assets/Sprites/FieldThemes/Fire/100-000-4.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/101-001-0.png",
+    "Assets/Sprites/FieldThemes/Fire/101-001-0.png.meta",
+    "Assets/Sprites/FieldThemes/Fire/101-007-0.png",
+    "Assets/Sprites/FieldThemes/Fire/101-007-0.png.meta",
+    "Assets/Sprites/FieldThemes/Ice.meta",
+    "Assets/Sprites/FieldThemes/Ice/000-000-0.png",
+    "Assets/Sprites/FieldThemes/Ice/000-000-0.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-001-0.png",
+    "Assets/Sprites/FieldThemes/Ice/001-001-0.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-001-1.png",
+    "Assets/Sprites/FieldThemes/Ice/001-001-1.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-001-10.png",
+    "Assets/Sprites/FieldThemes/Ice/001-001-10.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-001-11.png",
+    "Assets/Sprites/FieldThemes/Ice/001-001-11.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-001-13_0.png",
+    "Assets/Sprites/FieldThemes/Ice/001-001-13_0.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-001-2.png",
+    "Assets/Sprites/FieldThemes/Ice/001-001-2.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-001-3.png",
+    "Assets/Sprites/FieldThemes/Ice/001-001-3.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-001-4.png",
+    "Assets/Sprites/FieldThemes/Ice/001-001-4.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-001-5.png",
+    "Assets/Sprites/FieldThemes/Ice/001-001-5.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-001-6.png",
+    "Assets/Sprites/FieldThemes/Ice/001-001-6.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-001-7.png",
+    "Assets/Sprites/FieldThemes/Ice/001-001-7.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-002.png",
+    "Assets/Sprites/FieldThemes/Ice/001-002.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/001-005.png",
+    "Assets/Sprites/FieldThemes/Ice/001-005.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/100-000-0.png",
+    "Assets/Sprites/FieldThemes/Ice/100-000-0.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/100-000-1.png",
+    "Assets/Sprites/FieldThemes/Ice/100-000-1.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/100-000-2.png",
+    "Assets/Sprites/FieldThemes/Ice/100-000-2.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/100-000-3.png",
+    "Assets/Sprites/FieldThemes/Ice/100-000-3.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/100-000-4.png",
+    "Assets/Sprites/FieldThemes/Ice/100-000-4.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/101-001-0.png",
+    "Assets/Sprites/FieldThemes/Ice/101-001-0.png.meta",
+    "Assets/Sprites/FieldThemes/Ice/101-007-0.png",
+    "Assets/Sprites/FieldThemes/Ice/101-007-0.png.meta"
+  ],
+  "removed": [],
+  "unchanged_count": 1573,
+  "original_images_unchanged": 76,
+  "theme_images": 42,
+  "unrotated_exact_copies": 41,
+  "pixel_exact_quarter_turns": 1,
+  "runtime_checks": "TOTAL 1186, FAILED 0",
+  "isolated_product_differences": [],
+  "isolated_importer_metadata_differences": [],
+  "actual_save_files_copied": 0,
+  "files": [
+    {
+      "path": "Assets/Scripts/GamePlay/Map/AssetVariantSprite2D.cs",
+      "before_sha256": "a616eb62989348c4a84cfc383002b8e9f6d1a6d6cdd9c5772a21761c87a65d57",
+      "after_sha256": "e32dd91f6f57f50713b7d343df888c42c883ec634affc22b43babc907575746f"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Map/FieldEffectManager.cs",
+      "before_sha256": "7c2be97c786563134e82044491de683bf72915b682de939fd16b4af984211954",
+      "after_sha256": "ea0ab9c95846451709f4fc61b937475b6aa2a43dd97fc5446ced5470d4c51f25"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Map/JsonBlockBuilder2D.Retile.cs",
+      "before_sha256": "4c75489b06ac018e3b88e6ff6a534aea083a9f19ddf39237f87162d9d3f18fcc",
+      "after_sha256": "25988ea9ef2873d8cfc97ff40348ae805259600cf27e95b576051e1c25c5278d"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Map/JsonBlockBuilder2D.cs",
+      "before_sha256": "b664951686c39dbec800f3cec9adcae74158b9da4103e2f48b2aac1051cddf47",
+      "after_sha256": "8e6bd6eedc3ffedeeb561299fb1b618897153ee99e233ec7b30554597352fb91"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Traps/Destructible.cs",
+      "before_sha256": "1eb4a187ff3fac855746fb570ed60106a273abdf453f825be37bd3845aaf3d40",
+      "after_sha256": "1f6172caa063db2dba78d038bbeb7ed915ade93f300e4bd85783033847444e1a"
+    },
+    {
+      "path": "Assets/Scripts/System/ReplaceSelfWithPrefabOnDisable.cs",
+      "before_sha256": "fc56b9cc8354b0601207a76546efb4f9dcd7249cdab2ac8db07de5df64fd96c5",
+      "after_sha256": "cd5ce99baea81e0deac4f0b503b1b3f2820bb2f0a8254440deb7d952ec0bf759"
+    },
+    {
+      "path": "Assets/Resources/Data/MapSpriteThemes.asset",
+      "before_sha256": null,
+      "after_sha256": "4548b192e1424885c137ff8991b5b1df945b0e4379f45e60eba63495d63c080a"
+    },
+    {
+      "path": "Assets/Resources/Data/MapSpriteThemes.asset.meta",
+      "before_sha256": null,
+      "after_sha256": "145a829116116d35a8bdb29844b0701dce6ef3a71b82a0dfcf42e77d731fe798"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Map/MapSpriteThemeCatalog.cs",
+      "before_sha256": null,
+      "after_sha256": "62324781d651729d833072aa879bf5ce197393dff7eb0fe2e4668f47a55542fd"
+    },
+    {
+      "path": "Assets/Scripts/GamePlay/Map/MapSpriteThemeCatalog.cs.meta",
+      "before_sha256": null,
+      "after_sha256": "cbfbe341e06c41359480dbb5cf6e278d92a6e3946a8c2bb01276c8865eb1bdd3"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes.meta",
+      "before_sha256": null,
+      "after_sha256": "9c1acd4d36de464c4073e196a83b5a001dac1b71a7d6d21fd823dfd62849c340"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire.meta",
+      "before_sha256": null,
+      "after_sha256": "95ffc653be68cc67926fb8c4745d7382d809e8876d3d9e743aa2094e08e05e59"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/000-000-0.png",
+      "before_sha256": null,
+      "after_sha256": "86a70755392482d72d71ff9f2c02b979833da41975a18e398383b58b13e4b805"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/000-000-0.png.meta",
+      "before_sha256": null,
+      "after_sha256": "c277f9575893e33112b766a16e1cc0e06efc1a7374ff7076ccb837d88f2d49ef"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-0.png",
+      "before_sha256": null,
+      "after_sha256": "43f774e1f464a9a61f53b789b9faa2daf7536d1f0ba2e2f8434cc395d6e48e95"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-0.png.meta",
+      "before_sha256": null,
+      "after_sha256": "3deeb5fa0e8d472ea002b4c3781ceb5fe643f4f9efe655125ac774c4cf3e9a13"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-1.png",
+      "before_sha256": null,
+      "after_sha256": "eecab3718d462179c2b9892c69e0c6c59b8edf867db5dd2ae19591fd89929cdf"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-1.png.meta",
+      "before_sha256": null,
+      "after_sha256": "b6aa6c792f16d68d87611c5cc8171d91b6c6922add32d71cbca41dca441b6661"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-10.png",
+      "before_sha256": null,
+      "after_sha256": "be04fc7b0b7847e67098155f6d820ecc0bb8d1251f327d888a842b772d262e8f"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-10.png.meta",
+      "before_sha256": null,
+      "after_sha256": "9d0652afcd1f226e8c731728d6993477f25e2c6e920830260576ba66a07d4333"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-11.png",
+      "before_sha256": null,
+      "after_sha256": "f4644ad2efb14242e96ec95006c2f24688850fa56a3edf82decf35c25e851231"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-11.png.meta",
+      "before_sha256": null,
+      "after_sha256": "69d737fdd85b7d8efc4c60879bc8fcd66e044366af6c46c7804600bc606dda05"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-13_0.png",
+      "before_sha256": null,
+      "after_sha256": "7f6d26d8ec916b67d819b2ec277453d0ddd33ab273218ba815b35b3822fa44ea"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-13_0.png.meta",
+      "before_sha256": null,
+      "after_sha256": "7572ce4e0c7588df2c073e46f62f48b8b8c977a70de6d895f8ad17361a1f410e"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-2.png",
+      "before_sha256": null,
+      "after_sha256": "6063392c8b13203a2e07cba8b76f9a890e995049a9f2a9f0b2cdbb1ded4a1101"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-2.png.meta",
+      "before_sha256": null,
+      "after_sha256": "f737037c2e965f066b067bf2113f497c8a743f616f963a3ce8d11adb29cd78c5"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-3.png",
+      "before_sha256": null,
+      "after_sha256": "e1dba15736510a16799f2d2da50d2780c415b12a35dd0afc8318ecb32614db15"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-3.png.meta",
+      "before_sha256": null,
+      "after_sha256": "94494b7d23512526136624916781a3ea1936d107e4a104d87bb45d5f9688d29a"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-4.png",
+      "before_sha256": null,
+      "after_sha256": "68975f6e22a814d1c0d822859c769dc578305f253fa126fb98b08fd2cfa05632"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-4.png.meta",
+      "before_sha256": null,
+      "after_sha256": "076cbf6dd74d46f1fe2abc419e0d7ca0eb2689af5061b1ec0e385bd1f9da807a"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-5.png",
+      "before_sha256": null,
+      "after_sha256": "2bf3670b7522fc72adafe949359a4adf581fbdef9f1aa74e9434f515da6ff375"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-5.png.meta",
+      "before_sha256": null,
+      "after_sha256": "178651ba755af8606f1bc4d644af778e95ca684a13f9f113cc07f5e02c70ed78"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-6.png",
+      "before_sha256": null,
+      "after_sha256": "be4366d19f2faf09b6712b317e7d9591d2eec56fe8e17f39dcbffe6428d4fa4a"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-6.png.meta",
+      "before_sha256": null,
+      "after_sha256": "1ab56448d8e6fc4a861e4a7bba98e58a56486f5e6b020dd508573929ae2ae885"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-7.png",
+      "before_sha256": null,
+      "after_sha256": "82a560a9d64d075263049560e8270a354c812c152e84c7aa9b6145510d853754"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-001-7.png.meta",
+      "before_sha256": null,
+      "after_sha256": "f6f5a07dc54b82956779260ef28409d03f6c9c1b0f84903aa74899bf665829f7"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-002.png",
+      "before_sha256": null,
+      "after_sha256": "d0cc3af887dd859fc8e4287316583ed6624f09819212da3ecbed966b069b71a7"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-002.png.meta",
+      "before_sha256": null,
+      "after_sha256": "9ce4a7906c4074b2e9d5f402b393447d4ac605149ea0cfee3461ab17b7d7a3ed"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-005.png",
+      "before_sha256": null,
+      "after_sha256": "9c513d4119ca4d51408e954131cb956176cf80ad5912a96a42986c53f7d52c9f"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/001-005.png.meta",
+      "before_sha256": null,
+      "after_sha256": "4ef2782577a8921626849b2e238eebd277599824e1b1a8d90f464cfa411b365a"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/100-000-0.png",
+      "before_sha256": null,
+      "after_sha256": "7d80b12ce5e4c07332b144768569c343c71af0501a0b2f60d4c04d6bf43378a6"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/100-000-0.png.meta",
+      "before_sha256": null,
+      "after_sha256": "d7177e30a72181fa2bbdb21a9c5a52586b0a6ed1ad99d474ef267e214c5a878e"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/100-000-1.png",
+      "before_sha256": null,
+      "after_sha256": "7f962446c50e5e5c3f8b350d1af81c0a182ce88d809b6deffce9b9e09f02d031"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/100-000-1.png.meta",
+      "before_sha256": null,
+      "after_sha256": "555bbedb0062b400d1d0ab351bb8c510f2d180c62b3d59a4a9ce54e5440dbc45"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/100-000-2.png",
+      "before_sha256": null,
+      "after_sha256": "854edad982bcba8513f227caf23515097f2d300dc724c770d13977cfcbdd7591"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/100-000-2.png.meta",
+      "before_sha256": null,
+      "after_sha256": "a77f324a8b42a30caf06bb34465bb0eb57f824d8ddb6d85c950d8805ddb672c4"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/100-000-3.png",
+      "before_sha256": null,
+      "after_sha256": "8ea3b57ed7f43a4f1367d49861a8e4ec6b4abefddb8eaae25b57a058a105e84b"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/100-000-3.png.meta",
+      "before_sha256": null,
+      "after_sha256": "b88b203607bd1dbcc166ec5e0b2adcc07da828183ecd863d6e89d6b2c7ecf563"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/100-000-4.png",
+      "before_sha256": null,
+      "after_sha256": "1cce88505a3f5c8ef83d1ed00d28497d79e41ebd01a7b19c3633899436dbf29b"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/100-000-4.png.meta",
+      "before_sha256": null,
+      "after_sha256": "e12cd9862b9df5cb50c99396b99ffcef90dfa9a8332baa03348bc52a01e4916d"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/101-001-0.png",
+      "before_sha256": null,
+      "after_sha256": "f872519e6f97ad66dc1687a437d56f478e9015ea1846059febeb4c3e29802649"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/101-001-0.png.meta",
+      "before_sha256": null,
+      "after_sha256": "99d1d1ec78e183d96c745d52e936992c62e018f3e078574a261051c0204193e4"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/101-007-0.png",
+      "before_sha256": null,
+      "after_sha256": "a9ecdca18a997351b43f62e0877eac496ee1475809ce2628290e0b8e1f7bd0bb"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Fire/101-007-0.png.meta",
+      "before_sha256": null,
+      "after_sha256": "597e56a4c28b2acd6ff1f7dd5ff7bf43ced242dbde45436e1e77088f90cee097"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice.meta",
+      "before_sha256": null,
+      "after_sha256": "47fe7780127d05cabed8cf92d4ef629acf2d48ecef2772fcb8bebba51364203a"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/000-000-0.png",
+      "before_sha256": null,
+      "after_sha256": "009db99f0366c57952569c8af5af7df6e1b5ee8fbaac3cc2a3b462cb772f3b16"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/000-000-0.png.meta",
+      "before_sha256": null,
+      "after_sha256": "1adabbf47a1003c23ecc324313c6b52f72919622169a3a4d7c5e52f1f8a21b33"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-0.png",
+      "before_sha256": null,
+      "after_sha256": "9c796d7e3a60fc83d3d7bf315ddffef21497619a98694a2c63aa54f3352c9b16"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-0.png.meta",
+      "before_sha256": null,
+      "after_sha256": "848645f486ef7bd978cc417fcd04455479a92f537c50bcdb97c919334539da4f"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-1.png",
+      "before_sha256": null,
+      "after_sha256": "cc3c6bd5786d7bb7a1ce5af688dd565e9ee8d0a0d47f7e64dc7a4567675256ee"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-1.png.meta",
+      "before_sha256": null,
+      "after_sha256": "12294abbb4eb59de7cf71e36f10533116b9ec0a954e845c90abe033b5a24960e"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-10.png",
+      "before_sha256": null,
+      "after_sha256": "d310b88f14c78377b0ca51640034307183e1646226fd4ae10445badffdfe15f9"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-10.png.meta",
+      "before_sha256": null,
+      "after_sha256": "8669fec9ffd2d493fd261605e97cf5d644a7fccb9e39fd42c402058b76c2e8b1"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-11.png",
+      "before_sha256": null,
+      "after_sha256": "2a161148e37e1a0f2e3b7fa7648a252919d4084742449bf2724073e84efe31da"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-11.png.meta",
+      "before_sha256": null,
+      "after_sha256": "c597e508eb806f57fcd23c7f72a764e4ebcaaa42ff8ba1467cc0166cb974931d"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-13_0.png",
+      "before_sha256": null,
+      "after_sha256": "fbd370d08030e87713e1546a8b59e29ef7b5b9334950b83d90e70e444626c8e3"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-13_0.png.meta",
+      "before_sha256": null,
+      "after_sha256": "cb05ad232fc325a153bfd219324dee39fd8db5970de43103a0ca242eca2be19e"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-2.png",
+      "before_sha256": null,
+      "after_sha256": "ce6bfa4bdf05d877c98685f62f501302eccaffa0851a0be6d49e954b4abb9b93"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-2.png.meta",
+      "before_sha256": null,
+      "after_sha256": "6bbb59b8940a4edc1fcfdb2fdfcb4f81fa150e2b3c863fa910343e318f9e0762"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-3.png",
+      "before_sha256": null,
+      "after_sha256": "cc90b0cc9d7d464ed1c8d5b0a509b4c356c1bf8425532d3b09d0e53790728e10"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-3.png.meta",
+      "before_sha256": null,
+      "after_sha256": "bf75d20d07f34bacc8162925f8e6b6f5e546c65b5b378dc73b279e978cba8861"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-4.png",
+      "before_sha256": null,
+      "after_sha256": "ea784c57fa9aeb111864ef9099fef80ebf6a004db68f4a6bf02727a29e918104"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-4.png.meta",
+      "before_sha256": null,
+      "after_sha256": "c470d16c4066eeb93be26caba8eb6f17269018833e2f85b688054100173892f9"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-5.png",
+      "before_sha256": null,
+      "after_sha256": "78908217cdce1e24e015fb4546f3d3e21dac721e41bf5d4758352119c5be1e0a"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-5.png.meta",
+      "before_sha256": null,
+      "after_sha256": "d1b120ef0877e0c68b59125fdb1cee0ca61ff58a20a32b739050bc1e0c484618"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-6.png",
+      "before_sha256": null,
+      "after_sha256": "90816e0f4d8bdda03137abe6f91e0bed704560dbb4f1fed8fe49b030275f315e"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-6.png.meta",
+      "before_sha256": null,
+      "after_sha256": "91c800a260c837e814996a9028a0ccba7e25127b5a86b5eabbb7c1e1273fbd03"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-7.png",
+      "before_sha256": null,
+      "after_sha256": "247933f4de1fe0b52ed5ee1059fb60e8fa540c27d5edab6fd8ed05885b4b9bf3"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-001-7.png.meta",
+      "before_sha256": null,
+      "after_sha256": "1f6356c70e077beab7e3d29523d31a2e6bb246194f05795887d577f7f6df7dc4"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-002.png",
+      "before_sha256": null,
+      "after_sha256": "38d3794bb472e75990a6db5228fdac68b85dc558958642cc0e59396ba1f4d4d6"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-002.png.meta",
+      "before_sha256": null,
+      "after_sha256": "20789a1b70bfdd6b8ac495107a23b37126ea7b5e94682a21e722257ccf96f21c"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-005.png",
+      "before_sha256": null,
+      "after_sha256": "7a20fdc7c0d9936b825f99e568656c8e51c19e7e42054544599304522cd09171"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/001-005.png.meta",
+      "before_sha256": null,
+      "after_sha256": "3c1a280ef369a06f5b5456769da074344ea5d0f91e017f0d99ff4773ac727673"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/100-000-0.png",
+      "before_sha256": null,
+      "after_sha256": "d0b69438edcaae59ae5284b0fe65bb1d5904b7db36022af5de6e4b5fb942bba6"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/100-000-0.png.meta",
+      "before_sha256": null,
+      "after_sha256": "a420798f1f83597d841de4f741ff0e12179498a0ab4d9c7e01d185354fbce515"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/100-000-1.png",
+      "before_sha256": null,
+      "after_sha256": "1fbf266b0b45c83d824137ccbabff93d4a6f9def3a480eb67864f506f964756f"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/100-000-1.png.meta",
+      "before_sha256": null,
+      "after_sha256": "1c3f634ed86285474dc15b4fd965632af97cb1757ffd05fccb5322876386c3d7"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/100-000-2.png",
+      "before_sha256": null,
+      "after_sha256": "796264f222f6220b6457d65468f8389c26384aa48b30b2238632de478c0110f3"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/100-000-2.png.meta",
+      "before_sha256": null,
+      "after_sha256": "aec54d25bbbb50981b8ef8b998d66c589ea0a282c00a0f69bf6711f7560a6da6"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/100-000-3.png",
+      "before_sha256": null,
+      "after_sha256": "e6d91d2c7c5e53dc91046ad800dfa3e3e0bae1afea0244e6af514c2cf46f10d8"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/100-000-3.png.meta",
+      "before_sha256": null,
+      "after_sha256": "52be759db335fbc755ab9706a38757cd116eba2f37c06c7c57b8ef917697f150"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/100-000-4.png",
+      "before_sha256": null,
+      "after_sha256": "e6951ea3706495f260b6fd8bf4dcdae4091dab4d136addb80d54547e1625d732"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/100-000-4.png.meta",
+      "before_sha256": null,
+      "after_sha256": "219f1a4cebd70a4f762afe4300bcbe762a25b63861eeeff6ca26a0f45e4ccf14"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/101-001-0.png",
+      "before_sha256": null,
+      "after_sha256": "8d2a913e8083ebb54e21f79432e7cc5ea27f66a46055f0ea84b8edd13f78b24f"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/101-001-0.png.meta",
+      "before_sha256": null,
+      "after_sha256": "c5b55843f6d582956207be24d6c567d9ce2475d81480f110ad374733a312eeb6"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/101-007-0.png",
+      "before_sha256": null,
+      "after_sha256": "7585666140e5e81df293c901a97869144cc6bb191cca0d235e90d3bf872d2b80"
+    },
+    {
+      "path": "Assets/Sprites/FieldThemes/Ice/101-007-0.png.meta",
+      "before_sha256": null,
+      "after_sha256": "8d6a650bbc32e6f60827bd589f1cb2260c198d525b8f4cc0054996ac0f83654b"
+    }
+  ]
+}

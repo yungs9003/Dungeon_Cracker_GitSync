@@ -141,9 +141,10 @@ namespace Dungeon.Map
             return TileDestructionHandling.Applied;
         }
 
-        private static void ApplyTrapWallVisual(GameObject target, AssetVariantSprite2D walls, int asset, Quaternion rotation)
+        private void ApplyTrapWallVisual(GameObject target, AssetVariantSprite2D walls, int asset, Quaternion rotation)
         {
-            Sprite sprite = walls.GetSpriteForAssetNo(asset, false);
+            Sprite sprite = MapSpriteThemeCatalog.ResolveDefault(
+                walls.GetSpriteForAssetNo(asset, false), CurrentSpriteTheme);
             var hidden = target.GetComponent<HiddenTrapVisual2D>();
             if (hidden != null) { hidden.OverrideHiddenWallSprite(sprite, rotation); return; }
             // 항상 보이는 밀치기/당기기의 별도 WallVisual만 바꾸고 공격 루트는 회전하지 않는다.

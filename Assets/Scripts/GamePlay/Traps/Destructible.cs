@@ -54,7 +54,7 @@ namespace Dungeon.Traps
             AddBrokenTrapCount();
 
             if (handling == TileDestructionHandling.NotHandled)
-                SpawnReplacement();
+                SpawnReplacement(builder);
             else if (destroyRoot != null)
             {
                 // 새 바닥과 오래된 함정이 한 프레임 겹치거나 통로를 막지 않도록 한다.
@@ -85,7 +85,7 @@ namespace Dungeon.Traps
             StatusSaveFile.Instance.AddBrokenTrap(1);
         }
 
-        private void SpawnReplacement()
+        private void SpawnReplacement(JsonBlockBuilder2D builder)
         {
             if (replacementPrefab == null)
                 return;
@@ -97,7 +97,9 @@ namespace Dungeon.Traps
             Vector3 spawnPos = baseTf.position;
             Quaternion spawnRot = copyDestroyedObjectRotation ? baseTf.rotation : Quaternion.identity;
 
-            Instantiate(replacementPrefab, spawnPos, spawnRot);
+            GameObject replacement = Instantiate(replacementPrefab, spawnPos, spawnRot);
+            if (builder != null)
+                builder.ApplySpriteTheme(replacement);
         }
 
         private void DisableTraps()

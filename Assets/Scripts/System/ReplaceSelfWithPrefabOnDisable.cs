@@ -50,6 +50,9 @@ public class ReplaceSelfWithPrefabOnDisable : MonoBehaviour, ITrapToggle
 
         GameObject newBlock = Instantiate(prefab, pos, rot, parent);
         newBlock.name = $"{replaceToCode}_ReplacedFrom_{gameObject.name}";
+        var builder = GetComponentInParent<JsonBlockBuilder2D>();
+        if (builder != null)
+            builder.ApplySpriteTheme(newBlock);
 
         // 3) 좌표 유지 (BlockCoord가 있으면 복사)
         CopyBlockCoordIfExists(this.gameObject, newBlock);

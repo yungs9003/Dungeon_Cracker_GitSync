@@ -277,7 +277,7 @@ namespace Dungeon.Map
             };
         }
 
-        private static FieldEffectType ParseType(string rawType)
+        public static FieldEffectType ParseType(string rawType)
         {
             if (string.IsNullOrWhiteSpace(rawType))
                 return FieldEffectType.None;
@@ -285,6 +285,7 @@ namespace Dungeon.Map
             return rawType.Trim().ToLowerInvariant() switch
             {
                 "burn" => FieldEffectType.Burn,
+                "fire" => FieldEffectType.Burn,
                 "ice" => FieldEffectType.Ice,
                 "none" => FieldEffectType.None,
                 _ => FieldEffectType.None

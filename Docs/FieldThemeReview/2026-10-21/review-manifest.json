@@ -1,0 +1,42 @@
+{
+  "checked_at_kst": "2026-10-21T01:33:00+09:00",
+  "status": "awaiting_user_mapping_review",
+  "scope": "Read-only sprite matching; Docs review artifacts only. No Unity run or gameplay implementation.",
+  "existing_png_count": 32,
+  "incoming_png_count": 44,
+  "matched_existing_count": 21,
+  "existing_without_theme_count": 11,
+  "extra_pair_count": 1,
+  "source_hash_count": 76,
+  "source_changes": [],
+  "product_baseline_file_count": 1579,
+  "product_current_file_count": 1579,
+  "product_changed_files": [],
+  "product_added_files": [],
+  "product_removed_files": [],
+  "incoming_coverage_complete": true,
+  "incoming_assignments_unique": true,
+  "existing_coverage_complete": true,
+  "preview_rotation_only": {
+    "IMG_4944.png": "90 degrees counterclockwise"
+  },
+  "artifact_sha256": {
+    "01-walls-0-6.png": "707f2c77bf921f360a42287c1d44c35573955944feb5675e0c2d13c5209025e8",
+    "02-walls-7-13.png": "086c96015a66955b158a7c7a58787f6611011d9adb83bdb162c5542f57bb638b",
+    "03-floor-portals-traps.png": "e94dd9b8246093405b4476c49f0d82e6db53798fe80a5bccae5c5fba85b5753d",
+    "04-pits.png": "cbcdc61e83324a816dee00253c225df05c87c5a04ae0e8258a30572b1bcd38aa",
+    "05-no-theme-counterparts.png": "cbfe1760992129b495f49ed6a1e0fbcc51fff45acb5ee7f3969a636b7d6998fc",
+    "06-rotation-detail.png": "780b814895e0ba2728b28706eab0f54c79aff056665841b43f412458cb084205",
+    "before-project-sha256.json": "111ef181ffea686bc2981265173821618049720efd15b46d76b1d43264e34219",
+    "existing-inventory.png": "0774816383ef13736b0ca7320f4e8ebbd1dfd41bd94f01d68d1b0ca7c646f6cf",
+    "incoming-inventory.png": "efc87398b01987bec0597880e7acc3f20cd8d913c6fb49eb9bd2805e650740bb",
+    "mapping.csv": "d0175efad4a328282ad9da1cedb68c6e6002afeadf12cb01b0b373f84a60b66c",
+    "proposed-mapping.json": "eb9f42519508bf25011246b41fd061db2f37ae3ed6b90e1d966760424f0bbbff",
+    "README.md": "c564db1c3862057045c9261ccd6015c86af1b2f9ed1778b840d918a9d2093d00",
+    "rotated-structure-candidates.json": "d4edf51814ed668ab000f5c5df2c7095c871f9c150eb43819d80cf832d6d1930",
+    "source-sha256.json": "b1997117cc1e94ee98bcbcf6a2e9872af4067079d0505dd6b018a799ac0c5a29",
+    "structure-score-candidates.json": "1cfbf88d4f1e383fc9f3b36e2502232ee59fb9d92cd72de2b98a4878030eec85",
+    "Tools/create_comparison_sheets.py": "78307345025d65c3146a3ea22c42a59b11801458a44b6028c1f0a2a29846e8bf",
+    "Tools/verify_review.py": "a8ffec2e602cdb1e95651664e38c8668a39ff954a891d414031659d9ffae345c"
+  }
+}

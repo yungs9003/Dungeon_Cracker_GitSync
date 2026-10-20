@@ -1,4 +1,5 @@
 using UnityEngine;
+using Dungeon.Map;
 
 public class AssetVariantSprite2D : MonoBehaviour
 {
@@ -16,6 +17,14 @@ public class AssetVariantSprite2D : MonoBehaviour
 
     public int CurrentAssetNo { get; private set; } = -1;
     public int VariantCount => variants != null ? variants.Length : 0;
+    public FieldEffectManager.FieldEffectType SpriteTheme { get; private set; }
+
+    public void SetSpriteTheme(FieldEffectManager.FieldEffectType theme)
+    {
+        SpriteTheme = theme;
+        if (CurrentAssetNo >= 0)
+            SetAssetNo(CurrentAssetNo);
+    }
 
     private void Awake()
     {
@@ -46,7 +55,7 @@ public class AssetVariantSprite2D : MonoBehaviour
         }
 
         CurrentAssetNo = assetNo;
-        spriteRenderer.sprite = sprite;
+        spriteRenderer.sprite = MapSpriteThemeCatalog.ResolveDefault(sprite, SpriteTheme);
     }
 
     public Sprite GetSpriteForAssetNo(int assetNo, bool fallbackToZero = true)

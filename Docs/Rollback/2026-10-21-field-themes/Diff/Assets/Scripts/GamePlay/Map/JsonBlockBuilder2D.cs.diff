@@ -1,0 +1,55 @@
+--- Before/Assets/Scripts/GamePlay/Map/JsonBlockBuilder2D.cs
++++ After/Assets/Scripts/GamePlay/Map/JsonBlockBuilder2D.cs
+@@ -35,7 +35,7 @@
+ 
+     /// <summary>
+     /// 맵 전체에 적용되는 필드 효과 데이터입니다.
+-    /// type은 "burn", "ice", 또는 비어 있는 값/"none"을 사용합니다.
++    /// type은 "fire"(기존 "burn" 호환), "ice", 또는 비어 있는 값/"none"을 사용합니다.
+     /// damage는 FieldEffectManager가 주기적으로 적용할 1회 피해량입니다.
+     /// </summary>
+     [Serializable]
+@@ -130,6 +130,7 @@
+         private readonly Dictionary<Vector2Int, List<string>> relationMap = new();
+ 
+         public MapData2D LoadedMapData { get; private set; }
++        public FieldEffectManager.FieldEffectType CurrentSpriteTheme { get; private set; }
+ 
+         private void Start()
+         {
+@@ -153,6 +154,7 @@
+         /// </summary>
+         public void BuildFromJson()
+         {
++            CurrentSpriteTheme = FieldEffectManager.FieldEffectType.None;
+             ResetTileRetileState();
+             ClearChildren();
+             prefabCache.Clear();
+@@ -176,6 +178,7 @@
+             }
+ 
+             CacheRelations(LoadedMapData.relation);
++            CurrentSpriteTheme = FieldEffectManager.ParseType(LoadedMapData.field_effect?.type);
+ 
+             // 렌더 순서: grid < 3F
+             BuildGridTiles(LoadedMapData.grid);
+@@ -368,8 +371,19 @@
+ 
+             GameObject block = Instantiate(prefab, pos, rot, transform);
+             block.name = $"{code}_{x:X2}{y:X2}";
++            ApplySpriteTheme(block);
+ 
+             return block;
++        }
++
++        /// <summary>생성/교체한 타일의 모든 렌더러와 이후 Element 전환에 현재 맵 테마를 적용합니다.</summary>
++        public void ApplySpriteTheme(GameObject block)
++        {
++            if (block == null) return;
++            foreach (var variant in block.GetComponentsInChildren<AssetVariantSprite2D>(true))
++                variant.SetSpriteTheme(CurrentSpriteTheme);
++            foreach (var renderer in block.GetComponentsInChildren<SpriteRenderer>(true))
++                renderer.sprite = MapSpriteThemeCatalog.ResolveDefault(renderer.sprite, CurrentSpriteTheme);
+         }
+ 
+         /// <summary>

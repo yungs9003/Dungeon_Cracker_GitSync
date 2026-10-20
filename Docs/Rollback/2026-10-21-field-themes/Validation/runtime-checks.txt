@@ -1,0 +1,1187 @@
+PASS original import Assets/Sprites/Tiles/000-000-0.png
+PASS original import Assets/Sprites/Tiles/001-001-0.png
+PASS original import Assets/Sprites/Tiles/001-001-1.png
+PASS original import Assets/Sprites/Tiles/001-001-10.png
+PASS original import Assets/Sprites/Tiles/001-001-11.png
+PASS original import Assets/Sprites/Tiles/001-001-12_0.png
+PASS original import Assets/Sprites/Tiles/001-001-13_0.png
+PASS original import Assets/Sprites/Tiles/001-001-2.png
+PASS original import Assets/Sprites/Tiles/001-001-3.png
+PASS original import Assets/Sprites/Tiles/001-001-4.png
+PASS original import Assets/Sprites/Tiles/001-001-5.png
+PASS original import Assets/Sprites/Tiles/001-001-6.png
+PASS original import Assets/Sprites/Tiles/001-001-7.png
+PASS original import Assets/Sprites/Tiles/001-001-8.png
+PASS original import Assets/Sprites/Tiles/001-001-9.png
+PASS original import Assets/Sprites/Tiles/001-002.png
+PASS original import Assets/Sprites/Tiles/001-005.png
+PASS original import Assets/Sprites/Tiles/002-002-0.png
+PASS original import Assets/Sprites/Tiles/002-002-1.png
+PASS original import Assets/Sprites/Tiles/100-000-0.png
+PASS original import Assets/Sprites/Tiles/100-000-1.png
+PASS original import Assets/Sprites/Tiles/100-000-2.png
+PASS original import Assets/Sprites/Tiles/100-000-3.png
+PASS original import Assets/Sprites/Tiles/100-000-4.png
+PASS original import Assets/Sprites/Tiles/101-001-0.png
+PASS original import Assets/Sprites/Tiles/101-007-0.png
+PASS original import Assets/Sprites/Tiles/102-002-0.png
+PASS original import Assets/Sprites/Tiles/102-005-0.png
+PASS original import Assets/Sprites/Tiles/102-009-0.png
+PASS original import Assets/Sprites/Tiles/102-010-0.png
+PASS original import Assets/Sprites/Tiles/102-011-0.png
+PASS original import Assets/Sprites/Tiles/103-012-0.png
+PASS catalog is a runtime Resources dependency
+PASS catalog ice Assets/Sprites/Tiles/000-000-0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/000-000-0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/000-000-0.png
+PASS catalog fire Assets/Sprites/Tiles/000-000-0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/000-000-0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/000-000-0.png
+PASS catalog none Assets/Sprites/Tiles/000-000-0.png
+PASS catalog restores original none Assets/Sprites/Tiles/000-000-0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/000-000-0.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-0.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-0.png
+PASS catalog none Assets/Sprites/Tiles/001-001-0.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-0.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-1.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-1.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-1.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-1.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-1.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-1.png
+PASS catalog none Assets/Sprites/Tiles/001-001-1.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-1.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-1.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-10.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-10.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-10.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-10.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-10.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-10.png
+PASS catalog none Assets/Sprites/Tiles/001-001-10.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-10.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-10.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-11.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-11.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-11.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-11.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-11.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-11.png
+PASS catalog none Assets/Sprites/Tiles/001-001-11.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-11.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-11.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-12_0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-12_0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-12_0.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-12_0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-12_0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-12_0.png
+PASS catalog none Assets/Sprites/Tiles/001-001-12_0.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-12_0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-12_0.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-13_0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-13_0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-13_0.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-13_0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-13_0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-13_0.png
+PASS catalog none Assets/Sprites/Tiles/001-001-13_0.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-13_0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-13_0.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-2.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-2.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-2.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-2.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-2.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-2.png
+PASS catalog none Assets/Sprites/Tiles/001-001-2.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-2.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-2.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-3.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-3.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-3.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-3.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-3.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-3.png
+PASS catalog none Assets/Sprites/Tiles/001-001-3.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-3.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-3.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-4.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-4.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-4.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-4.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-4.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-4.png
+PASS catalog none Assets/Sprites/Tiles/001-001-4.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-4.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-4.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-5.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-5.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-5.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-5.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-5.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-5.png
+PASS catalog none Assets/Sprites/Tiles/001-001-5.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-5.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-5.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-6.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-6.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-6.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-6.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-6.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-6.png
+PASS catalog none Assets/Sprites/Tiles/001-001-6.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-6.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-6.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-7.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-7.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-7.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-7.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-7.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-7.png
+PASS catalog none Assets/Sprites/Tiles/001-001-7.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-7.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-7.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-8.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-8.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-8.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-8.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-8.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-8.png
+PASS catalog none Assets/Sprites/Tiles/001-001-8.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-8.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-8.png
+PASS catalog ice Assets/Sprites/Tiles/001-001-9.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-001-9.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-001-9.png
+PASS catalog fire Assets/Sprites/Tiles/001-001-9.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-001-9.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-001-9.png
+PASS catalog none Assets/Sprites/Tiles/001-001-9.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-001-9.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-001-9.png
+PASS catalog ice Assets/Sprites/Tiles/001-002.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-002.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-002.png
+PASS catalog fire Assets/Sprites/Tiles/001-002.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-002.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-002.png
+PASS catalog none Assets/Sprites/Tiles/001-002.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-002.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-002.png
+PASS catalog ice Assets/Sprites/Tiles/001-005.png
+PASS catalog restores original ice Assets/Sprites/Tiles/001-005.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/001-005.png
+PASS catalog fire Assets/Sprites/Tiles/001-005.png
+PASS catalog restores original fire Assets/Sprites/Tiles/001-005.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/001-005.png
+PASS catalog none Assets/Sprites/Tiles/001-005.png
+PASS catalog restores original none Assets/Sprites/Tiles/001-005.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/001-005.png
+PASS catalog ice Assets/Sprites/Tiles/002-002-0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/002-002-0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/002-002-0.png
+PASS catalog fire Assets/Sprites/Tiles/002-002-0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/002-002-0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/002-002-0.png
+PASS catalog none Assets/Sprites/Tiles/002-002-0.png
+PASS catalog restores original none Assets/Sprites/Tiles/002-002-0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/002-002-0.png
+PASS catalog ice Assets/Sprites/Tiles/002-002-1.png
+PASS catalog restores original ice Assets/Sprites/Tiles/002-002-1.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/002-002-1.png
+PASS catalog fire Assets/Sprites/Tiles/002-002-1.png
+PASS catalog restores original fire Assets/Sprites/Tiles/002-002-1.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/002-002-1.png
+PASS catalog none Assets/Sprites/Tiles/002-002-1.png
+PASS catalog restores original none Assets/Sprites/Tiles/002-002-1.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/002-002-1.png
+PASS catalog ice Assets/Sprites/Tiles/100-000-0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/100-000-0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/100-000-0.png
+PASS catalog fire Assets/Sprites/Tiles/100-000-0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/100-000-0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/100-000-0.png
+PASS catalog none Assets/Sprites/Tiles/100-000-0.png
+PASS catalog restores original none Assets/Sprites/Tiles/100-000-0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/100-000-0.png
+PASS catalog ice Assets/Sprites/Tiles/100-000-1.png
+PASS catalog restores original ice Assets/Sprites/Tiles/100-000-1.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/100-000-1.png
+PASS catalog fire Assets/Sprites/Tiles/100-000-1.png
+PASS catalog restores original fire Assets/Sprites/Tiles/100-000-1.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/100-000-1.png
+PASS catalog none Assets/Sprites/Tiles/100-000-1.png
+PASS catalog restores original none Assets/Sprites/Tiles/100-000-1.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/100-000-1.png
+PASS catalog ice Assets/Sprites/Tiles/100-000-2.png
+PASS catalog restores original ice Assets/Sprites/Tiles/100-000-2.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/100-000-2.png
+PASS catalog fire Assets/Sprites/Tiles/100-000-2.png
+PASS catalog restores original fire Assets/Sprites/Tiles/100-000-2.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/100-000-2.png
+PASS catalog none Assets/Sprites/Tiles/100-000-2.png
+PASS catalog restores original none Assets/Sprites/Tiles/100-000-2.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/100-000-2.png
+PASS catalog ice Assets/Sprites/Tiles/100-000-3.png
+PASS catalog restores original ice Assets/Sprites/Tiles/100-000-3.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/100-000-3.png
+PASS catalog fire Assets/Sprites/Tiles/100-000-3.png
+PASS catalog restores original fire Assets/Sprites/Tiles/100-000-3.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/100-000-3.png
+PASS catalog none Assets/Sprites/Tiles/100-000-3.png
+PASS catalog restores original none Assets/Sprites/Tiles/100-000-3.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/100-000-3.png
+PASS catalog ice Assets/Sprites/Tiles/100-000-4.png
+PASS catalog restores original ice Assets/Sprites/Tiles/100-000-4.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/100-000-4.png
+PASS catalog fire Assets/Sprites/Tiles/100-000-4.png
+PASS catalog restores original fire Assets/Sprites/Tiles/100-000-4.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/100-000-4.png
+PASS catalog none Assets/Sprites/Tiles/100-000-4.png
+PASS catalog restores original none Assets/Sprites/Tiles/100-000-4.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/100-000-4.png
+PASS catalog ice Assets/Sprites/Tiles/101-001-0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/101-001-0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/101-001-0.png
+PASS catalog fire Assets/Sprites/Tiles/101-001-0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/101-001-0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/101-001-0.png
+PASS catalog none Assets/Sprites/Tiles/101-001-0.png
+PASS catalog restores original none Assets/Sprites/Tiles/101-001-0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/101-001-0.png
+PASS catalog ice Assets/Sprites/Tiles/101-007-0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/101-007-0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/101-007-0.png
+PASS catalog fire Assets/Sprites/Tiles/101-007-0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/101-007-0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/101-007-0.png
+PASS catalog none Assets/Sprites/Tiles/101-007-0.png
+PASS catalog restores original none Assets/Sprites/Tiles/101-007-0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/101-007-0.png
+PASS catalog ice Assets/Sprites/Tiles/102-002-0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/102-002-0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/102-002-0.png
+PASS catalog fire Assets/Sprites/Tiles/102-002-0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/102-002-0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/102-002-0.png
+PASS catalog none Assets/Sprites/Tiles/102-002-0.png
+PASS catalog restores original none Assets/Sprites/Tiles/102-002-0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/102-002-0.png
+PASS catalog ice Assets/Sprites/Tiles/102-005-0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/102-005-0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/102-005-0.png
+PASS catalog fire Assets/Sprites/Tiles/102-005-0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/102-005-0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/102-005-0.png
+PASS catalog none Assets/Sprites/Tiles/102-005-0.png
+PASS catalog restores original none Assets/Sprites/Tiles/102-005-0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/102-005-0.png
+PASS catalog ice Assets/Sprites/Tiles/102-009-0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/102-009-0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/102-009-0.png
+PASS catalog fire Assets/Sprites/Tiles/102-009-0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/102-009-0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/102-009-0.png
+PASS catalog none Assets/Sprites/Tiles/102-009-0.png
+PASS catalog restores original none Assets/Sprites/Tiles/102-009-0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/102-009-0.png
+PASS catalog ice Assets/Sprites/Tiles/102-010-0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/102-010-0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/102-010-0.png
+PASS catalog fire Assets/Sprites/Tiles/102-010-0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/102-010-0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/102-010-0.png
+PASS catalog none Assets/Sprites/Tiles/102-010-0.png
+PASS catalog restores original none Assets/Sprites/Tiles/102-010-0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/102-010-0.png
+PASS catalog ice Assets/Sprites/Tiles/102-011-0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/102-011-0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/102-011-0.png
+PASS catalog fire Assets/Sprites/Tiles/102-011-0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/102-011-0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/102-011-0.png
+PASS catalog none Assets/Sprites/Tiles/102-011-0.png
+PASS catalog restores original none Assets/Sprites/Tiles/102-011-0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/102-011-0.png
+PASS catalog ice Assets/Sprites/Tiles/103-012-0.png
+PASS catalog restores original ice Assets/Sprites/Tiles/103-012-0.png
+PASS sprite geometry preserved ice Assets/Sprites/Tiles/103-012-0.png
+PASS catalog fire Assets/Sprites/Tiles/103-012-0.png
+PASS catalog restores original fire Assets/Sprites/Tiles/103-012-0.png
+PASS sprite geometry preserved fire Assets/Sprites/Tiles/103-012-0.png
+PASS catalog none Assets/Sprites/Tiles/103-012-0.png
+PASS catalog restores original none Assets/Sprites/Tiles/103-012-0.png
+PASS sprite geometry preserved none Assets/Sprites/Tiles/103-012-0.png
+PASS shared type parser aliases/normalization
+PASS future image starts with original fallback
+PASS filling empty Inspector slot works without code changes
+PASS future slot check leaves shipped catalog unchanged
+PASS ice builder/effect selection
+PASS ice hidden 001-001_0002/
+PASS ice hidden 001-001_0102/
+PASS ice hidden 001-001_0202/
+PASS ice hidden 001-001_0302/
+PASS ice hidden 001-001_0402/
+PASS ice hidden 001-001_0502/
+PASS ice hidden 001-001_0602/
+PASS ice hidden 001-001_0702/
+PASS ice hidden 001-001_0802/
+PASS ice hidden 001-001_0902/
+PASS ice hidden 001-001_0A02/
+PASS ice hidden 001-001_0B02/
+PASS ice hidden 001-001_0C02/
+PASS ice hidden 001-001_0D02/
+PASS ice hidden 100-000_0004/
+PASS ice hidden 100-000_0104/
+PASS ice hidden 100-000_0204/
+PASS ice hidden 100-000_0304/
+PASS ice hidden 100-000_0404/
+PASS ice hidden 000-000_0006/
+PASS ice hidden 001-002_0106/
+PASS ice hidden 001-003_0206/
+PASS ice hidden 001-004_0306/
+PASS ice hidden 001-005_0406/
+PASS ice hidden 001-005_0406/Obstacle
+PASS ice hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS ice hidden 101-001_0506/
+PASS ice hidden 101-007_0606/
+PASS ice hidden 101-014_0706/WallVisual
+PASS ice hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS ice hidden 101-015_0806/WallVisual
+PASS ice hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS ice hidden 3F_101-001_0008/
+PASS ice hidden 3F_101-007_0108/
+PASS ice hidden 3F_001-005_0208/
+PASS ice hidden 3F_001-005_0208/Obstacle
+PASS ice hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS ice hidden 3F_001-002_0308/
+PASS ice revealed 001-001_0002/
+PASS ice revealed 001-001_0102/
+PASS ice revealed 001-001_0202/
+PASS ice revealed 001-001_0302/
+PASS ice revealed 001-001_0402/
+PASS ice revealed 001-001_0502/
+PASS ice revealed 001-001_0602/
+PASS ice revealed 001-001_0702/
+PASS ice revealed 001-001_0802/
+PASS ice revealed 001-001_0902/
+PASS ice revealed 001-001_0A02/
+PASS ice revealed 001-001_0B02/
+PASS ice revealed 001-001_0C02/
+PASS ice revealed 001-001_0D02/
+PASS ice revealed 100-000_0004/
+PASS ice revealed 100-000_0104/
+PASS ice revealed 100-000_0204/
+PASS ice revealed 100-000_0304/
+PASS ice revealed 100-000_0404/
+PASS ice revealed 000-000_0006/
+PASS ice revealed 001-002_0106/
+PASS ice revealed 001-003_0206/
+PASS ice revealed 001-004_0306/
+PASS ice revealed 001-005_0406/
+PASS ice revealed 001-005_0406/Obstacle
+PASS ice revealed 001-005_0406/Obstacle/InteractionHighlight
+PASS ice revealed 101-001_0506/
+PASS ice revealed 101-007_0606/
+PASS ice revealed 101-014_0706/WallVisual
+PASS ice revealed 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS ice revealed 101-015_0806/WallVisual
+PASS ice revealed 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS ice revealed 3F_101-001_0008/
+PASS ice revealed 3F_101-007_0108/
+PASS ice revealed 3F_001-005_0208/
+PASS ice revealed 3F_001-005_0208/Obstacle
+PASS ice revealed 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS ice revealed 3F_001-002_0308/
+PASS ice hidden 001-001_0002/
+PASS ice hidden 001-001_0102/
+PASS ice hidden 001-001_0202/
+PASS ice hidden 001-001_0302/
+PASS ice hidden 001-001_0402/
+PASS ice hidden 001-001_0502/
+PASS ice hidden 001-001_0602/
+PASS ice hidden 001-001_0702/
+PASS ice hidden 001-001_0802/
+PASS ice hidden 001-001_0902/
+PASS ice hidden 001-001_0A02/
+PASS ice hidden 001-001_0B02/
+PASS ice hidden 001-001_0C02/
+PASS ice hidden 001-001_0D02/
+PASS ice hidden 100-000_0004/
+PASS ice hidden 100-000_0104/
+PASS ice hidden 100-000_0204/
+PASS ice hidden 100-000_0304/
+PASS ice hidden 100-000_0404/
+PASS ice hidden 000-000_0006/
+PASS ice hidden 001-002_0106/
+PASS ice hidden 001-003_0206/
+PASS ice hidden 001-004_0306/
+PASS ice hidden 001-005_0406/
+PASS ice hidden 001-005_0406/Obstacle
+PASS ice hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS ice hidden 101-001_0506/
+PASS ice hidden 101-007_0606/
+PASS ice hidden 101-014_0706/WallVisual
+PASS ice hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS ice hidden 101-015_0806/WallVisual
+PASS ice hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS ice hidden 3F_101-001_0008/
+PASS ice hidden 3F_101-007_0108/
+PASS ice hidden 3F_001-005_0208/
+PASS ice hidden 3F_001-005_0208/Obstacle
+PASS ice hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS ice hidden 3F_001-002_0308/
+PASS ice rebuild removes previous tile instances
+PASS fire builder/effect selection
+PASS fire hidden 001-001_0002/
+PASS fire hidden 001-001_0102/
+PASS fire hidden 001-001_0202/
+PASS fire hidden 001-001_0302/
+PASS fire hidden 001-001_0402/
+PASS fire hidden 001-001_0502/
+PASS fire hidden 001-001_0602/
+PASS fire hidden 001-001_0702/
+PASS fire hidden 001-001_0802/
+PASS fire hidden 001-001_0902/
+PASS fire hidden 001-001_0A02/
+PASS fire hidden 001-001_0B02/
+PASS fire hidden 001-001_0C02/
+PASS fire hidden 001-001_0D02/
+PASS fire hidden 100-000_0004/
+PASS fire hidden 100-000_0104/
+PASS fire hidden 100-000_0204/
+PASS fire hidden 100-000_0304/
+PASS fire hidden 100-000_0404/
+PASS fire hidden 000-000_0006/
+PASS fire hidden 001-002_0106/
+PASS fire hidden 001-003_0206/
+PASS fire hidden 001-004_0306/
+PASS fire hidden 001-005_0406/
+PASS fire hidden 001-005_0406/Obstacle
+PASS fire hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS fire hidden 101-001_0506/
+PASS fire hidden 101-007_0606/
+PASS fire hidden 101-014_0706/WallVisual
+PASS fire hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS fire hidden 101-015_0806/WallVisual
+PASS fire hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS fire hidden 3F_101-001_0008/
+PASS fire hidden 3F_101-007_0108/
+PASS fire hidden 3F_001-005_0208/
+PASS fire hidden 3F_001-005_0208/Obstacle
+PASS fire hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS fire hidden 3F_001-002_0308/
+PASS fire revealed 001-001_0002/
+PASS fire revealed 001-001_0102/
+PASS fire revealed 001-001_0202/
+PASS fire revealed 001-001_0302/
+PASS fire revealed 001-001_0402/
+PASS fire revealed 001-001_0502/
+PASS fire revealed 001-001_0602/
+PASS fire revealed 001-001_0702/
+PASS fire revealed 001-001_0802/
+PASS fire revealed 001-001_0902/
+PASS fire revealed 001-001_0A02/
+PASS fire revealed 001-001_0B02/
+PASS fire revealed 001-001_0C02/
+PASS fire revealed 001-001_0D02/
+PASS fire revealed 100-000_0004/
+PASS fire revealed 100-000_0104/
+PASS fire revealed 100-000_0204/
+PASS fire revealed 100-000_0304/
+PASS fire revealed 100-000_0404/
+PASS fire revealed 000-000_0006/
+PASS fire revealed 001-002_0106/
+PASS fire revealed 001-003_0206/
+PASS fire revealed 001-004_0306/
+PASS fire revealed 001-005_0406/
+PASS fire revealed 001-005_0406/Obstacle
+PASS fire revealed 001-005_0406/Obstacle/InteractionHighlight
+PASS fire revealed 101-001_0506/
+PASS fire revealed 101-007_0606/
+PASS fire revealed 101-014_0706/WallVisual
+PASS fire revealed 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS fire revealed 101-015_0806/WallVisual
+PASS fire revealed 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS fire revealed 3F_101-001_0008/
+PASS fire revealed 3F_101-007_0108/
+PASS fire revealed 3F_001-005_0208/
+PASS fire revealed 3F_001-005_0208/Obstacle
+PASS fire revealed 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS fire revealed 3F_001-002_0308/
+PASS fire hidden 001-001_0002/
+PASS fire hidden 001-001_0102/
+PASS fire hidden 001-001_0202/
+PASS fire hidden 001-001_0302/
+PASS fire hidden 001-001_0402/
+PASS fire hidden 001-001_0502/
+PASS fire hidden 001-001_0602/
+PASS fire hidden 001-001_0702/
+PASS fire hidden 001-001_0802/
+PASS fire hidden 001-001_0902/
+PASS fire hidden 001-001_0A02/
+PASS fire hidden 001-001_0B02/
+PASS fire hidden 001-001_0C02/
+PASS fire hidden 001-001_0D02/
+PASS fire hidden 100-000_0004/
+PASS fire hidden 100-000_0104/
+PASS fire hidden 100-000_0204/
+PASS fire hidden 100-000_0304/
+PASS fire hidden 100-000_0404/
+PASS fire hidden 000-000_0006/
+PASS fire hidden 001-002_0106/
+PASS fire hidden 001-003_0206/
+PASS fire hidden 001-004_0306/
+PASS fire hidden 001-005_0406/
+PASS fire hidden 001-005_0406/Obstacle
+PASS fire hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS fire hidden 101-001_0506/
+PASS fire hidden 101-007_0606/
+PASS fire hidden 101-014_0706/WallVisual
+PASS fire hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS fire hidden 101-015_0806/WallVisual
+PASS fire hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS fire hidden 3F_101-001_0008/
+PASS fire hidden 3F_101-007_0108/
+PASS fire hidden 3F_001-005_0208/
+PASS fire hidden 3F_001-005_0208/Obstacle
+PASS fire hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS fire hidden 3F_001-002_0308/
+PASS fire rebuild removes previous tile instances
+PASS burn builder/effect selection
+PASS burn hidden 001-001_0002/
+PASS burn hidden 001-001_0102/
+PASS burn hidden 001-001_0202/
+PASS burn hidden 001-001_0302/
+PASS burn hidden 001-001_0402/
+PASS burn hidden 001-001_0502/
+PASS burn hidden 001-001_0602/
+PASS burn hidden 001-001_0702/
+PASS burn hidden 001-001_0802/
+PASS burn hidden 001-001_0902/
+PASS burn hidden 001-001_0A02/
+PASS burn hidden 001-001_0B02/
+PASS burn hidden 001-001_0C02/
+PASS burn hidden 001-001_0D02/
+PASS burn hidden 100-000_0004/
+PASS burn hidden 100-000_0104/
+PASS burn hidden 100-000_0204/
+PASS burn hidden 100-000_0304/
+PASS burn hidden 100-000_0404/
+PASS burn hidden 000-000_0006/
+PASS burn hidden 001-002_0106/
+PASS burn hidden 001-003_0206/
+PASS burn hidden 001-004_0306/
+PASS burn hidden 001-005_0406/
+PASS burn hidden 001-005_0406/Obstacle
+PASS burn hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS burn hidden 101-001_0506/
+PASS burn hidden 101-007_0606/
+PASS burn hidden 101-014_0706/WallVisual
+PASS burn hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS burn hidden 101-015_0806/WallVisual
+PASS burn hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS burn hidden 3F_101-001_0008/
+PASS burn hidden 3F_101-007_0108/
+PASS burn hidden 3F_001-005_0208/
+PASS burn hidden 3F_001-005_0208/Obstacle
+PASS burn hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS burn hidden 3F_001-002_0308/
+PASS burn revealed 001-001_0002/
+PASS burn revealed 001-001_0102/
+PASS burn revealed 001-001_0202/
+PASS burn revealed 001-001_0302/
+PASS burn revealed 001-001_0402/
+PASS burn revealed 001-001_0502/
+PASS burn revealed 001-001_0602/
+PASS burn revealed 001-001_0702/
+PASS burn revealed 001-001_0802/
+PASS burn revealed 001-001_0902/
+PASS burn revealed 001-001_0A02/
+PASS burn revealed 001-001_0B02/
+PASS burn revealed 001-001_0C02/
+PASS burn revealed 001-001_0D02/
+PASS burn revealed 100-000_0004/
+PASS burn revealed 100-000_0104/
+PASS burn revealed 100-000_0204/
+PASS burn revealed 100-000_0304/
+PASS burn revealed 100-000_0404/
+PASS burn revealed 000-000_0006/
+PASS burn revealed 001-002_0106/
+PASS burn revealed 001-003_0206/
+PASS burn revealed 001-004_0306/
+PASS burn revealed 001-005_0406/
+PASS burn revealed 001-005_0406/Obstacle
+PASS burn revealed 001-005_0406/Obstacle/InteractionHighlight
+PASS burn revealed 101-001_0506/
+PASS burn revealed 101-007_0606/
+PASS burn revealed 101-014_0706/WallVisual
+PASS burn revealed 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS burn revealed 101-015_0806/WallVisual
+PASS burn revealed 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS burn revealed 3F_101-001_0008/
+PASS burn revealed 3F_101-007_0108/
+PASS burn revealed 3F_001-005_0208/
+PASS burn revealed 3F_001-005_0208/Obstacle
+PASS burn revealed 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS burn revealed 3F_001-002_0308/
+PASS burn hidden 001-001_0002/
+PASS burn hidden 001-001_0102/
+PASS burn hidden 001-001_0202/
+PASS burn hidden 001-001_0302/
+PASS burn hidden 001-001_0402/
+PASS burn hidden 001-001_0502/
+PASS burn hidden 001-001_0602/
+PASS burn hidden 001-001_0702/
+PASS burn hidden 001-001_0802/
+PASS burn hidden 001-001_0902/
+PASS burn hidden 001-001_0A02/
+PASS burn hidden 001-001_0B02/
+PASS burn hidden 001-001_0C02/
+PASS burn hidden 001-001_0D02/
+PASS burn hidden 100-000_0004/
+PASS burn hidden 100-000_0104/
+PASS burn hidden 100-000_0204/
+PASS burn hidden 100-000_0304/
+PASS burn hidden 100-000_0404/
+PASS burn hidden 000-000_0006/
+PASS burn hidden 001-002_0106/
+PASS burn hidden 001-003_0206/
+PASS burn hidden 001-004_0306/
+PASS burn hidden 001-005_0406/
+PASS burn hidden 001-005_0406/Obstacle
+PASS burn hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS burn hidden 101-001_0506/
+PASS burn hidden 101-007_0606/
+PASS burn hidden 101-014_0706/WallVisual
+PASS burn hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS burn hidden 101-015_0806/WallVisual
+PASS burn hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS burn hidden 3F_101-001_0008/
+PASS burn hidden 3F_101-007_0108/
+PASS burn hidden 3F_001-005_0208/
+PASS burn hidden 3F_001-005_0208/Obstacle
+PASS burn hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS burn hidden 3F_001-002_0308/
+PASS burn rebuild removes previous tile instances
+PASS none builder/effect selection
+PASS none hidden 001-001_0002/
+PASS none hidden 001-001_0102/
+PASS none hidden 001-001_0202/
+PASS none hidden 001-001_0302/
+PASS none hidden 001-001_0402/
+PASS none hidden 001-001_0502/
+PASS none hidden 001-001_0602/
+PASS none hidden 001-001_0702/
+PASS none hidden 001-001_0802/
+PASS none hidden 001-001_0902/
+PASS none hidden 001-001_0A02/
+PASS none hidden 001-001_0B02/
+PASS none hidden 001-001_0C02/
+PASS none hidden 001-001_0D02/
+PASS none hidden 100-000_0004/
+PASS none hidden 100-000_0104/
+PASS none hidden 100-000_0204/
+PASS none hidden 100-000_0304/
+PASS none hidden 100-000_0404/
+PASS none hidden 000-000_0006/
+PASS none hidden 001-002_0106/
+PASS none hidden 001-003_0206/
+PASS none hidden 001-004_0306/
+PASS none hidden 001-005_0406/
+PASS none hidden 001-005_0406/Obstacle
+PASS none hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS none hidden 101-001_0506/
+PASS none hidden 101-007_0606/
+PASS none hidden 101-014_0706/WallVisual
+PASS none hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS none hidden 101-015_0806/WallVisual
+PASS none hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS none hidden 3F_101-001_0008/
+PASS none hidden 3F_101-007_0108/
+PASS none hidden 3F_001-005_0208/
+PASS none hidden 3F_001-005_0208/Obstacle
+PASS none hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS none hidden 3F_001-002_0308/
+PASS none revealed 001-001_0002/
+PASS none revealed 001-001_0102/
+PASS none revealed 001-001_0202/
+PASS none revealed 001-001_0302/
+PASS none revealed 001-001_0402/
+PASS none revealed 001-001_0502/
+PASS none revealed 001-001_0602/
+PASS none revealed 001-001_0702/
+PASS none revealed 001-001_0802/
+PASS none revealed 001-001_0902/
+PASS none revealed 001-001_0A02/
+PASS none revealed 001-001_0B02/
+PASS none revealed 001-001_0C02/
+PASS none revealed 001-001_0D02/
+PASS none revealed 100-000_0004/
+PASS none revealed 100-000_0104/
+PASS none revealed 100-000_0204/
+PASS none revealed 100-000_0304/
+PASS none revealed 100-000_0404/
+PASS none revealed 000-000_0006/
+PASS none revealed 001-002_0106/
+PASS none revealed 001-003_0206/
+PASS none revealed 001-004_0306/
+PASS none revealed 001-005_0406/
+PASS none revealed 001-005_0406/Obstacle
+PASS none revealed 001-005_0406/Obstacle/InteractionHighlight
+PASS none revealed 101-001_0506/
+PASS none revealed 101-007_0606/
+PASS none revealed 101-014_0706/WallVisual
+PASS none revealed 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS none revealed 101-015_0806/WallVisual
+PASS none revealed 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS none revealed 3F_101-001_0008/
+PASS none revealed 3F_101-007_0108/
+PASS none revealed 3F_001-005_0208/
+PASS none revealed 3F_001-005_0208/Obstacle
+PASS none revealed 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS none revealed 3F_001-002_0308/
+PASS none hidden 001-001_0002/
+PASS none hidden 001-001_0102/
+PASS none hidden 001-001_0202/
+PASS none hidden 001-001_0302/
+PASS none hidden 001-001_0402/
+PASS none hidden 001-001_0502/
+PASS none hidden 001-001_0602/
+PASS none hidden 001-001_0702/
+PASS none hidden 001-001_0802/
+PASS none hidden 001-001_0902/
+PASS none hidden 001-001_0A02/
+PASS none hidden 001-001_0B02/
+PASS none hidden 001-001_0C02/
+PASS none hidden 001-001_0D02/
+PASS none hidden 100-000_0004/
+PASS none hidden 100-000_0104/
+PASS none hidden 100-000_0204/
+PASS none hidden 100-000_0304/
+PASS none hidden 100-000_0404/
+PASS none hidden 000-000_0006/
+PASS none hidden 001-002_0106/
+PASS none hidden 001-003_0206/
+PASS none hidden 001-004_0306/
+PASS none hidden 001-005_0406/
+PASS none hidden 001-005_0406/Obstacle
+PASS none hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS none hidden 101-001_0506/
+PASS none hidden 101-007_0606/
+PASS none hidden 101-014_0706/WallVisual
+PASS none hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS none hidden 101-015_0806/WallVisual
+PASS none hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS none hidden 3F_101-001_0008/
+PASS none hidden 3F_101-007_0108/
+PASS none hidden 3F_001-005_0208/
+PASS none hidden 3F_001-005_0208/Obstacle
+PASS none hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS none hidden 3F_001-002_0308/
+PASS none rebuild removes previous tile instances
+PASS missing builder/effect selection
+PASS missing hidden 001-001_0002/
+PASS missing hidden 001-001_0102/
+PASS missing hidden 001-001_0202/
+PASS missing hidden 001-001_0302/
+PASS missing hidden 001-001_0402/
+PASS missing hidden 001-001_0502/
+PASS missing hidden 001-001_0602/
+PASS missing hidden 001-001_0702/
+PASS missing hidden 001-001_0802/
+PASS missing hidden 001-001_0902/
+PASS missing hidden 001-001_0A02/
+PASS missing hidden 001-001_0B02/
+PASS missing hidden 001-001_0C02/
+PASS missing hidden 001-001_0D02/
+PASS missing hidden 100-000_0004/
+PASS missing hidden 100-000_0104/
+PASS missing hidden 100-000_0204/
+PASS missing hidden 100-000_0304/
+PASS missing hidden 100-000_0404/
+PASS missing hidden 000-000_0006/
+PASS missing hidden 001-002_0106/
+PASS missing hidden 001-003_0206/
+PASS missing hidden 001-004_0306/
+PASS missing hidden 001-005_0406/
+PASS missing hidden 001-005_0406/Obstacle
+PASS missing hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS missing hidden 101-001_0506/
+PASS missing hidden 101-007_0606/
+PASS missing hidden 101-014_0706/WallVisual
+PASS missing hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS missing hidden 101-015_0806/WallVisual
+PASS missing hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS missing hidden 3F_101-001_0008/
+PASS missing hidden 3F_101-007_0108/
+PASS missing hidden 3F_001-005_0208/
+PASS missing hidden 3F_001-005_0208/Obstacle
+PASS missing hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS missing hidden 3F_001-002_0308/
+PASS missing revealed 001-001_0002/
+PASS missing revealed 001-001_0102/
+PASS missing revealed 001-001_0202/
+PASS missing revealed 001-001_0302/
+PASS missing revealed 001-001_0402/
+PASS missing revealed 001-001_0502/
+PASS missing revealed 001-001_0602/
+PASS missing revealed 001-001_0702/
+PASS missing revealed 001-001_0802/
+PASS missing revealed 001-001_0902/
+PASS missing revealed 001-001_0A02/
+PASS missing revealed 001-001_0B02/
+PASS missing revealed 001-001_0C02/
+PASS missing revealed 001-001_0D02/
+PASS missing revealed 100-000_0004/
+PASS missing revealed 100-000_0104/
+PASS missing revealed 100-000_0204/
+PASS missing revealed 100-000_0304/
+PASS missing revealed 100-000_0404/
+PASS missing revealed 000-000_0006/
+PASS missing revealed 001-002_0106/
+PASS missing revealed 001-003_0206/
+PASS missing revealed 001-004_0306/
+PASS missing revealed 001-005_0406/
+PASS missing revealed 001-005_0406/Obstacle
+PASS missing revealed 001-005_0406/Obstacle/InteractionHighlight
+PASS missing revealed 101-001_0506/
+PASS missing revealed 101-007_0606/
+PASS missing revealed 101-014_0706/WallVisual
+PASS missing revealed 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS missing revealed 101-015_0806/WallVisual
+PASS missing revealed 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS missing revealed 3F_101-001_0008/
+PASS missing revealed 3F_101-007_0108/
+PASS missing revealed 3F_001-005_0208/
+PASS missing revealed 3F_001-005_0208/Obstacle
+PASS missing revealed 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS missing revealed 3F_001-002_0308/
+PASS missing hidden 001-001_0002/
+PASS missing hidden 001-001_0102/
+PASS missing hidden 001-001_0202/
+PASS missing hidden 001-001_0302/
+PASS missing hidden 001-001_0402/
+PASS missing hidden 001-001_0502/
+PASS missing hidden 001-001_0602/
+PASS missing hidden 001-001_0702/
+PASS missing hidden 001-001_0802/
+PASS missing hidden 001-001_0902/
+PASS missing hidden 001-001_0A02/
+PASS missing hidden 001-001_0B02/
+PASS missing hidden 001-001_0C02/
+PASS missing hidden 001-001_0D02/
+PASS missing hidden 100-000_0004/
+PASS missing hidden 100-000_0104/
+PASS missing hidden 100-000_0204/
+PASS missing hidden 100-000_0304/
+PASS missing hidden 100-000_0404/
+PASS missing hidden 000-000_0006/
+PASS missing hidden 001-002_0106/
+PASS missing hidden 001-003_0206/
+PASS missing hidden 001-004_0306/
+PASS missing hidden 001-005_0406/
+PASS missing hidden 001-005_0406/Obstacle
+PASS missing hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS missing hidden 101-001_0506/
+PASS missing hidden 101-007_0606/
+PASS missing hidden 101-014_0706/WallVisual
+PASS missing hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS missing hidden 101-015_0806/WallVisual
+PASS missing hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS missing hidden 3F_101-001_0008/
+PASS missing hidden 3F_101-007_0108/
+PASS missing hidden 3F_001-005_0208/
+PASS missing hidden 3F_001-005_0208/Obstacle
+PASS missing hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS missing hidden 3F_001-002_0308/
+PASS missing rebuild removes previous tile instances
+PASS unknown builder/effect selection
+PASS unknown hidden 001-001_0002/
+PASS unknown hidden 001-001_0102/
+PASS unknown hidden 001-001_0202/
+PASS unknown hidden 001-001_0302/
+PASS unknown hidden 001-001_0402/
+PASS unknown hidden 001-001_0502/
+PASS unknown hidden 001-001_0602/
+PASS unknown hidden 001-001_0702/
+PASS unknown hidden 001-001_0802/
+PASS unknown hidden 001-001_0902/
+PASS unknown hidden 001-001_0A02/
+PASS unknown hidden 001-001_0B02/
+PASS unknown hidden 001-001_0C02/
+PASS unknown hidden 001-001_0D02/
+PASS unknown hidden 100-000_0004/
+PASS unknown hidden 100-000_0104/
+PASS unknown hidden 100-000_0204/
+PASS unknown hidden 100-000_0304/
+PASS unknown hidden 100-000_0404/
+PASS unknown hidden 000-000_0006/
+PASS unknown hidden 001-002_0106/
+PASS unknown hidden 001-003_0206/
+PASS unknown hidden 001-004_0306/
+PASS unknown hidden 001-005_0406/
+PASS unknown hidden 001-005_0406/Obstacle
+PASS unknown hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS unknown hidden 101-001_0506/
+PASS unknown hidden 101-007_0606/
+PASS unknown hidden 101-014_0706/WallVisual
+PASS unknown hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS unknown hidden 101-015_0806/WallVisual
+PASS unknown hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS unknown hidden 3F_101-001_0008/
+PASS unknown hidden 3F_101-007_0108/
+PASS unknown hidden 3F_001-005_0208/
+PASS unknown hidden 3F_001-005_0208/Obstacle
+PASS unknown hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS unknown hidden 3F_001-002_0308/
+PASS unknown revealed 001-001_0002/
+PASS unknown revealed 001-001_0102/
+PASS unknown revealed 001-001_0202/
+PASS unknown revealed 001-001_0302/
+PASS unknown revealed 001-001_0402/
+PASS unknown revealed 001-001_0502/
+PASS unknown revealed 001-001_0602/
+PASS unknown revealed 001-001_0702/
+PASS unknown revealed 001-001_0802/
+PASS unknown revealed 001-001_0902/
+PASS unknown revealed 001-001_0A02/
+PASS unknown revealed 001-001_0B02/
+PASS unknown revealed 001-001_0C02/
+PASS unknown revealed 001-001_0D02/
+PASS unknown revealed 100-000_0004/
+PASS unknown revealed 100-000_0104/
+PASS unknown revealed 100-000_0204/
+PASS unknown revealed 100-000_0304/
+PASS unknown revealed 100-000_0404/
+PASS unknown revealed 000-000_0006/
+PASS unknown revealed 001-002_0106/
+PASS unknown revealed 001-003_0206/
+PASS unknown revealed 001-004_0306/
+PASS unknown revealed 001-005_0406/
+PASS unknown revealed 001-005_0406/Obstacle
+PASS unknown revealed 001-005_0406/Obstacle/InteractionHighlight
+PASS unknown revealed 101-001_0506/
+PASS unknown revealed 101-007_0606/
+PASS unknown revealed 101-014_0706/WallVisual
+PASS unknown revealed 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS unknown revealed 101-015_0806/WallVisual
+PASS unknown revealed 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS unknown revealed 3F_101-001_0008/
+PASS unknown revealed 3F_101-007_0108/
+PASS unknown revealed 3F_001-005_0208/
+PASS unknown revealed 3F_001-005_0208/Obstacle
+PASS unknown revealed 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS unknown revealed 3F_001-002_0308/
+PASS unknown hidden 001-001_0002/
+PASS unknown hidden 001-001_0102/
+PASS unknown hidden 001-001_0202/
+PASS unknown hidden 001-001_0302/
+PASS unknown hidden 001-001_0402/
+PASS unknown hidden 001-001_0502/
+PASS unknown hidden 001-001_0602/
+PASS unknown hidden 001-001_0702/
+PASS unknown hidden 001-001_0802/
+PASS unknown hidden 001-001_0902/
+PASS unknown hidden 001-001_0A02/
+PASS unknown hidden 001-001_0B02/
+PASS unknown hidden 001-001_0C02/
+PASS unknown hidden 001-001_0D02/
+PASS unknown hidden 100-000_0004/
+PASS unknown hidden 100-000_0104/
+PASS unknown hidden 100-000_0204/
+PASS unknown hidden 100-000_0304/
+PASS unknown hidden 100-000_0404/
+PASS unknown hidden 000-000_0006/
+PASS unknown hidden 001-002_0106/
+PASS unknown hidden 001-003_0206/
+PASS unknown hidden 001-004_0306/
+PASS unknown hidden 001-005_0406/
+PASS unknown hidden 001-005_0406/Obstacle
+PASS unknown hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS unknown hidden 101-001_0506/
+PASS unknown hidden 101-007_0606/
+PASS unknown hidden 101-014_0706/WallVisual
+PASS unknown hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS unknown hidden 101-015_0806/WallVisual
+PASS unknown hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS unknown hidden 3F_101-001_0008/
+PASS unknown hidden 3F_101-007_0108/
+PASS unknown hidden 3F_001-005_0208/
+PASS unknown hidden 3F_001-005_0208/Obstacle
+PASS unknown hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS unknown hidden 3F_001-002_0308/
+PASS unknown rebuild removes previous tile instances
+PASS ice builder/effect selection
+PASS ice hidden 001-001_0002/
+PASS ice hidden 001-001_0102/
+PASS ice hidden 001-001_0202/
+PASS ice hidden 001-001_0302/
+PASS ice hidden 001-001_0402/
+PASS ice hidden 001-001_0502/
+PASS ice hidden 001-001_0602/
+PASS ice hidden 001-001_0702/
+PASS ice hidden 001-001_0802/
+PASS ice hidden 001-001_0902/
+PASS ice hidden 001-001_0A02/
+PASS ice hidden 001-001_0B02/
+PASS ice hidden 001-001_0C02/
+PASS ice hidden 001-001_0D02/
+PASS ice hidden 100-000_0004/
+PASS ice hidden 100-000_0104/
+PASS ice hidden 100-000_0204/
+PASS ice hidden 100-000_0304/
+PASS ice hidden 100-000_0404/
+PASS ice hidden 000-000_0006/
+PASS ice hidden 001-002_0106/
+PASS ice hidden 001-003_0206/
+PASS ice hidden 001-004_0306/
+PASS ice hidden 001-005_0406/
+PASS ice hidden 001-005_0406/Obstacle
+PASS ice hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS ice hidden 101-001_0506/
+PASS ice hidden 101-007_0606/
+PASS ice hidden 101-014_0706/WallVisual
+PASS ice hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS ice hidden 101-015_0806/WallVisual
+PASS ice hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS ice hidden 3F_101-001_0008/
+PASS ice hidden 3F_101-007_0108/
+PASS ice hidden 3F_001-005_0208/
+PASS ice hidden 3F_001-005_0208/Obstacle
+PASS ice hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS ice hidden 3F_001-002_0308/
+PASS ice revealed 001-001_0002/
+PASS ice revealed 001-001_0102/
+PASS ice revealed 001-001_0202/
+PASS ice revealed 001-001_0302/
+PASS ice revealed 001-001_0402/
+PASS ice revealed 001-001_0502/
+PASS ice revealed 001-001_0602/
+PASS ice revealed 001-001_0702/
+PASS ice revealed 001-001_0802/
+PASS ice revealed 001-001_0902/
+PASS ice revealed 001-001_0A02/
+PASS ice revealed 001-001_0B02/
+PASS ice revealed 001-001_0C02/
+PASS ice revealed 001-001_0D02/
+PASS ice revealed 100-000_0004/
+PASS ice revealed 100-000_0104/
+PASS ice revealed 100-000_0204/
+PASS ice revealed 100-000_0304/
+PASS ice revealed 100-000_0404/
+PASS ice revealed 000-000_0006/
+PASS ice revealed 001-002_0106/
+PASS ice revealed 001-003_0206/
+PASS ice revealed 001-004_0306/
+PASS ice revealed 001-005_0406/
+PASS ice revealed 001-005_0406/Obstacle
+PASS ice revealed 001-005_0406/Obstacle/InteractionHighlight
+PASS ice revealed 101-001_0506/
+PASS ice revealed 101-007_0606/
+PASS ice revealed 101-014_0706/WallVisual
+PASS ice revealed 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS ice revealed 101-015_0806/WallVisual
+PASS ice revealed 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS ice revealed 3F_101-001_0008/
+PASS ice revealed 3F_101-007_0108/
+PASS ice revealed 3F_001-005_0208/
+PASS ice revealed 3F_001-005_0208/Obstacle
+PASS ice revealed 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS ice revealed 3F_001-002_0308/
+PASS ice hidden 001-001_0002/
+PASS ice hidden 001-001_0102/
+PASS ice hidden 001-001_0202/
+PASS ice hidden 001-001_0302/
+PASS ice hidden 001-001_0402/
+PASS ice hidden 001-001_0502/
+PASS ice hidden 001-001_0602/
+PASS ice hidden 001-001_0702/
+PASS ice hidden 001-001_0802/
+PASS ice hidden 001-001_0902/
+PASS ice hidden 001-001_0A02/
+PASS ice hidden 001-001_0B02/
+PASS ice hidden 001-001_0C02/
+PASS ice hidden 001-001_0D02/
+PASS ice hidden 100-000_0004/
+PASS ice hidden 100-000_0104/
+PASS ice hidden 100-000_0204/
+PASS ice hidden 100-000_0304/
+PASS ice hidden 100-000_0404/
+PASS ice hidden 000-000_0006/
+PASS ice hidden 001-002_0106/
+PASS ice hidden 001-003_0206/
+PASS ice hidden 001-004_0306/
+PASS ice hidden 001-005_0406/
+PASS ice hidden 001-005_0406/Obstacle
+PASS ice hidden 001-005_0406/Obstacle/InteractionHighlight
+PASS ice hidden 101-001_0506/
+PASS ice hidden 101-007_0606/
+PASS ice hidden 101-014_0706/WallVisual
+PASS ice hidden 101-014_0706/ArmAssembly/MovingTip/PJ-005
+PASS ice hidden 101-015_0806/WallVisual
+PASS ice hidden 101-015_0806/ArmAssembly/MovingTip/PJ-005
+PASS ice hidden 3F_101-001_0008/
+PASS ice hidden 3F_101-007_0108/
+PASS ice hidden 3F_001-005_0208/
+PASS ice hidden 3F_001-005_0208/Obstacle
+PASS ice hidden 3F_001-005_0208/Obstacle/InteractionHighlight
+PASS ice hidden 3F_001-002_0308/
+PASS ice rebuild removes previous tile instances
+PASS fire preserves authored damage and existing burn tick interval
+PASS iceneighbour destruction counted once
+PASS iceneighbour replacement floor theme
+PASS iceneighbour retiled wall 0203
+PASS iceneighbour retiled wall 0403
+PASS iceneighbour retiled wall 0202
+PASS iceneighbour retiled wall 0302
+PASS iceneighbour retiled wall 0402
+PASS iceneighbour neighbour attack metadata unchanged
+PASS ice reveal hides retiled overlay
+PASS ice revealed trap keeps theme
+PASS ice hide restores retiled overlay
+PASS iceforceNeighbour destruction counted once
+PASS iceforceNeighbour replacement floor theme
+PASS iceforceNeighbour retiled wall 0203
+PASS iceforceNeighbour retiled wall 0403
+PASS iceforceNeighbour retiled wall 0202
+PASS iceforceNeighbour retiled wall 0302
+PASS iceforceNeighbour retiled wall 0402
+PASS iceforceNeighbour neighbour attack metadata unchanged
+PASS ice 3F replacement theme
+PASS ice 3F keeps base registry
+PASS ice switch floor inherits theme
+PASS ice legacy disarm floor inherits theme
+PASS ice actual map002 disarm succeeds
+PASS fireneighbour destruction counted once
+PASS fireneighbour replacement floor theme
+PASS fireneighbour retiled wall 0203
+PASS fireneighbour retiled wall 0403
+PASS fireneighbour retiled wall 0202
+PASS fireneighbour retiled wall 0302
+PASS fireneighbour retiled wall 0402
+PASS fireneighbour neighbour attack metadata unchanged
+PASS fire reveal hides retiled overlay
+PASS fire revealed trap keeps theme
+PASS fire hide restores retiled overlay
+PASS fireforceNeighbour destruction counted once
+PASS fireforceNeighbour replacement floor theme
+PASS fireforceNeighbour retiled wall 0203
+PASS fireforceNeighbour retiled wall 0403
+PASS fireforceNeighbour retiled wall 0202
+PASS fireforceNeighbour retiled wall 0302
+PASS fireforceNeighbour retiled wall 0402
+PASS fireforceNeighbour neighbour attack metadata unchanged
+PASS fire 3F replacement theme
+PASS fire 3F keeps base registry
+PASS fire switch floor inherits theme
+PASS fire legacy disarm floor inherits theme
+PASS fire actual map002 disarm succeeds
+TOTAL 1186, FAILED 0

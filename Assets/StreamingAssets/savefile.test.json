@@ -2,11 +2,11 @@
   "save_version": 5,
   "user_name": "Toluse",
   "gold": 46150,
-  "broken_traps": 28,
+  "broken_traps": 30,
   "clear_reward_claimed": false,
   "last_getting_gold": 0,
-  "clear_time_seconds": 734,
-  "hit_count": 14,
+  "clear_time_seconds": 764,
+  "hit_count": 21,
   "main_stats": {
     "max_HP": 150,
     "physical_resist": 20,
@@ -181,9 +181,9 @@
       "completed": false,
       "broken_traps_snapshot": 3,
       "run_id": "977882d0ac444b61a08f37fc6ca745c1",
-      "run_time_seconds": 734,
-      "run_hit_count": 14,
-      "run_broken_traps": 28
+      "run_time_seconds": 764,
+      "run_hit_count": 21,
+      "run_broken_traps": 30
     }
   },
   "dungeon_records": {
@@ -201,9 +201,9 @@
     "pending_clear": false
   },
   "dungeon_status": [],
-  "play_time": "136:18",
-  "play_time_minutes": 8178,
-  "play_time_remainder_seconds": 25.659940299997288,
+  "play_time": "136:19",
+  "play_time_minutes": 8179,
+  "play_time_remainder_seconds": 0.46765449999384145,
   "play_time_legacy_unparsed": "",
   "clear_num_info": "28:73:96",
   "adventure_count": 128,
