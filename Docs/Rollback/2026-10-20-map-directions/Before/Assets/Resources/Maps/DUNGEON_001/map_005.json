@@ -1,0 +1,3374 @@
+{
+  "size": "121e",
+  "grid": [
+    {
+      "coord": "001d",
+      "code": "001-001",
+      "assetNo": 1,
+      "direction": "00"
+    },
+    {
+      "coord": "011d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "021d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "031d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "041d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "051d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "061d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "071d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "081d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "091d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "0a1d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "0b1d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "0c1d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "0d1d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "0e1d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "0f1d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "101d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "11"
+    },
+    {
+      "coord": "111d",
+      "code": "001-001",
+      "assetNo": 1,
+      "direction": "01"
+    },
+    {
+      "coord": "001c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "011c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "021c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "031c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "041c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "051c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "061c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "071c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "081c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "091c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a1c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b1c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c1c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0d1c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0e1c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0f1c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "101c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "111c",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "001b",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "011b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "021b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "031b",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "041b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "051b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "061b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "071b",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "081b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "091b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a1b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b1b",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "0c1b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0d1b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0e1b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0f1b",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "101b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "111b",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "001a",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "011a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "021a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "031a",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "041a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "051a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "061a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "071a",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "081a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "091a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a1a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b1a",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c1a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d1a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e1a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f1a",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "101a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "111a",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0019",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0119",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0219",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0319",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0419",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0519",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0619",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0719",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0819",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0919",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a19",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b19",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c19",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d19",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e19",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f19",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1019",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1119",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0018",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0118",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0218",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0318",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0418",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0518",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0618",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0718",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0818",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0918",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a18",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b18",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c18",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d18",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e18",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f18",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1018",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1118",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0017",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0117",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0217",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0317",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0417",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0517",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0617",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0717",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0817",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0917",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a17",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b17",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c17",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0d17",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0e17",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0f17",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1017",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1117",
+      "code": "101-007",
+      "assetNo": 0,
+      "direction": "11",
+      "hidden": {
+        "code": "001-001",
+        "assetNo": 2,
+        "direction": "10"
+      }
+    },
+    {
+      "coord": "0016",
+      "code": "101-007",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "001-001",
+        "assetNo": 2,
+        "direction": "01"
+      }
+    },
+    {
+      "coord": "0116",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0216",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0316",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0416",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0516",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0616",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0716",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0816",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0916",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a16",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b16",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c16",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d16",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e16",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f16",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1016",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1116",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0015",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0115",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0215",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0315",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "0415",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0515",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0615",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0715",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "0815",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0915",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a15",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b15",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "0c15",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0d15",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0e15",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0f15",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "1015",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1115",
+      "code": "101-007",
+      "assetNo": 0,
+      "direction": "11",
+      "hidden": {
+        "code": "001-001",
+        "assetNo": 2,
+        "direction": "10"
+      }
+    },
+    {
+      "coord": "0014",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0114",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0214",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0314",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0414",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0514",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0614",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0714",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0814",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0914",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a14",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b14",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c14",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d14",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e14",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f14",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1014",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1114",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0013",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0113",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0213",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0313",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0413",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0513",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0613",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0713",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0813",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0913",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a13",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b13",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c13",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d13",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e13",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f13",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1013",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1113",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0012",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0112",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0212",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0312",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0412",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0512",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0612",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0712",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0812",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0912",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a12",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b12",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c12",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d12",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e12",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f12",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1012",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1112",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0011",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0111",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0211",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0311",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0411",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0511",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0611",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0711",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0811",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0911",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a11",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b11",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c11",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d11",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e11",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f11",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1011",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1111",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0010",
+      "code": "101-007",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "001-001",
+        "assetNo": 2,
+        "direction": "01"
+      }
+    },
+    {
+      "coord": "0110",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0210",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0310",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0410",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0510",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0610",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0710",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0810",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0910",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a10",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b10",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c10",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0d10",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0e10",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0f10",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1010",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1110",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "000f",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "010f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "020f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "030f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "040f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "050f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "060f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "070f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "080f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "090f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a0f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b0f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c0f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0d0f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0e0f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0f0f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "100f",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "110f",
+      "code": "101-007",
+      "assetNo": 0,
+      "direction": "11",
+      "hidden": {
+        "code": "001-001",
+        "assetNo": 2,
+        "direction": "10"
+      }
+    },
+    {
+      "coord": "000e",
+      "code": "101-007",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "001-001",
+        "assetNo": 2,
+        "direction": "01"
+      }
+    },
+    {
+      "coord": "010e",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "020e",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "030e",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "040e",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "050e",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "060e",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "070e",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "080e",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "090e",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a0e",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b0e",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "0c0e",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0d0e",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0e0e",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0f0e",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "100e",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "110e",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "000d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "010d",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "020d",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "030d",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "040d",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "050d",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "060d",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "070d",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "080d",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "090d",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a0d",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b0d",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c0d",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d0d",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e0d",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f0d",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "100d",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "110d",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "000c",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "010c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "020c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "030c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "040c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "050c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "060c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "070c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "080c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "090c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a0c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b0c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c0c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d0c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e0c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f0c",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "100c",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "110c",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "000b",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "010b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "020b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "030b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "040b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "050b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "060b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "070b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "080b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "090b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a0b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b0b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0c0b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d0b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e0b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f0b",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "100b",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "110b",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "000a",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "010a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "020a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "030a",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "040a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "050a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "060a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "070a",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "080a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "090a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a0a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b0a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0c0a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d0a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e0a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f0a",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "100a",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "110a",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0009",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0109",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0209",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0309",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0409",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0509",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0609",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0709",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0809",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0909",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a09",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b09",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c09",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0d09",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0e09",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0f09",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1009",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1109",
+      "code": "101-007",
+      "assetNo": 0,
+      "direction": "11",
+      "hidden": {
+        "code": "001-001",
+        "assetNo": 2,
+        "direction": "10"
+      }
+    },
+    {
+      "coord": "0008",
+      "code": "101-007",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "001-001",
+        "assetNo": 2,
+        "direction": "01"
+      }
+    },
+    {
+      "coord": "0108",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0208",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0308",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0408",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0508",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0608",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0708",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0808",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0908",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a08",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b08",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c08",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0d08",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0e08",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0f08",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1008",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1108",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0007",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0107",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0207",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0307",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "0407",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0507",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0607",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0707",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "0807",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0907",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a07",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b07",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "0c07",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0d07",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0e07",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0f07",
+      "code": "102-002",
+      "assetNo": 0,
+      "direction": "00",
+      "hidden": {
+        "code": "000-000",
+        "assetNo": 0,
+        "direction": "00"
+      }
+    },
+    {
+      "coord": "1007",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1107",
+      "code": "101-007",
+      "assetNo": 0,
+      "direction": "11",
+      "hidden": {
+        "code": "001-001",
+        "assetNo": 2,
+        "direction": "10"
+      }
+    },
+    {
+      "coord": "0006",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0106",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0206",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0306",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0406",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0506",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0606",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0706",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0806",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0906",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a06",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b06",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c06",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d06",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e06",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f06",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1006",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1106",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0005",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0105",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0205",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0305",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0405",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0505",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0605",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0705",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0805",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0905",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a05",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b05",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c05",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d05",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e05",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f05",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1005",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1105",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0004",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0104",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0204",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0304",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0404",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0504",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0604",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0704",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0804",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0904",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a04",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b04",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0c04",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d04",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e04",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f04",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1004",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1104",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0003",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0103",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0203",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0303",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0403",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0503",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0603",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0703",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0803",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0903",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0a03",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0b03",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0c03",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0d03",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0e03",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0f03",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1003",
+      "code": "100-000",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "1103",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0002",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0102",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0202",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0302",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0402",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0502",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0602",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0702",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0802",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0902",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a02",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b02",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c02",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0d02",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0e02",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0f02",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1002",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1102",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "10"
+    },
+    {
+      "coord": "0001",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "01"
+    },
+    {
+      "coord": "0101",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0201",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0301",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0401",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0501",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0601",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0701",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0801",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0901",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0a01",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0b01",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0c01",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0d01",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0e01",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "0f01",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1001",
+      "code": "000-000",
+      "assetNo": 0,
+      "direction": "00"
+    },
+    {
+      "coord": "1101",
+      "code": "001-002",
+      "assetNo": 0,
+      "direction": "10"
+    },
+    {
+      "coord": "0000",
+      "code": "001-001",
+      "assetNo": 1,
+      "direction": "10"
+    },
+    {
+      "coord": "0100",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0200",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0300",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0400",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0500",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0600",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0700",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0800",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0900",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0a00",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0b00",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0c00",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0d00",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0e00",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "0f00",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "1000",
+      "code": "001-001",
+      "assetNo": 2,
+      "direction": "00"
+    },
+    {
+      "coord": "1100",
+      "code": "001-001",
+      "assetNo": 1,
+      "direction": "11"
+    }
+  ],
+  "relation": [],
+  "player": {
+    "start": "001c"
+  }
+}

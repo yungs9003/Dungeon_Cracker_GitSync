@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="37" result="Passed" total="37" passed="37" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.1732659">
+  <test-suite type="TestSuite" id="1000" name="Dungeon" fullname="Dungeon" runstate="Runnable" testcasecount="128" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.173266" total="37" passed="37" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1113" name="Dungeon.Save.EditorTests.dll" fullname="C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Library/CodexPlayTime/Unity/Library/ScriptAssemblies/Dungeon.Save.EditorTests.dll" runstate="Runnable" testcasecount="94" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.119903" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="82328" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1114" name="Dungeon" fullname="Dungeon" runstate="Runnable" testcasecount="94" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.118284" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1115" name="Tests" fullname="Dungeon.Tests" runstate="Runnable" testcasecount="94" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.115681" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1093" name="TrapSystemTests" fullname="Dungeon.Tests.TrapSystemTests" classname="Dungeon.Tests.TrapSystemTests" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.111691" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1098" name="GameDatabase_LoadsDamageAndOptionalKnockback" fullname="Dungeon.Tests.TrapSystemTests.GameDatabase_LoadsDamageAndOptionalKnockback" methodname="GameDatabase_LoadsDamageAndOptionalKnockback" classname="Dungeon.Tests.TrapSystemTests" runstate="Runnable" seed="1066169531" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.092522" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1109" name="HiddenTrapVisual_SwitchesChildVariantButLeavesMarkedEffectVisible" fullname="Dungeon.Tests.TrapSystemTests.HiddenTrapVisual_SwitchesChildVariantButLeavesMarkedEffectVisible" methodname="HiddenTrapVisual_SwitchesChildVariantButLeavesMarkedEffectVisible" classname="Dungeon.Tests.TrapSystemTests" runstate="Runnable" seed="1769279900" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.008991" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1110" name="HiddenTrapVisual_VisibilityOnlyKeepsRootActiveAndStaysRevealed" fullname="Dungeon.Tests.TrapSystemTests.HiddenTrapVisual_VisibilityOnlyKeepsRootActiveAndStaysRevealed" methodname="HiddenTrapVisual_VisibilityOnlyKeepsRootActiveAndStaysRevealed" classname="Dungeon.Tests.TrapSystemTests" runstate="Runnable" seed="1116463899" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.001245" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1155" name="Dungeon.TileRetile.EditorTests.dll" fullname="C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Library/CodexPlayTime/Unity/Library/ScriptAssemblies/Dungeon.TileRetile.EditorTests.dll" runstate="Runnable" testcasecount="34" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.045267" total="34" passed="34" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="82328" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1156" name="Dungeon" fullname="Dungeon" runstate="Runnable" testcasecount="34" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.044574" total="34" passed="34" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1157" name="Tests" fullname="Dungeon.Tests" runstate="Runnable" testcasecount="34" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.044275" total="34" passed="34" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1116" name="TileRetileTests" fullname="Dungeon.Tests.TileRetileTests" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" testcasecount="34" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.043897" total="34" passed="34" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1132" name="AllNonIsolatedTopologiesProduceMatchingCardinalOpenings" fullname="Dungeon.Tests.TileRetileTests.AllNonIsolatedTopologiesProduceMatchingCardinalOpenings" methodname="AllNonIsolatedTopologiesProduceMatchingCardinalOpenings" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1363736943" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.021918" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1126" name="ANewDbApprovedWallTrapGetsThePolicyWithoutAnotherJsonEntry" fullname="Dungeon.Tests.TileRetileTests.ANewDbApprovedWallTrapGetsThePolicyWithoutAnotherJsonEntry" methodname="ANewDbApprovedWallTrapGetsThePolicyWithoutAnotherJsonEntry" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1777839646" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000512" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1128" name="CalculationPreservesAllOriginalMapFields" fullname="Dungeon.Tests.TileRetileTests.CalculationPreservesAllOriginalMapFields" methodname="CalculationPreservesAllOriginalMapFields" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1681332890" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.002231" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1145" name="EveryAuthoredSpriteMaskCanBeSelected" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.004730" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1133" name="EveryAuthoredSpriteMaskCanBeSelected(0)" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected(0)" methodname="EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="2086242308" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000967" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1134" name="EveryAuthoredSpriteMaskCanBeSelected(1)" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected(1)" methodname="EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="74919593" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000184" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1135" name="EveryAuthoredSpriteMaskCanBeSelected(2)" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected(2)" methodname="EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1017781092" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000141" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1136" name="EveryAuthoredSpriteMaskCanBeSelected(3)" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected(3)" methodname="EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1318618153" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000149" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1137" name="EveryAuthoredSpriteMaskCanBeSelected(4)" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected(4)" methodname="EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1905682879" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000132" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1138" name="EveryAuthoredSpriteMaskCanBeSelected(5)" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected(5)" methodname="EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1104799770" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000126" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1139" name="EveryAuthoredSpriteMaskCanBeSelected(6)" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected(6)" methodname="EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="563795591" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000126" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1140" name="EveryAuthoredSpriteMaskCanBeSelected(8)" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected(8)" methodname="EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="583433537" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.001225" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1141" name="EveryAuthoredSpriteMaskCanBeSelected(9)" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected(9)" methodname="EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="884181016" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000186" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1142" name="EveryAuthoredSpriteMaskCanBeSelected(10)" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected(10)" methodname="EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="985570635" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000141" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1143" name="EveryAuthoredSpriteMaskCanBeSelected(11)" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected(11)" methodname="EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="474209692" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000130" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1144" name="EveryAuthoredSpriteMaskCanBeSelected(12)" fullname="Dungeon.Tests.TileRetileTests.EveryAuthoredSpriteMaskCanBeSelected(12)" methodname="EveryAuthoredSpriteMaskCanBeSelected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="954186733" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000127" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1121" name="EveryDbWallTrapHasSharedRuleWithoutChangingDestructibility" fullname="Dungeon.Tests.TileRetileTests.EveryDbWallTrapHasSharedRuleWithoutChangingDestructibility" methodname="EveryDbWallTrapHasSharedRuleWithoutChangingDestructibility" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="353249283" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.001311" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1146" name="InvalidSignatureOrderIsRejected" fullname="Dungeon.Tests.TileRetileTests.InvalidSignatureOrderIsRejected" methodname="InvalidSignatureOrderIsRejected" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1915702463" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.001500" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1153" name="MissingOrInvalidCoordinateReturnsNoChanges" fullname="Dungeon.Tests.TileRetileTests.MissingOrInvalidCoordinateReturnsNoChanges" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.001903" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1148" name="MissingOrInvalidCoordinateReturnsNoChanges(null)" fullname="Dungeon.Tests.TileRetileTests.MissingOrInvalidCoordinateReturnsNoChanges(null)" methodname="MissingOrInvalidCoordinateReturnsNoChanges" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="2119892776" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000635" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1149" name="MissingOrInvalidCoordinateReturnsNoChanges(&quot;&quot;)" fullname="Dungeon.Tests.TileRetileTests.MissingOrInvalidCoordinateReturnsNoChanges(&quot;&quot;)" methodname="MissingOrInvalidCoordinateReturnsNoChanges" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="265898420" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000162" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1150" name="MissingOrInvalidCoordinateReturnsNoChanges(&quot;fffff&quot;)" fullname="Dungeon.Tests.TileRetileTests.MissingOrInvalidCoordinateReturnsNoChanges(&quot;fffff&quot;)" methodname="MissingOrInvalidCoordinateReturnsNoChanges" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1127620520" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000127" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1151" name="MissingOrInvalidCoordinateReturnsNoChanges(&quot;zzzz&quot;)" fullname="Dungeon.Tests.TileRetileTests.MissingOrInvalidCoordinateReturnsNoChanges(&quot;zzzz&quot;)" methodname="MissingOrInvalidCoordinateReturnsNoChanges" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1281462930" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000143" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1152" name="MissingOrInvalidCoordinateReturnsNoChanges(&quot;ffff&quot;)" fullname="Dungeon.Tests.TileRetileTests.MissingOrInvalidCoordinateReturnsNoChanges(&quot;ffff&quot;)" methodname="MissingOrInvalidCoordinateReturnsNoChanges" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1451717257" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000120" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1127" name="NoDbDestructibleListDoesNotGrantDestruction" fullname="Dungeon.Tests.TileRetileTests.NoDbDestructibleListDoesNotGrantDestruction" methodname="NoDbDestructibleListDoesNotGrantDestruction" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="965510960" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000172" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1125" name="NonDestructibleOrUnknownTrapsAreWallsButNotReplacementTargets" fullname="Dungeon.Tests.TileRetileTests.NonDestructibleOrUnknownTrapsAreWallsButNotReplacementTargets" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.001252" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1122" name="NonDestructibleOrUnknownTrapsAreWallsButNotReplacementTargets(&quot;101-014&quot;)" fullname="Dungeon.Tests.TileRetileTests.NonDestructibleOrUnknownTrapsAreWallsButNotReplacementTargets(&quot;101-014&quot;)" methodname="NonDestructibleOrUnknownTrapsAreWallsButNotReplacementTargets" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="269374743" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000395" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1123" name="NonDestructibleOrUnknownTrapsAreWallsButNotReplacementTargets(&quot;101-015&quot;)" fullname="Dungeon.Tests.TileRetileTests.NonDestructibleOrUnknownTrapsAreWallsButNotReplacementTargets(&quot;101-015&quot;)" methodname="NonDestructibleOrUnknownTrapsAreWallsButNotReplacementTargets" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1357441292" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000175" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1124" name="NonDestructibleOrUnknownTrapsAreWallsButNotReplacementTargets(&quot;101-999&quot;)" fullname="Dungeon.Tests.TileRetileTests.NonDestructibleOrUnknownTrapsAreWallsButNotReplacementTargets(&quot;101-999&quot;)" methodname="NonDestructibleOrUnknownTrapsAreWallsButNotReplacementTargets" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1664994693" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000129" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1129" name="PreviousSpritesDoNotInfluenceOnePassSelection" fullname="Dungeon.Tests.TileRetileTests.PreviousSpritesDoNotInfluenceOnePassSelection" methodname="PreviousSpritesDoNotInfluenceOnePassSelection" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1723005722" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000872" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1131" name="RemainingTrapKeepsItsAttackMetadataInVisualOnlyResult" fullname="Dungeon.Tests.TileRetileTests.RemainingTrapKeepsItsAttackMetadataInVisualOnlyResult" methodname="RemainingTrapKeepsItsAttackMetadataInVisualOnlyResult" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="680655735" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000727" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1130" name="ResultsRemainTheSameAfterApplyingNeighbourChoices" fullname="Dungeon.Tests.TileRetileTests.ResultsRemainTheSameAfterApplyingNeighbourChoices" methodname="ResultsRemainTheSameAfterApplyingNeighbourChoices" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="318666009" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.002132" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1147" name="SignatureAndMaskCardinalsMustAgree" fullname="Dungeon.Tests.TileRetileTests.SignatureAndMaskCardinalsMustAgree" methodname="SignatureAndMaskCardinalsMustAgree" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1542940112" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000315" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1154" name="UnsignedHexCoordinatesAndRotationAreBounded" fullname="Dungeon.Tests.TileRetileTests.UnsignedHexCoordinatesAndRotationAreBounded" methodname="UnsignedHexCoordinatesAndRotationAreBounded" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="811173221" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000530" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1120" name="WallTrapFamilySharesReplacementAndWallClassification" fullname="Dungeon.Tests.TileRetileTests.WallTrapFamilySharesReplacementAndWallClassification" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.001772" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1117" name="WallTrapFamilySharesReplacementAndWallClassification(&quot;101-001&quot;)" fullname="Dungeon.Tests.TileRetileTests.WallTrapFamilySharesReplacementAndWallClassification(&quot;101-001&quot;)" methodname="WallTrapFamilySharesReplacementAndWallClassification" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="1172370799" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000571" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1118" name="WallTrapFamilySharesReplacementAndWallClassification(&quot;101-004&quot;)" fullname="Dungeon.Tests.TileRetileTests.WallTrapFamilySharesReplacementAndWallClassification(&quot;101-004&quot;)" methodname="WallTrapFamilySharesReplacementAndWallClassification" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="219583590" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000328" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1119" name="WallTrapFamilySharesReplacementAndWallClassification(&quot;101-007&quot;)" fullname="Dungeon.Tests.TileRetileTests.WallTrapFamilySharesReplacementAndWallClassification(&quot;101-007&quot;)" methodname="WallTrapFamilySharesReplacementAndWallClassification" classname="Dungeon.Tests.TileRetileTests" runstate="Runnable" seed="865896407" result="Passed" start-time="2026-10-20 14:24:20Z" end-time="2026-10-20 14:24:20Z" duration="0.000301" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Docs\Rollback\2026-10-20-tile-retile\Validation\final-unit-tests.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

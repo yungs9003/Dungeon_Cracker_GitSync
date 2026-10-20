@@ -1,0 +1,3 @@
+PASS original project preview only
+PASS all 11 files restored in isolated scratch workspace
+PASS actual project remains applied with all final hashes matching

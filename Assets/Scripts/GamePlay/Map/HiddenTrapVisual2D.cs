@@ -59,6 +59,31 @@ namespace Dungeon.Map
         private RevealVisualMode visualMode;
 
         private readonly List<SpriteRenderer> renderersToHide = new();
+        private SpriteRenderer retiledHiddenWall;
+
+        /// <summary>발견 전 벽 외형만 교체한다. 함정 루트/공격 방향과 발견용 Element 0/1은 보존한다.</summary>
+        public void OverrideHiddenWallSprite(Sprite sprite, Quaternion worldRotation)
+        {
+            if (!configured || visualMode != RevealVisualMode.AssetVariant || sprite == null) return;
+            ResolveRenderer();
+            if (targetRenderer == null) return;
+            if (retiledHiddenWall == null)
+            {
+                var wall = new GameObject("RetiledHiddenWall");
+                wall.transform.SetParent(transform, false);
+                wall.layer = targetRenderer.gameObject.layer;
+                wall.AddComponent<TrapRevealAlwaysVisible2D>();
+                retiledHiddenWall = wall.AddComponent<SpriteRenderer>();
+                retiledHiddenWall.sharedMaterial = targetRenderer.sharedMaterial;
+                retiledHiddenWall.sortingLayerID = targetRenderer.sortingLayerID;
+                retiledHiddenWall.sortingOrder = targetRenderer.sortingOrder;
+                retiledHiddenWall.maskInteraction = targetRenderer.maskInteraction;
+                retiledHiddenWall.color = targetRenderer.color;
+            }
+            retiledHiddenWall.sprite = sprite;
+            retiledHiddenWall.transform.rotation = worldRotation;
+            ApplyVisual(lastAppliedShowActual);
+        }
 
         public bool ConfigureFromAssetVariants(
             AssetVariantSprite2D variant,
@@ -196,6 +221,11 @@ namespace Dungeon.Map
 
             ApplyExtraRendererVisibility(showActual);
             ApplyExtraObjectVisibility(showActual);
+            if (retiledHiddenWall != null)
+            {
+                retiledHiddenWall.forceRenderingOff = showActual;
+                if (targetRenderer != null) targetRenderer.forceRenderingOff = !showActual;
+            }
         }
 
         /// <summary>

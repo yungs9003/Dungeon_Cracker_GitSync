@@ -57,7 +57,7 @@
     { "coord": "0605", "code": "102-011","assetNo":0,"direction":"00" },
     { "coord": "0606", "code": "001-001","assetNo":2,"direction":"11" },
 
-    { "coord": "0700", "code": "001-003","assetNo":0,"direction":"10" },
+    { "coord": "0700", "code": "001-003","assetNo":0,"direction":"00" },
     { "coord": "0701", "code": "000-000","assetNo":0,"direction":"00" },
     { "coord": "0702", "code": "000-000","assetNo":0,"direction":"00" },
     { "coord": "0703", "code": "000-000","assetNo":0,"direction":"00" },
@@ -69,7 +69,7 @@
     { "coord": "0801", "code": "001-001","assetNo":2,"direction":"10" },
     { "coord": "0802", "code": "001-001","assetNo":2,"direction":"10" },
     { "coord": "0803", "code": "101-015","assetNo":5,"direction":"10" },
-    { "coord": "0804", "code": "101-007","assetNo":2,"direction":"11" },
+    { "coord": "0804", "code": "101-007","assetNo":2,"direction":"10" },
     { "coord": "0805", "code": "001-001","assetNo":2,"direction":"10" },
     { "coord": "0806", "code": "001-001","assetNo":1,"direction":"01" },
 
@@ -92,6 +92,6 @@
   },
   "field_effect": {
     "type"	:"ice",
-	  "damage": 4
+	  "damage": 2
   }
 }

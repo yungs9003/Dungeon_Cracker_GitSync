@@ -165,7 +165,7 @@
       "coord": "0c0b",
       "code": "101-007",
       "assetNo": 0,
-      "direction": "11",
+      "direction": "10",
       "hidden": {
         "code": "001-001",
         "assetNo": 2,
@@ -254,7 +254,7 @@
       "coord": "0009",
       "code": "101-007",
       "assetNo": 0,
-      "direction": "00",
+      "direction": "01",
       "hidden": {
         "code": "001-001",
         "assetNo": 2,

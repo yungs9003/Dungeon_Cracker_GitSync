@@ -1,0 +1,83 @@
+--- Before/Assets/Resources/Maps/DUNGEON_001/map_005.json
++++ After/Assets/Resources/Maps/DUNGEON_001/map_005.json
+@@ -775,7 +775,7 @@
+       "coord": "1117",
+       "code": "101-007",
+       "assetNo": 0,
+-      "direction": "11",
++      "direction": "10",
+       "hidden": {
+         "code": "001-001",
+         "assetNo": 2,
+@@ -786,7 +786,7 @@
+       "coord": "0016",
+       "code": "101-007",
+       "assetNo": 0,
+-      "direction": "00",
++      "direction": "01",
+       "hidden": {
+         "code": "001-001",
+         "assetNo": 2,
+@@ -1021,7 +1021,7 @@
+       "coord": "1115",
+       "code": "101-007",
+       "assetNo": 0,
+-      "direction": "11",
++      "direction": "10",
+       "hidden": {
+         "code": "001-001",
+         "assetNo": 2,
+@@ -1464,7 +1464,7 @@
+       "coord": "0010",
+       "code": "101-007",
+       "assetNo": 0,
+-      "direction": "00",
++      "direction": "01",
+       "hidden": {
+         "code": "001-001",
+         "assetNo": 2,
+@@ -1679,7 +1679,7 @@
+       "coord": "110f",
+       "code": "101-007",
+       "assetNo": 0,
+-      "direction": "11",
++      "direction": "10",
+       "hidden": {
+         "code": "001-001",
+         "assetNo": 2,
+@@ -1690,7 +1690,7 @@
+       "coord": "000e",
+       "code": "101-007",
+       "assetNo": 0,
+-      "direction": "00",
++      "direction": "01",
+       "hidden": {
+         "code": "001-001",
+         "assetNo": 2,
+@@ -2357,7 +2357,7 @@
+       "coord": "1109",
+       "code": "101-007",
+       "assetNo": 0,
+-      "direction": "11",
++      "direction": "10",
+       "hidden": {
+         "code": "001-001",
+         "assetNo": 2,
+@@ -2368,7 +2368,7 @@
+       "coord": "0008",
+       "code": "101-007",
+       "assetNo": 0,
+-      "direction": "00",
++      "direction": "01",
+       "hidden": {
+         "code": "001-001",
+         "assetNo": 2,
+@@ -2603,7 +2603,7 @@
+       "coord": "1107",
+       "code": "101-007",
+       "assetNo": 0,
+-      "direction": "11",
++      "direction": "10",
+       "hidden": {
+         "code": "001-001",
+         "assetNo": 2,

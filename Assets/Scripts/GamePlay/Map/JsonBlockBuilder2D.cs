@@ -69,7 +69,7 @@ namespace Dungeon.Map
     /// 3. player.start 위치로 플레이어와 Respawn2D 기준점을 이동합니다.
     /// 4. 발견 대상 함정은 자식 AssetVariant Element를 전환하거나 자식 렌더링을 활성화합니다.
     /// </summary>
-    public class JsonBlockBuilder2D : MonoBehaviour
+    public partial class JsonBlockBuilder2D : MonoBehaviour
     {
         [Header("JSON 파일 이름 (Assets/Resources 기준, 확장자 제외)")]
         public string jsonFileName = "map_001";
@@ -153,6 +153,7 @@ namespace Dungeon.Map
         /// </summary>
         public void BuildFromJson()
         {
+            ResetTileRetileState();
             ClearChildren();
             prefabCache.Clear();
             relationMap.Clear();
@@ -288,6 +289,7 @@ namespace Dungeon.Map
 
                 SetupTrapRevealIfNeeded(block, code);
                 SendRelationsIfNeeded(block, x, y);
+                RegisterTileForRetile(block, cell, false);
             }
         }
 
@@ -328,6 +330,7 @@ namespace Dungeon.Map
                 ApplyAssetVariant(block, cell.assetNo);
                 ApplySortingBand(block, floor3SortingOrderBase);
                 SetupTrapRevealIfNeeded(block, code, visibilityOnly: true);
+                RegisterTileForRetile(block, cell, true);
 
                 // 3F relation 처리는 현재 적용하지 않습니다.
             }

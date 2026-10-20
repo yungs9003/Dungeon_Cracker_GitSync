@@ -1,0 +1,349 @@
+PASS isolated save service initialized
+PASS 101-001/00 initial build
+PASS 101-001/00 registry before
+PASS 101-001/00 actual Destructible present
+PASS 101-001/00 count once
+PASS 101-001/00 old collision disabled immediately
+PASS 101-001/00 registry replacement
+PASS 101-001/00 owned floor and coordinate
+PASS 101-001/00 map data floor
+PASS 101-001/00 sprite 0203
+PASS 101-001/00 data 0203
+PASS 101-001/00 rotation 0203
+PASS 101-001/00 sprite 0403
+PASS 101-001/00 data 0403
+PASS 101-001/00 rotation 0403
+PASS 101-001/00 sprite 0202
+PASS 101-001/00 data 0202
+PASS 101-001/00 rotation 0202
+PASS 101-001/00 sprite 0302
+PASS 101-001/00 data 0302
+PASS 101-001/00 rotation 0302
+PASS 101-001/00 sprite 0402
+PASS 101-001/00 data 0402
+PASS 101-001/00 rotation 0402
+PASS 101-001/00 other cells unchanged
+PASS 101-001/00 old object removed
+PASS 101-001/00 one floor only
+PASS 101-001/00 rebuild cleans replacement and restores source
+PASS 101-001/01 initial build
+PASS 101-001/01 registry before
+PASS 101-001/01 actual Destructible present
+PASS 101-001/01 count once
+PASS 101-001/01 old collision disabled immediately
+PASS 101-001/01 registry replacement
+PASS 101-001/01 owned floor and coordinate
+PASS 101-001/01 map data floor
+PASS 101-001/01 sprite 0204
+PASS 101-001/01 data 0204
+PASS 101-001/01 rotation 0204
+PASS 101-001/01 sprite 0304
+PASS 101-001/01 data 0304
+PASS 101-001/01 rotation 0304
+PASS 101-001/01 sprite 0203
+PASS 101-001/01 data 0203
+PASS 101-001/01 rotation 0203
+PASS 101-001/01 sprite 0202
+PASS 101-001/01 data 0202
+PASS 101-001/01 rotation 0202
+PASS 101-001/01 sprite 0302
+PASS 101-001/01 data 0302
+PASS 101-001/01 rotation 0302
+PASS 101-001/01 other cells unchanged
+PASS 101-001/01 old object removed
+PASS 101-001/01 one floor only
+PASS 101-001/01 rebuild cleans replacement and restores source
+PASS 101-001/11 initial build
+PASS 101-001/11 registry before
+PASS 101-001/11 actual Destructible present
+PASS 101-001/11 count once
+PASS 101-001/11 old collision disabled immediately
+PASS 101-001/11 registry replacement
+PASS 101-001/11 owned floor and coordinate
+PASS 101-001/11 map data floor
+PASS 101-001/11 sprite 0204
+PASS 101-001/11 data 0204
+PASS 101-001/11 rotation 0204
+PASS 101-001/11 sprite 0304
+PASS 101-001/11 data 0304
+PASS 101-001/11 rotation 0304
+PASS 101-001/11 sprite 0404
+PASS 101-001/11 data 0404
+PASS 101-001/11 rotation 0404
+PASS 101-001/11 sprite 0203
+PASS 101-001/11 data 0203
+PASS 101-001/11 rotation 0203
+PASS 101-001/11 sprite 0403
+PASS 101-001/11 data 0403
+PASS 101-001/11 rotation 0403
+PASS 101-001/11 other cells unchanged
+PASS 101-001/11 old object removed
+PASS 101-001/11 one floor only
+PASS 101-001/11 rebuild cleans replacement and restores source
+PASS 101-001/10 initial build
+PASS 101-001/10 registry before
+PASS 101-001/10 actual Destructible present
+PASS 101-001/10 count once
+PASS 101-001/10 old collision disabled immediately
+PASS 101-001/10 registry replacement
+PASS 101-001/10 owned floor and coordinate
+PASS 101-001/10 map data floor
+PASS 101-001/10 sprite 0304
+PASS 101-001/10 data 0304
+PASS 101-001/10 rotation 0304
+PASS 101-001/10 sprite 0404
+PASS 101-001/10 data 0404
+PASS 101-001/10 rotation 0404
+PASS 101-001/10 sprite 0403
+PASS 101-001/10 data 0403
+PASS 101-001/10 rotation 0403
+PASS 101-001/10 sprite 0302
+PASS 101-001/10 data 0302
+PASS 101-001/10 rotation 0302
+PASS 101-001/10 sprite 0402
+PASS 101-001/10 data 0402
+PASS 101-001/10 rotation 0402
+PASS 101-001/10 other cells unchanged
+PASS 101-001/10 old object removed
+PASS 101-001/10 one floor only
+PASS 101-001/10 rebuild cleans replacement and restores source
+PASS 101-004/00 initial build
+PASS 101-004/00 registry before
+PASS 101-004/00 actual Destructible present
+PASS 101-004/00 count once
+PASS 101-004/00 old collision disabled immediately
+PASS 101-004/00 registry replacement
+PASS 101-004/00 owned floor and coordinate
+PASS 101-004/00 map data floor
+PASS 101-004/00 sprite 0203
+PASS 101-004/00 data 0203
+PASS 101-004/00 rotation 0203
+PASS 101-004/00 sprite 0403
+PASS 101-004/00 data 0403
+PASS 101-004/00 rotation 0403
+PASS 101-004/00 sprite 0202
+PASS 101-004/00 data 0202
+PASS 101-004/00 rotation 0202
+PASS 101-004/00 sprite 0302
+PASS 101-004/00 data 0302
+PASS 101-004/00 rotation 0302
+PASS 101-004/00 sprite 0402
+PASS 101-004/00 data 0402
+PASS 101-004/00 rotation 0402
+PASS 101-004/00 other cells unchanged
+PASS 101-004/00 old object removed
+PASS 101-004/00 one floor only
+PASS 101-004/00 rebuild cleans replacement and restores source
+PASS 101-004/01 initial build
+PASS 101-004/01 registry before
+PASS 101-004/01 actual Destructible present
+PASS 101-004/01 count once
+PASS 101-004/01 old collision disabled immediately
+PASS 101-004/01 registry replacement
+PASS 101-004/01 owned floor and coordinate
+PASS 101-004/01 map data floor
+PASS 101-004/01 sprite 0204
+PASS 101-004/01 data 0204
+PASS 101-004/01 rotation 0204
+PASS 101-004/01 sprite 0304
+PASS 101-004/01 data 0304
+PASS 101-004/01 rotation 0304
+PASS 101-004/01 sprite 0203
+PASS 101-004/01 data 0203
+PASS 101-004/01 rotation 0203
+PASS 101-004/01 sprite 0202
+PASS 101-004/01 data 0202
+PASS 101-004/01 rotation 0202
+PASS 101-004/01 sprite 0302
+PASS 101-004/01 data 0302
+PASS 101-004/01 rotation 0302
+PASS 101-004/01 other cells unchanged
+PASS 101-004/01 old object removed
+PASS 101-004/01 one floor only
+PASS 101-004/01 rebuild cleans replacement and restores source
+PASS 101-004/11 initial build
+PASS 101-004/11 registry before
+PASS 101-004/11 actual Destructible present
+PASS 101-004/11 count once
+PASS 101-004/11 old collision disabled immediately
+PASS 101-004/11 registry replacement
+PASS 101-004/11 owned floor and coordinate
+PASS 101-004/11 map data floor
+PASS 101-004/11 sprite 0204
+PASS 101-004/11 data 0204
+PASS 101-004/11 rotation 0204
+PASS 101-004/11 sprite 0304
+PASS 101-004/11 data 0304
+PASS 101-004/11 rotation 0304
+PASS 101-004/11 sprite 0404
+PASS 101-004/11 data 0404
+PASS 101-004/11 rotation 0404
+PASS 101-004/11 sprite 0203
+PASS 101-004/11 data 0203
+PASS 101-004/11 rotation 0203
+PASS 101-004/11 sprite 0403
+PASS 101-004/11 data 0403
+PASS 101-004/11 rotation 0403
+PASS 101-004/11 other cells unchanged
+PASS 101-004/11 old object removed
+PASS 101-004/11 one floor only
+PASS 101-004/11 rebuild cleans replacement and restores source
+PASS 101-004/10 initial build
+PASS 101-004/10 registry before
+PASS 101-004/10 actual Destructible present
+PASS 101-004/10 count once
+PASS 101-004/10 old collision disabled immediately
+PASS 101-004/10 registry replacement
+PASS 101-004/10 owned floor and coordinate
+PASS 101-004/10 map data floor
+PASS 101-004/10 sprite 0304
+PASS 101-004/10 data 0304
+PASS 101-004/10 rotation 0304
+PASS 101-004/10 sprite 0404
+PASS 101-004/10 data 0404
+PASS 101-004/10 rotation 0404
+PASS 101-004/10 sprite 0403
+PASS 101-004/10 data 0403
+PASS 101-004/10 rotation 0403
+PASS 101-004/10 sprite 0302
+PASS 101-004/10 data 0302
+PASS 101-004/10 rotation 0302
+PASS 101-004/10 sprite 0402
+PASS 101-004/10 data 0402
+PASS 101-004/10 rotation 0402
+PASS 101-004/10 other cells unchanged
+PASS 101-004/10 old object removed
+PASS 101-004/10 one floor only
+PASS 101-004/10 rebuild cleans replacement and restores source
+PASS 101-007/00 initial build
+PASS 101-007/00 registry before
+PASS 101-007/00 actual Destructible present
+PASS 101-007/00 count once
+PASS 101-007/00 old collision disabled immediately
+PASS 101-007/00 registry replacement
+PASS 101-007/00 owned floor and coordinate
+PASS 101-007/00 map data floor
+PASS 101-007/00 sprite 0203
+PASS 101-007/00 data 0203
+PASS 101-007/00 rotation 0203
+PASS 101-007/00 sprite 0403
+PASS 101-007/00 data 0403
+PASS 101-007/00 rotation 0403
+PASS 101-007/00 sprite 0202
+PASS 101-007/00 data 0202
+PASS 101-007/00 rotation 0202
+PASS 101-007/00 sprite 0302
+PASS 101-007/00 data 0302
+PASS 101-007/00 rotation 0302
+PASS 101-007/00 sprite 0402
+PASS 101-007/00 data 0402
+PASS 101-007/00 rotation 0402
+PASS 101-007/00 other cells unchanged
+PASS 101-007/00 old object removed
+PASS 101-007/00 one floor only
+PASS 101-007/00 rebuild cleans replacement and restores source
+PASS 101-007/01 initial build
+PASS 101-007/01 registry before
+PASS 101-007/01 actual Destructible present
+PASS 101-007/01 count once
+PASS 101-007/01 old collision disabled immediately
+PASS 101-007/01 registry replacement
+PASS 101-007/01 owned floor and coordinate
+PASS 101-007/01 map data floor
+PASS 101-007/01 sprite 0204
+PASS 101-007/01 data 0204
+PASS 101-007/01 rotation 0204
+PASS 101-007/01 sprite 0304
+PASS 101-007/01 data 0304
+PASS 101-007/01 rotation 0304
+PASS 101-007/01 sprite 0203
+PASS 101-007/01 data 0203
+PASS 101-007/01 rotation 0203
+PASS 101-007/01 sprite 0202
+PASS 101-007/01 data 0202
+PASS 101-007/01 rotation 0202
+PASS 101-007/01 sprite 0302
+PASS 101-007/01 data 0302
+PASS 101-007/01 rotation 0302
+PASS 101-007/01 other cells unchanged
+PASS 101-007/01 old object removed
+PASS 101-007/01 one floor only
+PASS 101-007/01 rebuild cleans replacement and restores source
+PASS 101-007/11 initial build
+PASS 101-007/11 registry before
+PASS 101-007/11 actual Destructible present
+PASS 101-007/11 count once
+PASS 101-007/11 old collision disabled immediately
+PASS 101-007/11 registry replacement
+PASS 101-007/11 owned floor and coordinate
+PASS 101-007/11 map data floor
+PASS 101-007/11 sprite 0204
+PASS 101-007/11 data 0204
+PASS 101-007/11 rotation 0204
+PASS 101-007/11 sprite 0304
+PASS 101-007/11 data 0304
+PASS 101-007/11 rotation 0304
+PASS 101-007/11 sprite 0404
+PASS 101-007/11 data 0404
+PASS 101-007/11 rotation 0404
+PASS 101-007/11 sprite 0203
+PASS 101-007/11 data 0203
+PASS 101-007/11 rotation 0203
+PASS 101-007/11 sprite 0403
+PASS 101-007/11 data 0403
+PASS 101-007/11 rotation 0403
+PASS 101-007/11 other cells unchanged
+PASS 101-007/11 old object removed
+PASS 101-007/11 one floor only
+PASS 101-007/11 rebuild cleans replacement and restores source
+PASS 101-007/10 initial build
+PASS 101-007/10 registry before
+PASS 101-007/10 actual Destructible present
+PASS 101-007/10 count once
+PASS 101-007/10 old collision disabled immediately
+PASS 101-007/10 registry replacement
+PASS 101-007/10 owned floor and coordinate
+PASS 101-007/10 map data floor
+PASS 101-007/10 sprite 0304
+PASS 101-007/10 data 0304
+PASS 101-007/10 rotation 0304
+PASS 101-007/10 sprite 0404
+PASS 101-007/10 data 0404
+PASS 101-007/10 rotation 0404
+PASS 101-007/10 sprite 0403
+PASS 101-007/10 data 0403
+PASS 101-007/10 rotation 0403
+PASS 101-007/10 sprite 0302
+PASS 101-007/10 data 0302
+PASS 101-007/10 rotation 0302
+PASS 101-007/10 sprite 0402
+PASS 101-007/10 data 0402
+PASS 101-007/10 rotation 0402
+PASS 101-007/10 other cells unchanged
+PASS 101-007/10 old object removed
+PASS 101-007/10 one floor only
+PASS 101-007/10 rebuild cleans replacement and restores source
+PASS 101-014 remains non-destructible prefab
+PASS 101-014 DB rejects forced replacement
+PASS 101-014 no data/count change
+PASS 101-015 remains non-destructible prefab
+PASS 101-015 DB rejects forced replacement
+PASS 101-015 no data/count change
+PASS 001-005 existing child obstacle mechanism
+PASS 001-005 legacy child removal leaves walkable floor and registry intact
+PASS 3F does not overwrite base registry
+PASS 3F keeps base map data
+PASS 3F replacement data and object
+PASS 3F sorting band preserved
+PASS remaining hidden wall trap has separate wall visual
+PASS remaining trap attack direction and reveal metadata preserved
+PASS reveal hides overlay and restores trap renderer
+PASS hide uses retiled wall again
+PASS always-visible wall force trap keeps attack root
+PASS Maps/DUNGEON_001/map_001 initial generation preserves authored map fields
+PASS Maps/DUNGEON_001/map_001 actual map destruction integration
+PASS Maps/DUNGEON_001/map_001 resource JSON unchanged
+PASS Maps/DUNGEON_001/map_002 initial generation preserves authored map fields
+PASS Maps/DUNGEON_001/map_002 actual map destruction integration
+PASS Maps/DUNGEON_001/map_002 resource JSON unchanged
+TOTAL 348, FAILED 0

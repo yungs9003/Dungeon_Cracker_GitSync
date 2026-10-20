@@ -1,5 +1,6 @@
 using UnityEngine;
 using Dungeon.Core;
+using Dungeon.Map;
 
 namespace Dungeon.Traps
 {
@@ -38,6 +39,13 @@ namespace Dungeon.Traps
             if (alreadyDestroyed)
                 return;
 
+            var builder = (destroyRoot != null ? destroyRoot : transform).GetComponentInParent<JsonBlockBuilder2D>();
+            var handling = builder != null
+                ? builder.TryHandleTileDestruction(destroyRoot != null ? destroyRoot.gameObject : gameObject)
+                : TileDestructionHandling.NotHandled;
+            if (handling == TileDestructionHandling.Rejected)
+                return;
+
             alreadyDestroyed = true;
 
             if (disableTrapsBeforeDestroy)
@@ -45,7 +53,14 @@ namespace Dungeon.Traps
 
             AddBrokenTrapCount();
 
-            SpawnReplacement();
+            if (handling == TileDestructionHandling.NotHandled)
+                SpawnReplacement();
+            else if (destroyRoot != null)
+            {
+                // 새 바닥과 오래된 함정이 한 프레임 겹치거나 통로를 막지 않도록 한다.
+                foreach (var collider in destroyRoot.GetComponentsInChildren<Collider2D>(true)) collider.enabled = false;
+                foreach (var renderer in destroyRoot.GetComponentsInChildren<Renderer>(true)) renderer.enabled = false;
+            }
 
             if (destroyRoot == null)
                 return;

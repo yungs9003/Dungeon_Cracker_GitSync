@@ -1,0 +1,201 @@
+PASS Maps/CheckpointScene/checkpoint 001-004@0308 JSON direction
+PASS Maps/CheckpointScene/checkpoint 001-004@0308 actual prefab
+PASS Maps/CheckpointScene/checkpoint 001-004@0308 sprite forward
+PASS Maps/CheckpointScene/checkpoint 001-004@0308 faces floor corridor
+PASS Maps/CheckpointScene/checkpoint 001-004@0308 original sprite reference
+PASS Maps/DUNGEON_001/map_001 001-003@0700 JSON direction
+PASS Maps/DUNGEON_001/map_001 001-003@0700 actual prefab
+PASS Maps/DUNGEON_001/map_001 001-003@0700 sprite forward
+PASS Maps/DUNGEON_001/map_001 001-003@0700 faces floor corridor
+PASS Maps/DUNGEON_001/map_001 001-003@0700 original sprite reference
+PASS Maps/DUNGEON_001/map_001 101-007@0804 JSON direction
+PASS Maps/DUNGEON_001/map_001 101-007@0804 actual prefab
+PASS Maps/DUNGEON_001/map_001 101-007@0804 sprite forward
+PASS Maps/DUNGEON_001/map_001 101-007@0804 faces floor corridor
+PASS Maps/DUNGEON_001/map_001 101-007@0804 original sprite reference
+PASS Maps/DUNGEON_001/map_001 101-007@0804 actual rolling ball spawn
+PASS Maps/DUNGEON_001/map_001 101-007@0804 projectile follows sprite forward
+PASS Maps/DUNGEON_001/map_001 101-007@0804 projectile starts in front
+PASS Maps/DUNGEON_001/map_001 101-007@0804 projectile has no sideways spawn offset
+PASS Maps/DUNGEON_001/map_001 101-007@0804 authored speed preserved
+PASS Maps/DUNGEON_001/map_002 001-002@0700 JSON direction
+PASS Maps/DUNGEON_001/map_002 001-002@0700 actual prefab
+PASS Maps/DUNGEON_001/map_002 001-002@0700 sprite forward
+PASS Maps/DUNGEON_001/map_002 001-002@0700 faces floor corridor
+PASS Maps/DUNGEON_001/map_002 001-002@0700 original sprite reference
+PASS Maps/DUNGEON_001/map_003 001-002@1401 JSON direction
+PASS Maps/DUNGEON_001/map_003 001-002@1401 actual prefab
+PASS Maps/DUNGEON_001/map_003 001-002@1401 sprite forward
+PASS Maps/DUNGEON_001/map_003 001-002@1401 faces floor corridor
+PASS Maps/DUNGEON_001/map_003 001-002@1401 original sprite reference
+PASS Maps/DUNGEON_001/map_004 101-007@0c0b JSON direction
+PASS Maps/DUNGEON_001/map_004 101-007@0c0b actual prefab
+PASS Maps/DUNGEON_001/map_004 101-007@0c0b sprite forward
+PASS Maps/DUNGEON_001/map_004 101-007@0c0b faces floor corridor
+PASS Maps/DUNGEON_001/map_004 101-007@0c0b original sprite reference
+PASS Maps/DUNGEON_001/map_004 101-007@0c0b actual rolling ball spawn
+PASS Maps/DUNGEON_001/map_004 101-007@0c0b projectile follows sprite forward
+PASS Maps/DUNGEON_001/map_004 101-007@0c0b projectile starts in front
+PASS Maps/DUNGEON_001/map_004 101-007@0c0b projectile has no sideways spawn offset
+PASS Maps/DUNGEON_001/map_004 101-007@0c0b authored speed preserved
+PASS Maps/DUNGEON_001/map_004 101-007@0009 JSON direction
+PASS Maps/DUNGEON_001/map_004 101-007@0009 actual prefab
+PASS Maps/DUNGEON_001/map_004 101-007@0009 sprite forward
+PASS Maps/DUNGEON_001/map_004 101-007@0009 faces floor corridor
+PASS Maps/DUNGEON_001/map_004 101-007@0009 original sprite reference
+PASS Maps/DUNGEON_001/map_004 101-007@0009 actual rolling ball spawn
+PASS Maps/DUNGEON_001/map_004 101-007@0009 projectile follows sprite forward
+PASS Maps/DUNGEON_001/map_004 101-007@0009 projectile starts in front
+PASS Maps/DUNGEON_001/map_004 101-007@0009 projectile has no sideways spawn offset
+PASS Maps/DUNGEON_001/map_004 101-007@0009 authored speed preserved
+PASS Maps/DUNGEON_001/map_004 001-002@0c01 JSON direction
+PASS Maps/DUNGEON_001/map_004 001-002@0c01 actual prefab
+PASS Maps/DUNGEON_001/map_004 001-002@0c01 sprite forward
+PASS Maps/DUNGEON_001/map_004 001-002@0c01 faces floor corridor
+PASS Maps/DUNGEON_001/map_004 001-002@0c01 original sprite reference
+PASS Maps/DUNGEON_001/map_005 101-007@1117 JSON direction
+PASS Maps/DUNGEON_001/map_005 101-007@1117 actual prefab
+PASS Maps/DUNGEON_001/map_005 101-007@1117 sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@1117 faces floor corridor
+PASS Maps/DUNGEON_001/map_005 101-007@1117 original sprite reference
+PASS Maps/DUNGEON_001/map_005 101-007@1117 actual rolling ball spawn
+PASS Maps/DUNGEON_001/map_005 101-007@1117 projectile follows sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@1117 projectile starts in front
+PASS Maps/DUNGEON_001/map_005 101-007@1117 projectile has no sideways spawn offset
+PASS Maps/DUNGEON_001/map_005 101-007@1117 authored speed preserved
+PASS Maps/DUNGEON_001/map_005 101-007@0016 JSON direction
+PASS Maps/DUNGEON_001/map_005 101-007@0016 actual prefab
+PASS Maps/DUNGEON_001/map_005 101-007@0016 sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@0016 faces floor corridor
+PASS Maps/DUNGEON_001/map_005 101-007@0016 original sprite reference
+PASS Maps/DUNGEON_001/map_005 101-007@0016 actual rolling ball spawn
+PASS Maps/DUNGEON_001/map_005 101-007@0016 projectile follows sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@0016 projectile starts in front
+PASS Maps/DUNGEON_001/map_005 101-007@0016 projectile has no sideways spawn offset
+PASS Maps/DUNGEON_001/map_005 101-007@0016 authored speed preserved
+PASS Maps/DUNGEON_001/map_005 101-007@1115 JSON direction
+PASS Maps/DUNGEON_001/map_005 101-007@1115 actual prefab
+PASS Maps/DUNGEON_001/map_005 101-007@1115 sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@1115 faces floor corridor
+PASS Maps/DUNGEON_001/map_005 101-007@1115 original sprite reference
+PASS Maps/DUNGEON_001/map_005 101-007@1115 actual rolling ball spawn
+PASS Maps/DUNGEON_001/map_005 101-007@1115 projectile follows sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@1115 projectile starts in front
+PASS Maps/DUNGEON_001/map_005 101-007@1115 projectile has no sideways spawn offset
+PASS Maps/DUNGEON_001/map_005 101-007@1115 authored speed preserved
+PASS Maps/DUNGEON_001/map_005 101-007@0010 JSON direction
+PASS Maps/DUNGEON_001/map_005 101-007@0010 actual prefab
+PASS Maps/DUNGEON_001/map_005 101-007@0010 sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@0010 faces floor corridor
+PASS Maps/DUNGEON_001/map_005 101-007@0010 original sprite reference
+PASS Maps/DUNGEON_001/map_005 101-007@0010 actual rolling ball spawn
+PASS Maps/DUNGEON_001/map_005 101-007@0010 projectile follows sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@0010 projectile starts in front
+PASS Maps/DUNGEON_001/map_005 101-007@0010 projectile has no sideways spawn offset
+PASS Maps/DUNGEON_001/map_005 101-007@0010 authored speed preserved
+PASS Maps/DUNGEON_001/map_005 101-007@110f JSON direction
+PASS Maps/DUNGEON_001/map_005 101-007@110f actual prefab
+PASS Maps/DUNGEON_001/map_005 101-007@110f sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@110f faces floor corridor
+PASS Maps/DUNGEON_001/map_005 101-007@110f original sprite reference
+PASS Maps/DUNGEON_001/map_005 101-007@110f actual rolling ball spawn
+PASS Maps/DUNGEON_001/map_005 101-007@110f projectile follows sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@110f projectile starts in front
+PASS Maps/DUNGEON_001/map_005 101-007@110f projectile has no sideways spawn offset
+PASS Maps/DUNGEON_001/map_005 101-007@110f authored speed preserved
+PASS Maps/DUNGEON_001/map_005 101-007@000e JSON direction
+PASS Maps/DUNGEON_001/map_005 101-007@000e actual prefab
+PASS Maps/DUNGEON_001/map_005 101-007@000e sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@000e faces floor corridor
+PASS Maps/DUNGEON_001/map_005 101-007@000e original sprite reference
+PASS Maps/DUNGEON_001/map_005 101-007@000e actual rolling ball spawn
+PASS Maps/DUNGEON_001/map_005 101-007@000e projectile follows sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@000e projectile starts in front
+PASS Maps/DUNGEON_001/map_005 101-007@000e projectile has no sideways spawn offset
+PASS Maps/DUNGEON_001/map_005 101-007@000e authored speed preserved
+PASS Maps/DUNGEON_001/map_005 101-007@1109 JSON direction
+PASS Maps/DUNGEON_001/map_005 101-007@1109 actual prefab
+PASS Maps/DUNGEON_001/map_005 101-007@1109 sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@1109 faces floor corridor
+PASS Maps/DUNGEON_001/map_005 101-007@1109 original sprite reference
+PASS Maps/DUNGEON_001/map_005 101-007@1109 actual rolling ball spawn
+PASS Maps/DUNGEON_001/map_005 101-007@1109 projectile follows sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@1109 projectile starts in front
+PASS Maps/DUNGEON_001/map_005 101-007@1109 projectile has no sideways spawn offset
+PASS Maps/DUNGEON_001/map_005 101-007@1109 authored speed preserved
+PASS Maps/DUNGEON_001/map_005 101-007@0008 JSON direction
+PASS Maps/DUNGEON_001/map_005 101-007@0008 actual prefab
+PASS Maps/DUNGEON_001/map_005 101-007@0008 sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@0008 faces floor corridor
+PASS Maps/DUNGEON_001/map_005 101-007@0008 original sprite reference
+PASS Maps/DUNGEON_001/map_005 101-007@0008 actual rolling ball spawn
+PASS Maps/DUNGEON_001/map_005 101-007@0008 projectile follows sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@0008 projectile starts in front
+PASS Maps/DUNGEON_001/map_005 101-007@0008 projectile has no sideways spawn offset
+PASS Maps/DUNGEON_001/map_005 101-007@0008 authored speed preserved
+PASS Maps/DUNGEON_001/map_005 101-007@1107 JSON direction
+PASS Maps/DUNGEON_001/map_005 101-007@1107 actual prefab
+PASS Maps/DUNGEON_001/map_005 101-007@1107 sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@1107 faces floor corridor
+PASS Maps/DUNGEON_001/map_005 101-007@1107 original sprite reference
+PASS Maps/DUNGEON_001/map_005 101-007@1107 actual rolling ball spawn
+PASS Maps/DUNGEON_001/map_005 101-007@1107 projectile follows sprite forward
+PASS Maps/DUNGEON_001/map_005 101-007@1107 projectile starts in front
+PASS Maps/DUNGEON_001/map_005 101-007@1107 projectile has no sideways spawn offset
+PASS Maps/DUNGEON_001/map_005 101-007@1107 authored speed preserved
+PASS Maps/DUNGEON_001/map_005 001-002@1101 JSON direction
+PASS Maps/DUNGEON_001/map_005 001-002@1101 actual prefab
+PASS Maps/DUNGEON_001/map_005 001-002@1101 sprite forward
+PASS Maps/DUNGEON_001/map_005 001-002@1101 faces floor corridor
+PASS Maps/DUNGEON_001/map_005 001-002@1101 original sprite reference
+PASS Maps/DUNGEON_002/map_001 001-002@0700 JSON direction
+PASS Maps/DUNGEON_002/map_001 001-002@0700 actual prefab
+PASS Maps/DUNGEON_002/map_001 001-002@0700 sprite forward
+PASS Maps/DUNGEON_002/map_001 001-002@0700 faces floor corridor
+PASS Maps/DUNGEON_002/map_001 001-002@0700 original sprite reference
+PASS Maps/DUNGEON_002/map_002 001-002@0403 JSON direction
+PASS Maps/DUNGEON_002/map_002 001-002@0403 actual prefab
+PASS Maps/DUNGEON_002/map_002 001-002@0403 sprite forward
+PASS Maps/DUNGEON_002/map_002 001-002@0403 faces floor corridor
+PASS Maps/DUNGEON_002/map_002 001-002@0403 original sprite reference
+PASS Maps/DUNGEON_002/map_003 101-007@030a JSON direction
+PASS Maps/DUNGEON_002/map_003 101-007@030a actual prefab
+PASS Maps/DUNGEON_002/map_003 101-007@030a sprite forward
+PASS Maps/DUNGEON_002/map_003 101-007@030a faces floor corridor
+PASS Maps/DUNGEON_002/map_003 101-007@030a original sprite reference
+PASS Maps/DUNGEON_002/map_003 101-007@030a actual rolling ball spawn
+PASS Maps/DUNGEON_002/map_003 101-007@030a projectile follows sprite forward
+PASS Maps/DUNGEON_002/map_003 101-007@030a projectile starts in front
+PASS Maps/DUNGEON_002/map_003 101-007@030a projectile has no sideways spawn offset
+PASS Maps/DUNGEON_002/map_003 101-007@030a authored speed preserved
+PASS Maps/DUNGEON_002/map_003 001-002@0709 JSON direction
+PASS Maps/DUNGEON_002/map_003 001-002@0709 actual prefab
+PASS Maps/DUNGEON_002/map_003 001-002@0709 sprite forward
+PASS Maps/DUNGEON_002/map_003 001-002@0709 faces floor corridor
+PASS Maps/DUNGEON_002/map_003 001-002@0709 original sprite reference
+PASS Maps/DUNGEON_002/map_004 101-007@1612 JSON direction
+PASS Maps/DUNGEON_002/map_004 101-007@1612 actual prefab
+PASS Maps/DUNGEON_002/map_004 101-007@1612 sprite forward
+PASS Maps/DUNGEON_002/map_004 101-007@1612 faces floor corridor
+PASS Maps/DUNGEON_002/map_004 101-007@1612 original sprite reference
+PASS Maps/DUNGEON_002/map_004 101-007@1612 actual rolling ball spawn
+PASS Maps/DUNGEON_002/map_004 101-007@1612 projectile follows sprite forward
+PASS Maps/DUNGEON_002/map_004 101-007@1612 projectile starts in front
+PASS Maps/DUNGEON_002/map_004 101-007@1612 projectile has no sideways spawn offset
+PASS Maps/DUNGEON_002/map_004 101-007@1612 authored speed preserved
+PASS Maps/DUNGEON_002/map_004 001-002@1B0E JSON direction
+PASS Maps/DUNGEON_002/map_004 001-002@1B0E actual prefab
+PASS Maps/DUNGEON_002/map_004 001-002@1B0E sprite forward
+PASS Maps/DUNGEON_002/map_004 001-002@1B0E faces floor corridor
+PASS Maps/DUNGEON_002/map_004 001-002@1B0E original sprite reference
+PASS Maps/DUNGEON_002/map_004 101-007@0A01 JSON direction
+PASS Maps/DUNGEON_002/map_004 101-007@0A01 actual prefab
+PASS Maps/DUNGEON_002/map_004 101-007@0A01 sprite forward
+PASS Maps/DUNGEON_002/map_004 101-007@0A01 faces floor corridor
+PASS Maps/DUNGEON_002/map_004 101-007@0A01 original sprite reference
+PASS Maps/DUNGEON_002/map_004 101-007@0A01 actual rolling ball spawn
+PASS Maps/DUNGEON_002/map_004 101-007@0A01 projectile follows sprite forward
+PASS Maps/DUNGEON_002/map_004 101-007@0A01 projectile starts in front
+PASS Maps/DUNGEON_002/map_004 101-007@0A01 projectile has no sideways spawn offset
+PASS Maps/DUNGEON_002/map_004 101-007@0A01 authored speed preserved
+TOTAL 200, FAILED 0

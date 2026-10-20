@@ -9,7 +9,7 @@ namespace Dungeon.Traps
         [SerializeField] private RollingBallTrap2D ballPrefab;
 
         [Header("Spawn Offset (local XY)")]
-        [SerializeField] private Vector2 spawnLocalOffset = new Vector2(0.6f, 0f);
+        [SerializeField] private Vector2 spawnLocalOffset = new Vector2(0f, 0.6f);
 
         [Header("Grid")]
         [SerializeField] private float cellSize = 1f;
@@ -50,7 +50,8 @@ namespace Dungeon.Traps
         {
             if (ballPrefab == null) return;
 
-            Vector2 dir = ((Vector2)transform.right).normalized;
+            // 맵 direction과 기본 Sprite의 위쪽(+Y)을 발사 전방으로 사용한다.
+            Vector2 dir = ((Vector2)transform.up).normalized;
             Vector2 spawnPos = (Vector2)transform.TransformPoint(spawnLocalOffset);
             spawnPos += dir * cellSize;
             spawnPos += dir * forwardPadding;

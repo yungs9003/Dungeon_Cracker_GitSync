@@ -1,0 +1,227 @@
+[
+  {
+    "path": "Assets/Resources/Maps/CheckpointScene/checkpoint.json",
+    "layer": "grid",
+    "coord": "0308",
+    "code": "001-004",
+    "before": "01",
+    "after": "11",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_001.json",
+    "layer": "grid",
+    "coord": "0700",
+    "code": "001-003",
+    "before": "10",
+    "after": "00",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_001.json",
+    "layer": "grid",
+    "coord": "0804",
+    "code": "101-007",
+    "before": "11",
+    "after": "10",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_002.json",
+    "layer": "grid",
+    "coord": "0700",
+    "code": "001-002",
+    "before": "10",
+    "after": "00",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_003.json",
+    "layer": "grid",
+    "coord": "1401",
+    "code": "001-002",
+    "before": "00",
+    "after": "10",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_004.json",
+    "layer": "grid",
+    "coord": "0c0b",
+    "code": "101-007",
+    "before": "11",
+    "after": "10",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_004.json",
+    "layer": "grid",
+    "coord": "0009",
+    "code": "101-007",
+    "before": "00",
+    "after": "01",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_004.json",
+    "layer": "grid",
+    "coord": "0c01",
+    "code": "001-002",
+    "before": "10",
+    "after": "10",
+    "changed": false
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_005.json",
+    "layer": "grid",
+    "coord": "1117",
+    "code": "101-007",
+    "before": "11",
+    "after": "10",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_005.json",
+    "layer": "grid",
+    "coord": "0016",
+    "code": "101-007",
+    "before": "00",
+    "after": "01",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_005.json",
+    "layer": "grid",
+    "coord": "1115",
+    "code": "101-007",
+    "before": "11",
+    "after": "10",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_005.json",
+    "layer": "grid",
+    "coord": "0010",
+    "code": "101-007",
+    "before": "00",
+    "after": "01",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_005.json",
+    "layer": "grid",
+    "coord": "110f",
+    "code": "101-007",
+    "before": "11",
+    "after": "10",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_005.json",
+    "layer": "grid",
+    "coord": "000e",
+    "code": "101-007",
+    "before": "00",
+    "after": "01",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_005.json",
+    "layer": "grid",
+    "coord": "1109",
+    "code": "101-007",
+    "before": "11",
+    "after": "10",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_005.json",
+    "layer": "grid",
+    "coord": "0008",
+    "code": "101-007",
+    "before": "00",
+    "after": "01",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_005.json",
+    "layer": "grid",
+    "coord": "1107",
+    "code": "101-007",
+    "before": "11",
+    "after": "10",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_001/map_005.json",
+    "layer": "grid",
+    "coord": "1101",
+    "code": "001-002",
+    "before": "10",
+    "after": "10",
+    "changed": false
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_002/map_001.json",
+    "layer": "grid",
+    "coord": "0700",
+    "code": "001-002",
+    "before": "00",
+    "after": "00",
+    "changed": false
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_002/map_002.json",
+    "layer": "grid",
+    "coord": "0403",
+    "code": "001-002",
+    "before": null,
+    "after": "10",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_002/map_003.json",
+    "layer": "grid",
+    "coord": "030a",
+    "code": "101-007",
+    "before": null,
+    "after": "11",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_002/map_003.json",
+    "layer": "grid",
+    "coord": "0709",
+    "code": "001-002",
+    "before": null,
+    "after": "10",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_002/map_004.json",
+    "layer": "grid",
+    "coord": "1612",
+    "code": "101-007",
+    "before": null,
+    "after": "11",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_002/map_004.json",
+    "layer": "grid",
+    "coord": "1B0E",
+    "code": "001-002",
+    "before": null,
+    "after": "10",
+    "changed": true
+  },
+  {
+    "path": "Assets/Resources/Maps/DUNGEON_002/map_004.json",
+    "layer": "grid",
+    "coord": "0A01",
+    "code": "101-007",
+    "before": null,
+    "after": "00",
+    "changed": true
+  }
+]

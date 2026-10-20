@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 2,
+  "signatureOrder": "NESW",
+  "missingCellsAreWalls": true,
+  "TileReplacements": [
+    {
+      "prePrefix": "101-",
+      "post": "000-000",
+      "tilesetCode": "001-001",
+      "extraWallLikePrefixes": [
+        "101-"
+      ],
+      "requireDestructible": true
+    }
+  ],
+  "sideProfileCodes": [
+    {
+      "code": "00",
+      "name": "Empty",
+      "compatibleWith": [
+        "00"
+      ]
+    },
+    {
+      "code": "01",
+      "name": "Solid",
+      "compatibleWith": [
+        "01"
+      ]
+    },
+    {
+      "code": "02",
+      "name": "LeftSlopeWide",
+      "compatibleWith": [
+        "04"
+      ]
+    },
+    {
+      "code": "03",
+      "name": "LeftSlopeNarrow",
+      "compatibleWith": [
+        "05"
+      ]
+    },
+    {
+      "code": "04",
+      "name": "RightSlopeWide",
+      "compatibleWith": [
+        "02"
+      ]
+    },
+    {
+      "code": "05",
+      "name": "RightSlopeNarrow",
+      "compatibleWith": [
+        "03"
+      ]
+    },
+    {
+      "code": "06",
+      "name": "CenterPlateauWide",
+      "compatibleWith": [
+        "06"
+      ]
+    },
+    {
+      "code": "07",
+      "name": "CenterPlateauLeft",
+      "compatibleWith": [
+        "08"
+      ]
+    },
+    {
+      "code": "08",
+      "name": "CenterPlateauRight",
+      "compatibleWith": [
+        "07"
+      ]
+    }
+  ],
+  "rulesets": [
+    {
+      "tilesetCode": "001-001",
+      "structureMasks": [
+        {
+          "mask3x3": [
+            "111",
+            "111",
+            "110"
+          ],
+          "candidates": [
+            1
+          ]
+        },
+        {
+          "mask3x3": [
+            "?0?",
+            "111",
+            "111"
+          ],
+          "candidates": [
+            2
+          ]
+        },
+        {
+          "mask3x3": [
+            "111",
+            "110",
+            "000"
+          ],
+          "candidates": [
+            3
+          ]
+        },
+        {
+          "mask3x3": [
+            "111",
+            "111",
+            "010"
+          ],
+          "candidates": [
+            6
+          ]
+        },
+        {
+          "mask3x3": [
+            "111",
+            "011",
+            "010"
+          ],
+          "candidates": [
+            8
+          ]
+        },
+        {
+          "mask3x3": [
+            "111",
+            "010",
+            "000"
+          ],
+          "candidates": [
+            5
+          ]
+        },
+        {
+          "mask3x3": [
+            "110",
+            "010",
+            "000"
+          ],
+          "candidates": [
+            10
+          ]
+        },
+        {
+          "mask3x3": [
+            "011",
+            "010",
+            "000"
+          ],
+          "candidates": [
+            11
+          ]
+        },
+        {
+          "mask3x3": [
+            "010",
+            "010",
+            "010"
+          ],
+          "candidates": [
+            4
+          ]
+        },
+        {
+          "mask3x3": [
+            "111",
+            "111",
+            "111"
+          ],
+          "candidates": [
+            0
+          ]
+        },
+        {
+          "mask3x3": [
+            "011",
+            "010",
+            "011"
+          ],
+          "candidates": [
+            9
+          ]
+        },
+        {
+          "mask3x3": [
+            "111",
+            "110",
+            "010"
+          ],
+          "candidates": [
+            12
+          ]
+        }
+      ],
+      "tiles": [
+        {
+          "assetNo": 0,
+          "structureType": "Solid",
+          "signature": "01010101"
+        },
+        {
+          "assetNo": 1,
+          "structureType": "InnerCorner",
+          "signature": "01040201"
+        },
+        {
+          "assetNo": 2,
+          "structureType": "Edge",
+          "signature": "00020104"
+        },
+        {
+          "assetNo": 3,
+          "structureType": "OuterCorner",
+          "signature": "04000002"
+        },
+        {
+          "assetNo": 4,
+          "structureType": "Spine",
+          "signature": "06000600"
+        },
+        {
+          "assetNo": 5,
+          "structureType": "Cap",
+          "signature": "06000000"
+        },
+        {
+          "assetNo": 6,
+          "structureType": "InsetEdge",
+          "signature": "01040602"
+        },
+        {
+          "assetNo": 7,
+          "structureType": "StepCorner",
+          "signature": "03040600"
+        },
+        {
+          "assetNo": 8,
+          "structureType": "StepCorner",
+          "signature": "02040700"
+        },
+        {
+          "assetNo": 9,
+          "structureType": "Spine",
+          "signature": "08000700"
+        },
+        {
+          "assetNo": 10,
+          "structureType": "Cap",
+          "signature": "07000000"
+        },
+        {
+          "assetNo": 11,
+          "structureType": "Cap",
+          "signature": "08000000"
+        },
+        {
+          "assetNo": 12,
+          "structureType": "StepCorner",
+          "signature": "04000802"
+        },
+        {
+          "assetNo": 13,
+          "structureType": "StepCorner",
+          "signature": "05000602"
+        }
+      ]
+    }
+  ]
+}

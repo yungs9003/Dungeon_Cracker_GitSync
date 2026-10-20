@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Traps.BallLauncher2D
   ballPrefab: {fileID: 1226098189425314892, guid: bfd6884f1b1676f4dbb5894d0fcced08, type: 3}
-  spawnLocalOffset: {x: -1.7, y: 0}
+  spawnLocalOffset: {x: 0, y: -1.7}
   cellSize: 1
   speed: 3
   spawnCooldown: 2

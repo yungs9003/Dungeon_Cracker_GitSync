@@ -1,0 +1,11 @@
+--- Before/Assets/Resources/Maps/DUNGEON_002/map_002.json
++++ After/Assets/Resources/Maps/DUNGEON_002/map_002.json
+@@ -32,7 +32,7 @@
+     { "coord": "0400", "code": "001-001" },
+     { "coord": "0401", "code": "001-001" },
+     { "coord": "0402", "code": "001-001" },
+-    { "coord": "0403", "code": "001-002" },
++    { "coord": "0403", "code": "001-002", "direction": "10" },
+     { "coord": "0404", "code": "001-001" },
+     { "coord": "0405", "code": "001-001" }
+   ],

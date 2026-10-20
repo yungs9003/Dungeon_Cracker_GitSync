@@ -1,0 +1,11 @@
+--- Before/Assets/Resources/Maps/DUNGEON_001/map_002.json
++++ After/Assets/Resources/Maps/DUNGEON_001/map_002.json
+@@ -57,7 +57,7 @@
+     { "coord": "0605", "code": "102-018","assetNo":0,"direction":"00" },
+     { "coord": "0606", "code": "001-001","assetNo":2,"direction":"11" },
+ 
+-    { "coord": "0700", "code": "001-002","assetNo":0,"direction":"10" },
++    { "coord": "0700", "code": "001-002","assetNo":0,"direction":"00" },
+     { "coord": "0701", "code": "102-018","assetNo":0,"direction":"00" },
+     { "coord": "0702", "code": "102-018","assetNo":0,"direction":"00" },
+     { "coord": "0703", "code": "102-019","assetNo":0,"direction":"00" },

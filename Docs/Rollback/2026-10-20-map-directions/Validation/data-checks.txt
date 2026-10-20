@@ -1,0 +1,12 @@
+PASS only designated direction fields changed: Assets/Resources/Maps/CheckpointScene/checkpoint.json
+PASS only designated direction fields changed: Assets/Resources/Maps/DUNGEON_001/map_001.json
+PASS only designated direction fields changed: Assets/Resources/Maps/DUNGEON_001/map_002.json
+PASS only designated direction fields changed: Assets/Resources/Maps/DUNGEON_001/map_003.json
+PASS only designated direction fields changed: Assets/Resources/Maps/DUNGEON_001/map_004.json
+PASS only designated direction fields changed: Assets/Resources/Maps/DUNGEON_001/map_005.json
+PASS only designated direction fields changed: Assets/Resources/Maps/DUNGEON_002/map_002.json
+PASS only designated direction fields changed: Assets/Resources/Maps/DUNGEON_002/map_003.json
+PASS only designated direction fields changed: Assets/Resources/Maps/DUNGEON_002/map_004.json
+PASS all 25 audited tiles face their unique floor corridor
+PASS no added/deleted game files; exactly 9 maps + 1 launcher script + 1 prefab modified
+PASS all applied files identical to isolated test project

@@ -1,0 +1,15 @@
+{
+  "name": "Dungeon.TileRetile.EditorTests",
+  "references": [
+    "Dungeon.Core",
+    "Dungeon.GamePlay",
+    "Dungeon.System"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": false,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "horizontal": {
+    "counts": {
+      "includes_nearest": 895,
+      "nearest_incompatible": 517,
+      "nearest_compatible": 378,
+      "both_exact": 129,
+      "exact_compatible": 129
+    },
+    "exact_bad_examples": []
+  },
+  "vertical": {
+    "counts": {
+      "includes_nearest": 895,
+      "nearest_incompatible": 518,
+      "nearest_compatible": 377,
+      "both_exact": 129,
+      "exact_compatible": 129
+    },
+    "exact_bad_examples": []
+  }
+}
