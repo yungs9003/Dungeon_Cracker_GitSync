@@ -112,7 +112,17 @@ public class DungeonPopupPanelController : MonoBehaviour
         if (referenceView != null)
         {
             bool canEnter = TryResolveBuildScene(info.sceneName, out targetSceneName);
-            referenceView.Present(info.id, info.name, canEnter);
+            string number = info.id, title = info.name;
+            if (GameDatabase.TryFindDungeonBySceneName(info.sceneName, out var definition))
+            { number = definition.number.ToString(); title = definition.name; }
+            referenceView.Present(number, title, canEnter);
+            var save = StatusSaveFile.Instance?.Data;
+            string key = DungeonProgressService.SceneKey(info.sceneName);
+            var record = DungeonProgressService.GetRecord(save, key);
+            int completedMaps = 0, totalMaps = 0;
+            if (save != null && save.checkpoint.TryGetValue(key, out var checkpoint))
+            { completedMaps = checkpoint.mapIndex; totalMaps = checkpoint.totalMaps; }
+            referenceView.ApplyRecordDisplay(record.clear_count, completedMaps, totalMaps);
             RectTransform anchor = null;
             foreach (var map in FindObjectsByType<WorldMapPanZoomUI>(FindObjectsSortMode.None))
                 if (map.gameObject.scene == gameObject.scene && map.FocusedPoint != null)
@@ -350,8 +360,8 @@ public class DungeonPopupPanelController : MonoBehaviour
             return;
         }
 
-        panelRoot.SetActive(false);
-        SceneManager.LoadScene(targetSceneName);
+        if (SaveManager.GetOrCreate().EnterDungeon(targetSceneName)) panelRoot.SetActive(false);
+        else Debug.LogWarning("[DungeonPopup] 던전 입장/저장에 실패했습니다.");
     }
 }
 }

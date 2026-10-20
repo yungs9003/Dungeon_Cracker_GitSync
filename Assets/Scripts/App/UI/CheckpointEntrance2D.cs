@@ -61,10 +61,8 @@ namespace Dungeon.UI
             else
                 Debug.LogWarning("[CheckpointEntrance2D] MapSequenceManager2D를 찾지 못했습니다. nextMapIndex를 0으로 저장합니다.");
 
-            if (SaveManager.Instance != null)
-                SaveManager.Instance.SetCheckpoint(returnSceneName, nextMapIndex, checkpointSceneName);
-            else
-                Debug.LogWarning("[CheckpointEntrance2D] SaveManager.Instance가 없습니다. 체크포인트 저장 없이 씬만 이동합니다.");
+            if (manager == null || !SaveManager.GetOrCreate().SetCheckpoint(returnSceneName, nextMapIndex, checkpointSceneName, manager.MapCount))
+            { triggered = false; Debug.LogWarning("[CheckpointEntrance2D] 체크포인트 저장 실패. 씬을 이동하지 않습니다."); return; }
 
             SceneManager.LoadScene(checkpointSceneName, LoadSceneMode.Single);
         }

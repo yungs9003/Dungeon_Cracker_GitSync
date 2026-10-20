@@ -60,6 +60,7 @@ namespace Dungeon.Core
         private readonly Dictionary<string, EquipmentDefinition> equipMap = new();
         private readonly Dictionary<string, ModuleDefinition> moduleMap = new();
         private readonly Dictionary<string, TrapDefinition> trapMap = new();
+        private readonly Dictionary<string, DungeonDefinition> dungeonMap = new();
 
         private readonly Dictionary<string, DbRecordKind> recordKinds = new();
 
@@ -73,6 +74,23 @@ namespace Dungeon.Core
         public IReadOnlyList<EquipmentDefinition> Equipment => loadedData != null && loadedData.equips != null ? loadedData.equips : Array.Empty<EquipmentDefinition>();
         public IReadOnlyList<ModuleDefinition> Modules => loadedData != null && loadedData.modules != null ? loadedData.modules : Array.Empty<ModuleDefinition>();
         public IReadOnlyList<TrapDefinition> Traps => loadedData != null && loadedData.traps != null ? loadedData.traps : Array.Empty<TrapDefinition>();
+        public IReadOnlyList<DungeonDefinition> Dungeons => loadedData?.dungeons ?? Array.Empty<DungeonDefinition>();
+        public bool TryGetDungeonBySceneName(string sceneName, out DungeonDefinition definition) =>
+            dungeonMap.TryGetValue(DungeonProgressService.SceneKey(sceneName), out definition);
+
+        public static bool TryFindDungeonBySceneName(string sceneName, out DungeonDefinition definition)
+        {
+            if (Instance != null) return Instance.TryGetDungeonBySceneName(sceneName, out definition);
+            // 월드맵 씬을 단독 실행해도 공용 DB의 던전 이름/번호를 사용합니다.
+            definition = null;
+            var json = Resources.Load<TextAsset>("Data/db");
+            if (json == null) return false;
+            var root = JsonConvert.DeserializeObject<DbRoot>(json.text);
+            foreach (var entry in root?.dungeons ?? Array.Empty<DungeonDefinition>())
+                if (entry != null && DungeonProgressService.SceneKey(entry.sceneName) == DungeonProgressService.SceneKey(sceneName))
+                { definition = entry; return true; }
+            return false;
+        }
 
         private void Awake()
         {
@@ -141,6 +159,13 @@ namespace Dungeon.Core
             RebuildEquipmentMaps();
             RebuildModuleMaps();
             RebuildTrapMaps();
+            dungeonMap.Clear();
+            foreach (var dungeon in Dungeons)
+            {
+                if (dungeon == null || string.IsNullOrWhiteSpace(dungeon.sceneName)) continue;
+                dungeon.sceneName = DungeonProgressService.SceneKey(dungeon.sceneName);
+                dungeonMap[dungeon.sceneName] = dungeon;
+            }
         }
 
         private void LoadIconOverrides()
@@ -591,6 +616,16 @@ namespace Dungeon.Core
         public EquipmentDefinition[] equips;
         public ModuleDefinition[] modules;
         public TrapDefinition[] traps;
+        public DungeonDefinition[] dungeons;
+    }
+
+    [Serializable]
+    public sealed class DungeonDefinition
+    {
+        public string sceneName, name, mapResourcePath;
+        public int number;
+        public int rank_reference_hit_count;
+        public int rank_reference_time_seconds;
     }
 
     [Serializable]

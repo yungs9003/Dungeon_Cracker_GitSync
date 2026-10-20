@@ -1,0 +1,29 @@
+--- Before/Assets/Scripts/Core/StatusSaveFile.cs
++++ After/Assets/Scripts/Core/StatusSaveFile.cs
+@@ -42,7 +42,7 @@
+         private bool dungeonSceneTransition;
+         private string timingSceneName;
+         private string savedRunId;
+-        private float savedRunSeconds;
++        private int savedRunSeconds;
+ 
+         public StatusSaveData Data => data;
+ 
+@@ -374,7 +374,7 @@
+             sb.Append($"gold={data.gold}, ");
+             sb.Append($"maxHP={data.main_stats.max_HP}, ");
+             sb.Append($"broken_traps={data.broken_traps}, ");
+-            sb.Append($"clear_time={data.clear_time_seconds:F2}, ");
++            sb.Append($"clear_time={data.clear_time_seconds}, ");
+             sb.Append($"hit_count={data.hit_count}");
+ 
+             if (logInventorySummary)
+@@ -681,7 +681,7 @@
+             if (deltaSeconds <= 0f)
+                 return;
+ 
+-            data.clear_time_seconds = Mathf.Max(0f, data.clear_time_seconds + deltaSeconds);
++            data.clear_time_seconds = DungeonTime.WholeSeconds((double)data.clear_time_seconds + deltaSeconds);
+ 
+             if (saveImmediately)
+                 Save();

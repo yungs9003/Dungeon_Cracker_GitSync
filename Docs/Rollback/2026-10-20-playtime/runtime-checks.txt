@@ -1,0 +1,44 @@
+PASS MainMenu bootstrap creates save service
+PASS fresh generated save starts at zero minutes
+PASS test storage path stays inside isolated project
+PASS Adventure Record shows hours and minutes from numeric value
+PASS total time increases while timeScale is zero in MainMenu
+PASS no per-second file write in MainMenu
+PASS real elapsed minute increments saved numeric minutes
+PASS exactly one timer write at real minute boundary
+PASS open Adventure Record refreshes on minute save notification
+PASS minute value is persisted to the isolated file
+PASS actual SaveManager enters first dungeon
+PASS save singleton persists across scene changes
+PASS dungeon time starts after first entry
+PASS dungeon frames do not perform one-second saves
+PASS in-game pause stops dungeon time
+PASS total time continues during dungeon pause
+PASS actual checkpoint transaction saves timing
+PASS checkpoint transition uses one combined timing and state write
+PASS checkpoint waiting freezes dungeon time
+PASS checkpoint file contains precise run seconds
+PASS application suspension takes one save snapshot
+PASS checkpoint exit returns to saved next map
+PASS checkpoint resume preserves map index two
+PASS duplicate legacy tracker removes only itself and preserves the scene GameManager
+PASS dungeon time resumes from checkpoint seconds
+PASS explicit save persists current timing without another timer write
+PASS save reload preserves accumulated dungeon seconds
+PASS normal clear transition prepares exact final time
+PASS ClearScene commits exactly one clear
+PASS first clear stores actual time as best
+PASS ClearScene displays this run time
+PASS ClearScene freezes dungeon result time
+PASS total time continues on ClearScene
+PASS result refresh neither recommits time nor duplicates rewards
+PASS replay starts a new run after completed clear
+PASS replay checkpoint saves new run
+PASS switch to second dungeon
+PASS second dungeon stores separate seconds
+PASS return to first dungeon selects its checkpoint
+PASS returning dungeon resumes through checkpoint scene
+PASS two dungeon clocks remain independent
+PASS unfinished replay does not alter best time
+PASS normal quit captures remainder once despite repeated callback
+PASS normal quit persists subminute remainder

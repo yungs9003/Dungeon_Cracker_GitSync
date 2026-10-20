@@ -1,0 +1,22 @@
+PASS MainMenu bootstrap creates save service
+PASS fresh generated save starts at zero minutes
+PASS test storage path stays inside isolated project
+PASS Adventure Record shows hours and minutes from numeric value
+PASS total time increases while timeScale is zero in MainMenu
+PASS no per-second file write in MainMenu
+PASS real elapsed minute increments saved numeric minutes
+PASS exactly one timer write at real minute boundary
+PASS open Adventure Record refreshes on minute save notification
+PASS minute value is persisted to the isolated file
+PASS actual SaveManager enters first dungeon
+PASS save singleton persists across scene changes
+PASS dungeon time starts after first entry
+PASS dungeon frames do not perform one-second saves
+PASS in-game pause stops dungeon time
+PASS total time continues during dungeon pause
+PASS actual checkpoint transaction saves timing
+PASS checkpoint transition uses one combined timing and state write
+FAIL System.Exception: checkpoint waiting freezes dungeon time
+  at PlayTimeRuntimeChecks.Check (System.Boolean condition, System.String label) [0x00030] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\CodexPlayTime\Unity\Assets\Tests\PlayTimeRuntimeChecks.cs:50 
+  at PlayTimeRuntimeChecks+<Run>d__10.MoveNext () [0x005dd] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\CodexPlayTime\Unity\Assets\Tests\PlayTimeRuntimeChecks.cs:104 
+  at PlayTimeRuntimeChecks+<Start>d__8.MoveNext () [0x0003d] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\CodexPlayTime\Unity\Assets\Tests\PlayTimeRuntimeChecks.cs:35 

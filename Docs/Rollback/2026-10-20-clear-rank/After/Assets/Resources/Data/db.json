@@ -1,0 +1,420 @@
+{
+  "items": [
+    {
+      "id": "000",
+      "rank": 0,
+      "name": "급성치료제",
+      "type": "consumable",
+      "desc": "체력을10만큼 회복",
+      "gold": 150
+    },
+    {
+      "id": "001",
+      "rank": 0,
+      "name": "지속형포션",
+      "type": "consumable",
+      "desc": "10초간, 체력을 1초당 5씩 회복",
+      "gold": 200
+    },
+    {
+      "id": "002",
+      "rank": 2,
+      "name": "지혈스프레이",
+      "type": "consumable",
+      "desc": "출혈상태를 해제",
+      "gold": 300
+    },
+    {
+      "id": "003",
+      "rank": 2,
+      "name": "물리역장",
+      "type": "consumable",
+      "desc": "5초간, 물리저항 +10",
+      "gold": 250
+    },
+    {
+      "id": "004",
+      "rank": 2,
+      "name": "마력역장",
+      "type": "consumable",
+      "desc": "5초간, 마법저항 +10",
+      "gold": 250
+    },
+    {
+      "id": "005",
+      "rank": 3,
+      "name": "생명보험",
+      "type": "consumable",
+      "desc": "사용시, 해당 맵에서 사망에 이르는 데미지를 받더라도 1회 버팀, 즉시 체력을 최대치로 회복",
+      "gold": 1000
+    }
+  ],
+  "equips": [
+    {
+      "id": "000",
+      "rank": 0,
+      "name": "고물 투구",
+      "slot": "head",
+      "desc": "최대체력 +50",
+      "main_stats": {
+        "max_HP": 50
+      }
+    },
+    {
+      "id": "001",
+      "rank": 0,
+      "name": "고물 흉갑",
+      "slot": "body",
+      "desc": "물리저항 +10",
+      "main_stats": {
+        "physical_resist": 10
+      }
+    },
+    {
+      "id": "002",
+      "rank": 0,
+      "name": "고물 신발",
+      "slot": "legs",
+      "desc": "이동속도 2배",
+      "sub_stats_multiplier": {
+        "speed": 2.0
+      }
+    },
+    {
+      "id": "003",
+      "rank": 1,
+      "name": "거미줄 두건",
+      "slot": "head",
+      "desc": "출혈데미지 반감"
+    },
+    {
+      "id": "004",
+      "rank": 1,
+      "name": "거미줄 망토",
+      "slot": "body",
+      "desc": "출혈 특공 데미지 반감"
+    },
+    {
+      "id": "005",
+      "rank": 1,
+      "name": "슬라임 후드",
+      "slot": "body",
+      "desc": "초당 체력 회복 +2\n물리데미지 반감"
+    },
+    {
+      "id": "006",
+      "rank": 2,
+      "name": "혈귀 블레이저",
+      "slot": "body",
+      "desc": "출혈 발동시, 수치만큼 체력을 회복"
+    },
+    {
+      "id": "007",
+      "rank": 1,
+      "name": "거적대기 로브",
+      "slot": "body",
+      "desc": "마법저항 +10",
+      "main_stats": {
+        "magical_resist": 10
+      }
+    },
+    {
+      "id": "008",
+      "rank": 3,
+      "name": "방염복",
+      "slot": "body",
+      "desc": "필드효과 화상의 데미지를 반감"
+    },
+    {
+      "id": "009",
+      "rank": 4,
+      "name": "광기",
+      "slot": "head",
+      "desc": "광기... 내 오랜 친구지....."
+    }
+  ],
+  "modules": [
+    {
+      "id": "000",
+      "name": "반응형 장갑",
+      "desc": "5초마다 한 번씩 외부 투사체의 공격을 막아주는 보호막을 생성한다. 최대 2회 충전 가능하다."
+    },
+    {
+      "id": "001",
+      "name": "비행 시스템",
+      "desc": "지상 함정에 대해 피해를 입지 않는 대신, 함정에 피격 시 해당 기능이 비활성화된다."
+    },
+    {
+      "id": "002",
+      "name": "가속",
+      "desc": "이동속도가 점진적으로 상승한다. 단, 벽에 부딪히면 피해를 입고 초기화된다."
+    },
+    {
+      "id": "003",
+      "name": "원격 거래 시스템",
+      "desc": "아이템을 전부 소모하더라도 사용 가능하다. 단, 해당 아이템 정가의 1.2배만큼 골드를 지불한다."
+    },
+    {
+      "id": "004",
+      "name": "단거리 텔레포트",
+      "desc": "상호 작용 키를 눌러서 타일 한 칸을 넘어서 이동할 수 있다."
+    },
+    {
+      "id": "005",
+      "name": "충격력 흡수",
+      "desc": "밀쳐지지 않는다. 벽에 부딪혀도 피해를 입지 않는다."
+    },
+    {
+      "id": "006",
+      "name": "차원 반전 시스템",
+      "desc": "일반 타일을 지날 때마다 고정데미지를 받는 대신 함정에 피격 시 데미지를 받지 않고 회복한다. 낭떠러지는 제외하며 밀치기, 당기기 등의 변위 효과는 적용된다."
+    },
+    {
+      "id": "007",
+      "name": "이중 해체",
+      "desc": "한 번에 함정 및 투사체를 두 개 해체할 수 있다."
+    },
+    {
+      "id": "008",
+      "name": "음향 탐지 시스템",
+      "desc": "탐지하지 않은 함정들에서 오는 공격에 대한 경고를 확인할 수 있다."
+    },
+    {
+      "id": "009",
+      "name": "온도 조절 시스템",
+      "desc": "필드 데미지를 받지 않는다. 추가 체력이 있을 때만 발동한다."
+    },
+    {
+      "id": "010",
+      "name": "오버드라이브",
+      "desc": "충전형 모듈의 재사용 대기시간이 절반으로 줄어든다. 대신 피격 데미지가 1.2배가 된다."
+    },
+    {
+      "id": "011",
+      "name": "팔랑크스",
+      "desc": "낭떠러지, 바닥함정, 필드효과를 제외한 모든 피해를 받지 않는다. 대신 함정이 드러나지 않고, 다른 피해에 대해서 2배의 데미지를 받는다."
+    },
+    {
+      "id": "012",
+      "name": "환급",
+      "desc": "투사체를 제거할 때마다 골드를 획득한다."
+    },
+    {
+      "id": "013",
+      "name": "과충전 보호막",
+      "desc": "최대체력 초과 회복 시 추가체력으로 저장한다. 최대 체력의 절반만큼 저장 가능하다."
+    }
+  ],
+  "traps": [
+    {
+      "code": "100-000",
+      "name": "낭떠러지",
+      "type": "trap",
+      "desc": "떨어지면 피해를 입고 이전 블록으로 돌아옴",
+      "destructible": false,
+      "damage_type": "physical",
+      "damage": 10,
+      "knockback_distance": null
+    },
+    {
+      "code": "101-001",
+      "name": "화살함정",
+      "type": "trap",
+      "desc": "화살을 발사하는 함정",
+      "destructible": true,
+      "damage_type": "physical",
+      "damage": 4,
+      "knockback_distance": null
+    },
+    {
+      "code": "102-002",
+      "name": "가시함정(상시형)",
+      "type": "trap",
+      "desc": "바닥으로 위장되어, 떨어졌을때 데미지를 주는 함정",
+      "destructible": true,
+      "damage_type": "physical",
+      "damage": null,
+      "knockback_distance": 0.1
+    },
+    {
+      "code": "102-003",
+      "name": "가시함정(반응형)",
+      "type": "trap",
+      "desc": "바닥에 보이지만, 접근하면 가시가 튀어나오는 함정",
+      "destructible": null,
+      "damage_type": "physical",
+      "damage": null,
+      "knockback_distance": null
+    },
+    {
+      "code": "101-004",
+      "name": "작살",
+      "type": "trap",
+      "desc": "벽에서 작살이 튀어나오는 함정",
+      "destructible": true,
+      "damage_type": "physical",
+      "damage": 8,
+      "knockback_distance": 0.5
+    },
+    {
+      "code": "102-005",
+      "name": "슬라임",
+      "type": "trap",
+      "desc": "(미구현)",
+      "destructible": null,
+      "damage_type": null,
+      "damage": null,
+      "knockback_distance": null
+    },
+    {
+      "code": "102-006",
+      "name": "슬라임(확산)",
+      "type": "trap",
+      "desc": "(미구현)",
+      "destructible": null,
+      "damage_type": null,
+      "damage": null,
+      "knockback_distance": null
+    },
+    {
+      "code": "101-007",
+      "name": "롤링스톤",
+      "type": "trap",
+      "desc": "벽의 장치에서 돌이 굴러오는 함정",
+      "destructible": true,
+      "damage_type": "physical",
+      "damage": 15,
+      "knockback_distance": 0.3
+    },
+    {
+      "code": "102-008",
+      "name": "이동형 톱니",
+      "type": "trap",
+      "desc": "바닥의 특정 구간을 반복적으로 이동하는 함정",
+      "destructible": null,
+      "damage_type": "physical",
+      "damage": null,
+      "knockback_distance": null
+    },
+    {
+      "code": "102-009",
+      "name": "레이저 포탑",
+      "type": "trap",
+      "desc": "플레이어를 인식해 해당 위치로 레이저를 쏨",
+      "destructible": true,
+      "damage_type": "magic",
+      "damage": 6,
+      "knockback_distance": null
+    },
+    {
+      "code": "102-010",
+      "name": "에너지 포탑",
+      "type": "trap",
+      "desc": "플레이어를 인식해 해당 위치로 에너지볼을 쏨",
+      "destructible": true,
+      "damage_type": "magic",
+      "damage": 8,
+      "knockback_distance": null
+    },
+    {
+      "code": "102-011",
+      "name": "전격함정",
+      "type": "trap",
+      "desc": "주기적으로 해당 위치에 전격이 생성됨",
+      "destructible": false,
+      "damage_type": "magic",
+      "damage": 4,
+      "knockback_distance": null
+    },
+    {
+      "code": "101-014",
+      "name": "밀치기",
+      "type": "trap",
+      "desc": "벽 전방 2칸에서 감지한 플레이어를 발동 위치에서 벽 반대 방향으로 3칸 이동시킴",
+      "destructible": false,
+      "damage_type": null,
+      "damage": 0,
+      "knockback_distance": 0
+    },
+    {
+      "code": "101-015",
+      "name": "당기기",
+      "type": "trap",
+      "desc": "벽 전방 4칸에서 감지한 플레이어를 해당 벽 바로 앞 1칸의 중심으로 이동시킴",
+      "destructible": false,
+      "damage_type": null,
+      "damage": 0,
+      "knockback_distance": 0
+    },
+    {
+      "code": "103-012",
+      "name": "3층레이저 포탑",
+      "type": "trap",
+      "desc": "플레이어를 인식해 해당 위치로 에너지볼을 쏨(벽에 막히지 않음)",
+      "destructible": false,
+      "damage_type": "magic",
+      "damage": 5,
+      "knockback_distance": null
+    },
+    {
+      "code": "103-013",
+      "name": "3층에너지 포탑",
+      "type": "trap",
+      "desc": "플레이어를 인식해 해당 위치로 레이저를 쏨(벽에 막히지 않음)",
+      "destructible": false,
+      "damage_type": "magic",
+      "damage": 7,
+      "knockback_distance": null
+    },
+    {
+      "code": "102-016",
+      "name": "용암",
+      "type": "trap",
+      "desc": "떨어지면 피해를 입고 이전 블록으로 돌아옴",
+      "destructible": false,
+      "damage_type": "burn",
+      "damage": 16,
+      "knockback_distance": 0
+    },
+    {
+      "code": "102-017",
+      "name": "분출",
+      "type": "trap",
+      "desc": "일정 시간마다 용암기둥 생성. 해당 타일 위에 있으면 데미지를 입음",
+      "destructible": false,
+      "damage_type": "burn",
+      "damage": 20,
+      "knockback_distance": 0.3
+    },
+    {
+      "code": "102-018",
+      "name": "빙판",
+      "type": "trap",
+      "desc": "감속을 하는데 시간이 더 걸림. 최대 1.5배 가속 가능",
+      "destructible": false,
+      "damage_type": null,
+      "damage": null,
+      "knockback_distance": null
+    },
+    {
+      "code": "102-019",
+      "name": "얼음 결정",
+      "type": "trap",
+      "desc": "얼음 결정이 주기적으로 생성됨. 결정에 충돌시 데미지 입음",
+      "destructible": false,
+      "damage_type": "ice",
+      "damage": 12,
+      "knockback_distance": 0.3
+    }
+  ],
+  "dungeons": [
+    {
+      "sceneName": "DUNGEON_001",
+      "number": 1,
+      "name": "버려진 채굴장",
+      "mapResourcePath": "Maps/DUNGEON_001",
+      "rank_reference_hit_count": 20,
+      "rank_reference_time_seconds": 120
+    }
+  ]
+}

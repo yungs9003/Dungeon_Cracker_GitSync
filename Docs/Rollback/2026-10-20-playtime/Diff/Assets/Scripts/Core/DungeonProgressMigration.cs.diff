@@ -1,0 +1,11 @@
+--- Before/Assets/Scripts/Core/DungeonProgressMigration.cs
++++ After/Assets/Scripts/Core/DungeonProgressMigration.cs
+@@ -9,7 +9,7 @@
+         public static bool IsLegacyJson(string json)
+         {
+             var root = JObject.Parse(json);
+-            return ((int?)root["save_version"] ?? 0) < 3 || root["checkpoint"]?["sceneName"] != null;
++            return ((int?)root["save_version"] ?? 0) < StatusSaveDefaults.CurrentSaveVersion || root["checkpoint"]?["sceneName"] != null;
+         }
+ 
+         public static JObject Upgrade(JObject root)

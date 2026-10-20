@@ -290,6 +290,7 @@ public static class StatusAdventureRecordSceneBuilder
         dataView.ApplyData(new StatusSaveData
         {
             play_time = "135:26",
+            play_time_minutes = 135 * 60 + 26,
             clear_num_info = "28:73:96",
             adventure_count = 128,
             achievement = "87:300",

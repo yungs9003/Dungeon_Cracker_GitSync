@@ -11,7 +11,7 @@ namespace Dungeon.Core
     /// </summary>
     public static class StatusSaveDefaults
     {
-        public const int CurrentSaveVersion = 2;
+        public const int CurrentSaveVersion = 5;
 
         public static StatusSaveData Create()
         {
@@ -23,7 +23,7 @@ namespace Dungeon.Core
                 broken_traps = 0,
                 clear_reward_claimed = false,
                 last_getting_gold = 0,
-                clear_time_seconds = 0f,
+                clear_time_seconds = 0,
                 hit_count = 0,
                 main_stats = CreateMainStats(),
                 sub_stats = CreateSubStats(),
@@ -61,15 +61,12 @@ namespace Dungeon.Core
                         new() { { "slot6", GameDatabase.NoneKey } }
                     }
                 },
-                checkpoint = new CheckpointData
-                {
-                    sceneName = string.Empty,
-                    mapIndex = -1,
-                    resumeRequested = false,
-                    broken_traps_snapshot = 0
-                },
+                checkpoint = new Dictionary<string, DungeonCheckpointData> { ["DUNGEON_001"] = new() },
+                dungeon_records = new Dictionary<string, DungeonRecordData> { ["DUNGEON_001"] = new() },
+                active_run = new ActiveDungeonRunData(),
                 dungeon_status = new List<Dictionary<string, string>>(),
-                play_time = string.Empty,
+                play_time = "0:00",
+                play_time_minutes = 0,
                 clear_num_info = string.Empty,
                 adventure_count = 0,
                 achievement = string.Empty,
@@ -97,7 +94,7 @@ namespace Dungeon.Core
             try
             {
                 data = JsonConvert.DeserializeObject<StatusSaveData>(
-                    json,
+                    DungeonProgressMigration.Upgrade(JObject.Parse(json)).ToString(),
                     new JsonSerializerSettings
                     {
                         MissingMemberHandling = MissingMemberHandling.Ignore,
@@ -160,7 +157,7 @@ namespace Dungeon.Core
             data.gold = Math.Max(0, data.gold);
             data.broken_traps = Math.Max(0, data.broken_traps);
             data.last_getting_gold = Math.Max(0, data.last_getting_gold);
-            data.clear_time_seconds = Math.Max(0f, data.clear_time_seconds);
+            data.clear_time_seconds = Math.Max(0, data.clear_time_seconds);
             data.hit_count = Math.Max(0, data.hit_count);
             data.adventure_count = Math.Max(0, data.adventure_count);
 
@@ -200,13 +197,10 @@ namespace Dungeon.Core
             EnsureStringSlot(data.equips.module, "slot5");
             EnsureStringSlot(data.equips.module, "slot6");
 
-            data.checkpoint ??= new CheckpointData();
-            data.checkpoint.sceneName ??= string.Empty;
-            data.checkpoint.mapIndex = Math.Max(-1, data.checkpoint.mapIndex);
-            data.checkpoint.broken_traps_snapshot = Math.Max(0, data.checkpoint.broken_traps_snapshot);
+            DungeonProgressMigration.Normalize(data);
 
             data.dungeon_status ??= new List<Dictionary<string, string>>();
-            data.play_time ??= string.Empty;
+            PlayTimeData.Normalize(data);
             data.clear_num_info ??= string.Empty;
             data.achievement ??= string.Empty;
             data.player_rank ??= string.Empty;

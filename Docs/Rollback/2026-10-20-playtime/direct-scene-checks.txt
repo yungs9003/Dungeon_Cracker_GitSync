@@ -1,0 +1,8 @@
+PASS direct dungeon startup creates save service
+PASS scene save component and bootstrap leave exactly one service
+PASS direct dungeon startup initializes active run and measures time
+PASS direct dungeon startup measures total time
+PASS direct dungeon has no one-second save
+PASS direct dungeon pause freezes run time
+PASS direct dungeon pause keeps total clock running
+PASS direct dungeon quit persists remainder

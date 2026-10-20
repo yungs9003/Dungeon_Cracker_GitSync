@@ -1,0 +1,28 @@
+--- Before/Assets/StreamingAssets/savefile.json
++++ After/Assets/StreamingAssets/savefile.json
+@@ -1,5 +1,5 @@
+ {
+-  "save_version": 3,
++  "save_version": 4,
+   "user_name": "",
+   "gold": 0,
+   "broken_traps": 0,
+@@ -100,7 +100,7 @@
+     }
+   },
+   "dungeon_status": [],
+-  "play_time": "",
++  "play_time": "0:00",
+   "clear_num_info": "",
+   "adventure_count": 0,
+   "achievement": "",
+@@ -118,5 +118,8 @@
+     "sceneName": "",
+     "run_id": "",
+     "pending_clear": false
+-  }
++  },
++  "play_time_minutes": 0,
++  "play_time_remainder_seconds": 0.0,
++  "play_time_legacy_unparsed": ""
+ }

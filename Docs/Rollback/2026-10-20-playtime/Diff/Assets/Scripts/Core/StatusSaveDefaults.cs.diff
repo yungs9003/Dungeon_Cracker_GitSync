@@ -1,0 +1,30 @@
+--- Before/Assets/Scripts/Core/StatusSaveDefaults.cs
++++ After/Assets/Scripts/Core/StatusSaveDefaults.cs
+@@ -11,7 +11,7 @@
+     /// </summary>
+     public static class StatusSaveDefaults
+     {
+-        public const int CurrentSaveVersion = 3;
++        public const int CurrentSaveVersion = 4;
+ 
+         public static StatusSaveData Create()
+         {
+@@ -65,7 +65,8 @@
+                 dungeon_records = new Dictionary<string, DungeonRecordData> { ["DUNGEON_001"] = new() },
+                 active_run = new ActiveDungeonRunData(),
+                 dungeon_status = new List<Dictionary<string, string>>(),
+-                play_time = string.Empty,
++                play_time = "0:00",
++                play_time_minutes = 0,
+                 clear_num_info = string.Empty,
+                 adventure_count = 0,
+                 achievement = string.Empty,
+@@ -199,7 +200,7 @@
+             DungeonProgressMigration.Normalize(data);
+ 
+             data.dungeon_status ??= new List<Dictionary<string, string>>();
+-            data.play_time ??= string.Empty;
++            PlayTimeData.Normalize(data);
+             data.clear_num_info ??= string.Empty;
+             data.achievement ??= string.Empty;
+             data.player_rank ??= string.Empty;

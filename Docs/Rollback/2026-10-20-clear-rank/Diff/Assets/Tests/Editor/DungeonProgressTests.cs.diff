@@ -1,0 +1,11 @@
+--- Before/Assets/Tests/Editor/DungeonProgressTests.cs
++++ After/Assets/Tests/Editor/DungeonProgressTests.cs
+@@ -26,7 +26,7 @@
+         private static void Complete(StatusSaveData data, float time, int hits, int broken)
+         {
+             DungeonProgressService.Enter(data, A, 6);
+-            data.clear_time_seconds = time; data.hit_count = hits; data.broken_traps = broken;
++            data.clear_time_seconds = DungeonTime.WholeSeconds(time); data.hit_count = hits; data.broken_traps = broken;
+             Assert.That(DungeonProgressService.PrepareClear(data, A, 6), Is.True);
+             Assert.That(DungeonProgressService.CommitClear(data), Is.True);
+         }

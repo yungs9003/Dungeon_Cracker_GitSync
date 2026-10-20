@@ -1,0 +1,13 @@
+--- Before/Assets/Resources/Data/db.json
++++ After/Assets/Resources/Data/db.json
+@@ -412,7 +412,9 @@
+       "sceneName": "DUNGEON_001",
+       "number": 1,
+       "name": "버려진 채굴장",
+-      "mapResourcePath": "Maps/DUNGEON_001"
++      "mapResourcePath": "Maps/DUNGEON_001",
++      "rank_reference_hit_count": 20,
++      "rank_reference_time_seconds": 120
+     }
+   ]
+ }

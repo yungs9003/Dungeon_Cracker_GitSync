@@ -1,0 +1,54 @@
+--- Before/Assets/Tests/Editor/PlayTimeTests.cs
++++ After/Assets/Tests/Editor/PlayTimeTests.cs
+@@ -23,7 +23,7 @@
+             Assert.That(StatusSaveDefaults.TryDeserialize(json, out var data, out var error), Is.True, error);
+             Assert.That(data.play_time_minutes, Is.EqualTo(minutes));
+             Assert.That(data.play_time, Is.EqualTo(PlayTimeData.Format(minutes)));
+-            Assert.That(data.save_version, Is.EqualTo(4));
++            Assert.That(data.save_version, Is.EqualTo(StatusSaveDefaults.CurrentSaveVersion));
+         }
+ 
+         [TestCase("135:99")]
+@@ -100,7 +100,7 @@
+             DungeonProgressService.SetCheckpoint(data, A, 2, 6);
+             clock.BindRun(data, "CheckpointScene");
+             clock.Sample(data, 92.5, 92.5, "CheckpointScene");
+-            Assert.That(data.clear_time_seconds, Is.EqualTo(12.5));
++            Assert.That(data.clear_time_seconds, Is.EqualTo(12));
+             clock.BindRun(data, A); clock.Sample(data, 100, 100, A);
+             Assert.That(data.clear_time_seconds, Is.EqualTo(20));
+             DungeonProgressService.PrepareClear(data, A, 6); clock.BindRun(data, "ClearScene");
+@@ -123,12 +123,12 @@
+             clock.Sample(data, 8.25, 8.25, "WorldMap");
+             DungeonProgressService.Enter(data, B, 4); clock.BindRun(data, "WorldMap");
+             clock.Sample(data, 20, 20, B); clock.Sample(data, 25.5, 25.5, B);
+-            Assert.That(data.clear_time_seconds, Is.EqualTo(5.5));
++            Assert.That(data.clear_time_seconds, Is.EqualTo(5));
+             DungeonProgressService.Enter(data, A, 6); clock.BindRun(data, A);
+-            Assert.That(data.clear_time_seconds, Is.EqualTo(8.25));
++            Assert.That(data.clear_time_seconds, Is.EqualTo(8));
+             clock.Sample(data, 27, 27, A);
+-            Assert.That(data.clear_time_seconds, Is.EqualTo(9.75));
+-            Assert.That(data.checkpoint[B].run_time_seconds, Is.EqualTo(5.5));
++            Assert.That(data.clear_time_seconds, Is.EqualTo(9));
++            Assert.That(data.checkpoint[B].run_time_seconds, Is.EqualTo(5));
+         }
+ 
+         [Test]
+@@ -159,14 +159,14 @@
+                 storage.fail = true;
+                 LogAssert.Expect(LogType.Error, new Regex("\\[StatusSaveFile\\] Save failed"));
+                 Assert.That(save.TryUpdateDungeonProgress(d => { DungeonProgressService.SetCheckpoint(d, A, 2, 6); return true; }), Is.False);
+-                Assert.That(save.Data.clear_time_seconds, Is.EqualTo(65.25));
++                Assert.That(save.Data.clear_time_seconds, Is.EqualTo(65));
+                 Assert.That(save.Data.play_time_minutes, Is.EqualTo(1));
+                 Assert.That(save.Data.checkpoint[A].mapIndex, Is.Zero);
+                 storage.fail = false;
+                 Assert.That(save.TryUpdateDungeonProgress(d => { DungeonProgressService.SetCheckpoint(d, A, 2, 6); return true; }), Is.True);
+                 Assert.That(storage.writes, Is.EqualTo(1));
+                 Assert.That(StatusSaveDefaults.TryDeserialize(storage.json, out var restored, out _), Is.True);
+-                Assert.That(restored.checkpoint[A].run_time_seconds, Is.EqualTo(65.25));
++                Assert.That(restored.checkpoint[A].run_time_seconds, Is.EqualTo(65));
+                 Assert.That(restored.play_time_remainder_seconds, Is.EqualTo(5.25));
+             }
+             finally { UnityEngine.Object.DestroyImmediate(go); }

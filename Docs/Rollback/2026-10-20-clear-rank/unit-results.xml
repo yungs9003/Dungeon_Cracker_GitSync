@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="69" result="Passed" total="69" passed="69" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.4913994">
+  <test-suite type="TestSuite" id="1000" name="Dungeon" fullname="Dungeon" runstate="Runnable" testcasecount="94" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.491399" total="69" passed="69" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1113" name="Dungeon.Save.EditorTests.dll" fullname="C:/Users/yoong/Dungeon 2025-11-29_23-04-34/Dungeon/Library/CodexPlayTime/Unity/Library/ScriptAssemblies/Dungeon.Save.EditorTests.dll" runstate="Runnable" testcasecount="94" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.485443" total="69" passed="69" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="25224" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1114" name="Dungeon" fullname="Dungeon" runstate="Runnable" testcasecount="94" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.484599" total="69" passed="69" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1115" name="Tests" fullname="Dungeon.Tests" runstate="Runnable" testcasecount="94" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.482801" total="69" passed="69" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1001" name="DungeonClearRankTests" fullname="Dungeon.Tests.DungeonClearRankTests" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" testcasecount="27" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.189701" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1023" name="DatabaseProvidesFirstDungeonReferences" fullname="Dungeon.Tests.DungeonClearRankTests.DatabaseProvidesFirstDungeonReferences" methodname="DatabaseProvidesFirstDungeonReferences" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1656413196" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.084916" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1016" name="JustBelowRankThresholdDoesNotRoundUp" fullname="Dungeon.Tests.DungeonClearRankTests.JustBelowRankThresholdDoesNotRoundUp" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.007685" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1013" name="JustBelowRankThresholdDoesNotRoundUp(20,151,A)" fullname="Dungeon.Tests.DungeonClearRankTests.JustBelowRankThresholdDoesNotRoundUp(20,151,A)" methodname="JustBelowRankThresholdDoesNotRoundUp" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="827498025" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.003501" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1014" name="JustBelowRankThresholdDoesNotRoundUp(20,196,B)" fullname="Dungeon.Tests.DungeonClearRankTests.JustBelowRankThresholdDoesNotRoundUp(20,196,B)" methodname="JustBelowRankThresholdDoesNotRoundUp" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="492204573" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000072" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1015" name="JustBelowRankThresholdDoesNotRoundUp(40,181,C)" fullname="Dungeon.Tests.DungeonClearRankTests.JustBelowRankThresholdDoesNotRoundUp(40,181,C)" methodname="JustBelowRankThresholdDoesNotRoundUp" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1577789361" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000029" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="ParameterizedMethod" id="1022" name="MissingOrInvalidReferencesDoNotInventARank" fullname="Dungeon.Tests.DungeonClearRankTests.MissingOrInvalidReferencesDoNotInventARank" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.002275" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1018" name="MissingOrInvalidReferencesDoNotInventARank(0,120)" fullname="Dungeon.Tests.DungeonClearRankTests.MissingOrInvalidReferencesDoNotInventARank(0,120)" methodname="MissingOrInvalidReferencesDoNotInventARank" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1391738286" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000275" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1019" name="MissingOrInvalidReferencesDoNotInventARank(-1,120)" fullname="Dungeon.Tests.DungeonClearRankTests.MissingOrInvalidReferencesDoNotInventARank(-1,120)" methodname="MissingOrInvalidReferencesDoNotInventARank" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1508639730" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000038" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1020" name="MissingOrInvalidReferencesDoNotInventARank(20,0)" fullname="Dungeon.Tests.DungeonClearRankTests.MissingOrInvalidReferencesDoNotInventARank(20,0)" methodname="MissingOrInvalidReferencesDoNotInventARank" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="844457466" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000020" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1021" name="MissingOrInvalidReferencesDoNotInventARank(20,-1)" fullname="Dungeon.Tests.DungeonClearRankTests.MissingOrInvalidReferencesDoNotInventARank(20,-1)" methodname="MissingOrInvalidReferencesDoNotInventARank" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="2085834485" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000018" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1030" name="OldFractionsAreFlooredAndAllDungeonTimeJsonValuesAreIntegers" fullname="Dungeon.Tests.DungeonClearRankTests.OldFractionsAreFlooredAndAllDungeonTimeJsonValuesAreIntegers" methodname="OldFractionsAreFlooredAndAllDungeonTimeJsonValuesAreIntegers" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="548429875" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.036228" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1012" name="ReferenceScoresAndInclusiveRankBoundaries" fullname="Dungeon.Tests.DungeonClearRankTests.ReferenceScoresAndInclusiveRankBoundaries" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.008442" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1002" name="ReferenceScoresAndInclusiveRankBoundaries(20,120,100,S)" fullname="Dungeon.Tests.DungeonClearRankTests.ReferenceScoresAndInclusiveRankBoundaries(20,120,100,S)" methodname="ReferenceScoresAndInclusiveRankBoundaries" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1119151958" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000776" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1003" name="ReferenceScoresAndInclusiveRankBoundaries(24,132,90,S)" fullname="Dungeon.Tests.DungeonClearRankTests.ReferenceScoresAndInclusiveRankBoundaries(24,132,90,S)" methodname="ReferenceScoresAndInclusiveRankBoundaries" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="371084707" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000090" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1004" name="ReferenceScoresAndInclusiveRankBoundaries(20,150,90,S)" fullname="Dungeon.Tests.DungeonClearRankTests.ReferenceScoresAndInclusiveRankBoundaries(20,150,90,S)" methodname="ReferenceScoresAndInclusiveRankBoundaries" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1874743822" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000044" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1005" name="ReferenceScoresAndInclusiveRankBoundaries(20,195,75,A)" fullname="Dungeon.Tests.DungeonClearRankTests.ReferenceScoresAndInclusiveRankBoundaries(20,195,75,A)" methodname="ReferenceScoresAndInclusiveRankBoundaries" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1277127660" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000039" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1006" name="ReferenceScoresAndInclusiveRankBoundaries(40,180,50,B)" fullname="Dungeon.Tests.DungeonClearRankTests.ReferenceScoresAndInclusiveRankBoundaries(40,180,50,B)" methodname="ReferenceScoresAndInclusiveRankBoundaries" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1214966811" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000037" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1007" name="ReferenceScoresAndInclusiveRankBoundaries(60,240,0,C)" fullname="Dungeon.Tests.DungeonClearRankTests.ReferenceScoresAndInclusiveRankBoundaries(60,240,0,C)" methodname="ReferenceScoresAndInclusiveRankBoundaries" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1858784124" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000038" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1008" name="ReferenceScoresAndInclusiveRankBoundaries(0,0,100,S)" fullname="Dungeon.Tests.DungeonClearRankTests.ReferenceScoresAndInclusiveRankBoundaries(0,0,100,S)" methodname="ReferenceScoresAndInclusiveRankBoundaries" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1826011185" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000047" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1009" name="ReferenceScoresAndInclusiveRankBoundaries(100,1000,0,C)" fullname="Dungeon.Tests.DungeonClearRankTests.ReferenceScoresAndInclusiveRankBoundaries(100,1000,0,C)" methodname="ReferenceScoresAndInclusiveRankBoundaries" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1193524132" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000040" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1010" name="ReferenceScoresAndInclusiveRankBoundaries(20,240,60,B)" fullname="Dungeon.Tests.DungeonClearRankTests.ReferenceScoresAndInclusiveRankBoundaries(20,240,60,B)" methodname="ReferenceScoresAndInclusiveRankBoundaries" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="2052247637" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000039" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1011" name="ReferenceScoresAndInclusiveRankBoundaries(60,120,40,C)" fullname="Dungeon.Tests.DungeonClearRankTests.ReferenceScoresAndInclusiveRankBoundaries(60,120,40,C)" methodname="ReferenceScoresAndInclusiveRankBoundaries" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1719661587" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000040" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1031" name="RepeatedSnapshotsDoNotDiscardSmallFrameTimeDuringSameRun" fullname="Dungeon.Tests.DungeonClearRankTests.RepeatedSnapshotsDoNotDiscardSmallFrameTimeDuringSameRun" methodname="RepeatedSnapshotsDoNotDiscardSmallFrameTimeDuringSameRun" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="475414512" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.001629" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1017" name="ScoreOf89Point96RemainsA" fullname="Dungeon.Tests.DungeonClearRankTests.ScoreOf89Point96RemainsA" methodname="ScoreOf89Point96RemainsA" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="314760521" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000154" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1029" name="TimeDisplayTruncatesToWholeSeconds" fullname="Dungeon.Tests.DungeonClearRankTests.TimeDisplayTruncatesToWholeSeconds" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.004108" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1024" name="TimeDisplayTruncatesToWholeSeconds(127.54d,&quot;02:07&quot;)" fullname="Dungeon.Tests.DungeonClearRankTests.TimeDisplayTruncatesToWholeSeconds(127.54d,&quot;02:07&quot;)" methodname="TimeDisplayTruncatesToWholeSeconds" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1665459574" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000381" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1025" name="TimeDisplayTruncatesToWholeSeconds(59.999d,&quot;00:59&quot;)" fullname="Dungeon.Tests.DungeonClearRankTests.TimeDisplayTruncatesToWholeSeconds(59.999d,&quot;00:59&quot;)" methodname="TimeDisplayTruncatesToWholeSeconds" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="821610154" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000048" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1026" name="TimeDisplayTruncatesToWholeSeconds(120.999d,&quot;02:00&quot;)" fullname="Dungeon.Tests.DungeonClearRankTests.TimeDisplayTruncatesToWholeSeconds(120.999d,&quot;02:00&quot;)" methodname="TimeDisplayTruncatesToWholeSeconds" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="2146436402" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000025" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1027" name="TimeDisplayTruncatesToWholeSeconds(0.9d,&quot;00:00&quot;)" fullname="Dungeon.Tests.DungeonClearRankTests.TimeDisplayTruncatesToWholeSeconds(0.9d,&quot;00:00&quot;)" methodname="TimeDisplayTruncatesToWholeSeconds" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="240135308" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000021" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1028" name="TimeDisplayTruncatesToWholeSeconds(-1,&quot;00:00&quot;)" fullname="Dungeon.Tests.DungeonClearRankTests.TimeDisplayTruncatesToWholeSeconds(-1,&quot;00:00&quot;)" methodname="TimeDisplayTruncatesToWholeSeconds" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="1002964193" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000032" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1032" name="WholeSecondMigrationPreservesPreviousFileInBackup" fullname="Dungeon.Tests.DungeonClearRankTests.WholeSecondMigrationPreservesPreviousFileInBackup" methodname="WholeSecondMigrationPreservesPreviousFileInBackup" classname="Dungeon.Tests.DungeonClearRankTests" runstate="Runnable" seed="299973170" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.029975" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[[StatusSaveFile] Loaded. ID=-2214, Path=C:\Users\yoong\AppData\Local\Temp\DungeonRankTests\a4dce1d256b040588667480cdc51ac27\active.json, user_name=, gold=0, maxHP=100, broken_traps=0, clear_time=127, hit_count=0
+  inventory.item=[], inventory.equipment=[], inventory.module=[]
+  equips.item=[slot1=none, slot2=none, slot3=none, slot4=none, slot5=none], equips.equip=[head=none, body=none, legs=none], equips.module=[slot1=none, slot2=none, slot3=none, slot4=none, slot5=none, slot6=none]
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1033" name="DungeonProgressTests" fullname="Dungeon.Tests.DungeonProgressTests" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" testcasecount="16" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.159034" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="ParameterizedMethod" id="1043" name="CheckpointEntryResumesRegardlessOfPreviousClearCount" fullname="Dungeon.Tests.DungeonProgressTests.CheckpointEntryResumesRegardlessOfPreviousClearCount" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.002519" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1041" name="CheckpointEntryResumesRegardlessOfPreviousClearCount(0)" fullname="Dungeon.Tests.DungeonProgressTests.CheckpointEntryResumesRegardlessOfPreviousClearCount(0)" methodname="CheckpointEntryResumesRegardlessOfPreviousClearCount" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="2119209880" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000371" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1042" name="CheckpointEntryResumesRegardlessOfPreviousClearCount(2)" fullname="Dungeon.Tests.DungeonProgressTests.CheckpointEntryResumesRegardlessOfPreviousClearCount(2)" methodname="CheckpointEntryResumesRegardlessOfPreviousClearCount" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="1384129378" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000071" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1040" name="ClearRequiresMatchingPendingRunAndCommitsOnlyOnce" fullname="Dungeon.Tests.DungeonProgressTests.ClearRequiresMatchingPendingRunAndCommitsOnlyOnce" methodname="ClearRequiresMatchingPendingRunAndCommitsOnlyOnce" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="526297850" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000396" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1045" name="CompletedNOverNAndLastCheckpointHaveDifferentEntryBehavior" fullname="Dungeon.Tests.DungeonProgressTests.CompletedNOverNAndLastCheckpointHaveDifferentEntryBehavior" methodname="CompletedNOverNAndLastCheckpointHaveDifferentEntryBehavior" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="1371452416" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.001193" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1047" name="DeathRestoresDisarmSnapshotAndKeepsTimeAndHits" fullname="Dungeon.Tests.DungeonProgressTests.DeathRestoresDisarmSnapshotAndKeepsTimeAndHits" methodname="DeathRestoresDisarmSnapshotAndKeepsTimeAndHits" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="2036724400" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000224" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1034" name="DungeonMetadataAndMapListResolveWithoutWorldmapDatabaseObject" fullname="Dungeon.Tests.DungeonProgressTests.DungeonMetadataAndMapListResolveWithoutWorldmapDatabaseObject" methodname="DungeonMetadataAndMapListResolveWithoutWorldmapDatabaseObject" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="1087432576" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.004021" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1051" name="FailedCommitRollsBackMemoryAndRetryStillCommitsOnlyOnce" fullname="Dungeon.Tests.DungeonProgressTests.FailedCommitRollsBackMemoryAndRetryStillCommitsOnlyOnce" methodname="FailedCommitRollsBackMemoryAndRetryStillCommitsOnlyOnce" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="1139424046" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.119693" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[[StatusSaveFile] Save failed. Path=memory, Error=expected failure
+[StatusSaveFile] Saved. ID=-2220, Path=memory, user_name=, gold=0, maxHP=100, broken_traps=3, clear_time=4000, hit_count=410
+  inventory.item=[], inventory.equipment=[], inventory.module=[]
+  equips.item=[slot1=none, slot2=none, slot3=none, slot4=none, slot5=none], equips.equip=[head=none, body=none, legs=none], equips.module=[slot1=none, slot2=none, slot3=none, slot4=none, slot5=none, slot6=none]
+]]></output>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1038" name="FirstActualClearStoresActualValuesEvenWhenWorseThanSentinels" fullname="Dungeon.Tests.DungeonProgressTests.FirstActualClearStoresActualValuesEvenWhenWorseThanSentinels" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.001776" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1036" name="FirstActualClearStoresActualValuesEvenWhenWorseThanSentinels(4200.0f,450,7)" fullname="Dungeon.Tests.DungeonProgressTests.FirstActualClearStoresActualValuesEvenWhenWorseThanSentinels(4200.0f,450,7)" methodname="FirstActualClearStoresActualValuesEvenWhenWorseThanSentinels" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="1808850518" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000755" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1037" name="FirstActualClearStoresActualValuesEvenWhenWorseThanSentinels(120.0f,0,0)" fullname="Dungeon.Tests.DungeonProgressTests.FirstActualClearStoresActualValuesEvenWhenWorseThanSentinels(120.0f,0,0)" methodname="FirstActualClearStoresActualValuesEvenWhenWorseThanSentinels" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="1834290038" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000099" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1049" name="FutureVersionIsRejectedByDeserializer" fullname="Dungeon.Tests.DungeonProgressTests.FutureVersionIsRejectedByDeserializer" methodname="FutureVersionIsRejectedByDeserializer" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="1844291124" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000511" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1050" name="LoadMigrationKeepsOriginalFileInAtomicBackup" fullname="Dungeon.Tests.DungeonProgressTests.LoadMigrationKeepsOriginalFileInAtomicBackup" methodname="LoadMigrationKeepsOriginalFileInAtomicBackup" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="1231503293" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.023049" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[[StatusSaveFile] Loaded. ID=-2226, Path=C:\Users\yoong\AppData\Local\Temp\DungeonRecordsTests\1a44338df487418e9c9039356dc8873b\active.json, user_name=, gold=1234, maxHP=100, broken_traps=5, clear_time=45, hit_count=7
+  inventory.item=[000x15], inventory.equipment=[003x1], inventory.module=[001x1]
+  equips.item=[slot1=000, slot2=none, slot3=none, slot4=none, slot5=none], equips.equip=[head=003, body=none, legs=none], equips.module=[slot1=none, slot2=none, slot3=none, slot4=none, slot5=none, slot6=none]
+]]></output>
+            </test-case>
+            <test-case id="1039" name="RepeatedClearsCompareIndependentBestValues" fullname="Dungeon.Tests.DungeonProgressTests.RepeatedClearsCompareIndependentBestValues" methodname="RepeatedClearsCompareIndependentBestValues" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="1404843664" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.001713" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1046" name="SwitchingDungeonsKeepsEachCheckpointAndRunCounters" fullname="Dungeon.Tests.DungeonProgressTests.SwitchingDungeonsKeepsEachCheckpointAndRunCounters" methodname="SwitchingDungeonsKeepsEachCheckpointAndRunCounters" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="2104079842" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000323" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1035" name="UnclearedRecordsKeepSentinelsAndCannotSatisfyClearedRecordQuery" fullname="Dungeon.Tests.DungeonProgressTests.UnclearedRecordsKeepSentinelsAndCannotSatisfyClearedRecordQuery" methodname="UnclearedRecordsKeepSentinelsAndCannotSatisfyClearedRecordQuery" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="2009442217" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000223" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1044" name="UncommittedMapsDoNotAdvanceProgressOrEraseRunOnEntry" fullname="Dungeon.Tests.DungeonProgressTests.UncommittedMapsDoNotAdvanceProgressOrEraseRunOnEntry" methodname="UncommittedMapsDoNotAdvanceProgressOrEraseRunOnEntry" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="441471385" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000174" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1048" name="Version2MigrationPreservesCheckpointAndInventoryWithoutInventingClearHistory" fullname="Dungeon.Tests.DungeonProgressTests.Version2MigrationPreservesCheckpointAndInventoryWithoutInventingClearHistory" methodname="Version2MigrationPreservesCheckpointAndInventoryWithoutInventingClearHistory" classname="Dungeon.Tests.DungeonProgressTests" runstate="Runnable" seed="371763483" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000977" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1062" name="PlayTimeTests" fullname="Dungeon.Tests.PlayTimeTests" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" testcasecount="19" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.033696" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1077" name="CheckpointWaitResumeClearAndBestTimeKeepTheirOwnMeaning" fullname="Dungeon.Tests.PlayTimeTests.CheckpointWaitResumeClearAndBestTimeKeepTheirOwnMeaning" methodname="CheckpointWaitResumeClearAndBestTimeKeepTheirOwnMeaning" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="220744079" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000473" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1080" name="FailedCheckpointTransactionKeepsMeasuredTimeAndCanRetry" fullname="Dungeon.Tests.PlayTimeTests.FailedCheckpointTransactionKeepsMeasuredTimeAndCanRetry" methodname="FailedCheckpointTransactionKeepsMeasuredTimeAndCanRetry" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="2130275741" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.003299" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[[StatusSaveFile] Save failed. Path=time-memory, Error=expected failure
+[StatusSaveFile] Saved. ID=-2232, Path=time-memory, user_name=, gold=0, maxHP=100, broken_traps=0, clear_time=65, hit_count=0
+  inventory.item=[], inventory.equipment=[], inventory.module=[]
+  equips.item=[slot1=none, slot2=none, slot3=none, slot4=none, slot5=none], equips.equip=[head=none, body=none, legs=none], equips.module=[slot1=none, slot2=none, slot3=none, slot4=none, slot5=none, slot6=none]
+]]></output>
+            </test-case>
+            <test-case id="1079" name="FailedPeriodicSaveRetriesAfterDelayWithoutDoubleAddingMinutes" fullname="Dungeon.Tests.PlayTimeTests.FailedPeriodicSaveRetriesAfterDelayWithoutDoubleAddingMinutes" methodname="FailedPeriodicSaveRetriesAfterDelayWithoutDoubleAddingMinutes" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="658552056" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000240" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1081" name="LiveTimerSurvivesFailedClearTransactionAndSuccessfulRetry" fullname="Dungeon.Tests.PlayTimeTests.LiveTimerSurvivesFailedClearTransactionAndSuccessfulRetry" methodname="LiveTimerSurvivesFailedClearTransactionAndSuccessfulRetry" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="595918260" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.002532" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[[StatusSaveFile] Save failed. Path=time-memory, Error=expected failure
+[StatusSaveFile] Saved. ID=-2238, Path=time-memory, user_name=, gold=0, maxHP=100, broken_traps=0, clear_time=65, hit_count=0
+  inventory.item=[], inventory.equipment=[], inventory.module=[]
+  equips.item=[slot1=none, slot2=none, slot3=none, slot4=none, slot5=none], equips.equip=[head=none, body=none, legs=none], equips.module=[slot1=none, slot2=none, slot3=none, slot4=none, slot5=none, slot6=none]
+]]></output>
+            </test-case>
+            <test-case id="1074" name="MinuteBoundarySavesOnceAndDelayedFramesBatchMinutes" fullname="Dungeon.Tests.PlayTimeTests.MinuteBoundarySavesOnceAndDelayedFramesBatchMinutes" methodname="MinuteBoundarySavesOnceAndDelayedFramesBatchMinutes" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="2092873073" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000293" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1073" name="NumericMinutesAreAuthoritativeAndHoursDoNotWrap" fullname="Dungeon.Tests.PlayTimeTests.NumericMinutesAreAuthoritativeAndHoursDoNotWrap" methodname="NumericMinutesAreAuthoritativeAndHoursDoNotWrap" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="467118832" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000104" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1075" name="ShortSessionsKeepRemainderAndDoNotCountOfflineGap" fullname="Dungeon.Tests.PlayTimeTests.ShortSessionsKeepRemainderAndDoNotCountOfflineGap" methodname="ShortSessionsKeepRemainderAndDoNotCountOfflineGap" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="879938605" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000405" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1082" name="SmallFrameDeltasStillAccumulateDuringLongRuns" fullname="Dungeon.Tests.PlayTimeTests.SmallFrameDeltasStillAccumulateDuringLongRuns" methodname="SmallFrameDeltasStillAccumulateDuringLongRuns" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="2013901773" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.007862" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1078" name="SwitchingDungeonsPreservesIndependentSecondsAndDoesNotCountMenu" fullname="Dungeon.Tests.PlayTimeTests.SwitchingDungeonsPreservesIndependentSecondsAndDoesNotCountMenu" methodname="SwitchingDungeonsPreservesIndependentSecondsAndDoesNotCountMenu" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="390499285" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000239" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1076" name="TotalCountsPausedTimeWhileDungeonUsesScaledTime" fullname="Dungeon.Tests.PlayTimeTests.TotalCountsPausedTimeWhileDungeonUsesScaledTime" methodname="TotalCountsPausedTimeWhileDungeonUsesScaledTime" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="126386381" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000155" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1072" name="UnparseableLegacyTimeIsPreservedWithoutGuessing" fullname="Dungeon.Tests.PlayTimeTests.UnparseableLegacyTimeIsPreservedWithoutGuessing" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.003201" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1068" name="UnparseableLegacyTimeIsPreservedWithoutGuessing(&quot;135:99&quot;)" fullname="Dungeon.Tests.PlayTimeTests.UnparseableLegacyTimeIsPreservedWithoutGuessing(&quot;135:99&quot;)" methodname="UnparseableLegacyTimeIsPreservedWithoutGuessing" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="129500729" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.001761" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1069" name="UnparseableLegacyTimeIsPreservedWithoutGuessing(&quot;unknown&quot;)" fullname="Dungeon.Tests.PlayTimeTests.UnparseableLegacyTimeIsPreservedWithoutGuessing(&quot;unknown&quot;)" methodname="UnparseableLegacyTimeIsPreservedWithoutGuessing" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="229094976" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000267" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1070" name="UnparseableLegacyTimeIsPreservedWithoutGuessing(&quot;-1:00&quot;)" fullname="Dungeon.Tests.PlayTimeTests.UnparseableLegacyTimeIsPreservedWithoutGuessing(&quot;-1:00&quot;)" methodname="UnparseableLegacyTimeIsPreservedWithoutGuessing" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="288703631" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000227" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1071" name="UnparseableLegacyTimeIsPreservedWithoutGuessing(&quot;9999999999999999999:00&quot;)" fullname="Dungeon.Tests.PlayTimeTests.UnparseableLegacyTimeIsPreservedWithoutGuessing(&quot;9999999999999999999:00&quot;)" methodname="UnparseableLegacyTimeIsPreservedWithoutGuessing" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="543525187" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000252" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="ParameterizedMethod" id="1067" name="Version3TimeMigratesAsHoursAndMinutes" fullname="Dungeon.Tests.PlayTimeTests.Version3TimeMigratesAsHoursAndMinutes" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000906" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1063" name="Version3TimeMigratesAsHoursAndMinutes(&quot;135:26&quot;,8126)" fullname="Dungeon.Tests.PlayTimeTests.Version3TimeMigratesAsHoursAndMinutes(&quot;135:26&quot;,8126)" methodname="Version3TimeMigratesAsHoursAndMinutes" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="1973883993" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000273" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1064" name="Version3TimeMigratesAsHoursAndMinutes(&quot;25:01&quot;,1501)" fullname="Dungeon.Tests.PlayTimeTests.Version3TimeMigratesAsHoursAndMinutes(&quot;25:01&quot;,1501)" methodname="Version3TimeMigratesAsHoursAndMinutes" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="84092830" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000061" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1065" name="Version3TimeMigratesAsHoursAndMinutes(&quot;0:00&quot;,0)" fullname="Dungeon.Tests.PlayTimeTests.Version3TimeMigratesAsHoursAndMinutes(&quot;0:00&quot;,0)" methodname="Version3TimeMigratesAsHoursAndMinutes" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="1188341153" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000044" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1066" name="Version3TimeMigratesAsHoursAndMinutes(&quot;&quot;,0)" fullname="Dungeon.Tests.PlayTimeTests.Version3TimeMigratesAsHoursAndMinutes(&quot;&quot;,0)" methodname="Version3TimeMigratesAsHoursAndMinutes" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="641789657" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.000039" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1083" name="Version3TimeMigrationRetainsOriginalAtomicBackup" fullname="Dungeon.Tests.PlayTimeTests.Version3TimeMigrationRetainsOriginalAtomicBackup" methodname="Version3TimeMigrationRetainsOriginalAtomicBackup" classname="Dungeon.Tests.PlayTimeTests" runstate="Runnable" seed="913134518" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.012233" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[[StatusSaveFile] Loaded. ID=-2244, Path=C:\Users\yoong\AppData\Local\Temp\PlayTimeTests\ca2d84afe8884ea7886907357f0824de\active.json, user_name=, gold=0, maxHP=100, broken_traps=0, clear_time=0, hit_count=0
+  inventory.item=[], inventory.equipment=[], inventory.module=[]
+  equips.item=[slot1=none, slot2=none, slot3=none, slot4=none, slot5=none], equips.equip=[head=none, body=none, legs=none], equips.module=[slot1=none, slot2=none, slot3=none, slot4=none, slot5=none, slot6=none]
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1084" name="StatusSaveStorageTests" fullname="Dungeon.Tests.StatusSaveStorageTests" classname="Dungeon.Tests.StatusSaveStorageTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.093164" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1092" name="EditorFactory_UsesTestFileAndKeepsDefaultReadOnly" fullname="Dungeon.Tests.StatusSaveStorageTests.EditorFactory_UsesTestFileAndKeepsDefaultReadOnly" methodname="EditorFactory_UsesTestFileAndKeepsDefaultReadOnly" classname="Dungeon.Tests.StatusSaveStorageTests" runstate="Runnable" seed="253264634" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.003349" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1091" name="ProjectDefaultFile_MatchesCodeDefaults" fullname="Dungeon.Tests.StatusSaveStorageTests.ProjectDefaultFile_MatchesCodeDefaults" methodname="ProjectDefaultFile_MatchesCodeDefaults" classname="Dungeon.Tests.StatusSaveStorageTests" runstate="Runnable" seed="1128683187" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.001898" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1085" name="StatusSaveFile_UnitySerializationPreservesDictionaryProgress" fullname="Dungeon.Tests.StatusSaveStorageTests.StatusSaveFile_UnitySerializationPreservesDictionaryProgress" methodname="StatusSaveFile_UnitySerializationPreservesDictionaryProgress" classname="Dungeon.Tests.StatusSaveStorageTests" runstate="Runnable" seed="39813840" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.003238" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1090" name="TryLoadOrCreate_IgnoresAndPreservesInvalidTemporaryFile" fullname="Dungeon.Tests.StatusSaveStorageTests.TryLoadOrCreate_IgnoresAndPreservesInvalidTemporaryFile" methodname="TryLoadOrCreate_IgnoresAndPreservesInvalidTemporaryFile" classname="Dungeon.Tests.StatusSaveStorageTests" runstate="Runnable" seed="710970582" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.022896" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1088" name="TryLoadOrCreate_PromotesNewerCompletedTemporaryFile" fullname="Dungeon.Tests.StatusSaveStorageTests.TryLoadOrCreate_PromotesNewerCompletedTemporaryFile" methodname="TryLoadOrCreate_PromotesNewerCompletedTemporaryFile" classname="Dungeon.Tests.StatusSaveStorageTests" runstate="Runnable" seed="1238505249" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.018558" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1089" name="TryLoadOrCreate_RecoversPreviousBackupWhenActiveFileIsCorrupt" fullname="Dungeon.Tests.StatusSaveStorageTests.TryLoadOrCreate_RecoversPreviousBackupWhenActiveFileIsCorrupt" methodname="TryLoadOrCreate_RecoversPreviousBackupWhenActiveFileIsCorrupt" classname="Dungeon.Tests.StatusSaveStorageTests" runstate="Runnable" seed="1786523418" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.023034" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1087" name="TryWrite_ReplacesAtomicallyAndKeepsPreviousValidBackup" fullname="Dungeon.Tests.StatusSaveStorageTests.TryWrite_ReplacesAtomicallyAndKeepsPreviousValidBackup" methodname="TryWrite_ReplacesAtomicallyAndKeepsPreviousValidBackup" classname="Dungeon.Tests.StatusSaveStorageTests" runstate="Runnable" seed="2141922411" result="Passed" start-time="2026-10-20 12:25:40Z" end-time="2026-10-20 12:25:40Z" duration="0.015137" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Docs\Rollback\2026-10-20-clear-rank\unit-results.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

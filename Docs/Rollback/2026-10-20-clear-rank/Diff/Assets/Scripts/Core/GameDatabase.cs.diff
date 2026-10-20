@@ -1,0 +1,11 @@
+--- Before/Assets/Scripts/Core/GameDatabase.cs
++++ After/Assets/Scripts/Core/GameDatabase.cs
+@@ -624,6 +624,8 @@
+     {
+         public string sceneName, name, mapResourcePath;
+         public int number;
++        public int rank_reference_hit_count;
++        public int rank_reference_time_seconds;
+     }
+ 
+     [Serializable]

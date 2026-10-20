@@ -1,0 +1,52 @@
+--- Before/Assets/Scripts/Core/DungeonProgressMigration.cs
++++ After/Assets/Scripts/Core/DungeonProgressMigration.cs
+@@ -38,6 +38,14 @@
+                 }
+                 root["checkpoint"] = checkpoints;
+             }
++            // Json.NET의 정수 변환 반올림 전에 구형 소수 시간을 명시적으로 버립니다.
++            FloorTime(root, "clear_time_seconds");
++            if (root["checkpoint"] is JObject checkpointMap)
++                foreach (var pair in checkpointMap.Properties())
++                    if (pair.Value is JObject checkpoint) FloorTime(checkpoint, "run_time_seconds");
++            if (root["dungeon_records"] is JObject recordMap)
++                foreach (var pair in recordMap.Properties())
++                    if (pair.Value is JObject record) FloorTime(record, "best_clear_time_seconds", 3599);
+             root["save_version"] = StatusSaveDefaults.CurrentSaveVersion;
+             return root;
+         }
+@@ -59,7 +67,7 @@
+                 }
+                 else
+                 {
+-                    record.best_clear_time_seconds = Seconds(record.best_clear_time_seconds, 3599);
++                    record.best_clear_time_seconds = Math.Max(0, record.best_clear_time_seconds);
+                     record.best_hit_count = Math.Max(0, record.best_hit_count);
+                     record.max_broken_traps = Math.Max(0, record.max_broken_traps);
+                 }
+@@ -80,7 +88,7 @@
+                 checkpoint.broken_traps_snapshot = Math.Max(0, checkpoint.broken_traps_snapshot);
+                 checkpoint.run_id ??= "";
+                 if (checkpoint.resumeRequested && checkpoint.run_id.Length == 0) checkpoint.run_id = "legacy-" + key;
+-                checkpoint.run_time_seconds = Seconds(checkpoint.run_time_seconds, 0);
++                checkpoint.run_time_seconds = Math.Max(0, checkpoint.run_time_seconds);
+                 checkpoint.run_hit_count = Math.Max(0, checkpoint.run_hit_count);
+                 checkpoint.run_broken_traps = Math.Max(0, checkpoint.run_broken_traps);
+                 checkpoints[key] = checkpoint;
+@@ -92,10 +100,13 @@
+             data.active_run ??= new ActiveDungeonRunData();
+             data.active_run.sceneName = DungeonProgressService.SceneKey(data.active_run.sceneName);
+             data.active_run.run_id ??= "";
+-            data.clear_time_seconds = Seconds(data.clear_time_seconds, 0);
++            data.clear_time_seconds = Math.Max(0, data.clear_time_seconds);
+         }
+ 
+-        private static float Seconds(float value, float fallback) =>
+-            float.IsNaN(value) || float.IsInfinity(value) ? fallback : Math.Max(0, value);
++        private static void FloorTime(JObject root, string field, int fallback = 0)
++        {
++            if (root[field] == null) return;
++            root[field] = DungeonTime.WholeSeconds((double?)root[field] ?? fallback, fallback);
++        }
+     }
+ }

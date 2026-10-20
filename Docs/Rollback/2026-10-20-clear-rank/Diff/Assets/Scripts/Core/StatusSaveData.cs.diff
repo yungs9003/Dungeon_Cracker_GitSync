@@ -1,0 +1,11 @@
+--- Before/Assets/Scripts/Core/StatusSaveData.cs
++++ After/Assets/Scripts/Core/StatusSaveData.cs
+@@ -26,7 +26,7 @@
+         public int last_getting_gold = 0;
+ 
+         [JsonProperty("clear_time_seconds")]
+-        public float clear_time_seconds = 0f;
++        public int clear_time_seconds = 0;
+ 
+         [JsonProperty("hit_count")]
+         public int hit_count = 0;

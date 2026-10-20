@@ -1,0 +1,26 @@
+{
+  "modified": [
+    "Assets/Resources/Data/db.json",
+    "Assets/Scenes/ClearScene.unity",
+    "Assets/Scripts/App/UI/ClearResultUI.cs",
+    "Assets/Scripts/Core/DungeonProgressMigration.cs",
+    "Assets/Scripts/Core/DungeonProgressService.cs",
+    "Assets/Scripts/Core/GameDatabase.cs",
+    "Assets/Scripts/Core/PlayTimeSession.cs",
+    "Assets/Scripts/Core/StatusSaveData.cs",
+    "Assets/Scripts/Core/StatusSaveDefaults.cs",
+    "Assets/Scripts/Core/StatusSaveFile.cs",
+    "Assets/StreamingAssets/savefile.json",
+    "Assets/Tests/Editor/DungeonProgressTests.cs",
+    "Assets/Tests/Editor/PlayTimeTests.cs"
+  ],
+  "added": [
+    "Assets/Scripts/Core/DungeonClearRankCalculator.cs",
+    "Assets/Scripts/Core/DungeonClearRankCalculator.cs.meta",
+    "Assets/Tests/Editor/DungeonClearRankTests.cs",
+    "Assets/Tests/Editor/DungeonClearRankTests.cs.meta"
+  ],
+  "deleted": [],
+  "unchanged": 1550,
+  "isolated_source_hashes_match": true
+}

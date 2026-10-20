@@ -1,0 +1,12 @@
+PASS actual ClearScene initializes shared save and result UI
+PASS storage stays inside isolated project
+PASS actual ClearScene truncates 127.54 to 02:07
+PASS version4 fractional run migrates to integer version5
+PASS checkpoint run uses whole seconds
+PASS first actual best record uses whole seconds
+PASS ClearScene commits once
+PASS actual file stores all dungeon times as JSON integers
+FAIL System.Exception: 24 hits and 127 seconds produce visible S
+  at ClearRankChecks.Check (System.Boolean ok, System.String message) [0x00030] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\CodexPlayTime\Unity\Assets\Tests\ClearRankChecks.cs:22 
+  at ClearRankChecks+<Run>d__5.MoveNext () [0x001ed] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\CodexPlayTime\Unity\Assets\Tests\ClearRankChecks.cs:53 
+  at ClearRankChecks+<Start>d__4.MoveNext () [0x0006f] in C:\Users\yoong\Dungeon 2025-11-29_23-04-34\Dungeon\Library\CodexPlayTime\Unity\Assets\Tests\ClearRankChecks.cs:30 

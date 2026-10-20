@@ -1,0 +1,32 @@
+--- Before/Assets/Scripts/App/Manager/SaveManager.cs
++++ After/Assets/Scripts/App/Manager/SaveManager.cs
+@@ -35,7 +35,7 @@
+         {
+             if (scene.name == clearSceneName) StatusSaveFile.Instance?.TryFinalizeDungeonClear();
+         }
+-        private static void FlushTime() => DungeonRunTracker2D.Instance?.FlushTimeToSave();
++        private static void FlushTime() => StatusSaveFile.Instance?.CapturePlayTime();
+ 
+         public bool EnterDungeon(string sceneName)
+         {
+@@ -96,7 +96,11 @@
+             {
+                 DungeonProgressService.SetCheckpoint(data, returnSceneName, nextMapIndex, totalMaps); return true;
+             });
+-            if (success) { defaultCheckpointSceneName = destination; pendingMapIndex = -1; pendingReturnSceneName = ""; }
++            if (success)
++            {
++                save.PauseDungeonTimeForSceneChange();
++                defaultCheckpointSceneName = destination; pendingMapIndex = -1; pendingReturnSceneName = "";
++            }
+             return success;
+         }
+ 
+@@ -109,6 +113,7 @@
+             bool resume = false;
+             if (!save.TryUpdateDungeonProgress(data => { resume = DungeonProgressService.RestoreCheckpoint(data); return true; })) return false;
+             if (!resume) return false;
++            save.PauseDungeonTimeForSceneChange();
+             SceneManager.LoadScene(defaultCheckpointSceneName); return true;
+         }
+ 

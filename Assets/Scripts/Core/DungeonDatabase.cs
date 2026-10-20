@@ -43,6 +43,20 @@ public class DungeonDatabase : MonoBehaviour
     }
 
     public bool TryGetDungeon(string dungeonId, out DungeonInfo info)
-        => map.TryGetValue(dungeonId, out info);
+    {
+        map.TryGetValue(dungeonId, out var legacy);
+        if (GameDatabase.TryFindDungeonBySceneName(legacy?.sceneName ?? dungeonId, out var definition))
+        {
+            info = new DungeonInfo
+            {
+                id = definition.sceneName, sceneName = definition.sceneName, name = definition.name,
+                description = legacy?.description ?? "", previewSpritePath = legacy?.previewSpritePath ?? "",
+                farmableItems = legacy?.farmableItems ?? new(), clearCriteria = legacy?.clearCriteria ?? new()
+            };
+            return true;
+        }
+        info = legacy;
+        return info != null;
+    }
 }
 }

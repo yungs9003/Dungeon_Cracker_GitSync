@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Dungeon.Map;
 using Dungeon.UI;
+using Dungeon.Core;
 
 namespace Dungeon.Manager
 {
@@ -57,17 +58,14 @@ namespace Dungeon.Manager
         {
             LoadMapList();
 
-            // 체크포인트 씬에서 돌아온 경우 저장된 다음 맵 index부터 시작한다.
-            if (SaveManager.Instance != null &&
-                SaveManager.Instance.TryConsumePendingMapIndex(SceneManager.GetActiveScene().name, out int pendingIndex))
-            {
-                currentIndex = pendingIndex;
-            }
+            if (MapCount == 0) return;
+            if (!SaveManager.GetOrCreate().BeginLoadedDungeon(SceneManager.GetActiveScene().name, MapCount, out currentIndex))
+            { Debug.LogError("[MapSequence] 던전 기록을 준비/저장하지 못했습니다."); return; }
 
             if (mapFiles != null && mapFiles.Length > 0 && currentIndex >= mapFiles.Length)
             {
                 Debug.Log("[MapSequence] Pending map index is past the last map. Go to ClearScene.");
-                SceneManager.LoadScene(endSceneName);
+                FinishDungeon();
                 return;
             }
 
@@ -83,9 +81,9 @@ namespace Dungeon.Manager
         private void LoadMapList()
         {
             string sceneName = SceneManager.GetActiveScene().name;
-            string folderPath = $"{rootFolder}/{sceneName}";
+            string folderPath = DungeonMapCatalog.ResourcePath(sceneName, rootFolder);
 
-            mapFiles = Resources.LoadAll<TextAsset>(folderPath);
+            mapFiles = DungeonMapCatalog.Load(sceneName, rootFolder);
 
             if (mapFiles == null || mapFiles.Length == 0)
             {
@@ -93,7 +91,6 @@ namespace Dungeon.Manager
                 return;
             }
 
-            mapFiles = mapFiles.OrderBy(t => t.name).ToArray();
             Debug.Log($"[MapSequence] Found maps: {string.Join(", ", mapFiles.Select(m => m.name))}");
         }
 
@@ -105,7 +102,7 @@ namespace Dungeon.Manager
             currentIndex = Mathf.Clamp(currentIndex, 0, mapFiles.Length - 1);
 
             string sceneName = SceneManager.GetActiveScene().name;
-            string path = $"{rootFolder}/{sceneName}/{mapFiles[currentIndex].name}";
+            string path = $"{DungeonMapCatalog.ResourcePath(sceneName, rootFolder)}/{mapFiles[currentIndex].name}";
 
             builder.BuildFromJsonPath(path);
             Debug.Log($"[MapSequence] Loaded map {currentIndex + 1}/{mapFiles.Length} : {path}");
@@ -174,9 +171,17 @@ namespace Dungeon.Manager
                 if (fader != null)
                     yield return fader.FadeOut(1.0f);
 
-                SceneManager.LoadScene(endSceneName);
+                if (!FinishDungeon())
+                {
+                    SetPlayerControl(pendingPlayer, true, true);
+                    if (fader != null) yield return fader.FadeIn(fadeInSeconds);
+                    isTransitioning = false;
+                }
             }
         }
+
+        private bool FinishDungeon() => SaveManager.GetOrCreate().CompleteDungeon(
+            SceneManager.GetActiveScene().name, MapCount, endSceneName);
 
         private void SetPlayerControl(Component playerController, bool enabled, bool stopImmediately)
         {

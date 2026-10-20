@@ -1,0 +1,29 @@
+--- Before/Assets/Tests/Editor/DungeonProgressTests.cs
++++ After/Assets/Tests/Editor/DungeonProgressTests.cs
+@@ -176,7 +176,7 @@
+             string json = LegacyJson();
+             Assert.That(StatusSaveDefaults.IsValidJson(json), Is.True);
+             Assert.That(StatusSaveDefaults.TryDeserialize(json, out var data, out var error), Is.True, error);
+-            Assert.That(data.save_version, Is.EqualTo(3));
++            Assert.That(data.save_version, Is.EqualTo(StatusSaveDefaults.CurrentSaveVersion));
+             Assert.That(data.gold, Is.EqualTo(1234));
+             Assert.That(data.inventory.item[0]["000"], Is.EqualTo(15));
+             Assert.That(data.inventory.equipment[0]["003"], Is.EqualTo(1));
+@@ -196,7 +196,7 @@
+         [Test]
+         public void FutureVersionIsRejectedByDeserializer()
+         {
+-            string json = StatusSaveDefaults.Serialize(NewData()).Replace("\"save_version\": 3", "\"save_version\": 999");
++            string json = StatusSaveDefaults.Serialize(NewData()).Replace("\"save_version\": " + StatusSaveDefaults.CurrentSaveVersion, "\"save_version\": 999");
+             Assert.That(StatusSaveDefaults.IsValidJson(json), Is.False);
+         }
+ 
+@@ -211,7 +211,7 @@
+             try
+             {
+                 var save = go.AddComponent<StatusSaveFile>(); Set(save,"storage",storage); save.Load();
+-                StringAssert.Contains("\"save_version\": 3", File.ReadAllText(storage.ActivePath));
++                StringAssert.Contains("\"save_version\": " + StatusSaveDefaults.CurrentSaveVersion, File.ReadAllText(storage.ActivePath));
+                 Assert.That(File.ReadAllText(storage.BackupPath), Is.EqualTo(original));
+                 Assert.That(save.Data.checkpoint[A].mapIndex, Is.EqualTo(2));
+             }

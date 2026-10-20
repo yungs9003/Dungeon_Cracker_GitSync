@@ -1,0 +1,20 @@
+--- Before/Assets/Scripts/Core/DungeonProgressService.cs
++++ After/Assets/Scripts/Core/DungeonProgressService.cs
+@@ -8,7 +8,7 @@
+     public sealed class DungeonRecordData
+     {
+         public int clear_count;
+-        public float best_clear_time_seconds = 3599f;
++        public int best_clear_time_seconds = 3599;
+         public int best_hit_count = 399;
+         public int max_broken_traps;
+         public string last_committed_clear_run_id = "";
+@@ -21,7 +21,7 @@
+         public bool resumeRequested, completed;
+         public int broken_traps_snapshot;
+         public string run_id = "";
+-        public float run_time_seconds;
++        public int run_time_seconds;
+         public int run_hit_count, run_broken_traps;
+     }
+ 

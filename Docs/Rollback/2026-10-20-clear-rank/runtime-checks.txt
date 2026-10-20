@@ -1,0 +1,31 @@
+PASS actual ClearScene initializes shared save and result UI
+PASS storage stays inside isolated project
+PASS actual ClearScene truncates 127.54 to 02:07
+PASS version4 fractional run migrates to integer version5
+PASS checkpoint run uses whole seconds
+PASS first actual best record uses whole seconds
+PASS ClearScene commits once
+PASS actual file stores all dungeon times as JSON integers
+PASS 24 hits and 127 seconds produce visible S
+PASS provided S sprite is serialized and imported
+PASS provided A sprite is serialized and imported
+PASS provided B sprite is serialized and imported
+PASS provided C sprite is serialized and imported
+PASS rank image keeps aspect and does not intercept buttons
+PASS rank image does not cover return button
+PASS current run selects S image
+PASS time label stays whole-second for S
+PASS refresh keeps historical best and count while evaluating current S
+PASS current run selects A image
+PASS time label stays whole-second for A
+PASS refresh keeps historical best and count while evaluating current A
+PASS current run selects B image
+PASS time label stays whole-second for B
+PASS refresh keeps historical best and count while evaluating current B
+PASS current run selects C image
+PASS time label stays whole-second for C
+PASS refresh keeps historical best and count while evaluating current C
+PASS no actual completed run hides rank instead of granting S
+PASS second fixture run is actually completed
+PASS dungeon without DB references shows no invented rank
+PASS repeated result refresh remains idempotent

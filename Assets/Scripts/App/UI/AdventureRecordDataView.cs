@@ -87,7 +87,7 @@ namespace Dungeon.UI
             }
 
             if (playTimeText != null)
-                playTimeText.text = JoinTokens(data.play_time, " : ");
+                playTimeText.text = PlayTimeData.Format(data.play_time_minutes).Replace(":", " : ");
 
             if (clearedDungeonText != null)
                 clearedDungeonText.text = FormatClearedDungeon(data.clear_num_info);

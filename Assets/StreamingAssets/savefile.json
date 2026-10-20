@@ -1,11 +1,11 @@
 {
-  "save_version": 2,
+  "save_version": 5,
   "user_name": "",
   "gold": 0,
   "broken_traps": 0,
   "clear_reward_claimed": false,
   "last_getting_gold": 0,
-  "clear_time_seconds": 0.0,
+  "clear_time_seconds": 0,
   "hit_count": 0,
   "main_stats": {
     "max_HP": 100,
@@ -87,15 +87,39 @@
     ]
   },
   "checkpoint": {
-    "sceneName": "",
-    "mapIndex": -1,
-    "resumeRequested": false,
-    "broken_traps_snapshot": 0
+    "DUNGEON_001": {
+      "mapIndex": 0,
+      "totalMaps": 0,
+      "resumeRequested": false,
+      "completed": false,
+      "broken_traps_snapshot": 0,
+      "run_id": "",
+      "run_time_seconds": 0,
+      "run_hit_count": 0,
+      "run_broken_traps": 0
+    }
   },
   "dungeon_status": [],
-  "play_time": "",
+  "play_time": "0:00",
   "clear_num_info": "",
   "adventure_count": 0,
   "achievement": "",
-  "player_rank": ""
+  "player_rank": "",
+  "dungeon_records": {
+    "DUNGEON_001": {
+      "clear_count": 0,
+      "best_clear_time_seconds": 3599,
+      "best_hit_count": 399,
+      "max_broken_traps": 0,
+      "last_committed_clear_run_id": ""
+    }
+  },
+  "active_run": {
+    "sceneName": "",
+    "run_id": "",
+    "pending_clear": false
+  },
+  "play_time_minutes": 0,
+  "play_time_remainder_seconds": 0.0,
+  "play_time_legacy_unparsed": ""
 }

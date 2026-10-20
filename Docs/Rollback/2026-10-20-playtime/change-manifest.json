@@ -1,0 +1,23 @@
+{
+  "modified": [
+    "Assets/Editor/StatusAdventureRecordSceneBuilder.cs",
+    "Assets/Scripts/App/Manager/DungeonRunTracker2D.cs",
+    "Assets/Scripts/App/Manager/SaveManager.cs",
+    "Assets/Scripts/App/UI/AdventureRecordDataView.cs",
+    "Assets/Scripts/Core/DungeonProgressMigration.cs",
+    "Assets/Scripts/Core/StatusSaveData.cs",
+    "Assets/Scripts/Core/StatusSaveDefaults.cs",
+    "Assets/Scripts/Core/StatusSaveFile.cs",
+    "Assets/StreamingAssets/savefile.json",
+    "Assets/Tests/Editor/DungeonProgressTests.cs"
+  ],
+  "added": [
+    "Assets/Scripts/Core/PlayTimeSession.cs",
+    "Assets/Scripts/Core/PlayTimeSession.cs.meta",
+    "Assets/Tests/Editor/PlayTimeTests.cs",
+    "Assets/Tests/Editor/PlayTimeTests.cs.meta"
+  ],
+  "deleted": [],
+  "unchanged": 1549,
+  "isolated_source_hashes_match": true
+}

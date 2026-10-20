@@ -26,7 +26,7 @@ namespace Dungeon.Core
         public int last_getting_gold = 0;
 
         [JsonProperty("clear_time_seconds")]
-        public float clear_time_seconds = 0f;
+        public int clear_time_seconds = 0;
 
         [JsonProperty("hit_count")]
         public int hit_count = 0;
@@ -95,13 +95,21 @@ namespace Dungeon.Core
         }
 
         [JsonProperty("checkpoint")]
-        public CheckpointData checkpoint = new();
+        public Dictionary<string, DungeonCheckpointData> checkpoint = new();
+
+        public Dictionary<string, DungeonRecordData> dungeon_records = new();
+        public ActiveDungeonRunData active_run = new();
 
         [JsonProperty("dungeon_status")]
         public List<Dictionary<string, string>> dungeon_status = new();
 
         [JsonProperty("play_time")]
         public string play_time = "";
+
+        // -1은 숫자 필드가 없던 구형 JSON/에디터 미리보기의 1회 이행을 위한 값입니다.
+        public long play_time_minutes = -1;
+        public double play_time_remainder_seconds;
+        public string play_time_legacy_unparsed = "";
 
         [JsonProperty("clear_num_info")]
         public string clear_num_info = "";
@@ -174,19 +182,4 @@ namespace Dungeon.Core
         public int freeze_resist = 0;
     }
 
-    [Serializable]
-    public class CheckpointData
-    {
-        [JsonProperty("sceneName")]
-        public string sceneName = "";
-
-        [JsonProperty("mapIndex")]
-        public int mapIndex = -1;
-
-        [JsonProperty("resumeRequested")]
-        public bool resumeRequested = false;
-
-        [JsonProperty("broken_traps_snapshot")]
-        public int broken_traps_snapshot = 0;
-    }
 }

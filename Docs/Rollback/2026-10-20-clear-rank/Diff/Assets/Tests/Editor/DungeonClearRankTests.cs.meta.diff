@@ -1,0 +1,5 @@
+--- Before/Assets/Tests/Editor/DungeonClearRankTests.cs.meta
++++ After/Assets/Tests/Editor/DungeonClearRankTests.cs.meta
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: 8ac78267b602403cadd163b4984ea838

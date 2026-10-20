@@ -406,5 +406,15 @@
       "damage": 12,
       "knockback_distance": 0.3
     }
+  ],
+  "dungeons": [
+    {
+      "sceneName": "DUNGEON_001",
+      "number": 1,
+      "name": "버려진 채굴장",
+      "mapResourcePath": "Maps/DUNGEON_001",
+      "rank_reference_hit_count": 20,
+      "rank_reference_time_seconds": 120
+    }
   ]
 }

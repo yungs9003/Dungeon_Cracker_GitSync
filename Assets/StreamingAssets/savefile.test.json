@@ -1,12 +1,12 @@
 {
-  "save_version": 2,
+  "save_version": 5,
   "user_name": "Toluse",
-  "gold": 38350,
-  "broken_traps": 10,
+  "gold": 43700,
+  "broken_traps": 0,
   "clear_reward_claimed": false,
   "last_getting_gold": 0,
-  "clear_time_seconds": 3444.77368,
-  "hit_count": 228,
+  "clear_time_seconds": 0,
+  "hit_count": 0,
   "main_stats": {
     "max_HP": 150,
     "physical_resist": 20,
@@ -34,10 +34,7 @@
   "inventory": {
     "item": [
       {
-        "000": 12
-      },
-      {
-        "002": 8
+        "002": 7
       },
       {
         "003": 2
@@ -47,6 +44,9 @@
       },
       {
         "005": 28
+      },
+      {
+        "000": 12
       }
     ],
     "equipment": [
@@ -174,13 +174,37 @@
     ]
   },
   "checkpoint": {
-    "sceneName": "DUNGEON_001",
-    "mapIndex": 1,
-    "resumeRequested": true,
-    "broken_traps_snapshot": 4
+    "DUNGEON_001": {
+      "mapIndex": 5,
+      "totalMaps": 5,
+      "resumeRequested": false,
+      "completed": true,
+      "broken_traps_snapshot": 5,
+      "run_id": "c316c65109004f6ea6f059198ab95d5b",
+      "run_time_seconds": 113,
+      "run_hit_count": 14,
+      "run_broken_traps": 21
+    }
+  },
+  "dungeon_records": {
+    "DUNGEON_001": {
+      "clear_count": 5,
+      "best_clear_time_seconds": 0,
+      "best_hit_count": 14,
+      "max_broken_traps": 28,
+      "last_committed_clear_run_id": "c316c65109004f6ea6f059198ab95d5b"
+    }
+  },
+  "active_run": {
+    "sceneName": "",
+    "run_id": "",
+    "pending_clear": false
   },
   "dungeon_status": [],
-  "play_time": "135:26",
+  "play_time": "136:02",
+  "play_time_minutes": 8162,
+  "play_time_remainder_seconds": 1.2128137999998216,
+  "play_time_legacy_unparsed": "",
   "clear_num_info": "28:73:96",
   "adventure_count": 128,
   "achievement": "87:300",

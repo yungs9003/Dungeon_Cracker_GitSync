@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Dungeon.Core;
 using Dungeon.Manager;
 
@@ -14,6 +15,15 @@ namespace Dungeon.UI
         [SerializeField] private TMP_Text totalGoldText;
         [SerializeField] private TMP_Text clearTimeText;
         [SerializeField] private TMP_Text hitCountText;
+
+        [Header("Clear Rank")]
+        [SerializeField] private Image clearRankImage;
+        [SerializeField] private Image dungeonCompletedImage;
+        [SerializeField] private Sprite sRankSprite;
+        [SerializeField] private Sprite aRankSprite;
+        [SerializeField] private Sprite bRankSprite;
+        [SerializeField] private Sprite cRankSprite;
+        public DungeonClearRank DisplayedRank { get; private set; }
 
         [Header("Format")]
         [SerializeField] private string brokenTrapsFormat = "{0}개";
@@ -46,7 +56,9 @@ namespace Dungeon.UI
             }
 
             int brokenTraps = saveFile.GetBrokenTraps();
-            int gettingGold = saveFile.ClaimClearRewardGold();
+            // 씬 진입 처리의 저장 실패는 여기서 재시도하되 같은 run_id는 다시 집계하지 않습니다.
+            saveFile.TryFinalizeDungeonClear();
+            int gettingGold = DungeonProgressService.HasCompletedActiveRun(saveFile.Data) ? saveFile.ClaimClearRewardGold() : 0;
             int totalGold = saveFile.Data.gold;
 
             float clearSeconds = saveFile.GetClearTimeSeconds();
@@ -66,18 +78,41 @@ namespace Dungeon.UI
 
             if (hitCountText != null)
                 hitCountText.text = string.Format(hitCountFormat, hitCount);
+
+            RefreshRank(saveFile.Data);
         }
 
-        private string FormatTime(float seconds)
+        private string FormatTime(float seconds) => DungeonTime.Format(seconds);
+
+        private void RefreshRank(StatusSaveData data)
         {
-            seconds = Mathf.Max(0f, seconds);
+            DungeonClearRank rank = DungeonClearRank.None;
+            if (DungeonProgressService.HasCompletedActiveRun(data) &&
+                GameDatabase.TryFindDungeonBySceneName(data.active_run.sceneName, out var dungeon) &&
+                DungeonClearRankCalculator.TryCalculate(dungeon, data.hit_count, data.clear_time_seconds, out var result))
+                rank = result.Rank;
+            ShowRank(rank);
+        }
 
-            int totalSeconds = Mathf.FloorToInt(seconds);
-            int minutes = totalSeconds / 60;
-            int secs = totalSeconds % 60;
-            int centiseconds = Mathf.FloorToInt((seconds - totalSeconds) * 100f);
-
-            return $"{minutes:00}:{secs:00}.{centiseconds:00}";
+        private void ShowRank(DungeonClearRank rank)
+        {
+            DisplayedRank = rank;
+            if (clearRankImage == null)
+            {
+                if (dungeonCompletedImage != null) dungeonCompletedImage.enabled = false;
+                return;
+            }
+            clearRankImage.sprite = rank switch
+            {
+                DungeonClearRank.S => sRankSprite,
+                DungeonClearRank.A => aRankSprite,
+                DungeonClearRank.B => bRankSprite,
+                DungeonClearRank.C => cRankSprite,
+                _ => null
+            };
+            clearRankImage.enabled = clearRankImage.sprite != null;
+            if (dungeonCompletedImage != null)
+                dungeonCompletedImage.enabled = clearRankImage.enabled;
         }
 
         private void SetFallbackTexts()
@@ -92,10 +127,11 @@ namespace Dungeon.UI
                 totalGoldText.text = string.Format(totalGoldFormat, 0);
 
             if (clearTimeText != null)
-                clearTimeText.text = string.Format(clearTimeFormat, "00:00.00");
+                clearTimeText.text = string.Format(clearTimeFormat, "00:00");
 
             if (hitCountText != null)
                 hitCountText.text = string.Format(hitCountFormat, 0);
+            ShowRank(DungeonClearRank.None);
         }
 
         public void LeaveClearScene()

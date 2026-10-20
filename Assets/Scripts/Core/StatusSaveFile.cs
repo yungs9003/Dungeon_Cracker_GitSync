@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Dungeon.Core
 {
@@ -36,6 +37,12 @@ namespace Dungeon.Core
         private float lastSaveSummaryLogTime = -9999f;
         private IStatusSaveStorage storage;
         private bool purchaseInProgress;
+        private PlayTimeSession playTimeSession;
+        private bool applicationPaused;
+        private bool dungeonSceneTransition;
+        private string timingSceneName;
+        private string savedRunId;
+        private int savedRunSeconds;
 
         public StatusSaveData Data => data;
 
@@ -47,6 +54,13 @@ namespace Dungeon.Core
         private static void ResetStaticStateOnPlayStart()
         {
             Instance = null;
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void Bootstrap()
+        {
+            if (Instance == null)
+                new GameObject("StatusSaveFileManager").AddComponent<StatusSaveFile>();
         }
 
         private void Awake()
@@ -82,6 +96,7 @@ namespace Dungeon.Core
             }
 
             Load();
+            SceneManager.activeSceneChanged += OnActiveSceneChanged;
         }
 
         private void OnEnable()
@@ -93,6 +108,58 @@ namespace Dungeon.Core
             Instance = this;
             if (string.IsNullOrWhiteSpace(serializedDataJson))
                 Load();
+            else
+                StartPlayTimeSession();
+            SceneManager.activeSceneChanged -= OnActiveSceneChanged;
+            SceneManager.activeSceneChanged += OnActiveSceneChanged;
+        }
+
+        private string TimingScene => applicationPaused || dungeonSceneTransition ? "" : timingSceneName;
+
+        private void StartPlayTimeSession()
+        {
+            if (Application.isPlaying && Instance == this)
+            {
+                timingSceneName = SceneManager.GetActiveScene().name;
+                playTimeSession = new PlayTimeSession(data, Time.realtimeSinceStartupAsDouble, Time.timeAsDouble, TimingScene);
+            }
+        }
+
+        /// <summary>현재 프레임까지 메모리 시간만 확정합니다. 파일 쓰기는 Save에 합칩니다.</summary>
+        public void CapturePlayTime()
+        {
+            playTimeSession?.Sample(data, Time.realtimeSinceStartupAsDouble, Time.timeAsDouble, TimingScene);
+        }
+
+        /// <summary>체크포인트 확정 후 지연 로드 프레임을 던전 플레이 시간에 넣지 않습니다.</summary>
+        public void PauseDungeonTimeForSceneChange()
+        {
+            CapturePlayTime();
+            dungeonSceneTransition = true;
+            playTimeSession?.BindRun(data, TimingScene);
+        }
+
+        private void Update()
+        {
+            if (Instance != this || isQuitting) return;
+            CapturePlayTime();
+            if (playTimeSession?.IsSaveDue(Time.realtimeSinceStartupAsDouble) == true)
+                Save();
+        }
+
+        private void OnActiveSceneChanged(Scene previous, Scene current)
+        {
+            if (Instance != this || isQuitting) return;
+            string previousName = timingSceneName;
+            CapturePlayTime();
+            timingSceneName = current.name;
+            dungeonSceneTransition = false;
+            playTimeSession?.BindRun(data, TimingScene);
+            // 체크포인트/클리어 전환은 이미 같은 프레임의 트랜잭션에 포함됐습니다.
+            // 메뉴로 바로 나가는 경로는 아직 저장하지 않은 던전 시간만 보존합니다.
+            if (previousName?.StartsWith("DUNGEON_", StringComparison.OrdinalIgnoreCase) == true &&
+                data.active_run?.run_id == savedRunId && data.clear_time_seconds != savedRunSeconds)
+                Save();
         }
 
         public void OnBeforeSerialize()
@@ -135,6 +202,11 @@ namespace Dungeon.Core
                     throw new InvalidOperationException(deserializeError);
 
                 EnsureNotNull();
+                StartPlayTimeSession();
+
+                if (DungeonProgressMigration.IsLegacyJson(json) &&
+                    !activeStorage.TryWrite(StatusSaveDefaults.Serialize(data), StatusSaveDefaults.IsValidJson))
+                    Debug.LogWarning("[StatusSaveFile] 저장 버전 이행 쓰기 실패. 기존 파일/백업을 유지합니다: " + activeStorage.LastError);
 
                 if (GameDatabase.Instance != null)
                 {
@@ -159,14 +231,18 @@ namespace Dungeon.Core
 
                 data = StatusSaveDefaults.Create();
                 EnsureNotNull();
+                StartPlayTimeSession();
                 NotifySaveDataChangedSafely("LoadFallback");
             }
         }
 
-        public bool Save()
+        public bool Save() => SaveCore(captureTime: true);
+
+        private bool SaveCore(bool captureTime)
         {
             try
             {
+                if (captureTime) CapturePlayTime();
                 EnsureNotNull();
 
                 if (GameDatabase.Instance != null)
@@ -174,16 +250,23 @@ namespace Dungeon.Core
                     EquipmentStatCalculator.Recalculate(data, GameDatabase.Instance);
                 }
 
+                DungeonProgressService.CaptureActiveRun(data);
                 string json = StatusSaveDefaults.Serialize(data);
                 IStatusSaveStorage activeStorage = EnsureStorage();
 
                 if (!activeStorage.TryWrite(json, StatusSaveDefaults.IsValidJson))
                 {
+                    playTimeSession?.SaveFailed(Time.realtimeSinceStartupAsDouble);
                     Debug.LogError(
                         $"[StatusSaveFile] Save failed. Path={activeStorage.ActivePath}, " +
                         $"Error={activeStorage.LastError}");
                     return false;
                 }
+
+                playTimeSession?.Saved();
+                savedRunId = data.active_run?.run_id;
+                savedRunSeconds = data.clear_time_seconds;
+                playTimeSession?.BindRun(data, TimingScene);
 
                 if (ShouldLogSaveSummary())
                     Debug.Log(BuildSaveSummary("Saved"));
@@ -197,6 +280,7 @@ namespace Dungeon.Core
             }
             catch (Exception e)
             {
+                playTimeSession?.SaveFailed(Time.realtimeSinceStartupAsDouble);
                 Debug.LogError($"[StatusSaveFile] Save failed: {e}");
                 return false;
             }
@@ -234,6 +318,27 @@ namespace Dungeon.Core
             StatusSaveDefaults.Normalize(data);
         }
 
+        /// <summary>기록/재개 상태와 런 식별자를 함께 저장합니다. 쓰기 실패 시 메모리도 이전 값으로 되돌립니다.</summary>
+        public bool TryUpdateDungeonProgress(Func<StatusSaveData, bool> change)
+        {
+            CapturePlayTime();
+            EnsureNotNull();
+            var previous = data;
+            if (!StatusSaveDefaults.TryDeserialize(StatusSaveDefaults.Serialize(data), out var candidate, out _)) return false;
+            try
+            {
+                if (!change(candidate)) return false;
+                data = candidate;
+                if (SaveCore(captureTime: false)) return true;
+            }
+            catch (Exception error) { Debug.LogError("[StatusSaveFile] Dungeon update failed: " + error); }
+            data = previous;
+            playTimeSession?.BindRun(data, TimingScene);
+            return false;
+        }
+
+        public bool TryFinalizeDungeonClear() => TryUpdateDungeonProgress(DungeonProgressService.CommitClear);
+
         private bool ShouldLogSaveSummary()
         {
             if (!logSavePath || !logSaveSummary)
@@ -269,7 +374,7 @@ namespace Dungeon.Core
             sb.Append($"gold={data.gold}, ");
             sb.Append($"maxHP={data.main_stats.max_HP}, ");
             sb.Append($"broken_traps={data.broken_traps}, ");
-            sb.Append($"clear_time={data.clear_time_seconds:F2}, ");
+            sb.Append($"clear_time={data.clear_time_seconds}, ");
             sb.Append($"hit_count={data.hit_count}");
 
             if (logInventorySummary)
@@ -576,7 +681,7 @@ namespace Dungeon.Core
             if (deltaSeconds <= 0f)
                 return;
 
-            data.clear_time_seconds = Mathf.Max(0f, data.clear_time_seconds + deltaSeconds);
+            data.clear_time_seconds = DungeonTime.WholeSeconds((double)data.clear_time_seconds + deltaSeconds);
 
             if (saveImmediately)
                 Save();
@@ -598,25 +703,14 @@ namespace Dungeon.Core
 
         public void ResetRunResultStats()
         {
-            EnsureNotNull();
-
-            data.broken_traps = 0;
-            data.clear_reward_claimed = false;
-            data.last_getting_gold = 0;
-            data.clear_time_seconds = 0f;
-            data.hit_count = 0;
-
-            if (data.checkpoint != null)
+            TryUpdateDungeonProgress(current =>
             {
-                data.checkpoint.sceneName = "";
-                data.checkpoint.mapIndex = -1;
-                data.checkpoint.resumeRequested = false;
-                data.checkpoint.broken_traps_snapshot = 0;
-            }
-
-            Save();
-
-            Debug.Log("[StatusSaveFile] Run result stats reset.");
+                DungeonProgressService.CaptureActiveRun(current);
+                current.broken_traps = 0; current.clear_reward_claimed = false; current.last_getting_gold = 0;
+                current.clear_time_seconds = 0; current.hit_count = 0;
+                current.active_run = new ActiveDungeonRunData();
+                return true;
+            });
         }
 
         /// <summary>
@@ -760,14 +854,18 @@ namespace Dungeon.Core
 
         private void OnApplicationQuit()
         {
+            if (Instance != this || isQuitting) return;
             isQuitting = true;
             Save();
         }
 
         private void OnApplicationPause(bool pauseStatus)
         {
-            if (pauseStatus)
-                Save();
+            if (Instance != this || isQuitting || applicationPaused == pauseStatus) return;
+            CapturePlayTime();
+            applicationPaused = pauseStatus;
+            playTimeSession?.BindRun(data, TimingScene);
+            if (pauseStatus) Save();
         }
 
         private void OnDestroy()
@@ -775,6 +873,7 @@ namespace Dungeon.Core
             if (Instance != this)
                 return;
 
+            SceneManager.activeSceneChanged -= OnActiveSceneChanged;
             Instance = null;
 
             if (!isQuitting && logSavePath)

@@ -1,0 +1,29 @@
+--- Before/Assets/Scripts/Core/StatusSaveDefaults.cs
++++ After/Assets/Scripts/Core/StatusSaveDefaults.cs
+@@ -11,7 +11,7 @@
+     /// </summary>
+     public static class StatusSaveDefaults
+     {
+-        public const int CurrentSaveVersion = 4;
++        public const int CurrentSaveVersion = 5;
+ 
+         public static StatusSaveData Create()
+         {
+@@ -23,7 +23,7 @@
+                 broken_traps = 0,
+                 clear_reward_claimed = false,
+                 last_getting_gold = 0,
+-                clear_time_seconds = 0f,
++                clear_time_seconds = 0,
+                 hit_count = 0,
+                 main_stats = CreateMainStats(),
+                 sub_stats = CreateSubStats(),
+@@ -157,7 +157,7 @@
+             data.gold = Math.Max(0, data.gold);
+             data.broken_traps = Math.Max(0, data.broken_traps);
+             data.last_getting_gold = Math.Max(0, data.last_getting_gold);
+-            data.clear_time_seconds = Math.Max(0f, data.clear_time_seconds);
++            data.clear_time_seconds = Math.Max(0, data.clear_time_seconds);
+             data.hit_count = Math.Max(0, data.hit_count);
+             data.adventure_count = Math.Max(0, data.adventure_count);
+ 

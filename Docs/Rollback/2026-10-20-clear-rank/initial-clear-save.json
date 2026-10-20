@@ -1,0 +1,125 @@
+{
+  "save_version": 5,
+  "user_name": "",
+  "gold": 1650,
+  "broken_traps": 23,
+  "clear_reward_claimed": true,
+  "last_getting_gold": 1650,
+  "clear_time_seconds": 127,
+  "hit_count": 24,
+  "main_stats": {
+    "max_HP": 100,
+    "physical_resist": 0,
+    "magical_resist": 0
+  },
+  "sub_stats": {
+    "speed": 10,
+    "poison_resist": 0,
+    "electric_resist": 0,
+    "amber_resist": 0,
+    "freeze_resist": 0
+  },
+  "base_main_stats": {
+    "max_HP": 100,
+    "physical_resist": 0,
+    "magical_resist": 0
+  },
+  "base_sub_stats": {
+    "speed": 10,
+    "poison_resist": 0,
+    "electric_resist": 0,
+    "amber_resist": 0,
+    "freeze_resist": 0
+  },
+  "inventory": {
+    "item": [],
+    "equipment": [],
+    "module": []
+  },
+  "equips": {
+    "item": [
+      {
+        "slot1": "none"
+      },
+      {
+        "slot2": "none"
+      },
+      {
+        "slot3": "none"
+      },
+      {
+        "slot4": "none"
+      },
+      {
+        "slot5": "none"
+      }
+    ],
+    "equip": [
+      {
+        "head": "none"
+      },
+      {
+        "body": "none"
+      },
+      {
+        "legs": "none"
+      }
+    ],
+    "module": [
+      {
+        "slot1": "none"
+      },
+      {
+        "slot2": "none"
+      },
+      {
+        "slot3": "none"
+      },
+      {
+        "slot4": "none"
+      },
+      {
+        "slot5": "none"
+      },
+      {
+        "slot6": "none"
+      }
+    ]
+  },
+  "checkpoint": {
+    "DUNGEON_001": {
+      "mapIndex": 5,
+      "totalMaps": 5,
+      "resumeRequested": false,
+      "completed": true,
+      "broken_traps_snapshot": 0,
+      "run_id": "d713157d747c4f4daad5cac0f9069c48",
+      "run_time_seconds": 127,
+      "run_hit_count": 24,
+      "run_broken_traps": 23
+    }
+  },
+  "dungeon_records": {
+    "DUNGEON_001": {
+      "clear_count": 1,
+      "best_clear_time_seconds": 127,
+      "best_hit_count": 24,
+      "max_broken_traps": 23,
+      "last_committed_clear_run_id": "d713157d747c4f4daad5cac0f9069c48"
+    }
+  },
+  "active_run": {
+    "sceneName": "DUNGEON_001",
+    "run_id": "d713157d747c4f4daad5cac0f9069c48",
+    "pending_clear": false
+  },
+  "dungeon_status": [],
+  "play_time": "0:00",
+  "play_time_minutes": 0,
+  "play_time_remainder_seconds": 0.051517200000000152,
+  "play_time_legacy_unparsed": "",
+  "clear_num_info": "",
+  "adventure_count": 0,
+  "achievement": "",
+  "player_rank": ""
+}

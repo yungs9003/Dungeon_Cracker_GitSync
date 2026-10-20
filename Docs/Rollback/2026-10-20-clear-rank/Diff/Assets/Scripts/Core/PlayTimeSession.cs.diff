@@ -1,0 +1,46 @@
+--- Before/Assets/Scripts/Core/PlayTimeSession.cs
++++ After/Assets/Scripts/Core/PlayTimeSession.cs
+@@ -6,11 +6,11 @@
+     /// <summary>시계만 주입받는 메모리 타이머. 파일 쓰기와 Unity 생명주기는 StatusSaveFile이 담당합니다.</summary>
+     public sealed class PlayTimeSession
+     {
+-        private double lastRealtime, lastScaledTime, remainder, runSeconds, retryAfter;
++        private double lastRealtime, lastScaledTime, remainder, runSeconds, runCompensation, retryAfter;
+         private long minutes, savedMinutes;
+         private string runId;
+         private bool countingDungeon;
+-        private float observedRunSeconds;
++        private int observedRunSeconds;
+ 
+         public PlayTimeSession(StatusSaveData data, double realtime, double scaledTime, string sceneName)
+         {
+@@ -43,9 +43,16 @@
+                 !checkpoint.completed && !data.active_run.pending_clear)
+             {
+                 if (data.clear_time_seconds != observedRunSeconds)
++                {
+                     runSeconds = data.clear_time_seconds;
+-                runSeconds = Math.Min(float.MaxValue, runSeconds + scaledDelta);
+-                data.clear_time_seconds = (float)runSeconds;
++                    runCompensation = 0;
++                }
++                // 작은 프레임 시간을 유지하고 완성된 초만 공개/저장합니다.
++                double adjusted = scaledDelta - runCompensation;
++                double updated = runSeconds + adjusted;
++                runCompensation = (updated - runSeconds) - adjusted;
++                runSeconds = Math.Min(int.MaxValue, updated);
++                data.clear_time_seconds = DungeonTime.WholeSeconds(runSeconds);
+                 observedRunSeconds = data.clear_time_seconds;
+             }
+             BindRun(data, sceneName);
+@@ -56,7 +63,10 @@
+         {
+             string nextRun = data.active_run?.run_id;
+             if (runId != nextRun || data.clear_time_seconds != observedRunSeconds)
++            {
+                 runSeconds = data.clear_time_seconds;
++                runCompensation = 0;
++            }
+             runId = nextRun;
+             observedRunSeconds = data.clear_time_seconds;
+             countingDungeon = !string.IsNullOrEmpty(sceneName) &&
