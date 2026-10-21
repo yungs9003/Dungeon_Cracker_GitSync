@@ -81,15 +81,21 @@ namespace Dungeon.Core
         public static bool TryFindDungeonBySceneName(string sceneName, out DungeonDefinition definition)
         {
             if (Instance != null) return Instance.TryGetDungeonBySceneName(sceneName, out definition);
-            // 월드맵 씬을 단독 실행해도 공용 DB의 던전 이름/번호를 사용합니다.
             definition = null;
-            var json = Resources.Load<TextAsset>("Data/db");
-            if (json == null) return false;
-            var root = JsonConvert.DeserializeObject<DbRoot>(json.text);
-            foreach (var entry in root?.dungeons ?? Array.Empty<DungeonDefinition>())
+            foreach (var entry in GetDungeonDefinitions())
                 if (entry != null && DungeonProgressService.SceneKey(entry.sceneName) == DungeonProgressService.SceneKey(sceneName))
                 { definition = entry; return true; }
             return false;
+        }
+
+        /// <summary>길드/모험 기록도 같은 DB 목록을 사용하며 씬 단독 실행을 지원합니다.</summary>
+        public static IReadOnlyList<DungeonDefinition> GetDungeonDefinitions()
+        {
+            if (Instance != null) return Instance.Dungeons;
+            var json = Resources.Load<TextAsset>("Data/db");
+            if (json == null) return Array.Empty<DungeonDefinition>();
+            var root = JsonConvert.DeserializeObject<DbRoot>(json.text);
+            return root?.dungeons ?? Array.Empty<DungeonDefinition>();
         }
 
         private void Awake()
@@ -626,6 +632,17 @@ namespace Dungeon.Core
         public int number;
         public int rank_reference_hit_count;
         public int rank_reference_time_seconds;
+        // -1은 미집계. 0개인 던전은 클리어 후 해체 과제를 충족합니다.
+        public int destructible_trap_count = -1;
+        public DungeonMapTrapCount[] map_trap_counts = Array.Empty<DungeonMapTrapCount>();
+        public int achievement_reward_gold = 600;
+    }
+
+    [Serializable]
+    public sealed class DungeonMapTrapCount
+    {
+        public string map;
+        public int destructible_trap_count;
     }
 
     [Serializable]

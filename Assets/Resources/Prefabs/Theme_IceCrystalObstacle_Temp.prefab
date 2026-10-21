@@ -204,7 +204,7 @@ MonoBehaviour:
   copyDestroyedObjectRotation: 1
   disableTrapsBeforeDestroy: 1
   destroyNextFrame: 1
-  countAsBrokenTrap: 1
+  countAsBrokenTrap: 0
 --- !u!114 &1786509495888488896
 MonoBehaviour:
   m_ObjectHideFlags: 0

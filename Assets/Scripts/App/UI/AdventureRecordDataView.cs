@@ -89,8 +89,9 @@ namespace Dungeon.UI
             if (playTimeText != null)
                 playTimeText.text = PlayTimeData.Format(data.play_time_minutes).Replace(":", " : ");
 
+            var summary = DungeonAchievementService.Summarize(data, GameDatabase.GetDungeonDefinitions());
             if (clearedDungeonText != null)
-                clearedDungeonText.text = FormatClearedDungeon(data.clear_num_info);
+                clearedDungeonText.text = FormatClearedDungeon(summary.ClearedDisplay);
 
             if (adventureCountText != null)
             {
@@ -99,9 +100,9 @@ namespace Dungeon.UI
             }
 
             if (guildAchievementText != null)
-                guildAchievementText.text = FormatAchievement(data.achievement);
+                guildAchievementText.text = FormatAchievement(summary.AchievementDisplay);
 
-            ApplyRank(data.player_rank);
+            ApplyRank(summary.AdventureRank);
         }
 
         private void SubscribeToSaveFile()

@@ -16,7 +16,10 @@ namespace Dungeon.Core
         }
 
         public static TextAsset[] Load(string sceneName, string root = "Maps") =>
-            Resources.LoadAll<TextAsset>(ResourcePath(sceneName, root))
+            LoadPath(ResourcePath(sceneName, root));
+
+        public static TextAsset[] LoadPath(string resourcePath) =>
+            Resources.LoadAll<TextAsset>(resourcePath)
                 .Where(asset => Regex.IsMatch(asset.name, @"^map_\d+$", RegexOptions.IgnoreCase))
                 .OrderBy(asset => long.TryParse(asset.name.Substring(4), out long index) ? index : long.MaxValue)
                 .ThenBy(asset => asset.name, StringComparer.Ordinal).ToArray();

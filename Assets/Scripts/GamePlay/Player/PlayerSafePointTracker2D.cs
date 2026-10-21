@@ -1,6 +1,7 @@
 using UnityEngine;
 using Dungeon.Core;
 using Dungeon.Traps;
+using Dungeon.Map;
 
 namespace Dungeon.Player
 {
@@ -33,14 +34,17 @@ namespace Dungeon.Player
             if (PlayerEffectLock2D.IsProtectedTarget(this) || CliffTrap2D.IsPlayerFalling(GetComponent<Rigidbody2D>())) return;
             if (respawn == null || cellSize <= 0f) return;
 
-            Vector2Int cell = WorldToCell(transform.position);
+            var area = MapArea2D.ForBody(GetComponent<Rigidbody2D>());
+            if (area != null && !area.ContainsWorld(transform.position)) return;
+            Vector2Int cell = area != null ? area.WorldToCell(transform.position) : WorldToCell(transform.position);
 
             if (updateOnlyWhenCellChanges && cell == lastCheckedCell)
                 return;
 
             lastCheckedCell = cell;
 
-            Vector2 safePoint = CellToWorld(cell) + safePointOffset;
+            Vector2 safePoint = (area != null ? area.CellCenter(cell) : CellToWorld(cell)) + safePointOffset;
+            if (area != null && !area.ContainsWorld(safePoint)) return;
 
             // 현재 셀이 위험 타일이면 lastSafePoint 갱신 금지
             if (unsafeMask.value != 0 &&

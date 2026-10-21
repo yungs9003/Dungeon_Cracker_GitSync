@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Dungeon.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,13 +24,39 @@ namespace Dungeon.UI.Guild
         private IGuildAchievementProgressSource progress;
         private GuildDungeonDefinition selectedDungeon;
         private int commentIndex;
-        public GuildCatalog Catalog => catalog;
+        private GuildCatalog runtimeCatalog;
+        private StatusSaveFile subscribedSave;
+        public GuildCatalog Catalog => runtimeCatalog != null ? runtimeCatalog : catalog;
         public string SelectedDungeonId => selectedDungeon?.id;
         public int CommentIndex => commentIndex;
 
-        private void OnEnable() { if (commentButton != null) commentButton.onClick.AddListener(NextComment); }
-        private void OnDisable() { if (commentButton != null) commentButton.onClick.RemoveListener(NextComment); }
+        private void OnEnable()
+        {
+            if (commentButton != null) commentButton.onClick.AddListener(NextComment);
+            Subscribe(); RefreshProgress();
+        }
+        private void OnDisable()
+        {
+            if (commentButton != null) commentButton.onClick.RemoveListener(NextComment);
+            if (subscribedSave != null) subscribedSave.OnSaveDataChanged -= OnProgressChanged;
+            subscribedSave = null;
+        }
         private void Start() => Initialize();
+
+        private void LateUpdate()
+        {
+            if (subscribedSave == StatusSaveFile.Instance) return;
+            Subscribe(); RefreshProgress();
+        }
+        private void Subscribe()
+        {
+            if (subscribedSave == StatusSaveFile.Instance) return;
+            if (subscribedSave != null) subscribedSave.OnSaveDataChanged -= OnProgressChanged;
+            subscribedSave = StatusSaveFile.Instance;
+            if (subscribedSave != null) subscribedSave.OnSaveDataChanged += OnProgressChanged;
+        }
+        private void OnProgressChanged(StatusSaveData _) => RefreshProgress();
+        private void OnDestroy() { if (runtimeCatalog != null) Destroy(runtimeCatalog); }
 
         public void Configure(GuildCatalog data, GuildDungeonCaseUI caseTemplate, GuildAchievementRowUI rowTemplate,
             RectTransform casesRoot, RectTransform rowsRoot, ScrollRect rowsScroll, Button comment,
@@ -44,9 +71,15 @@ namespace Dungeon.UI.Guild
         public void Initialize()
         {
             if (catalog == null) return;
-            progress ??= new GuildPreviewProgressSource(catalog);
+            if (Application.isPlaying)
+            {
+                if (runtimeCatalog != null) Destroy(runtimeCatalog);
+                runtimeCatalog = GuildCatalog.FromDatabase(catalog);
+            }
+            progress ??= Application.isPlaying ? new GuildSavedProgressSource() : new GuildPreviewProgressSource(Catalog);
+            Subscribe();
             Clear(caseContent); cases.Clear();
-            foreach (var definition in catalog.dungeons)
+            foreach (var definition in Catalog.dungeons)
             {
                 if (definition == null) continue;
                 var view = Instantiate(casePrefab, caseContent);
@@ -54,8 +87,8 @@ namespace Dungeon.UI.Guild
                 view.Bind(this, definition); cases.Add(view);
             }
             ShowComment();
-            var initial = catalog.FindDungeon(catalog.initialDungeonId);
-            if (initial == null && cases.Count > 0) initial = catalog.FindDungeon(cases[0].DungeonId);
+            var initial = Catalog.FindDungeon(Catalog.initialDungeonId);
+            if (initial == null && cases.Count > 0) initial = Catalog.FindDungeon(cases[0].DungeonId);
             if (initial != null) SelectDungeon(initial.id);
         }
 
@@ -67,22 +100,22 @@ namespace Dungeon.UI.Guild
 
         public void NextComment()
         {
-            if (catalog == null || catalog.comments.Length == 0) return;
-            commentIndex = (commentIndex + 1) % catalog.comments.Length;
+            if (Catalog == null || Catalog.comments.Length == 0) return;
+            commentIndex = (commentIndex + 1) % Catalog.comments.Length;
             ShowComment();
         }
 
         private void ShowComment()
         {
             if (commentLabel == null) return;
-            if (catalog.comments.Length == 0) { commentLabel.text = string.Empty; return; }
-            commentIndex = Mathf.Clamp(commentIndex, 0, catalog.comments.Length - 1);
-            commentLabel.text = catalog.comments[commentIndex];
+            if (Catalog.comments.Length == 0) { commentLabel.text = string.Empty; return; }
+            commentIndex = Mathf.Clamp(commentIndex, 0, Catalog.comments.Length - 1);
+            commentLabel.text = Catalog.comments[commentIndex];
         }
 
         public void SelectDungeon(string dungeonId)
         {
-            var definition = catalog.FindDungeon(dungeonId);
+            var definition = Catalog.FindDungeon(dungeonId);
             if (definition == null) return;
             selectedDungeon = definition;
             foreach (var view in cases) view.SetSelected(view.DungeonId == dungeonId);
@@ -106,7 +139,7 @@ namespace Dungeon.UI.Guild
         public void RefreshProgress()
         {
             if (progress == null) return;
-            foreach (var view in cases) view.SetCompleted(IsDungeonCompleted(catalog.FindDungeon(view.DungeonId)));
+            foreach (var view in cases) view.SetCompleted(IsDungeonCompleted(Catalog.FindDungeon(view.DungeonId)));
             if (selectedDungeon == null) return;
             foreach (var row in rows) row.SetState(progress.GetState(selectedDungeon.id, row.AchievementId));
         }
@@ -128,7 +161,7 @@ namespace Dungeon.UI.Guild
         {
             if (row == null || !rows.Contains(row) || selectedDungeon == null || progress == null) return;
             if (progress.GetState(selectedDungeon.id, row.AchievementId) != GuildAchievementState.Verifiable) return;
-            // 향후 실제 저장 처리가 성공한 경우에만 인증 표시로 전환합니다.
+            // 조건 재확인·보상·수령 기록의 저장 성공 후 인증 표시로 전환합니다.
             if (progress.TryClaim(selectedDungeon.id, row.AchievementId)) RefreshProgress();
         }
 

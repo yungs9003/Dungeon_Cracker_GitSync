@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Dungeon.Core;
 using Dungeon.Traps;
+using Dungeon.Map;
 
 namespace Dungeon.Player
 {
@@ -77,7 +78,9 @@ namespace Dungeon.Player
                 ? iceMovement.CalculateVelocity(input, speed.CurrentSpeed, dt, kbDelta) : input * speed.CurrentSpeed;
             Vector2 moveDelta = moveVelocity * dt;
 
-            rb.MovePosition(rb.position + moveDelta + kbDelta);
+            Vector2 requested = rb.position + moveDelta + kbDelta;
+            var area = MapArea2D.ForBody(rb);
+            rb.MovePosition(area != null ? area.LimitMovement(rb, rb.position, requested) : requested);
         }
 
         public void SetControl(bool enabled, bool stopImmediately = false)

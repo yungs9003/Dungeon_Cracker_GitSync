@@ -1,5 +1,6 @@
 using Dungeon.Core;
 using Dungeon.Traps;
+using Dungeon.Map;
 using UnityEngine;
 
 namespace Dungeon.Player
@@ -77,7 +78,7 @@ namespace Dungeon.Player
             if (distance < 0.000001f) return true;
 
             ContactFilter2D filter = new ContactFilter2D();
-            filter.SetLayerMask(obstacleMask);
+            filter.SetLayerMask(obstacleMask.value | LayerMask.GetMask(MapArea2D.BoundaryLayerName));
             filter.useTriggers = false;
             int count = Physics2D.BoxCast(from + footprintOffset, footprintSize, 0f,
                 delta / distance, filter, castResults, distance + WallSkin);
@@ -96,6 +97,8 @@ namespace Dungeon.Player
                 allowed = Mathf.Min(allowed, Mathf.Max(0f, castResults[i].distance - WallSkin));
             }
             limited = from + delta.normalized * allowed;
+            var area = MapArea2D.ForBody(body);
+            if (area != null) limited = area.LimitMovement(body, from, limited, false);
             return true;
         }
     }

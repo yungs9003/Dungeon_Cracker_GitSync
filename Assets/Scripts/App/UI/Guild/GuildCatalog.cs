@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Dungeon.Core;
 using UnityEngine;
 
 namespace Dungeon.UI.Guild
@@ -37,6 +40,41 @@ namespace Dungeon.UI.Guild
             foreach (var dungeon in dungeons)
                 if (dungeon != null && string.Equals(dungeon.id, id, StringComparison.Ordinal)) return dungeon;
             return null;
+        }
+
+        /// <summary>시연용 에셋을 수정하지 않고 실제 DB의 던전/기준값으로 런타임 목록을 만듭니다.</summary>
+        public static GuildCatalog FromDatabase(GuildCatalog artwork)
+        {
+            var result = CreateInstance<GuildCatalog>();
+            result.comments = artwork != null ? artwork.comments : Array.Empty<string>();
+            result.initialDungeonId = artwork != null ? artwork.initialDungeonId : "";
+            var dungeons = new List<GuildDungeonDefinition>();
+            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var dungeon in GameDatabase.GetDungeonDefinitions().Where(d => d != null).OrderBy(d => d.number))
+            {
+                string scene = DungeonProgressService.SceneKey(dungeon.sceneName);
+                if (string.IsNullOrWhiteSpace(scene) || !seen.Add(scene)) continue;
+                var achievements = new List<GuildAchievementDefinition>();
+                foreach (DungeonAchievementKind kind in Enum.GetValues(typeof(DungeonAchievementKind)))
+                    achievements.Add(new GuildAchievementDefinition
+                    {
+                        id = DungeonAchievementService.Id(kind), rewardLabel = $"{dungeon.achievement_reward_gold}G",
+                        condition = kind switch
+                        {
+                            DungeonAchievementKind.Hits => $"피격 {dungeon.rank_reference_hit_count}회 이하로 클리어",
+                            DungeonAchievementKind.Time => $"{DungeonTime.Format(dungeon.rank_reference_time_seconds)} 이내에 클리어",
+                            _ => dungeon.destructible_trap_count < 0 ? "파괴 가능 함정 집계 필요" :
+                                $"함정 60% 이상 해체 ({DungeonAchievementService.RequiredDisarms(dungeon.destructible_trap_count)}/{dungeon.destructible_trap_count}개)"
+                        }
+                    });
+                dungeons.Add(new GuildDungeonDefinition
+                {
+                    id = scene, caseNumber = dungeon.number, dungeonName = dungeon.name,
+                    achievements = achievements.ToArray()
+                });
+            }
+            result.dungeons = dungeons.ToArray();
+            return result;
         }
     }
 }

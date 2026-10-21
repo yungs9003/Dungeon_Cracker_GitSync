@@ -82,6 +82,67 @@ namespace Dungeon.Tests
             Assert.That(DungeonProgressService.CommitClear(data), Is.True);
             Assert.That(DungeonProgressService.CommitClear(data), Is.False);
             Assert.That(data.dungeon_records[A].clear_count, Is.EqualTo(1));
+            Assert.That(data.adventure_count, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void AdventureCountIncreasesForEveryCompletedRunAcrossDungeonsOnlyOnce()
+        {
+            var data = NewData();
+            Complete(data, 60, 2, 3);
+            Assert.That(data.adventure_count, Is.EqualTo(1));
+            Assert.That(DungeonProgressService.CommitClear(data), Is.False);
+            Assert.That(data.adventure_count, Is.EqualTo(1));
+            Complete(data, 55, 1, 4);
+            DungeonProgressService.Enter(data, B, 4);
+            Assert.That(DungeonProgressService.PrepareClear(data, B, 4), Is.True);
+            Assert.That(DungeonProgressService.CommitClear(data), Is.True);
+            Assert.That(data.adventure_count, Is.EqualTo(3));
+            Assert.That(StatusSaveDefaults.TryDeserialize(StatusSaveDefaults.Serialize(data), out var loaded, out _), Is.True);
+            Assert.That(loaded.adventure_count, Is.EqualTo(3));
+            Assert.That(DungeonProgressService.CommitClear(loaded), Is.False);
+            Assert.That(loaded.adventure_count, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void EnterCheckpointAndDeathDoNotCountAnUnfinishedAdventure()
+        {
+            var data = NewData();
+            DungeonProgressService.Enter(data, A, 6);
+            DungeonProgressService.SetCheckpoint(data, A, 2, 6);
+            DungeonProgressService.RestoreCheckpoint(data);
+            DungeonProgressService.Enter(data, A, 6);
+            Assert.That(data.adventure_count, Is.Zero);
+            Assert.That(DungeonProgressService.PrepareClear(data, A, 6), Is.True);
+            Assert.That(data.adventure_count, Is.Zero);
+        }
+
+        [TestCase(0, 5)]
+        [TestCase(2, 5)]
+        [TestCase(128, 128)]
+        public void NormalizeRepairsMissingAdventureCountsWithoutReducingExistingHistory(int previous, int expected)
+        {
+            var data = NewData(); data.adventure_count = previous;
+            data.dungeon_records[A].clear_count = 2;
+            data.dungeon_records[B] = new DungeonRecordData { clear_count = 3 };
+            StatusSaveDefaults.Normalize(data);
+            Assert.That(data.adventure_count, Is.EqualTo(expected));
+            StatusSaveDefaults.Normalize(data);
+            Assert.That(data.adventure_count, Is.EqualTo(expected));
+            Complete(data, 60, 0, 0);
+            Assert.That(data.adventure_count, Is.EqualTo(expected + 1));
+        }
+
+        [Test]
+        public void AdventureHistoryRecoveryAndNewClearSaturateWithoutOverflow()
+        {
+            var data = NewData();
+            data.dungeon_records[A].clear_count = int.MaxValue;
+            data.dungeon_records[B] = new DungeonRecordData { clear_count = int.MaxValue };
+            StatusSaveDefaults.Normalize(data);
+            Assert.That(data.adventure_count, Is.EqualTo(int.MaxValue));
+            Complete(data, 60, 0, 0);
+            Assert.That(data.adventure_count, Is.EqualTo(int.MaxValue));
         }
 
         [TestCase(0)]
@@ -230,13 +291,16 @@ namespace Dungeon.Tests
                 LogAssert.Expect(LogType.Error,new Regex("\\[StatusSaveFile\\] Save failed"));
                 Assert.That(save.TryFinalizeDungeonClear(),Is.False);
                 Assert.That(save.Data.dungeon_records[A].clear_count,Is.Zero);
+                Assert.That(save.Data.adventure_count,Is.Zero);
                 Assert.That(save.Data.active_run.pending_clear,Is.True);
                 storage.fail=false;Assert.That(save.TryFinalizeDungeonClear(),Is.True);
                 Assert.That(save.Data.dungeon_records[A].clear_count,Is.EqualTo(1));
+                Assert.That(save.Data.adventure_count,Is.EqualTo(1));
                 Assert.That(save.TryFinalizeDungeonClear(),Is.False);
                 Assert.That(storage.writes,Is.EqualTo(1));
                 Assert.That(StatusSaveDefaults.TryDeserialize(storage.json,out var restored,out _),Is.True);
                 Assert.That(restored.dungeon_records[A].best_hit_count,Is.EqualTo(410));
+                Assert.That(restored.adventure_count,Is.EqualTo(1));
             }
             finally { UnityEngine.Object.DestroyImmediate(go); }
         }

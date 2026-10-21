@@ -57,6 +57,19 @@ namespace Dungeon.Core
             return record.clear_count > 0;
         }
 
+        /// <summary>과거 누락된 모험 횟수는 확정 클리어 합계까지 복구하고 더 큰 기존 값은 보존합니다.</summary>
+        public static void ReconcileAdventureCount(StatusSaveData data)
+        {
+            long completed = 0;
+            if (data.dungeon_records != null)
+                foreach (var record in data.dungeon_records.Values)
+                {
+                    completed += Math.Max(0, record?.clear_count ?? 0);
+                    if (completed >= int.MaxValue) { completed = int.MaxValue; break; }
+                }
+            data.adventure_count = Math.Max(Math.Max(0, data.adventure_count), (int)completed);
+        }
+
         public static bool TryGetActiveCheckpoint(StatusSaveData data, out DungeonCheckpointData checkpoint)
         {
             checkpoint = null;
@@ -139,6 +152,9 @@ namespace Dungeon.Core
             record.best_clear_time_seconds = first ? checkpoint.run_time_seconds : Math.Min(record.best_clear_time_seconds, checkpoint.run_time_seconds);
             record.best_hit_count = first ? checkpoint.run_hit_count : Math.Min(record.best_hit_count, checkpoint.run_hit_count);
             record.max_broken_traps = first ? checkpoint.run_broken_traps : Math.Max(record.max_broken_traps, checkpoint.run_broken_traps);
+            // run_id 중복 검사를 통과한 정상 클리어만 던전 기록과 함께 한 번 집계합니다.
+            ReconcileAdventureCount(data);
+            if (data.adventure_count < int.MaxValue) data.adventure_count++;
             if (record.clear_count < int.MaxValue) record.clear_count++;
             record.last_committed_clear_run_id = data.active_run.run_id;
             data.dungeon_records[data.active_run.sceneName] = record;

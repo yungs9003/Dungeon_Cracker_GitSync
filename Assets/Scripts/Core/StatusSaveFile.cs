@@ -202,6 +202,7 @@ namespace Dungeon.Core
                     throw new InvalidOperationException(deserializeError);
 
                 EnsureNotNull();
+                DungeonAchievementService.RefreshSummary(data, GameDatabase.GetDungeonDefinitions());
                 StartPlayTimeSession();
 
                 if (DungeonProgressMigration.IsLegacyJson(json) &&
@@ -251,6 +252,7 @@ namespace Dungeon.Core
                 }
 
                 DungeonProgressService.CaptureActiveRun(data);
+                DungeonAchievementService.RefreshSummary(data, GameDatabase.GetDungeonDefinitions());
                 string json = StatusSaveDefaults.Serialize(data);
                 IStatusSaveStorage activeStorage = EnsureStorage();
 
@@ -338,6 +340,10 @@ namespace Dungeon.Core
         }
 
         public bool TryFinalizeDungeonClear() => TryUpdateDungeonProgress(DungeonProgressService.CommitClear);
+
+        public bool TryClaimDungeonAchievement(string sceneName, string achievementId) =>
+            GameDatabase.TryFindDungeonBySceneName(sceneName, out var dungeon) &&
+            TryUpdateDungeonProgress(current => DungeonAchievementService.TryClaim(current, dungeon, achievementId));
 
         private bool ShouldLogSaveSummary()
         {

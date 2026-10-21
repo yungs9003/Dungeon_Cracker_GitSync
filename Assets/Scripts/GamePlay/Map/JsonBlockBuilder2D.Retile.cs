@@ -48,6 +48,22 @@ namespace Dungeon.Map
         private void RegisterTileForRetile(GameObject block, CellData2D cell, bool floor3)
         {
             retileBindings[block] = new TileBinding { instance = block, cell = cell, floor3 = floor3 };
+            if (!floor3 && MapArea != null && MapArea.enabled) MapArea.RegisterCell(cell.coord, cell.code);
+        }
+
+        /// <summary>기존 해체 경로의 대체 타일도 원래 레이어/좌표와 맵 소유권을 이어받는다.</summary>
+        public void RegisterLegacyReplacement(GameObject destroyedRoot, GameObject replacement, string replacementCode)
+        {
+            if (replacement == null || destroyedRoot == null ||
+                !retileBindings.TryGetValue(destroyedRoot, out var binding)) return;
+            if (!TileRetileSolver2D.TryParseCoord(binding.cell.coord, out int x, out int y)) return;
+            replacement.transform.SetParent(transform, true);
+            replacement.name = $"{(binding.floor3 ? "3F_" : "")}{replacementCode}_{x:X2}{y:X2}";
+            ApplySortingBand(replacement, binding.floor3 ? floor3SortingOrderBase : gridSortingOrderBase);
+            ApplyBlockCoordAndRegistry(replacement, x, y, !binding.floor3);
+            retileBindings.Remove(destroyedRoot);
+            // 102- 등 기존 경로의 MapData/해체 정책은 유지하고 실물 바인딩만 교체한다.
+            RegisterTileForRetile(replacement, binding.cell, binding.floor3);
         }
 
         private bool EnsureRetileSolver()

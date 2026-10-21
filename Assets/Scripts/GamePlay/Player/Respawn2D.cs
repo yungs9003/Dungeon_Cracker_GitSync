@@ -4,6 +4,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Dungeon.Core;
+using Dungeon.Map;
 
 namespace Dungeon.Player
 {
@@ -118,6 +119,13 @@ namespace Dungeon.Player
 
         private IEnumerator CoTeleport(Vector2 worldPos, bool reviveFull)
         {
+            var area = MapArea2D.ForBody(rb);
+            if (area != null && !area.TryResolveRespawnPoint(rb, worldPos, out worldPos))
+            {
+                Debug.LogWarning("[MapArea] 복귀할 유효한 지면이 없습니다.", this);
+                respawnCo = null;
+                yield break;
+            }
             GetComponent<PlayerIceMovement2D>()?.ResetMotion();
             if (resetVelocity && rb != null)
             {

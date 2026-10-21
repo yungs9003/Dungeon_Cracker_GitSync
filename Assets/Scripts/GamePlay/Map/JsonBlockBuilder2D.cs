@@ -155,6 +155,7 @@ namespace Dungeon.Map
         public void BuildFromJson()
         {
             CurrentSpriteTheme = FieldEffectManager.FieldEffectType.None;
+            BeginMapEnvironment();
             ResetTileRetileState();
             ClearChildren();
             prefabCache.Clear();
@@ -183,6 +184,7 @@ namespace Dungeon.Map
             // 렌더 순서: grid < 3F
             BuildGridTiles(LoadedMapData.grid);
             Build3FTiles(LoadedMapData.floor3);
+            CompleteMapEnvironment();
 
             PositionPlayerAndSetRespawn(LoadedMapData);
             ApplyLoadedFieldEffect(LoadedMapData.field_effect);
@@ -701,6 +703,12 @@ namespace Dungeon.Map
                 return;
 
             Vector2 spawn2D = new Vector2(x * cellSize, y * cellSize) + playerSpawnOffset;
+            var body = player != null ? player.GetComponentInParent<Rigidbody2D>() : null;
+            if (MapArea != null && MapArea.enabled && !MapArea.TryResolveRespawnPoint(body, spawn2D, out spawn2D))
+            {
+                Debug.LogWarning("[MapArea] 유효한 시작 지면이 없습니다.", this);
+                return;
+            }
             Vector3 spawnPos = new Vector3(spawn2D.x, spawn2D.y, 0f);
 
             if (player != null)
@@ -710,7 +718,10 @@ namespace Dungeon.Map
                 respawn = player.GetComponent<Respawn2D>();
 
             if (respawn != null)
+            {
                 respawn.SetRespawnPoint(spawn2D);
+                respawn.SetLastSafePoint(spawn2D);
+            }
             else
                 Debug.LogWarning("Respawn2D를 찾지 못했습니다.");
         }

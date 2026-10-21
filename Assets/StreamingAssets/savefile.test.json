@@ -1,12 +1,12 @@
 {
-  "save_version": 5,
+  "save_version": 6,
   "user_name": "Toluse",
-  "gold": 46150,
-  "broken_traps": 30,
+  "gold": 49500,
+  "broken_traps": 2,
   "clear_reward_claimed": false,
   "last_getting_gold": 0,
-  "clear_time_seconds": 764,
-  "hit_count": 21,
+  "clear_time_seconds": 9,
+  "hit_count": 2,
   "main_stats": {
     "max_HP": 150,
     "physical_resist": 20,
@@ -46,7 +46,10 @@
         "005": 28
       },
       {
-        "000": 11
+        "000": 19
+      },
+      {
+        "001": 4
       }
     ],
     "equipment": [
@@ -129,7 +132,7 @@
         "slot1": "000"
       },
       {
-        "slot2": "002"
+        "slot2": "001"
       },
       {
         "slot3": "003"
@@ -175,38 +178,45 @@
   },
   "checkpoint": {
     "DUNGEON_001": {
-      "mapIndex": 1,
+      "mapIndex": 0,
       "totalMaps": 5,
-      "resumeRequested": true,
+      "resumeRequested": false,
       "completed": false,
-      "broken_traps_snapshot": 3,
-      "run_id": "977882d0ac444b61a08f37fc6ca745c1",
-      "run_time_seconds": 764,
-      "run_hit_count": 21,
-      "run_broken_traps": 30
+      "broken_traps_snapshot": 0,
+      "run_id": "11f7cf87714a4f168cea7d1cbfa0e24b",
+      "run_time_seconds": 9,
+      "run_hit_count": 2,
+      "run_broken_traps": 2
     }
   },
   "dungeon_records": {
     "DUNGEON_001": {
-      "clear_count": 6,
+      "clear_count": 9,
       "best_clear_time_seconds": 0,
       "best_hit_count": 14,
-      "max_broken_traps": 39,
-      "last_committed_clear_run_id": "8b409195f68d422d82c3a50178506461"
+      "max_broken_traps": 46,
+      "last_committed_clear_run_id": "41a39cce2b454a7aab98e09daaabe22a"
     }
   },
   "active_run": {
     "sceneName": "DUNGEON_001",
-    "run_id": "977882d0ac444b61a08f37fc6ca745c1",
+    "run_id": "11f7cf87714a4f168cea7d1cbfa0e24b",
     "pending_clear": false
   },
+  "guild_achievement_claims": {
+    "DUNGEON_001": [
+      "low_hits",
+      "fast_clear",
+      "disarm_60_percent"
+    ]
+  },
   "dungeon_status": [],
-  "play_time": "136:19",
-  "play_time_minutes": 8179,
-  "play_time_remainder_seconds": 0.46765449999384145,
+  "play_time": "139:46",
+  "play_time_minutes": 8386,
+  "play_time_remainder_seconds": 42.141761499991269,
   "play_time_legacy_unparsed": "",
-  "clear_num_info": "28:73:96",
-  "adventure_count": 128,
-  "achievement": "87:300",
-  "player_rank": "s"
+  "clear_num_info": "1/1",
+  "adventure_count": 129,
+  "achievement": "3/3",
+  "player_rank": "S"
 }

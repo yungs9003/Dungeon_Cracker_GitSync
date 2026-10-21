@@ -25,6 +25,7 @@ namespace Dungeon.Traps
 
         [Header("Save Count")]
         [SerializeField] private bool countAsBrokenTrap = true;
+        public bool CountsAsBrokenTrap => countAsBrokenTrap;
 
         private bool alreadyDestroyed;
 
@@ -97,9 +98,15 @@ namespace Dungeon.Traps
             Vector3 spawnPos = baseTf.position;
             Quaternion spawnRot = copyDestroyedObjectRotation ? baseTf.rotation : Quaternion.identity;
 
-            GameObject replacement = Instantiate(replacementPrefab, spawnPos, spawnRot);
+            // 파괴 대상의 형제로 생성해 맵 전환 때 함께 정리하고, 자식 해체는 살아 있는 부모를 유지한다.
+            Transform parent = destroyRoot != null ? destroyRoot.parent : transform.parent;
+            GameObject replacement = Instantiate(replacementPrefab, spawnPos, spawnRot, parent);
             if (builder != null)
+            {
                 builder.ApplySpriteTheme(replacement);
+                builder.RegisterLegacyReplacement(destroyRoot != null ? destroyRoot.gameObject : gameObject,
+                    replacement, replacementPrefab.name);
+            }
         }
 
         private void DisableTraps()

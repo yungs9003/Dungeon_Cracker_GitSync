@@ -11,7 +11,7 @@ namespace Dungeon.Core
     /// </summary>
     public static class StatusSaveDefaults
     {
-        public const int CurrentSaveVersion = 5;
+        public const int CurrentSaveVersion = 6;
 
         public static StatusSaveData Create()
         {
@@ -198,6 +198,18 @@ namespace Dungeon.Core
             EnsureStringSlot(data.equips.module, "slot6");
 
             DungeonProgressMigration.Normalize(data);
+            DungeonProgressService.ReconcileAdventureCount(data);
+
+            var claims = new Dictionary<string, List<string>>();
+            foreach (var pair in data.guild_achievement_claims ?? new Dictionary<string, List<string>>())
+            {
+                string key = DungeonProgressService.SceneKey(pair.Key);
+                if (string.IsNullOrWhiteSpace(key)) continue;
+                if (!claims.TryGetValue(key, out var ids)) claims[key] = ids = new List<string>();
+                foreach (string id in pair.Value ?? new List<string>())
+                    if (!string.IsNullOrWhiteSpace(id) && !ids.Contains(id)) ids.Add(id);
+            }
+            data.guild_achievement_claims = claims;
 
             data.dungeon_status ??= new List<Dictionary<string, string>>();
             PlayTimeData.Normalize(data);

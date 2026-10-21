@@ -414,7 +414,16 @@
       "name": "버려진 채굴장",
       "mapResourcePath": "Maps/DUNGEON_001",
       "rank_reference_hit_count": 20,
-      "rank_reference_time_seconds": 120
+      "rank_reference_time_seconds": 120,
+      "destructible_trap_count": 41,
+      "map_trap_counts": [
+        { "map": "map_001", "destructible_trap_count": 5 },
+        { "map": "map_002", "destructible_trap_count": 5 },
+        { "map": "map_003", "destructible_trap_count": 0 },
+        { "map": "map_004", "destructible_trap_count": 6 },
+        { "map": "map_005", "destructible_trap_count": 25 }
+      ],
+      "achievement_reward_gold": 600
     }
   ]
 }

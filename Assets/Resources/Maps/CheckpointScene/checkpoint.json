@@ -3,9 +3,9 @@
   "grid": [
     { "coord": "0008", "code": "001-001", "assetNo": 0, "direction": "00" },
     { "coord": "0108", "code": "001-001", "assetNo": 0, "direction": "00" },
-    { "coord": "0208", "code": "001-001", "assetNo": 2, "direction": "01" },
+    { "coord": "0208", "code": "001-001", "assetNo": 1, "direction": "00" },
     { "coord": "0308", "code": "001-004", "assetNo": 0, "direction": "11" },
-    { "coord": "0408", "code": "001-001", "assetNo": 2, "direction": "10" },
+    { "coord": "0408", "code": "001-001", "assetNo": 1, "direction": "01" },
     { "coord": "0508", "code": "001-001", "assetNo": 0, "direction": "00" },
     { "coord": "0608", "code": "001-001", "assetNo": 0, "direction": "00" },
     { "coord": "0007", "code": "001-001", "assetNo": 0, "direction": "00" },

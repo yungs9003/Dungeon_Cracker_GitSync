@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059e5fcb8a3e5ccbba94e99243a16b68, type: 3}
+  m_Name: MapExteriorSettings
+  m_EditorClassIdentifier: Dungeon.GamePlay::Dungeon.Map.MapExteriorSettings2D
+  normal:
+    color: {r: 0.3803921568627451, g: 0.33725490196078434, b: 0.3137254901960784, a: 1}
+    sprite: {fileID: 0}
+    tiled: 1
+    tileWorldSize: 1
+  ice:
+    color: {r: 0.16862745098039217, g: 0.5137254901960784, b: 0.6392156862745098, a: 1}
+    sprite: {fileID: 0}
+    tiled: 1
+    tileWorldSize: 1
+  fire:
+    color: {r: 0.23921568627450981, g: 0.23921568627450981, b: 0.23921568627450981, a: 1}
+    sprite: {fileID: 0}
+    tiled: 1
+    tileWorldSize: 1

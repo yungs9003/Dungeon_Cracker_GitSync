@@ -99,6 +99,8 @@ namespace Dungeon.Core
 
         public Dictionary<string, DungeonRecordData> dungeon_records = new();
         public ActiveDungeonRunData active_run = new();
+        // 조건 달성은 최고 기록으로 계산하고, 보상 수령 여부만 별도로 저장합니다.
+        public Dictionary<string, List<string>> guild_achievement_claims = new();
 
         [JsonProperty("dungeon_status")]
         public List<Dictionary<string, string>> dungeon_status = new();
